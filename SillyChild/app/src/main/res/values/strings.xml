@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">SillyChild</string>
+
+
+    <!--登录-->
+    <string name="login">登录</string>
+    <string name="hintAccountText">请输入号码</string>
+    <string name="alphanumeric">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+    <string name="hintPasswordText">请输入密码</string>
+    <string name="forgotPassword">忘记密码？</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>

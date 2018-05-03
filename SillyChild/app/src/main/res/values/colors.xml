@@ -3,4 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--登录-->
+    <color name="fFFFFFColor">#FFFFFF</color>
+    <color name="e4E7DColor">#0E4E7D</color>
+    <color name="dDDDDDColor">#DDDDDD</color>
+    <color name="hintColor">#999999</color>
+    <color name="blackColor">#000000</color>
+    <color name="bCC6CCColor">#BCC6CC</color>
+    <color name="cD052Color">#2CD052</color>
+
+
+
+
+
+
+
 </resources>

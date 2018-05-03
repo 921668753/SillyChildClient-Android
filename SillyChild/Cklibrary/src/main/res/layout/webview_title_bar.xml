@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="@dimen/dimen250"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:tag="111111"
+            android:textColor="@color/textColor1"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dimen10"
+            android:src="@drawable/back"
+            android:visibility="visible" />
+        <View
+            android:id="@+id/v_dividercolor"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen1"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:progressDrawable="@drawable/webviewlayout_progressbar" />
+</LinearLayout>
