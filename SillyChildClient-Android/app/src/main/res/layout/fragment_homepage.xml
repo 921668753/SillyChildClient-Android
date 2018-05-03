@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen48"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/travelCity"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize12" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="@dimen/dimen65"
+            android:layout_height="@dimen/dimen48"
+            android:gravity="center_vertical|right"
+            android:paddingLeft="@dimen/dimen5"
+            android:paddingRight="@dimen/dimen5"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/down1" />
+
+        <ImageView
+            style="@style/AutoWrap"
+            android:src="@mipmap/logo" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/dimen105"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_customerService"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen25"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/dimen15"
+                android:scaleType="fitXY"
+                android:src="@mipmap/kefu" />
+
+            <TextView
+                android:id="@+id/tv_tag"
+                android:layout_width="@dimen/dimen10"
+                android:layout_height="@dimen/dimen10"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen5"
+                android:background="@drawable/shape_homepage_dot"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
+
+        <com.common.cklibrary.utils.myview.NoTouchEventScrollView
+            style="@style/MatchMatch"
+            android:background="@color/background"
+            android:scrollbars="none">
+
+            <LinearLayout
+                style="@style/MatchMatch"
+                android:orientation="vertical">
+
+                <cn.bingoogolapple.bgabanner.BGABanner
+                    android:id="@+id/banner_ad"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen130"
+                    android:background="@mipmap/placeholderfigure2"
+                    app:banner_pageChangeDuration="2000"
+                    app:banner_pointAutoPlayAble="false"
+                    app:banner_pointContainerBackground="@android:color/transparent"
+                    app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                    app:banner_pointTopBottomMargin="2dp"
+                    app:banner_transitionEffect="alpha" />
+
+                <ImageView
+                    android:id="@+id/img_charterCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen105"
+                    android:layout_marginTop="@dimen/dimen5"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/chartercustom" />
+
+                <ImageView
+                    android:id="@+id/img_homestaySubscribe"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen105"
+                    android:layout_marginTop="@dimen/dimen5"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/homestaysubscribe" />
+
+                <ImageView
+                    android:id="@+id/img_memorialMall"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen105"
+                    android:layout_marginTop="@dimen/dimen5"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/memorialmall" />
+
+                <LinearLayout
+                    android:id="@+id/ll_localTalent"
+                    style="@style/MatchWrap"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@color/whiteColors"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen20"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15"
+                    android:paddingTop="@dimen/dimen20">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:text="@string/localTalent"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize17" />
+
+                    <TextView
+                        android:id="@+id/tv_localTalentAll"
+                        style="@style/WrapMatch"
+                        android:layout_marginTop="@dimen/dimen1"
+                        android:paddingRight="@dimen/dimen5"
+                        android:text="@string/memberShowAll"
+                        android:textColor="@color/hintColors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <ImageView
+                        android:id="@+id/img_arrow"
+                        style="@style/WrapWrap"
+                        android:src="@mipmap/arrow" />
+                </LinearLayout>
+
+                <com.common.cklibrary.utils.myview.HorizontalListView
+                    android:id="@+id/hlv_localTalent"
+                    style="@style/MatchWrap"
+                    android:layout_height="@dimen/dimen168"
+                    android:background="@color/whiteColors"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/item_localtalent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_popularStrategy"
+                    style="@style/MatchWrap"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@color/whiteColors"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen20"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15"
+                    android:paddingTop="@dimen/dimen20">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:text="@string/popularStrategy"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize17" />
+
+
+                    <TextView
+                        android:id="@+id/tv_popularStrategyAll"
+                        style="@style/WrapMatch"
+                        android:layout_marginTop="@dimen/dimen1"
+                        android:paddingRight="@dimen/dimen5"
+                        android:text="@string/memberShowAll"
+                        android:textColor="@color/hintColors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <ImageView
+                        style="@style/WrapWrap"
+                        android:src="@mipmap/arrow" />
+                </LinearLayout>
+
+                <com.common.cklibrary.utils.myview.HorizontalListView
+                    android:id="@+id/hlv_popularStrategy"
+                    style="@style/MatchWrap"
+                    android:layout_height="@dimen/dimen168"
+                    android:background="@color/whiteColors"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/item_localtalent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_recentNews"
+                    style="@style/MatchWrap"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@color/whiteColors"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen20"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15"
+                    android:paddingTop="@dimen/dimen20">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:text="@string/recentNews"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize17" />
+
+                    <TextView
+                        android:id="@+id/tv_recentNewsAll"
+                        style="@style/WrapMatch"
+                        android:layout_marginTop="@dimen/dimen1"
+                        android:paddingRight="@dimen/dimen5"
+                        android:text="@string/memberShowAll"
+                        android:textColor="@color/hintColors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <ImageView
+                        style="@style/WrapWrap"
+                        android:src="@mipmap/arrow" />
+                </LinearLayout>
+
+                <com.common.cklibrary.utils.myview.HorizontalListView
+                    android:id="@+id/hlv_recentNews"
+                    style="@style/MatchWrap"
+                    android:layout_height="@dimen/dimen168"
+                    android:background="@color/whiteColors"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/item_recentnews" />
+
+            </LinearLayout>
+
+        </com.common.cklibrary.utils.myview.NoTouchEventScrollView>
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+</LinearLayout>

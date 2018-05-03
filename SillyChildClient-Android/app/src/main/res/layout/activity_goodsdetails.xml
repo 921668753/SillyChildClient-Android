@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/include_fangwei"
+        layout="@layout/common_title" />
+
+    <View
+        android:id="@+id/view_topdivider"
+        style="@style/DividerWidth"
+        android:layout_below="@id/include_fangwei" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:layout_alignParentBottom="true"
+        android:background="@color/whiteColors"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen18"
+                android:layout_height="@dimen/dimen18"
+                android:src="@mipmap/mallkefuxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen7"
+                android:text="@string/customerService"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize10" />
+        </LinearLayout>
+
+        <View style="@style/DividerHeight" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen18"
+                android:layout_height="@dimen/dimen18"
+                android:src="@mipmap/mallguanzhuxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen7"
+                android:text="@string/follow"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize10" />
+        </LinearLayout>
+
+        <View style="@style/DividerHeight" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen18"
+                android:layout_height="@dimen/dimen18"
+                android:src="@mipmap/mallcart_shopxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen7"
+                android:text="@string/shop"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize10" />
+        </LinearLayout>
+
+        <View style="@style/DividerHeight" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/whiteColors"
+            android:gravity="center"
+            android:text="@string/buyNow"
+            android:textColor="@color/redColors"
+            android:textSize="@dimen/textsize16" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/redColors"
+            android:gravity="center"
+            android:text="@string/addShoppingCart"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize16" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_bottom"
+        style="@style/DividerWidth"
+        android:layout_above="@id/ll_bottom" />
+
+    <ScrollView
+        style="@style/MatchWrap"
+        android:layout_above="@id/divider_bottom"
+        android:layout_below="@id/view_topdivider"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:background="@color/background"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:padding="@dimen/dimen15">
+
+                <cn.bingoogolapple.bgabanner.BGABanner
+                    android:id="@+id/banner_ad"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen350"
+                    android:background="@mipmap/placeholderfigure1"
+                    app:banner_pageChangeDuration="2000"
+                    app:banner_pointAutoPlayAble="false"
+                    app:banner_pointContainerBackground="@android:color/transparent"
+                    app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                    app:banner_pointTopBottomMargin="2dp"
+                    app:banner_transitionEffect="alpha" />
+            </RelativeLayout>
+
+
+            <View style="@style/DividerWidth" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:padding="@dimen/dimen15"
+                android:singleLine="true"
+                android:text="五道口附近"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize15" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen20"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:singleLine="true"
+                android:textColor="@color/lightRedColors"
+                android:textSize="@dimen/textsize18" />
+
+            <View style="@style/DividerWidth" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen20"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen20"
+                android:textColor="@color/tabColors"
+                android:textSize="@dimen/textsize14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:text="@string/goodParameters"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    style="@style/WrapWrap"
+                    android:src="@mipmap/minearrowxxx" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/userEvaluation"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:singleLine="true"
+                    android:text="(100)"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/seeMore"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize12" />
+
+                <ImageView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen8"
+                    android:src="@mipmap/minearrowxxx" />
+            </LinearLayout>
+
+            <View style="@style/DividerWidth" />
+            <!--
+                        <com.common.cklibrary.utils.myview.ChildLiistView
+                            android:id="@+id/lv_evaluation"
+                            style="@style/MatchMatch"
+                            android:divider="@color/dividercolors"
+                            android:dividerHeight="@dimen/dimen1"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            tools:listitem="@layout/item_evaluation" />
+                            -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen35"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="@dimen/dimen40"
+                    android:layout_height="@dimen/dimen1"
+                    android:background="@color/mallduanxian" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen18"
+                    android:layout_marginRight="@dimen/dimen18"
+                    android:text="限时抢购"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen40"
+                    android:layout_height="@dimen/dimen1"
+                    android:background="@color/mallduanxian" />
+
+            </LinearLayout>
+
+            <com.common.cklibrary.utils.myview.NoScrollGridView
+                android:id="@+id/lv_mall"
+                style="@style/MatchWrap"
+                android:horizontalSpacing="@dimen/dimen5"
+                android:numColumns="2"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/dimen5"
+                tools:listitem="@layout/item_mall" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

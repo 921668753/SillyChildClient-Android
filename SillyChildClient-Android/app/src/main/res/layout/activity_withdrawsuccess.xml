@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:background="@color/background">
+
+    <include layout="@layout/common_title"/>
+
+    <View style="@style/DividerWidth"/>
+
+    <ImageView
+        android:layout_width="@dimen/dimen65"
+        android:layout_height="@dimen/dimen65"
+        android:src="@mipmap/mine_paysuccessxxx"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen33"/>
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/withdrawalSuccess"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginBottom="@dimen/dimen28"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textsize15"/>
+
+    <View style="@style/DividerWidth"/>
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:orientation="vertical"
+        android:background="@color/whiteColors">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen45"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_centerVertical="true"
+                android:text="@string/withdrawalAmount"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize15"/>
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginRight="@dimen/dimen15">
+                <TextView
+                    android:id="@+id/tv_withdrawalamount"
+                    style="@style/WrapWrap"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/common_dividerwidth1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen45"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_centerVertical="true"
+                android:text="@string/CurrentBalanceNoSymbol"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize15"/>
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/dimen15">
+                <TextView
+                    android:id="@+id/tv_currentbalance"
+                    style="@style/WrapWrap"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/DividerWidth"/>
+
+</LinearLayout>

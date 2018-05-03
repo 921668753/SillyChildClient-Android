@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+
+    <LinearLayout
+        style="@style/MatchMatch"
+        android:orientation="horizontal">
+
+        <com.common.cklibrary.utils.myview.ChildLiistView
+            android:id="@+id/lv_moreClassification"
+            style="@style/AutoWrap"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen1"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_moreclassification" />
+
+
+        <com.common.cklibrary.utils.myview.NoScrollGridView
+            android:id="@+id/gv_classification"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"
+            android:background="@android:color/white"
+            android:horizontalSpacing="0dp"
+            android:numColumns="3"
+            android:overScrollMode="never"
+            android:paddingTop="@dimen/dimen40"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp"
+            tools:listitem="@layout/item_classification" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

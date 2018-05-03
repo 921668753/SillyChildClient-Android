@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:background="@color/whiteColors"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dimen40"
+        android:layout_height="@dimen/dimen40"
+        android:layout_marginTop="@dimen/dimen14"
+        android:src="@mipmap/placeholderfigure1" />
+
+    <TextView
+        style="@style/MatchWrap"
+        android:gravity="center"
+        android:paddingTop="@dimen/dimen9"
+        android:textColor="@color/tabColors"
+        android:textSize="@dimen/textsize12" />
+</LinearLayout>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+
+    <TextView
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:gravity="center"
+        android:padding="@dimen/dimen11"
+        android:text="@string/mall"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize18"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen7"
+        android:paddingLeft="@dimen/dimen25"
+        android:paddingRight="@dimen/dimen25"
+        android:paddingTop="@dimen/dimen7"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen30"
+            android:background="@drawable/shape_search"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen5">
+
+            <ImageView
+                style="@style/WrapWrap"
+                android:src="@mipmap/search" />
+
+            <EditText
+                style="@style/WrapMatch"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/checkProduct"
+                android:maxLength="20"
+                android:minWidth="@dimen/dimen150"
+                android:paddingLeft="@dimen/dimen10"
+                android:singleLine="true"
+                android:textColorHint="@color/searchTextColors"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/textsize14" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_ad"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen180"
+                android:background="@mipmap/placeholderfigure"
+                app:banner_pageChangeDuration="2000"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                app:banner_pointTopBottomMargin="2dp"
+                app:banner_transitionEffect="alpha" />
+
+            <com.common.cklibrary.utils.myview.NoScrollGridView
+                android:id="@+id/gv_classification"
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:horizontalSpacing="@dimen/dimen14"
+                android:numColumns="5"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/dimen14"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/dimen14"
+                tools:listitem="@layout/item_classification" />
+
+
+            <!--<LinearLayout-->
+            <!--style="@style/MatchWrap"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingBottom="@dimen/dimen10"-->
+            <!--android:paddingTop="@dimen/dimen10">-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/visa" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/homestay" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/charter" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/strategy" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/strategy" />-->
+
+            <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/MatchWrap"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingBottom="@dimen/dimen10">-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/visa" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/homestay" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/charter" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/strategy" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:src="@mipmap/default_image" />-->
+
+            <!--<TextView-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:paddingTop="@dimen/dimen5"-->
+            <!--android:text="@string/strategy" />-->
+
+            <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen11"
+                android:background="@color/whiteColors"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="@dimen/dimen40"
+                    android:layout_height="@dimen/dimen1"
+                    android:background="@color/lightRedColors" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:padding="@dimen/dimen10"
+                    android:text="限时抢购"
+                    android:textColor="@color/lightRedColors"
+                    android:textSize="@dimen/textsize14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen40"
+                    android:layout_height="@dimen/dimen1"
+                    android:background="@color/lightRedColors" />
+
+            </LinearLayout>
+
+
+            <com.common.cklibrary.utils.myview.NoScrollGridView
+                android:id="@+id/lv_mall"
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen6"
+                android:background="@color/whiteColors"
+                android:horizontalSpacing="@dimen/dimen5"
+                android:numColumns="2"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/dimen5"
+                tools:listitem="@layout/item_mall" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/expect" />
+
+
+    </LinearLayout>
+</LinearLayout>

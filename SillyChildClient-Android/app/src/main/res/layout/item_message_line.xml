@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="13dp">
+
+    <TextView
+        android:id="@+id/timestamp"
+        style="@style/chat_text_date_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_chat_activity">
+
+        <ImageView
+            android:id="@+id/iv_userhead"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:scaleType="fitXY"
+            android:src="@drawable/ease_default_avatar" />
+
+        <RelativeLayout
+            android:id="@+id/bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_userid"
+            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_toRightOf="@id/iv_userhead"
+            android:background="@drawable/hd_chatfrom_bg">
+
+            <ImageView
+                android:id="@+id/img_line"
+                android:layout_width="@dimen/dimen59"
+                android:layout_height="@dimen/dimen59"
+                android:layout_margin="@dimen/dimen16"
+                android:scaleType="fitXY"
+                android:src="@mipmap/placeholderfigure1" />
+
+
+            <RelativeLayout
+                android:layout_width="@dimen/dimen130"
+                android:layout_height="@dimen/dimen59"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/img_line">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingRight="@dimen/dimen8"
+                    android:text="你好你好你好你好你好你好你好你好"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize13" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen20"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen2"
+                        android:text="@string/moneySign"
+                        android:textColor="@color/guideShapeColors"
+                        android:textSize="@dimen/textsize9" />
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12.00"
+                        android:textColor="@color/guideShapeColors"
+                        android:textSize="@dimen/textsize13" />
+
+
+                    <TextView style="@style/AutoWrap" />
+
+
+                    <TextView
+                        android:id="@+id/tv_viewDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/dimen14"
+                        android:background="@drawable/shape_addshoppingcarte"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen5"
+                        android:paddingRight="@dimen/dimen5"
+                        android:text="@string/viewDetails"
+                        android:textColor="@color/hintColors"
+                        android:textSize="@dimen/textsize10" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_userid"
+            style="@style/chat_text_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/chat_nick_margin_left"
+            android:layout_toRightOf="@id/iv_userhead"
+            android:textSize="@dimen/chat_nick_text_size"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <View style="@style/DividerWidth" />
+
+    <EditText
+        android:id="@+id/et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:background="@color/whiteColors"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textsize15"
+        android:hint="@string/nicknamehint"
+        android:textColorHint="@color/hintColors"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen15"/>
+
+    <TextView
+        android:id="@+id/tv_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sillyChildNumberWords"
+        android:paddingTop="@dimen/dimen10"
+        android:paddingLeft="@dimen/dimen15"
+        android:textSize="@dimen/textsize15"
+        android:textColor="@color/hintColors"
+        android:visibility="gone"/>
+
+</LinearLayout>

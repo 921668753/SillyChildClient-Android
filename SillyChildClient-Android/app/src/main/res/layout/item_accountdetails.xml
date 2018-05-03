@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    style="@style/MatchMatch"
+    android:background="@color/whiteColors">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen55"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:gravity="center_vertical">
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="vertical">
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_detailstype"
+                    style="@style/WrapWrap"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15"/>
+                <TextView
+                    android:id="@+id/tv_changemoney"
+                    style="@style/MatchWrap"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize17"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen10">
+                <TextView
+                    android:id="@+id/tv_timefmt"
+                    style="@style/WrapWrap"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize11"
+                    android:layout_width="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_userbalance"
+                    style="@style/MatchWrap"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize11"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/common_dividerwidth1"/>
+
+</LinearLayout>

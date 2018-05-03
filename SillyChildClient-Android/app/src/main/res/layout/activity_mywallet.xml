@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:background="@color/background">
+
+    <include layout="@layout/common_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen156"
+        android:background="@color/lightRedColors">
+        <TextView
+            android:id="@+id/tv_yue"
+            style="@style/WrapWrap"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize30"
+            android:singleLine="true"
+            android:paddingTop="@dimen/dimen33"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/tv_yuestr"
+            style="@style/WrapWrap"
+            android:text="@string/accountBalance"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize14"
+            android:singleLine="true"
+            android:layout_marginTop="@dimen/dimen15"
+            android:layout_below="@id/tv_yue"
+            android:layout_centerHorizontal="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen1"
+            android:background="@color/myWalletDriver"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dimen45"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen45"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical">
+           <LinearLayout
+               android:id="@+id/ll_recharge"
+               style="@style/AutoMatch"
+               android:orientation="horizontal"
+               android:gravity="center">
+               
+               <ImageView
+                   android:layout_width="@dimen/dimen20"
+                   android:layout_height="@dimen/dimen20"
+                   android:src="@mipmap/mine_chongzhixxx"/>
+               <TextView
+                   style="@style/WrapWrap"
+                   android:text="@string/recharge"
+                   android:textColor="@color/whiteColors"
+                   android:textSize="@dimen/textsize15"
+                   android:layout_marginLeft="@dimen/dimen12"/>
+           </LinearLayout>
+            <View
+                android:layout_width="@dimen/dimen1"
+                android:layout_height="@dimen/dimen29"
+                android:background="@color/myWalletDriver"/>
+            <LinearLayout
+                android:id="@+id/ll_withdraw"
+                style="@style/AutoMatch"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="@dimen/dimen20"
+                    android:layout_height="@dimen/dimen20"
+                    android:src="@mipmap/mine_tixianxxx"/>
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/withdraw"
+                    android:textColor="@color/whiteColors"
+                    android:textSize="@dimen/textsize15"
+                    android:layout_marginLeft="@dimen/dimen12"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_coupons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:background="@color/whitemine"
+        android:layout_marginTop="@dimen/dimen15"
+        android:gravity="center_vertical">
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minewallet_couponxxx"
+            android:layout_marginLeft="@dimen/dimen20"/>
+        <TextView
+            style="@style/AutoWrap"
+            android:text="@string/coupons"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize16"/>
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minearrowxxx"
+            android:layout_marginRight="@dimen/dimen15"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_goshopping"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@color/whitemine"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen20"
+            android:src="@mipmap/minewallet_shoppingxxx" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/goShopping"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize16" />
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/minearrowxxx" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen1"
+        android:background="@color/longinotherdividerbg"/>
+
+    <LinearLayout
+        android:id="@+id/ll_hangingout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:background="@color/whitemine"
+        android:gravity="center_vertical">
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minewallet_tourxxx"
+            android:layout_marginLeft="@dimen/dimen20"/>
+        <TextView
+            style="@style/AutoWrap"
+            android:text="@string/hangingOut"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize16"/>
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minearrowxxx"
+            android:layout_marginRight="@dimen/dimen15"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen1"
+        android:background="@color/longinotherdividerbg"/>
+
+    <LinearLayout
+        android:id="@+id/ll_sleepin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50"
+        android:background="@color/whitemine"
+        android:gravity="center_vertical">
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minewallet_sleepxxx"
+            android:layout_marginLeft="@dimen/dimen20"/>
+        <TextView
+            style="@style/AutoWrap"
+            android:text="@string/sleepIn"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize16"/>
+        <ImageView
+            style="@style/WrapWrap"
+            android:src="@mipmap/minearrowxxx"
+            android:layout_marginRight="@dimen/dimen15"/>
+
+    </LinearLayout>
+
+</LinearLayout>
