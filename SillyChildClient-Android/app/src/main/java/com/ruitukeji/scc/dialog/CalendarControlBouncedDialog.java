@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.ViewInject;
 import com.kymjs.common.StringUtils;
-import com.othershe.calendarview.CalendarView;
-import com.othershe.calendarview.DateBean;
-import com.othershe.calendarview.listener.OnMonthItemClickListener;
+import com.othershe.calendarview.bean.DateBean;
 import com.othershe.calendarview.listener.OnPagerChangeListener;
+import com.othershe.calendarview.listener.OnSingleChooseListener;
+import com.othershe.calendarview.weiget.CalendarView;
 import com.ruitukeji.scc.R;
 import com.ruitukeji.scc.entity.CalendarControlDateBean;
 
@@ -65,7 +65,7 @@ public abstract class CalendarControlBouncedDialog extends Dialog implements Vie
         tv_confirm.setOnClickListener(this);
         calendarView = (CalendarView) findViewById(R.id.calendar);
         calendarView.init();
-        DateBean d = calendarView.getDateInit();
+        DateBean d = calendarView.getSingleDate();
         dateStr = d.getSolar()[0] + "-" + d.getSolar()[1] + "-" + d.getSolar()[2];
         title.setText(dateStr);
         dateStr1 = d.getSolar()[0] + "-" + d.getSolar()[1];
@@ -98,10 +98,10 @@ public abstract class CalendarControlBouncedDialog extends Dialog implements Vie
 //        });
 
         //日期点击回调
-        calendarView.setOnItemClickListener(new OnMonthItemClickListener() {
+        calendarView.setOnSingleChooseListener(new OnSingleChooseListener() {
             @Override
-            public void onMonthItemClick(View view, DateBean date) {
-                dateStr = date.getSolar()[0] + "-" + date.getSolar()[1] + "-" + date.getSolar()[2];
+            public void onSingleChoose(View view, DateBean dateBean) {
+                dateStr = dateBean.getSolar()[0] + "-" + dateBean.getSolar()[1] + "-" + dateBean.getSolar()[2];
             }
         });
 

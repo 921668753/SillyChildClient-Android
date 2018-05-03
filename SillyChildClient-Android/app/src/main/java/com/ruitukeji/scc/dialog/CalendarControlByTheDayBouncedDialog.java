@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.ViewInject;
-import com.othershe.calendarview.CalendarView;
-import com.othershe.calendarview.DateBean;
-import com.othershe.calendarview.listener.OnMonthItemChooseListener;
+import com.othershe.calendarview.bean.DateBean;
+import com.othershe.calendarview.listener.OnMultiChooseListener;
 import com.othershe.calendarview.listener.OnPagerChangeListener;
+import com.othershe.calendarview.weiget.CalendarView;
 import com.ruitukeji.scc.R;
 import com.ruitukeji.scc.entity.CalendarControlDateBean;
 import com.ruitukeji.scc.utils.DataUtil;
@@ -89,9 +89,9 @@ public abstract class CalendarControlByTheDayBouncedDialog extends Dialog implem
         calendarControlDateBean.setDateTime(new Date().getTime() / 1000);
         timeList(calendarControlDateBean);
 //       / calendarView.setDateInit
-        calendarView.setOnMonthItemChooseListener(new OnMonthItemChooseListener() {
+        calendarView.setOnMultiChooseListener(new OnMultiChooseListener() {
             @Override
-            public void onMonthItemChoose(View view, DateBean date, boolean flag) {
+            public void onMultiChoose(View view, DateBean date, boolean flag) {
                 String d = null;
                 if (date.getSolar()[1] < 10 & date.getSolar()[2] < 10) {
                     d = date.getSolar()[0] + "-0" + date.getSolar()[1] + "-0" + date.getSolar()[2];

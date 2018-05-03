@@ -41,15 +41,14 @@
 
         </RelativeLayout>
 
-        <com.othershe.calendarview.WeekView
+        <com.othershe.calendarview.weiget.WeekView
             android:layout_width="match_parent"
             android:layout_height="35dp" />
 
-        <com.othershe.calendarview.CalendarView
+        <com.othershe.calendarview.weiget.CalendarView
             android:id="@+id/calendar"
             style="@style/MatchWrap"
             android:layout_margin="@dimen/dimen10"
-            calendarview:disable_before="true"
             calendarview:show_lunar="false" />
 
         <TextView style="@style/DividerWidth" />
