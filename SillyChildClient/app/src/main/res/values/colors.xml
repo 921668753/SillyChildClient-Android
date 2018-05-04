@@ -15,6 +15,12 @@
     <color name="dividercolors1">#cccccc</color>
     <color name="dividercolors2">#e8e8e8</color>
 
+
+    <!--引导页-->
+    <color name="immediatelyColor">#40ffffff</color>
+    <color name="fFFFFFColors">#FFFFFF</color>
+
+
     <!--登录-->
     <color name="textColor">#333333</color>
     <color name="grayColors">#888888</color>

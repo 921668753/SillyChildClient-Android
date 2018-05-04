@@ -44,36 +44,8 @@ public class GuideViewActivity extends BaseActivity {
             @Override
             public void onClickEnterOrSkip() {
                 skipActivity(aty, MainActivity.class);
-//                startActivity(new Intent(GuideViewActivity.this, MainActivity.class));
-//                finish();
             }
         });
-//        mForegroundBanner.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                if (position == mForegroundBanner.getItemCount() - 2) {
-//                    ViewCompat.setAlpha(mEnterBtn, positionOffset);
-//                    ViewCompat.setAlpha(mSkipTv, 1.0f - positionOffset);
-//
-//                    if (positionOffset > 0.5f) {
-//                        mEnterBtn.setVisibility(View.VISIBLE);
-//                        mSkipTv.setVisibility(View.GONE);
-//
-//                    } else {
-//                        mEnterBtn.setVisibility(View.GONE);
-//                        mSkipTv.setVisibility(View.VISIBLE);
-//                    }
-//                } else if (position == mForegroundBanner.getItemCount() - 1) {
-//                    mSkipTv.setVisibility(View.GONE);
-//                    mEnterBtn.setVisibility(View.VISIBLE);
-//                    ViewCompat.setAlpha(mEnterBtn, 1.0f);
-//                } else {
-//                    mSkipTv.setVisibility(View.VISIBLE);
-//                    ViewCompat.setAlpha(mSkipTv, 1.0f);
-//                    mEnterBtn.setVisibility(View.GONE);
-//                }
-//            }
-//        });
     }
 
     private void processLogic() {
@@ -88,13 +60,6 @@ public class GuideViewActivity extends BaseActivity {
         });
         mForegroundBanner.setData(Arrays.asList(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher), null);
 
-
-        // 初始化方式2：通过直接传入视图集合的方式初始化
-//        List<View> views = new ArrayList<>();
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_1));
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_2));
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_3));
-//        mForegroundBanner.setData(views);
     }
 
     @Override

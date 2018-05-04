@@ -102,16 +102,16 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 //        startService(new Intent(aty, CommonService.class));
         boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "firstOpen", true);
         Intent jumpIntent = new Intent();
-//        if (isFirst) {
-//            PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
-//            jumpIntent.setClass(this, GuideViewActivity.class);
-//        } else {
-        jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        jumpIntent.setAction("android.intent.action.MAIN");
-        jumpIntent.addCategory("android.intent.category.LAUNCHER");
-        jumpIntent.setClass(this, MainActivity.class);
-        jumpIntent.putExtra("isShow", isShow);
-        //    }
+        if (true) {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
+            jumpIntent.setClass(this, GuideViewActivity.class);
+        } else {
+            jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            jumpIntent.setAction("android.intent.action.MAIN");
+            jumpIntent.addCategory("android.intent.category.LAUNCHER");
+            jumpIntent.setClass(this, MainActivity.class);
+            jumpIntent.putExtra("isShow", isShow);
+        }
         skipActivity(aty, jumpIntent);
         overridePendingTransition(0, 0);
     }
@@ -120,9 +120,9 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     @AfterPermissionGranted(NumericConstants.READ_AND_WRITE_CODE)
     public void readAndWriteTask() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};;
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Have permissions, do the thing!
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
@@ -149,8 +149,6 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
@@ -242,7 +240,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", location.getCity());
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "location", location.getLongitude() + "," + location.getLatitude());
                 Log.d("tag111", location.getCity());
-              //  jumpTo();
+                //  jumpTo();
             }
         }
 
@@ -256,7 +254,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
          */
         public void onLocDiagnosticMessage(int locType, int diagnosticType, String diagnosticMessage) {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "location", "");
-           // jumpTo();
+            // jumpTo();
             Log.d("tag111", "000000");
             if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_BETTER_OPEN_GPS) {
                 //建议打开GPS
