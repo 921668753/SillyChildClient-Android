@@ -110,15 +110,7 @@
 
     <!--引导页-->
     <string name="experienceImmediately">立即体验</string>
-
-
-
-
-
-
-
-
-
+    <string name="notOpenPositionSwitchClose">本应用需要结合定位功能使用，请点击按钮关闭应用，去打开定位开关后，重启应用即可正常使用</string>
 
     <!--主界面-->
     <string name="homePage">首页</string>

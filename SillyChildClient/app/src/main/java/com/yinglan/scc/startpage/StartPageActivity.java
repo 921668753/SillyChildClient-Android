@@ -14,19 +14,16 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.common.cklibrary.common.StringConstants;
-import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.kymjs.okhttp3.OkHttpStack;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.http.RequestQueue;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.dialog.VIPPermissionsDialog;
 import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.utils.activity.BaseInstrumentedActivity;
-
 
 import java.util.List;
 
@@ -102,7 +99,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 //        startService(new Intent(aty, CommonService.class));
         boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "firstOpen", true);
         Intent jumpIntent = new Intent();
-        if (true) {
+        if (isFirst) {
             PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
             jumpIntent.setClass(this, GuideViewActivity.class);
         } else {
@@ -122,7 +119,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE,
                 Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};;
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Have permissions, do the thing!
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
@@ -130,15 +127,16 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
             try {
                 if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     // 未打开位置开关，可能导致定位失败或定位不准，提示用户或做相应处理
-                    ViewInject.toast(getString(R.string.notOpenPositionSwitch));
+                    doFinishDialog(getString(R.string.notOpenPositionSwitchClose));
                     return;
                 }
             } catch (Exception e) {
-                ViewInject.toast(getString(R.string.notOpenPositionSwitch));
+                doFinishDialog(getString(R.string.notOpenPositionSwitchClose));
                 return;
             }
             PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", "");
-            ((StartPageContract.Presenter) mPresenter).getSystemMessage();
+            jumpTo(true);
+//            ((StartPageContract.Presenter) mPresenter).getSystemMessage();
 //            ((StartPageContract.Presenter) mPresenter).getAppConfig();
         } else {
             // Ask for both permissions
@@ -149,6 +147,8 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
@@ -161,10 +161,9 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Log.d("tag", "onPermissionsDenied:" + requestCode + ":" + perms.size());
         if (requestCode == NumericConstants.READ_AND_WRITE_CODE) {
-            ViewInject.toast(getString(R.string.sdPermission));
-            finish();
+            doFinishDialog(getString(R.string.sdPermission));
         } else if (requestCode == NumericConstants.LOCATION_CODE) {
-            ViewInject.toast(aty.getString(R.string.locationRelatedPermission));
+            doFinishDialog(getString(R.string.locationRelatedPermission));
         }
     }
 
@@ -303,5 +302,18 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 //        mLocationClient.unRegisterLocationListener(myListener); //注销掉监听
 //        mLocationClient.stop(); //停止定位服务
 //        myListener = null;
+    }
+
+    private void doFinishDialog(String content) {
+        VIPPermissionsDialog dialog = new VIPPermissionsDialog(this) {
+            @Override
+            public void doAction() {
+                finish();
+            }
+        };
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        dialog.setContent(content);
     }
 }
