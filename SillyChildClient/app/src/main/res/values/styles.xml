@@ -46,12 +46,12 @@
     <!--分割线-->
     <style name="DividerWidth">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_height">@dimen/dimen1</item>
         <item name="android:background">@color/dividercolors2</item>
     </style>
 
     <style name="DividerHeight">
-        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_width">@dimen/dimen1</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/dividercolors2</item>
     </style>
@@ -61,11 +61,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/titlebar_height</item>
         <item name="android:background">@color/whiteColors</item>
-        <item name="bgatitlebar_leftAndRightTextColor">@color/colorAccent</item>
-        <item name="bgatitlebar_leftAndRightTextSize">@dimen/textsize16</item>
-        <item name="bgatitlebar_titleTextColor">@color/textColor</item>
-        <item name="bgatitlebar_titleTextSize">@dimen/textsize18</item>
+        <item name="bgatitlebar_leftAndRightTextColor">@color/textColor</item>
+        <item name="bgatitlebar_leftAndRightTextSize">@dimen/textsize15</item>
+        <item name="bgatitlebar_titleTextColor">@color/titletextcolors</item>
+        <item name="bgatitlebar_titleTextSize">@dimen/textsize17</item>
         <item name="bgatitlebar_rightMaxWidth">@dimen/dimen150</item>
+        <item name="bgatitlebar_isTitleTextBold ">false</item>
         <item name="bgatitlebar_leftAndRightPadding">@dimen/dimen15</item>
     </style>
 
@@ -73,6 +74,21 @@
     <style name="Match44">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen44</item>
+    </style>
+
+    <style name="Match45">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen45</item>
+    </style>
+
+    <style name="Image20">
+        <item name="android:layout_width">@dimen/dimen20</item>
+        <item name="android:layout_height">@dimen/dimen20</item>
+    </style>
+
+    <style name="Image40">
+        <item name="android:layout_width">@dimen/dimen40</item>
+        <item name="android:layout_height">@dimen/dimen40</item>
     </style>
 
     <style name="MyDialog" parent="@android:style/Theme.Dialog">

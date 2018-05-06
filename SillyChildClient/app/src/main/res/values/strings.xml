@@ -115,6 +115,7 @@
     <!--主界面-->
     <string name="homePage">首页</string>
     <string name="message">消息</string>
+    <string name="activity">活动</string>
     <string name="mall">商城</string>
     <string name="trip">出行</string>
     <string name="mine">我的</string>
@@ -122,6 +123,20 @@
 
     <!--首页-->
     <string name="sillyChild">傻孩子</string>
+    <string name="airportPickup">接机</string>
+    <string name="boutiqueLine">精品线路</string>
+    <string name="privateOrdering">私人订制</string>
+    <string name="byTheDay">按天包车</string>
+    <string name="airportDropOff">送机</string>
+    <string name="hotRegion">热门地区</string>
+    <string name="moreCities">更多城市</string>
+    <string name="moreLines">更多线路</string>
+    <string name="circuitProfileSummary">线路简介/摘要</string>
+
+
+
+
+
     <string name="travelCity">出行城市</string>
     <string name="localTalent">当地达人</string>
     <string name="popularStrategy">热门攻略</string>
@@ -256,7 +271,7 @@
     <string name="quickReservation">快速预订</string>
     <string name="privateOrder">私人定制</string>
     <string name="fillInformation1">填写信息</string>
-    <string name="byTheDay">按天包车游</string>
+
     <string name="transfer">接送机</string>
     <string name="singleTransport">单次接送</string>
     <string name="selectLine">精选线路</string>
@@ -412,8 +427,8 @@
     <string name="viewDetails">查看详情</string>
 
     <!--首页   接送机-->
-    <string name="airportPickup">接机</string>
-    <string name="airportDropOff">送机</string>
+
+
     <string name="pleaseSelectModel">请选择车型</string>
     <string name="greateThanCurrentTime">预约的时间要大于当前时间</string>
     <string name="pleaseAddLuggage">请添加行李个数</string>
@@ -905,7 +920,7 @@
     <string name="piece30">件30寸</string>
     <string name="pickOrder">接机订单</string>
     <string name="sendOrder">送机订单</string>
-    <string name="privateOrdering">私人订制</string>
+
     <string name="detailsLine">线路详情</string>
     <string name="LineOrder">线路订单</string>
     <string name="noHave">无</string>

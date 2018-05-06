@@ -40,6 +40,15 @@
     <color name="lightYellowColor">#efcf82</color>
     <color name="userShapeColors">#ff4551</color>
 
+    <!--首页-->
+    <color name="translucent">#50000000</color>
+    <color name="c1C1C1Colors">#C1C1C1</color>
+
+
+
+
+
+
     <!--商城-->
     <color name="lightRedColors">#ff4e4e</color>
     <color name="redColors">#ff2e29</color>
