@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MatchWrap"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WrapWrap"
+    android:layout_marginBottom="@dimen/dimen15"
     android:background="@color/whiteColors"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen15">
 
     <ImageView
-        android:layout_width="@dimen/dimen40"
-        android:layout_height="@dimen/dimen40"
-        android:layout_marginTop="@dimen/dimen14"
+        android:layout_width="@dimen/dimen108"
+        android:layout_height="@dimen/dimen75"
+        android:scaleType="fitXY"
         android:src="@mipmap/placeholderfigure1" />
 
     <TextView
-        style="@style/MatchWrap"
+        android:layout_width="@dimen/dimen65"
+        android:layout_height="@dimen/dimen25"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen25"
+        android:background="@color/partTranslucent"
         android:gravity="center"
-        android:paddingTop="@dimen/dimen9"
-        android:textColor="@color/tabColors"
-        android:textSize="@dimen/textsize12" />
-</LinearLayout>
+        android:text="面膜"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize13" />
+
+</RelativeLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:background="@drawable/shape_mallhomepage"
+    android:orientation="vertical">
+
+    <ImageView
+        style="@style/MatchWrap"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <TextView
+        style="@style/MatchWrap"
+        android:padding="@dimen/dimen10"
+        android:text="兰蔻菁纯柔润丝缎唇膏口红"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize12" />
+
+    <TextView
+        style="@style/MatchWrap"
+        android:paddingBottom="@dimen/dimen10"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10"
+        android:text="时髦黑金配色 持久显色滋润"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize12" />
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:maxWidth="@dimen/dimen90"
+            android:paddingLeft="@dimen/dimen10"
+            android:singleLine="true"
+            android:text="270.000000000000000000000000000000"
+            android:textColor="@color/fF0000Colors"
+            android:textSize="@dimen/textsize12" />
+
+
+        <TextView
+            style="@style/AutoWrap"
+            android:gravity="right"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:singleLine="true"
+            android:text="兰蔻"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize12" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen9"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen9">
+
+        <TextView
+            android:layout_width="@dimen/dimen22"
+            android:layout_height="@dimen/dimen11"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:background="@drawable/shape_proprietary"
+            android:gravity="center"
+            android:text="@string/proprietary"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize9" />
+
+
+        <TextView
+            android:layout_width="@dimen/dimen42"
+            android:layout_height="@dimen/dimen11"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:background="@drawable/shape_timedspecials"
+            android:gravity="center"
+            android:text="@string/timedSpecials"
+            android:textColor="@color/fF0000Colors"
+            android:textSize="@dimen/textsize9" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

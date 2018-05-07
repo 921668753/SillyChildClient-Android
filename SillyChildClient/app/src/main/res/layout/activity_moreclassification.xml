@@ -18,8 +18,7 @@
         <com.common.cklibrary.utils.myview.ChildLiistView
             android:id="@+id/lv_moreClassification"
             style="@style/AutoWrap"
-            android:divider="@color/background"
-            android:dividerHeight="@dimen/dimen1"
+            android:divider="@color/whiteColors"
             android:overScrollMode="never"
             android:scrollbars="none"
             tools:listitem="@layout/item_moreclassification" />
@@ -31,12 +30,14 @@
             android:layout_height="match_parent"
             android:layout_weight="3.5"
             android:background="@android:color/white"
-            android:horizontalSpacing="0dp"
-            android:numColumns="3"
+            android:horizontalSpacing="15dp"
+            android:numColumns="2"
             android:overScrollMode="never"
-            android:paddingTop="@dimen/dimen40"
+            android:paddingLeft="@dimen/dimen35"
+            android:paddingRight="@dimen/dimen25"
+            android:paddingTop="@dimen/dimen15"
             android:scrollbars="none"
-            android:verticalSpacing="10dp"
+            android:verticalSpacing="0dp"
             tools:listitem="@layout/item_classification" />
 
 

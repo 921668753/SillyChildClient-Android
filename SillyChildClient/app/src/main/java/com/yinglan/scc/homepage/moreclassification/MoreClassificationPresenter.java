@@ -1,8 +1,9 @@
-package com.yinglan.scc.mall;
+package com.yinglan.scc.homepage.moreclassification;
 
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.yinglan.scc.homepage.moreclassification.MoreClassificationContract;
 import com.yinglan.scc.retrofit.RequestClient;
 
 /**

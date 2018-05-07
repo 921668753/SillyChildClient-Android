@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchWrap"
-    android:background="@android:color/white"
+    android:background="@color/f1F4F6Colors"
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="@dimen/dimen3"
-        android:layout_height="@dimen/dimen26"
+        android:layout_width="@dimen/dimen2"
+        android:layout_height="@dimen/dimen22"
         android:layout_marginBottom="@dimen/dimen12"
         android:layout_marginTop="@dimen/dimen12"
         android:background="@color/greenColors" />
 
     <TextView
-      style="@style/MatchMatch"
-       android:gravity="center"
+        style="@style/MatchMatch"
+        android:gravity="center"
+        android:text="护肤彩妆"
         android:textColor="@color/greenColors"
-        android:textSize="@dimen/textsize15"
-        android:text="护肤彩妆"/>
+        android:textSize="@dimen/textsize13" />
 
 </LinearLayout>

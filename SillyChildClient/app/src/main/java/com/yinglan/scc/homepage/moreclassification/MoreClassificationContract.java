@@ -1,4 +1,4 @@
-package com.yinglan.scc.mall;
+package com.yinglan.scc.homepage.moreclassification;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;

@@ -137,10 +137,6 @@
     <string name="moreLines">更多线路</string>
     <string name="circuitProfileSummary">线路简介/摘要</string>
 
-
-
-
-
     <string name="travelCity">出行城市</string>
     <string name="localTalent">当地达人</string>
     <string name="popularStrategy">热门攻略</string>
@@ -562,6 +558,23 @@
 
     <!--商城-->
     <string name="checkProduct">输入您正在找的商品</string>
+
+    <string name="cosmetics">护肤彩妆</string>
+    <string name="personalCare">个人护理</string>
+    <string name="maternalAndInfant">母婴</string>
+    <string name="bagAccessories">包包配饰</string>
+    <string name="clothingAndShoes">服装鞋帽</string>
+    <string name="homeApplianceDigital">家电数码</string>
+    <string name="household">家居</string>
+    <string name="beautyCare">美颜保健</string>
+    <string name="food">美食</string>
+    <string name="more">更多</string>
+
+    <string name="proprietary">自营</string>
+    <string name="timedSpecials">限时特价</string>
+
+
+
     <string name="goodParameters">商品参数</string>
     <string name="userEvaluation">用户评价</string>
     <string name="leftbracket">（</string>
