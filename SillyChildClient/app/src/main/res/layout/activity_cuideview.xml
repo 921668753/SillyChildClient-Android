@@ -24,7 +24,7 @@
         android:clickable="true"
         android:padding="4dp"
         android:text="跳过 >"
-        android:textColor="@color/greenColors"
+        android:textColor="@color/whiteColors"
         android:textSize="@dimen/textsize16" />
 
     <Button
@@ -35,9 +35,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen100"
         android:background="@drawable/shape_experienceimmediately"
-        android:text="@string/experienceImmediately"
         android:textColor="@color/fFFFFFColors"
         android:textSize="@dimen/textsize15"
         android:visibility="gone"
         tools:visibility="visible" />
+    <!--android:text="@string/experienceImmediately"-->
 </RelativeLayout>

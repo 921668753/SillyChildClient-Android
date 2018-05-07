@@ -14,7 +14,7 @@ interface RegisterContract {
          *
          * @param phone
          */
-        void postCode(String phone, String countroy_code, String postCode);
+        void postCode(String phone, String postCode);
 
         /**
          * 发送邮件验证码
@@ -26,7 +26,7 @@ interface RegisterContract {
         /**
          * 注册
          */
-        void postRegister(String phone, String type, String countroy_code, String code, String pwd, String pwd1, String recommendcode);
+        void postRegister(String phone, String code, String pwd);
 
         /**
          * 登录环信

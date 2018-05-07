@@ -27,7 +27,7 @@ import com.yinglan.scc.loginregister.LoginActivity;
 
 public class RegisterMailBoxFragment extends BaseFragment implements RegisterContract.View {
 
-    private RegisterActivity aty;
+    private RegisterActivity1 aty;
 
 
     /**
@@ -92,7 +92,7 @@ public class RegisterMailBoxFragment extends BaseFragment implements RegisterCon
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (RegisterActivity) getActivity();
+        aty = (RegisterActivity1) getActivity();
         return View.inflate(aty, R.layout.fragment_registermailbox, null);
     }
 
@@ -127,7 +127,7 @@ public class RegisterMailBoxFragment extends BaseFragment implements RegisterCon
                 tv_registe.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
                 if (opt.equals("reg")) {
-                    ((RegisterContract.Presenter) mPresenter).postRegister(et_phone.getText().toString(), type, "", et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString(), et_invitationCode.getText().toString().trim());
+                  //  ((RegisterContract.Presenter) mPresenter).postRegister(et_phone.getText().toString(), type, "", et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString(), et_invitationCode.getText().toString().trim());
                 }
                 break;
             case R.id.tv_agreement:

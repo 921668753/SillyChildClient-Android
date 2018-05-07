@@ -14,7 +14,7 @@ interface ForgotPasswordContract {
          *
          * @param phone
          */
-        void postCode(String phone, String countroy_code, String postCode);
+        void postCode(String phone,  String postCode);
 
 
         /**
@@ -27,7 +27,7 @@ interface ForgotPasswordContract {
         /**
          * 重置密码请求
          */
-        void postResetpwd(String phone, String countroy_code, String code, String pwd, String pwd1);
+        void postResetpwd(String phone,  String code, String pwd, String pwd1);
 
         /**
          * 忘记密码通过邮箱

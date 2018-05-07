@@ -29,7 +29,7 @@ import com.yinglan.scc.main.MainActivity;
 
 public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPasswordContract.View {
 
-    private ForgotPasswordActivity aty;
+    private ForgotPasswordActivity1 aty;
 
     /**
      * 倒计时内部类
@@ -90,7 +90,7 @@ public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPassw
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (ForgotPasswordActivity) getActivity();
+        aty = (ForgotPasswordActivity1) getActivity();
         return View.inflate(aty, R.layout.fragment_registermailbox, null);
     }
 

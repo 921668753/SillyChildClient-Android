@@ -89,22 +89,24 @@
             android:name="com.yinglan.scc.loginregister.register.RegisterActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--登录 忘记密码-->
+        <activity
+            android:name="com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity1"
+            android:screenOrientation="portrait"></activity>
+
         <!--注册 注册协议-->
         <activity
             android:name="com.yinglan.scc.loginregister.register.RegistrationAgreementActivity"
             android:screenOrientation="portrait"></activity>
 
 
-        <!--注册 綁定账号-->
+        <!--登录 綁定账号-->
         <activity
             android:name="com.yinglan.scc.loginregister.bindingaccount.BindingAccountActivity"
             android:screenOrientation="portrait"></activity>
 
 
-        <!-- 忘记密码-->
-        <activity
-            android:name="com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity"
-            android:screenOrientation="portrait"></activity>
+
 
         <!--主界面-->
         <activity

@@ -37,7 +37,7 @@ import com.yinglan.scc.entity.UploadImageBean;
 import com.yinglan.scc.entity.UserInfoBean;
 import com.yinglan.scc.homepage.addressselection.AddressSelectionActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity;
+import com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity1;
 import com.yinglan.scc.mine.personaldata.bindemail.BindEmailActivity;
 import com.yinglan.scc.mine.personaldata.setnickname.SetNickNameActivity;
 import com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity;
@@ -262,7 +262,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 break;
             case R.id.ll_personaldataxgmm:
                 updataSHZCode();
-                jumpintent=new Intent(this,ForgotPasswordActivity.class);
+                jumpintent=new Intent(this,ForgotPasswordActivity1.class);
                 jumpintent.putExtra("title",getString(R.string.changepassword));
                 showActivity(this,jumpintent);
                 break;

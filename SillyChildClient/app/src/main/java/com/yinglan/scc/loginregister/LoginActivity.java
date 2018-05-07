@@ -22,7 +22,7 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.LoginBean;
 import com.yinglan.scc.loginregister.bindingaccount.BindingAccountActivity;
-import com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity;
+import com.yinglan.scc.loginregister.forgotpassword.RetrievePasswordActivity;
 import com.yinglan.scc.loginregister.register.RegisterActivity;
 import com.yinglan.scc.mine.fansattention.FansAttentionActivity;
 import com.yinglan.scc.mine.fansattention.FansInfoActivity;
@@ -35,7 +35,10 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
 
-import cn.bingoogolapple.titlebar.BGATitleBar;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
  * 登录
@@ -43,22 +46,32 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
-    private LoginContract.Presenter mPresenter;
-    /**
-     * 标题
-     */
-    @BindView(id = R.id.titlebar)
-    private BGATitleBar titlebar;
+
     /**
      * 账号
      */
     @BindView(id = R.id.et_accountNumber)
     private EditText et_accountNumber;
+
+    /**
+     * 取消
+     */
+    @BindView(id = R.id.img_quxiao, click = true)
+    private ImageView img_quxiao;
+
     /**
      * 密码
      */
     @BindView(id = R.id.et_pwd)
     private EditText et_pwd;
+    /**
+     * 取消
+     */
+    @BindView(id = R.id.img_quxiao1, click = true)
+    private ImageView img_quxiao1;
+    @BindView(id = R.id.img_yanjing, click = true)
+    private ImageView img_yanjing;
+
     /**
      * 忘记密码
      */
@@ -72,15 +85,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     /**
      * 注册
      */
-    @BindView(id = R.id.tv_register, click = true)
-    private TextView tv_register;
-    /**
-     * 取消
-     */
-    @BindView(id = R.id.img_quxiao, click = true)
-    private ImageView img_quxiao;
-    @BindView(id = R.id.img_quxiao1, click = true)
-    private ImageView img_quxiao1;
+    @BindView(id = R.id.ll_register, click = true)
+    private LinearLayout ll_register;
 
     /**
      * 微信
@@ -119,37 +125,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        //   tv_login.setFocusable(false);
         tv_login.setClickable(false);//不可点击
         changeInputView(et_accountNumber, img_quxiao);
         changeInputView(et_pwd, img_quxiao1);
-
     }
 
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-//        ActivityTitleUtils.initToolbar(aty, getString(R.string.login), true, R.id.titlebar);
-        titlebar.setTitleText(getString(R.string.login));
-        titlebar.setRightText("");
-        titlebar.setRightDrawable(null);
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                KJActivityStack.create().finishActivity(MyReleaseActivity.class);
-                KJActivityStack.create().finishActivity(SharingCeremonyActivity.class);
-                KJActivityStack.create().finishActivity(FansInfoActivity.class);
-                KJActivityStack.create().finishActivity(FansAttentionActivity.class);
-                KJActivityStack.create().finishActivity(MyOrderActivity.class);
-                finish();
-            }
-        };
-        titlebar.setDelegate(simpleDelegate);
-
-    }
 
     /**
      * view监听事件
@@ -162,11 +142,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
         switch (v.getId()) {
             case R.id.tv_forgotPassword:
-                showActivity(aty, ForgotPasswordActivity.class);
+                showActivity(aty, RetrievePasswordActivity.class);
                 break;
             case R.id.tv_login:
                 showLoadingDialog(getString(R.string.loggingLoad));
-                mPresenter.postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
+                ((LoginContract.Presenter) mPresenter).postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
                 break;
             case R.id.img_quxiao:
                 et_accountNumber.setText("");
@@ -174,17 +154,26 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.img_quxiao1:
                 et_pwd.setText("");
                 break;
-            case R.id.tv_register:
+            case R.id.img_yanjing:
+                if (et_pwd.getInputType() == 0x00000081) {
+                    img_yanjing.setImageResource(R.mipmap.yanjing1);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    img_yanjing.setImageResource(R.mipmap.yanjing);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                et_pwd.setSelection(et_pwd.getText().toString().trim().length());
+                et_pwd.requestFocus();
+                break;
+            case R.id.ll_register:
                 showActivity(aty, RegisterActivity.class);
                 break;
-
             case R.id.ll_loginweixin:
                 thirdLogin(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.ll_loginqq:
                 thirdLogin(SHARE_MEDIA.QQ);
                 break;
-
             default:
                 break;
         }
@@ -387,7 +376,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             }
             nickname = map.get("name");
             head_pic = map.get("iconurl");
-            mPresenter.postThirdToLogin(openid, from, nickname, head_pic, sex);
+            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
         }
 
         /**

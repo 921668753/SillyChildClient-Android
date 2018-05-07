@@ -1,16 +1,12 @@
 package com.yinglan.scc.loginregister.forgotpassword;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.common.cklibrary.common.BaseFragment;
+import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
@@ -21,55 +17,28 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.entity.LoginBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.loginregister.SelectCountryActivity;
-import com.yinglan.scc.loginregister.register.RegistrationAgreementActivity;
 import com.yinglan.scc.main.MainActivity;
 
-import static android.app.Activity.RESULT_OK;
 
 /**
- * 手机号注册
+ * 找回密码
  * Created by Admin on 2017/8/10.
  */
 
-public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswordContract.View {
+public class RetrievePasswordActivity extends BaseActivity implements ForgotPasswordContract.View {
 
-    private ForgotPasswordActivity aty;
 
     /**
      * 倒计时内部类
      */
     private TimeCount time;
 
-    /**
-     * 邀请码
-     */
-    @BindView(id = R.id.ll_invitationCode)
-    private LinearLayout ll_invitationCode;
-
-    /**
-     * 注册协议
-     */
-    @BindView(id = R.id.ll_agreement)
-    private LinearLayout ll_agreement;
-
-    @BindView(id = R.id.tv_agreement, click = true)
-    private TextView tv_agreement;
-
-    /**
-     * 国码
-     */
-    @BindView(id = R.id.ll_areaCode, click = true)
-    private LinearLayout ll_areaCode;
-
-    @BindView(id = R.id.tv_areaCode)
-    private TextView tv_areaCode;
-
 
     /**
      * 手机号
      */
-    @BindView(id = R.id.et_phone)
-    private EditText et_phone;
+    @BindView(id = R.id.et_accountNumber)
+    private EditText et_accountNumber;
     /**
      * 验证码
      */
@@ -91,22 +60,20 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
     @BindView(id = R.id.et_pwd1)
     private EditText et_pwd1;
     /**
-     * 注册
+     * 确定
      */
-    @BindView(id = R.id.tv_registe, click = true)
-    private TextView tv_registe;
+    @BindView(id = R.id.tv_determine, click = true)
+    private TextView tv_determine;
 
     /**
      * opt	String
      * 验证码类型 reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */
     private String opt = "resetpwd";
-    private String areaCode = "86";
 
     @Override
-    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (ForgotPasswordActivity) getActivity();
-        return View.inflate(aty, R.layout.fragment_registerphone, null);
+    public void setRootView() {
+        setContentView(R.layout.activity_retrievepassword);
     }
 
     /**
@@ -119,40 +86,21 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
     }
 
-    /**
-     * 渲染view
-     */
-    @Override
-    protected void initWidget(View parentView) {
-        super.initWidget(parentView);
-        ll_invitationCode.setVisibility(View.GONE);
-        ll_agreement.setVisibility(View.GONE);
-        tv_registe.setText(getString(R.string.resetPassword));
-    }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_areaCode:
-                Intent intent = new Intent(aty, SelectCountryActivity.class);
-                startActivityForResult(intent, 1);
-//                aty.showActivity(aty, intent);
-                break;
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
-                ((ForgotPasswordContract.Presenter) mPresenter).postCode(et_phone.getText().toString(), areaCode, opt);
+                ((ForgotPasswordContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), opt);
                 break;
             case R.id.tv_registe:
-                tv_registe.setEnabled(false);
+                tv_determine.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
                 if (opt.equals("resetpwd")) {
-                    ((ForgotPasswordContract.Presenter) mPresenter).postResetpwd(et_phone.getText().toString(), areaCode, et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
+                    ((ForgotPasswordContract.Presenter) mPresenter).postResetpwd(et_accountNumber.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
                 }
-                break;
-            case R.id.tv_agreement:
-                // 注册协议
-                aty.showActivity(aty, RegistrationAgreementActivity.class);
                 break;
             default:
                 break;
@@ -188,7 +136,7 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
     @Override
     public void getSuccess(String s, int flag) {
         dismissLoadingDialog();
-        tv_registe.setEnabled(true);
+        tv_determine.setEnabled(true);
         if (flag == 0) {
             ViewInject.toast(getString(R.string.testget));
             time.start();
@@ -205,7 +153,7 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
             ViewInject.toast(getString(R.string.resetpwd));
             aty.finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class,MainActivity.class);
+            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
 
         }
     }
@@ -214,7 +162,7 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         ViewInject.toast(msg);
-        tv_registe.setEnabled(true);
+        tv_determine.setEnabled(true);
     }
 
 
@@ -236,8 +184,8 @@ public class RetrievePhoneFragment extends BaseFragment implements ForgotPasswor
         if (requestCode == 1 && resultCode == RESULT_OK) {// 如果等于1
             // 说明是我们的那次请求
             // 目的：区分请求，不同的请求要做不同的处理
-            areaCode = data.getStringExtra("areaCode");
-            tv_areaCode.setText("+" + areaCode);
+//            areaCode = data.getStringExtra("areaCode");
+//            tv_areaCode.setText("+" + areaCode);
         }
 
     }

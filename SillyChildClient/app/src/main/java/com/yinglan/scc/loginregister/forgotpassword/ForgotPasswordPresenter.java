@@ -24,7 +24,7 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     }
 
     @Override
-    public void postCode(String phone, String countroy_code, String opt) {
+    public void postCode(String phone, String opt) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
@@ -33,13 +33,8 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
-        if (countroy_code.equals("86") && phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("mobile", phone);
-        httpParams.put("countroy_code", countroy_code);
         String codeI = String.valueOf(System.currentTimeMillis());
         String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
         httpParams.put("codeId", codeId);
@@ -70,7 +65,7 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
             return;
         }
-      //  String regex = "^[A-Za-z]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";
+        //  String regex = "^[A-Za-z]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";
         if (!AccountValidatorUtil.isEmail(mail)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
             return;
@@ -92,19 +87,16 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     }
 
     @Override
-    public void postResetpwd(String phone, String countroy_code, String code, String pwd, String pwd1) {
+    public void postResetpwd(String phone, String code, String pwd, String pwd1) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() < 5) {
+        if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
-        if (countroy_code.equals("86") && phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
+
         if (StringUtils.isEmpty(code)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
             return;

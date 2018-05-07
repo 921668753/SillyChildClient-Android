@@ -29,7 +29,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void postCode(String phone, String countroy_code, String opt) {
+    public void postCode(String phone, String opt) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
@@ -38,14 +38,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
-        if (countroy_code.equals("86") && phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         // Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("mobile", phone);
-        httpParams.put("countroy_code", countroy_code);
         String codeI = String.valueOf(System.currentTimeMillis());
         String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
         httpParams.put("codeId", codeId);
@@ -99,62 +94,47 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void postRegister(String phone, String type, String countroy_code, String code, String pwd, String pwd1, String recommendcode) {
-        if (type.equals("phone")) {
-            if (StringUtils.isEmpty(phone)) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
-                return;
-            }
-            if (phone.length() < 5) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-                return;
-            }
-            if (countroy_code.equals("86") && phone.length() != 11) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-                return;
-            }
-        } else {
-            if (StringUtils.isEmpty(phone)) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
-                return;
-            }
-            if (phone.length() < 5) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
-                return;
-            }
-            if (!AccountValidatorUtil.isEmail(phone)) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
-                return;
-            }
-        }
-        if (StringUtils.isEmpty(code)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
+    public void postRegister(String phone, String code, String pwd) {
+//        if (type.equals("phone")) {
+        if (StringUtils.isEmpty(phone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
+        if (phone.length() != 11) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+            return;
+        }
+//        } else {
+//            if (StringUtils.isEmpty(phone)) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
+//                return;
+//            }
+//            if (phone.length() < 5) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
+//                return;
+//            }
+//            if (!AccountValidatorUtil.isEmail(phone)) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
+//                return;
+//            }
+        //  }
         if (StringUtils.isEmpty(pwd)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(pwd1)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText3), 0);
             return;
         }
         if (pwd.length() < 6 || pwd.length() > 20) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText1), 0);
             return;
         }
-        if (!pwd.equals(pwd1)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.passwordMismatch), 0);
+        if (StringUtils.isEmpty(code)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //  Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("username", phone);
-        httpParams.put("type", type);
         httpParams.put("code", code);
-        httpParams.put("apply_code", recommendcode);
         httpParams.put("password", CipherUtils.md5("TPSHOP" + pwd));
-        httpParams.put("countroy_code", countroy_code);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postRegister(httpParams, new ResponseListener<String>() {
