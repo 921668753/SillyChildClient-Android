@@ -208,7 +208,7 @@
                 </LinearLayout>
 
 
-                <com.common.cklibrary.utils.myview.ChildLiistView
+                <com.common.cklibrary.utils.myview.ChildListView
                     android:id="@+id/lv_dynamicsComments"
                     style="@style/MatchWrap"
                     android:layout_below="@id/ll_dynamicComments"

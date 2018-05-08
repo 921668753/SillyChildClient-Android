@@ -15,7 +15,7 @@
         style="@style/MatchMatch"
         android:orientation="horizontal">
 
-        <com.common.cklibrary.utils.myview.ChildLiistView
+        <com.common.cklibrary.utils.myview.ChildListView
             android:id="@+id/lv_moreClassification"
             style="@style/AutoWrap"
             android:divider="@color/whiteColors"

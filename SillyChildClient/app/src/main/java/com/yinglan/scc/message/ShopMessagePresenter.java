@@ -38,8 +38,9 @@ public class ShopMessagePresenter implements ShopMessageContract.Presenter {
         });
     }
 
+
     @Override
-    public void isLogin(int flag) {
+    public void isLogin() {
         RequestClient.isLogin(new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -48,7 +49,7 @@ public class ShopMessagePresenter implements ShopMessageContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 1);
             }
         });
     }

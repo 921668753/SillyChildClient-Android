@@ -539,7 +539,8 @@
     <string name="shop">店铺</string>
     <string name="login1">请登录</string>
     <string name="systemMessageDetails">消息详情</string>
-
+    <string name="interactiveMessage">互动消息</string>
+    <string name="systemMessage">系统消息</string>
 
     <!--消息    司导-->
     <string name="message_type_eval_request">[满意度邀请]</string>
@@ -558,7 +559,7 @@
 
     <!--商城-->
     <string name="checkProduct">输入您正在找的商品</string>
-
+    <string name="search">搜索</string>
     <string name="cosmetics">护肤彩妆</string>
     <string name="personalCare">个人护理</string>
     <string name="maternalAndInfant">母婴</string>
@@ -572,7 +573,6 @@
 
     <string name="proprietary">自营</string>
     <string name="timedSpecials">限时特价</string>
-
 
 
     <string name="goodParameters">商品参数</string>
@@ -590,7 +590,8 @@
     <string name="comprehensiveRanking">综合排序</string>
     <string name="salesPreferred">销量优先</string>
     <string name="pricePriority">价格优先</string>
-
+    <string name="comprehensive">综合</string>
+    <string name="sales">销量</string>
 
     <!--商城   评价-->
     <string name="revert">回复</string>
@@ -648,13 +649,14 @@
     <string name="share">分享</string>
 
     <!--主界面    我的-->
+    <string name="editData">编辑资料</string>
     <string name="fans">粉丝</string>
     <string name="follow">关注</string>
     <string name="beLike">被赞</string>
     <string name="beCollected">被收藏</string>
     <string name="myWallet">我的钱包</string>
     <string name="accountDetails">账户明细</string>
-    <string name="myShoppingCart">我的购物车</string>
+    <string name="shoppingCart">购物车</string>
     <string name="myOrder">我的订单</string>
     <string name="myRelease">我的发布</string>
     <string name="myCollection">我的收藏</string>
@@ -723,6 +725,7 @@
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>
     <string name="yourAccount">充值账号</string>
+    <string name="rechargeAmount">充值金额</string>
     <string name="money100">100元</string>
     <string name="money200">200元</string>
     <string name="money300">300元</string>
@@ -782,6 +785,7 @@
     <string name="personaData">个人资料</string>
     <string name="headPortrait">头像</string>
     <string name="nickname">昵称</string>
+    <string name="setNickname">设置昵称</string>
     <string name="save">保存</string>
     <string name="nicknamehint">请输入昵称</string>
     <string name="sillyChildNumber">傻孩子号</string>
@@ -789,6 +793,7 @@
     <string name="sillyChildNumberNoChange">您已经达到修改次数上限，已不可修改！</string>
     <string name="sillyChildNumberWords">傻孩子号最多可修改两次</string>
     <string name="gender">性别</string>
+    <string name="setSex">设置性别</string>
     <string name="birthday">生日</string>
     <string name="atRegion">地区</string>
     <string name="bindEmail">绑定邮箱</string>

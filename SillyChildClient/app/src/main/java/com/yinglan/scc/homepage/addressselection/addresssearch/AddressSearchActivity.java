@@ -16,7 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
@@ -74,7 +74,7 @@ public class AddressSearchActivity extends BaseActivity implements TextWatcher, 
     private TextView tv_divider1;
 
     @BindView(id = R.id.lv_addressSearch)
-    private ChildLiistView lv_addressSearch;
+    private ChildListView lv_addressSearch;
 
     /**
      * 错误提示页

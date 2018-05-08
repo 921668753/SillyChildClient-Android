@@ -81,9 +81,24 @@
         <item name="android:layout_height">@dimen/dimen45</item>
     </style>
 
+    <style name="Match50">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen50</item>
+    </style>
+
+    <style name="Match58">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen58</item>
+    </style>
+
     <style name="Image20">
         <item name="android:layout_width">@dimen/dimen20</item>
         <item name="android:layout_height">@dimen/dimen20</item>
+    </style>
+
+    <style name="Image812">
+        <item name="android:layout_width">@dimen/dimen8</item>
+        <item name="android:layout_height">@dimen/dimen12</item>
     </style>
 
     <style name="Image40">

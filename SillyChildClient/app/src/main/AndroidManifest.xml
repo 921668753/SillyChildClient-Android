@@ -291,6 +291,15 @@
             android:name="com.yinglan.scc.homepage.dynamics.AllDynamicsActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--首页   全部动态-->
+        <activity
+            android:name="com.yinglan.scc.homepage.goodslist.shop.ShopActivity"
+            android:screenOrientation="portrait"></activity>
+
+
+
+
+
         <!--消息   系统消息详情-->
         <activity
             android:name="com.yinglan.scc.message.SystemMessageDetailsActivity"
@@ -378,7 +387,7 @@
 
         <!--我的   我的订单 订单详情-->
         <activity
-            android:name="com.yinglan.scc.mine.myorder.orderDetails.CharterOrderDetailsActivity"
+            android:name="com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--我的   我的发布-->

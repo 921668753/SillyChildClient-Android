@@ -18,7 +18,6 @@ import com.yinglan.scc.entity.LocalTalentDetailsBean;
 import com.yinglan.scc.homepage.chartercustom.companyguide.CompanyGuideDetailsActivity;
 import com.yinglan.scc.homepage.homestaysubscribe.HomestayDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mall.ShopHomepageAllGoodsActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.jzvd.JZVideoPlayer;
@@ -124,9 +123,9 @@ public class LocalTalentDetailsActivity extends BaseActivity implements LocalTal
             case R.id.tv_shopAround:
                 //店铺详情
                 if (isShopkeepers) {
-                    Intent intent = new Intent(aty, ShopHomepageAllGoodsActivity.class);
-                    intent.putExtra("store_id", store_id);
-                    showActivity(aty, intent);
+//                    Intent intent = new Intent(aty, s.class);
+//                    intent.putExtra("store_id", store_id);
+//                    showActivity(aty, intent);
                     return;
                 }
                 ViewInject.toast(getString(R.string.notOpenedStore));

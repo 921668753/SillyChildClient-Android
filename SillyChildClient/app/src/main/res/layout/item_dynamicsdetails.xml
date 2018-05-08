@@ -86,7 +86,7 @@
             android:paddingRight="@dimen/dimen15"
             android:paddingTop="@dimen/dimen13">
 
-            <com.common.cklibrary.utils.myview.ChildLiistView
+            <com.common.cklibrary.utils.myview.ChildListView
                 android:id="@+id/lv_replies"
                 style="@style/MatchWrap"
                 android:divider="@android:color/transparent"

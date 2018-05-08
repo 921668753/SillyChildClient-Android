@@ -90,7 +90,7 @@
                 android:id="@+id/tv_divider"
                 style="@style/DividerWidth" />
 
-            <com.common.cklibrary.utils.myview.ChildLiistView
+            <com.common.cklibrary.utils.myview.ChildListView
                 android:id="@+id/lv_addressSearch"
                 style="@style/MatchWrap"
                 android:divider="@android:color/transparent"

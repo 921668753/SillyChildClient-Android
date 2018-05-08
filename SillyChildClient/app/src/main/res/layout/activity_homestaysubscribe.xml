@@ -103,7 +103,7 @@
 
             <TextView style="@style/DividerWidth" />
 
-            <com.common.cklibrary.utils.myview.ChildLiistView
+            <com.common.cklibrary.utils.myview.ChildListView
                 android:id="@+id/lv_homestaySubscribe"
                 style="@style/MatchWrap"
                 android:background="@color/whiteColors"

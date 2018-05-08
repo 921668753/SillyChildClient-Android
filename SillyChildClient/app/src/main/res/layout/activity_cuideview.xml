@@ -30,13 +30,11 @@
     <Button
         android:id="@+id/btn_guide_enter"
         android:layout_width="@dimen/dimen200"
-        android:layout_height="@dimen/dimen40"
+        android:layout_height="@dimen/dimen80"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen100"
-        android:background="@drawable/shape_experienceimmediately"
-        android:textColor="@color/fFFFFFColors"
-        android:textSize="@dimen/textsize15"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/dimen70"
         android:visibility="gone"
         tools:visibility="visible" />
     <!--android:text="@string/experienceImmediately"-->

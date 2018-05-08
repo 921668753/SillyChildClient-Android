@@ -74,7 +74,7 @@
             <View style="@style/DividerWidth"
                 android:layout_marginTop="@dimen/dimen10"/>
 
-            <com.common.cklibrary.utils.myview.ChildLiistView
+            <com.common.cklibrary.utils.myview.ChildListView
                 android:id="@+id/lv_shopgoods"
                 style="@style/MatchWrap"
                 android:overScrollMode="never"

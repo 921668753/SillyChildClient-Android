@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WrapWrap"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dimen178"
+        android:layout_height="@dimen/dimen142"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+</LinearLayout>

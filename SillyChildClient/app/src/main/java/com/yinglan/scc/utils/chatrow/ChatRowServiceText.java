@@ -16,7 +16,7 @@ import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRow;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.OnceOrderPseudoAgreementBean;
-import com.yinglan.scc.mine.myorder.orderDetails.CharterOrderDetailsActivity;
+import com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity;
 
 /**
  * 单次接送客服回复

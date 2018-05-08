@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
-import com.kymjs.common.PreferenceHelper;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.dynamics.DynamicsDetailsCommentarieViewAdapter;
@@ -101,7 +99,7 @@ public class DynamicsDetailsActivity extends BaseActivity implements DynamicsDet
 
 
     @BindView(id = R.id.lv_dynamicsComments)
-    private ChildLiistView lv_dynamicsComments;
+    private ChildListView lv_dynamicsComments;
 
 
     @BindView(id = R.id.et_writeComment)

@@ -260,18 +260,6 @@
 
         </LinearLayout>
 
-        <!--<com.common.cklibrary.utils.myview.NoScrollGridView-->
-        <!--android:id="@+id/lv_mall"-->
-        <!--style="@style/MatchWrap"-->
-        <!--android:layout_below="@id/ll_icon1"-->
-        <!--android:layout_marginTop="@dimen/dimen10"-->
-        <!--android:background="@color/whiteColors"-->
-        <!--android:horizontalSpacing="@dimen/dimen5"-->
-        <!--android:numColumns="2"-->
-        <!--android:overScrollMode="never"-->
-        <!--android:scrollbars="none"-->
-        <!--android:verticalSpacing="@dimen/dimen5"-->
-        <!--tools:listitem="@layout/item_mall" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -290,26 +278,27 @@
             android:background="@drawable/shape_search"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen5">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
-                style="@style/WrapWrap"
+                android:layout_width="@dimen/dimen14"
+                android:layout_height="@dimen/dimen14"
+                android:layout_marginLeft="@dimen/dimen15"
                 android:src="@mipmap/search" />
 
             <EditText
-                style="@style/WrapMatch"
+                style="@style/AutoMatch"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
-                android:hint="@string/checkProduct"
+                android:hint="@string/search"
                 android:maxLength="20"
                 android:minWidth="@dimen/dimen150"
                 android:paddingLeft="@dimen/dimen10"
                 android:singleLine="true"
-                android:textColorHint="@color/searchTextColors"
+                android:textColorHint="@color/hintColors"
                 android:textCursorDrawable="@drawable/shape_cursor"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize13" />
 
         </LinearLayout>
 

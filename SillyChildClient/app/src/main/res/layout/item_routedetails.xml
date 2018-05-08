@@ -33,7 +33,7 @@
     </LinearLayout>
 
 
-    <com.common.cklibrary.utils.myview.ChildLiistView
+    <com.common.cklibrary.utils.myview.ChildListView
         android:id="@+id/lv_itemRouteDetails"
         style="@style/MatchWrap"
         android:background="@android:color/white"

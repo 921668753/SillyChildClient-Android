@@ -39,6 +39,7 @@ import com.yinglan.scc.utils.GlideImageLoader;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
+ * 个人中心
  * Created by Admin on 2017/8/10.
  */
 
@@ -49,42 +50,21 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @BindView(id = R.id.mRefreshLayout, click = true)
     private BGARefreshLayout mRefreshLayout;
 
+    @BindView(id = R.id.tv_editData, click = true)
+    private TextView tv_editData;
+
     @BindView(id = R.id.iv_minetouxiang, click = true)
     private ImageView iv_minetouxiang;
 
-    @BindView(id = R.id.iv_minetype)
-    private ImageView iv_minetype;
+    @BindView(id = R.id.tv_nickname, click = true)
+    private TextView tv_nickname;
 
-    @BindView(id = R.id.tv_mineusername, click = true)
-    private TextView tv_mineusername;
 
-    @BindView(id = R.id.iv_minesexicon)
-    private ImageView iv_minesexicon;
+    @BindView(id = R.id.tv_serialNumber)
+    private TextView tv_serialNumber;
 
-    @BindView(id = R.id.tv_address)
-    private TextView tv_address;
-
-    @BindView(id = R.id.ll_fensi, click = true)
-    private LinearLayout ll_fensi;
-    @BindView(id = R.id.tv_minefsnum)
-    private TextView tv_minefsnum;
-
-    @BindView(id = R.id.ll_guanzhu, click = true)
-    private LinearLayout ll_guanzhu;
-    @BindView(id = R.id.tv_minegznum)
-    private TextView tv_minegznum;
-
-    @BindView(id = R.id.tv_minebznum)
-    private TextView tv_minebznum;
-
-    @BindView(id = R.id.tv_minebscnum)
-    private TextView tv_minebscnum;
-
-    @BindView(id = R.id.tv_minemoney, click = true)
-    private TextView tv_minemoney;
-
-    @BindView(id = R.id.ll_minewallet, click = true)
-    private LinearLayout ll_minewallet;
+    @BindView(id = R.id.tv_synopsis)
+    private TextView tv_synopsis;
 
     @BindView(id = R.id.ll_mineshopping, click = true)
     private LinearLayout ll_mineshopping;
@@ -92,8 +72,8 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @BindView(id = R.id.ll_mineorder, click = true)
     private LinearLayout ll_mineorder;
 
-    @BindView(id = R.id.ll_minerelease, click = true)
-    private LinearLayout ll_minerelease;
+    @BindView(id = R.id.ll_minewallet, click = true)
+    private LinearLayout ll_minewallet;
 
     @BindView(id = R.id.ll_minecollection, click = true)
     private LinearLayout ll_minecollection;
@@ -107,8 +87,8 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @BindView(id = R.id.ll_minesetup, click = true)
     private LinearLayout ll_minesetup;
 
-    @BindView(id = R.id.ll_minevipphone, click = true)
-    private LinearLayout ll_minevipphone;
+    @BindView(id = R.id.tv_vipEmergencyCall, click = true)
+    private TextView tv_vipEmergencyCall;
 
     private UserInfoBean userInfoBean;
     private boolean isRefreshMineFragment;
@@ -147,16 +127,13 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 ViewInject.toast(getActivity().getString(R.string.noDevelopment));
                 //   aty.showActivity(aty, MyShoppingCartActivity.class);
                 break;
-            case R.id.tv_minemoney:
             case R.id.ll_minewallet:
                 aty.showActivity(aty, MyWalletActivity.class);
                 break;
             case R.id.ll_mineorder:
                 aty.showActivity(aty, MyOrderActivity.class);
                 break;
-            case R.id.ll_minerelease:
-                aty.showActivity(aty, MyReleaseActivity.class);
-                break;
+
             case R.id.ll_minecollection:
                 aty.showActivity(aty, MyCollectionActivity.class);
                 break;
@@ -170,7 +147,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
             case R.id.ll_minesetup:
                 aty.showActivity(aty, SetUpActivity.class);
                 break;
-            case R.id.ll_minevipphone:
+            case R.id.tv_vipEmergencyCall:
                 if (userInfoBean == null) {
                     ViewInject.toast(getString(R.string.reloginPrompting));
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
@@ -201,21 +178,11 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                     aty.showActivity(aty, LoginActivity.class);
                 }
                 break;
-            case R.id.tv_mineusername:
-                if (!TextUtils.isEmpty(tv_mineusername.getText().toString()) && tv_mineusername.getText().toString().equals(getString(R.string.loginOrRegister))) {
+            case R.id.tv_nickname:
+                if (!TextUtils.isEmpty(tv_nickname.getText().toString()) && tv_nickname.getText().toString().equals(getString(R.string.loginOrRegister))) {
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
                     aty.showActivity(aty, LoginActivity.class);
                 }
-                break;
-            case R.id.ll_fensi:
-                intentjump = new Intent(aty, FansAttentionActivity.class);
-                intentjump.putExtra("chageIcon", 0);
-                aty.showActivity(aty, intentjump);
-                break;
-            case R.id.ll_guanzhu:
-                intentjump = new Intent(aty, FansAttentionActivity.class);
-                intentjump.putExtra("chageIcon", 1);
-                aty.showActivity(aty, intentjump);
                 break;
         }
     }
@@ -249,7 +216,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @Override
     public void onResume() {
         super.onResume();
-        if (aty.getChageIcon()==4){
+        if (aty.getChageIcon() == 4) {
             isReLogin = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isReLogin", false);
             if (isReLogin) {
                 initDefaultInfo();
@@ -270,12 +237,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
             if (isRefreshMineFragmentUserMoney) {
                 String user_money_fmt = PreferenceHelper.readString(aty, StringConstants.FILENAME, "user_money_fmt");
                 String user_money = PreferenceHelper.readString(aty, StringConstants.FILENAME, "user_money");
-                if (StringUtils.toDouble(user_money) != 0) {
-                    tv_minemoney.setVisibility(View.VISIBLE);
-                    tv_minemoney.setText(user_money_fmt);
-                } else {
-                    tv_minemoney.setVisibility(View.GONE);
-                }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragmentUserMoney", false);
             }
 
@@ -291,7 +252,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 
     @Override
     public void setPresenter(MineContract.Presenter presenter) {
-        mPresenter = (MinePresenter)presenter;
+        mPresenter = (MinePresenter) presenter;
     }
 
     @Override
@@ -303,52 +264,13 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
         if (userInfoBean != null && userInfoBean.getResult() != null) {
             saveUserInfo();
-            tv_mineusername.setText(userInfoBean.getResult().getNickname());
+            tv_nickname.setText(userInfoBean.getResult().getNickname());
             address = "";
             if (!TextUtils.isEmpty(userInfoBean.getResult().getCountry())) {
                 address += userInfoBean.getResult().getCountry() + "•";
             }
             if (!TextUtils.isEmpty(userInfoBean.getResult().getCity())) {
                 address += userInfoBean.getResult().getCity();
-            }
-            tv_address.setText(address);
-
-            switch (userInfoBean.getResult().getSex()) {
-                case 1:
-                    iv_minesexicon.setVisibility(View.VISIBLE);
-                    iv_minesexicon.setImageResource(R.mipmap.minenanxxx);
-                    break;
-                case 2:
-                    iv_minesexicon.setVisibility(View.VISIBLE);
-                    iv_minesexicon.setImageResource(R.mipmap.minenvxxx);
-                    break;
-                case 0:
-                    iv_minesexicon.setVisibility(View.GONE);
-                    break;
-            }
-            iv_minetype.setVisibility(View.VISIBLE);
-            switch (userInfoBean.getResult().getLevel()) {
-                case 1:
-                    iv_minetype.setImageResource(R.mipmap.minepthyxxx);
-                    break;
-                case 2:
-                    iv_minetype.setImageResource(R.mipmap.mineviphyxxx);
-                    break;
-                case 3:
-                    iv_minetype.setImageResource(R.mipmap.minezjthyxxx);
-                    break;
-                case 4:
-                    iv_minetype.setImageResource(R.mipmap.minegjhyxxx);
-                    break;
-                case 5:
-                    iv_minetype.setImageResource(R.mipmap.minecjvipxxx);
-                    break;
-                case 6:
-                    iv_minetype.setImageResource(R.mipmap.minezzvipxxx);
-                    break;
-                default:
-                    iv_minetype.setVisibility(View.INVISIBLE);
-                    break;
             }
 
             if (TextUtils.isEmpty(userInfoBean.getResult().getHead_pic())) {
@@ -359,17 +281,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 GlideImageLoader.glideLoader(aty, headpic, iv_minetouxiang, 0, R.mipmap.avatar);
             }
 
-            tv_minefsnum.setText(StringUtils.toInt(userInfoBean.getResult().getFans_num()) + "");
-            tv_minegznum.setText(StringUtils.toInt(userInfoBean.getResult().getAttention_num()) + "");
-            tv_minebznum.setText(StringUtils.toInt(userInfoBean.getResult().getGood_num()) + "");
-            tv_minebscnum.setText(StringUtils.toInt(userInfoBean.getResult().getCollection_num()) + "");
-
-            if (StringUtils.toDouble(userInfoBean.getResult().getUser_money()) != 0) {
-                tv_minemoney.setVisibility(View.VISIBLE);
-                tv_minemoney.setText(userInfoBean.getResult().getUser_money_fmt());
-            } else {
-                tv_minemoney.setVisibility(View.GONE);
-            }
         } else {
             ViewInject.toast(getString(R.string.noHaveUserInfo));
             initDefaultInfo();
@@ -402,17 +313,10 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 //            PreferenceHelper.write(context, StringConstants.FILENAME, "refreshToken", "");
         PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
         PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-        tv_mineusername.setText(getString(R.string.loginOrRegister));
-        tv_address.setText("");
-        iv_minesexicon.setVisibility(View.GONE);
-        iv_minetype.setVisibility(View.INVISIBLE);
+        tv_nickname.setText(getString(R.string.loginOrRegister));
+        tv_serialNumber.setVisibility(View.GONE);
         iv_minetouxiang.setImageResource(R.mipmap.avatar);
         headpic = null;
-        tv_minefsnum.setText("0");
-        tv_minegznum.setText("0");
-        tv_minebznum.setText("0");
-        tv_minebscnum.setText("0");
-        tv_minemoney.setVisibility(View.GONE);
         userInfoBean = null;
     }
 
@@ -420,7 +324,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         //    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MinePresenter)mPresenter).getInfo();
+        ((MinePresenter) mPresenter).getInfo();
         mRefreshLayout.endRefreshing();
     }
 

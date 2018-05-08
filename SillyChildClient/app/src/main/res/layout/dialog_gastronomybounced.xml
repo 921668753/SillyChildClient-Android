@@ -5,7 +5,7 @@
     android:background="@color/black60"
     android:orientation="horizontal">
 
-    <com.common.cklibrary.utils.myview.ChildLiistView
+    <com.common.cklibrary.utils.myview.ChildListView
         android:id="@+id/lv_gastronomyDialog"
         style="@style/MatchWrap"
         android:divider="@color/whiteColors"

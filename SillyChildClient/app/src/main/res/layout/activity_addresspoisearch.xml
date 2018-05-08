@@ -68,7 +68,7 @@
 
     <TextView style="@style/DividerWidth" />
 
-    <com.common.cklibrary.utils.myview.ChildLiistView
+    <com.common.cklibrary.utils.myview.ChildListView
         android:id="@+id/lv_addressPoiSearch"
         style="@style/MatchWrap"
         android:divider="@color/background"

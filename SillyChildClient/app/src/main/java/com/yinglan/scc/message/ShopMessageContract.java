@@ -20,7 +20,7 @@ public class ShopMessageContract {
         /**
          * 判断是否登录
          */
-        void isLogin(int flag);
+        void isLogin();
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.gastronomybounced.GastronomyBouncedViewAdapter;
 import com.yinglan.scc.entity.IndexCityBean;
@@ -24,7 +24,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class GastronomyBouncedDialog extends Dialog implements View.OnClickListener, GastronomyBouncedContract.View, AdapterView.OnItemClickListener {
 
     private Context context;
-    private ChildLiistView lv_gastronomyDialog;
+    private ChildListView lv_gastronomyDialog;
     private GastronomyBouncedViewAdapter gastronomyBouncedViewAdapter;
     private GastronomyBouncedContract.Presenter mPresenter;
     private SweetAlertDialog mLoadingDialog;
@@ -47,7 +47,7 @@ public class GastronomyBouncedDialog extends Dialog implements View.OnClickListe
 
     private void initView() {
         mPresenter = new GastronomyBouncedPresenter(this);
-        lv_gastronomyDialog = (ChildLiistView) findViewById(R.id.lv_gastronomyDialog);
+        lv_gastronomyDialog = (ChildListView) findViewById(R.id.lv_gastronomyDialog);
         gastronomyBouncedViewAdapter = new GastronomyBouncedViewAdapter(context);
         lv_gastronomyDialog.setAdapter(gastronomyBouncedViewAdapter);
         lv_gastronomyDialog.setOnItemClickListener(this);

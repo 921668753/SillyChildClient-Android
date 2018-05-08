@@ -15,7 +15,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.HomestaySubscribeViewAdapter;
@@ -25,8 +25,6 @@ import com.yinglan.scc.homepage.addressselection.AddressSelectionActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import cn.bingoogolapple.titlebar.BGATitleBar;
 
 import static com.yinglan.scc.constant.NumericConstants.STATUS;
 
@@ -47,7 +45,7 @@ public class HomestaySubscribeActivity extends BaseActivity implements HomestayS
     private TextView tv_address;
 
     @BindView(id = R.id.lv_homestaySubscribe)
-    private ChildLiistView lv_homestaySubscribe;
+    private ChildListView lv_homestaySubscribe;
 
 
     @BindView(id = R.id.ll_destination, click = true)

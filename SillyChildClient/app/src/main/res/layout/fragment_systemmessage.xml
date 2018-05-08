@@ -5,21 +5,18 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/DividerWidth"
-        android:layout_marginTop="@dimen/dimen10" />
-
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
         style="@style/MatchMatch"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:paddingTop="@dimen/dimen10">
 
         <!-- item_systemmessage -->
         <ListView
             android:id="@+id/lv_systemMessage"
             style="@style/MatchMatch"
             android:divider="@color/background"
-            android:dividerHeight="@dimen/dimen1"
+            android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
             android:scrollbars="none"
             tools:listitem="@layout/item_systemmessage" />

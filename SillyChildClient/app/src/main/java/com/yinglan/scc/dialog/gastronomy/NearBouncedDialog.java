@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.gastronomybounced.Near1BouncedViewAdapter;
 import com.yinglan.scc.adapter.gastronomybounced.NearBouncedViewAdapter;
@@ -22,10 +22,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class NearBouncedDialog extends Dialog implements View.OnClickListener, NearBouncedContract.View, AdapterView.OnItemClickListener {
 
     private Context context;
-    private ChildLiistView lv_nearDialog;
+    private ChildListView lv_nearDialog;
     private NearBouncedViewAdapter nearBouncedViewAdapter;
     private Near1BouncedViewAdapter near1BouncedViewAdapter;
-    private ChildLiistView lv_near1Dialog;
+    private ChildListView lv_near1Dialog;
     private NearBouncedContract.Presenter mPresenter;
     private SweetAlertDialog mLoadingDialog;
 
@@ -44,8 +44,8 @@ public class NearBouncedDialog extends Dialog implements View.OnClickListener, N
 
     private void initView() {
         mPresenter = new NearBouncedPresenter(this);
-        lv_nearDialog = (ChildLiistView) findViewById(R.id.lv_nearDialog);
-        lv_near1Dialog = (ChildLiistView) findViewById(R.id.lv_near1Dialog);
+        lv_nearDialog = (ChildListView) findViewById(R.id.lv_nearDialog);
+        lv_near1Dialog = (ChildListView) findViewById(R.id.lv_near1Dialog);
         nearBouncedViewAdapter = new NearBouncedViewAdapter(context);
         lv_nearDialog.setAdapter(nearBouncedViewAdapter);
         near1BouncedViewAdapter = new Near1BouncedViewAdapter(context);

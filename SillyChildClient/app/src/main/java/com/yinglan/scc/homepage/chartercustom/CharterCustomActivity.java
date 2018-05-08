@@ -18,7 +18,7 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -83,7 +83,7 @@ public class CharterCustomActivity extends BaseActivity implements AdapterView.O
     private TextView tv_allSelectLine;
 
     @BindView(id = R.id.lv_selectLine)
-    private ChildLiistView lv_selectLine;
+    private ChildListView lv_selectLine;
 
     @BindView(id = R.id.ll_localGuide)
     private LinearLayout ll_localGuide;
@@ -92,7 +92,7 @@ public class CharterCustomActivity extends BaseActivity implements AdapterView.O
     private TextView tv_allLocalGuide;
 
     @BindView(id = R.id.lv_localGuide)
-    private ChildLiistView lv_localGuide;
+    private ChildListView lv_localGuide;
 
     private CharterCustomClassificationViewAdaper charterCustomClassificationViewAdaper;
 

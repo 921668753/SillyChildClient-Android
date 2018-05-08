@@ -9,21 +9,37 @@
 
     <View style="@style/DividerWidth" />
 
-    <EditText
-        android:id="@+id/et_signature"
-        style="@style/MatchWrap"
-        android:minHeight="@dimen/dimen140"
-        android:background="@color/whiteColors"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/textsize15"
-        android:hint="@string/personalizedSignatureHint"
-        android:textColorHint="@color/hintColors"
-        android:paddingLeft="@dimen/dimen15"
-        android:paddingRight="@dimen/dimen15"
-        android:paddingTop="@dimen/dimen20"
-        android:paddingBottom="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen15"
-        android:gravity="start"
-        android:maxLength="30"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen100"
+        android:layout_marginTop="@dimen/dimen15">
+
+        <EditText
+            android:id="@+id/et_signature"
+            style="@style/MatchMatch"
+            android:background="@color/whiteColors"
+            android:gravity="start"
+            android:hint="@string/personalizedSignatureHint"
+            android:maxLength="30"
+            android:padding="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <TextView
+            android:id="@+id/tv_number"
+            style="@style/WrapWrap"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:text="0"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize13" />
+
+
+    </RelativeLayout>
+
 
 </LinearLayout>

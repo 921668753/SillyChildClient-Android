@@ -253,7 +253,7 @@
                         android:src="@mipmap/arrow" />
                 </LinearLayout>
 
-                <com.common.cklibrary.utils.myview.ChildLiistView
+                <com.common.cklibrary.utils.myview.ChildListView
                     android:id="@+id/clv_boutiqueLine"
                     style="@style/MatchWrap"
                     android:background="@color/whiteColors"

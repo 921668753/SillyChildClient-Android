@@ -249,16 +249,6 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        boolean isRefreshSystemMessage = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshSystemMessage", false);
-//        if (isRefreshSystemMessage) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
-
-
     public static class MessageReceiver extends BroadcastReceiver {
 
         @Override

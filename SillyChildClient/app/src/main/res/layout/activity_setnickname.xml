@@ -9,28 +9,45 @@
 
     <View style="@style/DividerWidth" />
 
-    <EditText
-        android:id="@+id/et_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen50"
+    <LinearLayout
+        style="@style/Match50"
+        android:layout_marginTop="@dimen/dimen15"
         android:background="@color/whiteColors"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/textsize15"
-        android:hint="@string/nicknamehint"
-        android:textColorHint="@color/hintColors"
-        android:paddingLeft="@dimen/dimen15"
-        android:paddingRight="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen15"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_nickname"
+            style="@style/AutoMatch"
+            android:background="@color/whiteColors"
+            android:hint="@string/nicknamehint"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:maxLength="11"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textSize="@dimen/textsize16" />
+
+        <ImageView
+            android:id="@+id/img_quxiao"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:padding="@dimen/dimen15"
+            android:src="@mipmap/delete"
+            android:visibility="gone" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_words"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sillyChildNumberWords"
-        android:paddingTop="@dimen/dimen10"
         android:paddingLeft="@dimen/dimen15"
-        android:textSize="@dimen/textsize15"
+        android:paddingTop="@dimen/dimen10"
+        android:text="@string/sillyChildNumberWords"
         android:textColor="@color/hintColors"
-        android:visibility="gone"/>
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
 
 </LinearLayout>

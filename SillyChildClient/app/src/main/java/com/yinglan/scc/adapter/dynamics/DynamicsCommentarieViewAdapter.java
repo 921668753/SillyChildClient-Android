@@ -3,10 +3,8 @@ package com.yinglan.scc.adapter.dynamics;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.common.cklibrary.utils.Utility;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.DynamicsCommentariesBean.ResultBean.ListBean;
 import com.yinglan.scc.utils.GlideImageLoader;
@@ -69,7 +67,7 @@ public class DynamicsCommentarieViewAdapter extends BGAAdapterViewAdapter<ListBe
         helper.setVisibility(R.id.ll_replies, View.GONE);
         if (model.getReplies() != null && model.getReplies().size() > 0) {
             helper.setVisibility(R.id.ll_replies, View.VISIBLE);
-            ChildLiistView lv_replies = (ChildLiistView) helper.getView(R.id.lv_replies);
+            ChildListView lv_replies = (ChildListView) helper.getView(R.id.lv_replies);
             DynamicsCommentarie1ViewAdapter dynamicsCommentarie1ViewAdapter = new DynamicsCommentarie1ViewAdapter(mContext);
             lv_replies.setAdapter(dynamicsCommentarie1ViewAdapter);
             dynamicsCommentarie1ViewAdapter.addNewData(model.getReplies());

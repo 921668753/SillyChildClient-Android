@@ -17,7 +17,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
-import com.yinglan.scc.mine.myorder.orderDetails.CharterOrderDetailsActivity;
+import com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity;
 
 /**
  * 支付成功

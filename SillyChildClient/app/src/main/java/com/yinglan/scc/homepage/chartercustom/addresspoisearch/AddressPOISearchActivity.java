@@ -21,7 +21,7 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.AddressPoiSearchViewAdapter;
@@ -56,7 +56,7 @@ public class AddressPOISearchActivity extends BaseActivity implements TextWatche
 
 
     @BindView(id = R.id.lv_addressPoiSearch)
-    private ChildLiistView lv_addressPoiSearch;
+    private ChildListView lv_addressPoiSearch;
 
     private AddressPoiSearchViewAdapter addressPoiSearchViewAdapter;
 

@@ -1,8 +1,12 @@
 package com.yinglan.scc.mine.personaldata.setsignature;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
@@ -21,7 +25,7 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/9/2.
  */
 
-public class SetSignatureActivity extends BaseActivity implements SetSignatureContract.View{
+public class SetSignatureActivity extends BaseActivity implements SetSignatureContract.View {
     private SetSignatureContract.Presenter mPresenter;
 
     @BindView(id = R.id.titlebar)
@@ -29,6 +33,10 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
 
     @BindView(id = R.id.et_signature)
     private EditText et_signature;
+
+
+    @BindView(id = R.id.tv_number)
+    private TextView tv_number;
 
     @Override
     public void setRootView() {
@@ -38,9 +46,9 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
     @Override
     public void initData() {
         super.initData();
-        mPresenter=new SetSignaturePresenter(this);
-        String signature=getIntent().getStringExtra("signature");
-        if (!TextUtils.isEmpty(signature)){
+        mPresenter = new SetSignaturePresenter(this);
+        String signature = getIntent().getStringExtra("signature");
+        if (!TextUtils.isEmpty(signature)) {
             et_signature.setText(signature);
         }
     }
@@ -49,6 +57,7 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
     public void initWidget() {
         super.initWidget();
         initTitle();
+        changeInputView(et_signature, tv_number);
     }
 
     /**
@@ -56,9 +65,9 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
      */
     public void initTitle() {
         titlebar.setTitleText(R.string.personalizedSignature);
-        titlebar.setRightText(R.string.save);
+        titlebar.setRightText(R.string.complete);
         titlebar.getRightCtv().setTextColor(getResources().getColor(R.color.greenColors));
-        titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+        titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -79,27 +88,59 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
 
     @Override
     public void setPresenter(SetSignatureContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        setResult(0,getIntent().putExtra("signature",et_signature.getText().toString()));
+        setResult(0, getIntent().putExtra("signature", et_signature.getText().toString()));
         finish();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (isLogin(msg)){
+        if (isLogin(msg)) {
             ViewInject.toast(getString(R.string.reloginPrompting));
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
             finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class,MainActivity.class);
+            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
             return;
         }
         ViewInject.toast(msg);
     }
+
+
+    /**
+     * 监听EditText输入改变
+     */
+    @SuppressWarnings("deprecation")
+    public void changeInputView(final EditText editText, final View view) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editText.getText().toString().length() > 0 && view != null) {
+                    view.setVisibility(View.VISIBLE);
+                    ((TextView) view).setText(String.valueOf(editText.getText().toString().length()));
+                } else {
+                    view.setVisibility(View.GONE);
+                    ((TextView) view).setText(String.valueOf(0));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+
 }

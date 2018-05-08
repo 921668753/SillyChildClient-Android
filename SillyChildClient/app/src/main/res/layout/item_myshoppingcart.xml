@@ -26,7 +26,7 @@
 
     <View style="@style/DividerWidth"/>
 
-        <com.common.cklibrary.utils.myview.ChildLiistView
+        <com.common.cklibrary.utils.myview.ChildListView
             android:id="@+id/lv_shopgoods"
             style="@style/MatchWrap"
             android:dividerHeight="@dimen/dimen20"

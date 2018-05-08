@@ -1,60 +1,22 @@
 package com.yinglan.scc.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
-import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
-import com.common.cklibrary.utils.myview.HorizontalListView;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
-import com.yinglan.scc.BuildConfig;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.BoutiqueLineViewAdapter;
 import com.yinglan.scc.adapter.homepage.HotRegionViewAdapter;
-import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.HomePageBean;
-import com.yinglan.scc.entity.HomePageBean.ResultBean.AdBean;
-import com.yinglan.scc.homepage.BannerDetailsActivity;
-import com.yinglan.scc.homepage.addressselection.newoverseas.NewOverseasCityActivity;
-import com.yinglan.scc.homepage.airportpickup.AirportPickupActivity;
-import com.yinglan.scc.homepage.boutiqueline.BoutiqueLineActivity;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
-import com.yinglan.scc.homepage.localtalent.LocalTalentActivity;
-import com.yinglan.scc.homepage.localtalent.LocalTalentDetailsActivity;
-import com.yinglan.scc.homepage.popularstrategy.HotStrategyActivity;
-import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.trip.strategy.StrategyDetailsActivity;
-import com.yinglan.scc.utils.DisplayUtil;
-import com.yinglan.scc.utils.GlideImageLoader;
-
-import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.yinglan.scc.constant.NumericConstants.STATUS;
 
 /**
  * 商城首页
@@ -142,7 +104,7 @@ public class MallHomePageFragment extends BaseFragment
      */
 
     @BindView(id = R.id.clv_boutiqueLine)
-    private ChildLiistView clv_boutiqueLine;
+    private ChildListView clv_boutiqueLine;
 
     public LocationClient mLocationClient = null;
 

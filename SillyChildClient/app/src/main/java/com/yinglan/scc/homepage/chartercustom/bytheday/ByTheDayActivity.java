@@ -21,7 +21,7 @@ import com.yinglan.scc.entity.AirportDropOffBean;
 import com.yinglan.scc.entity.CarBrandBean;
 import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.myorder.orderDetails.CharterOrderDetailsActivity;
+import com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import java.text.SimpleDateFormat;

@@ -39,7 +39,7 @@ public class MyShoppingCartActivity extends BaseActivity {
      * 设置标题
      */
     public void initTitle() {
-        titlebar.setTitleText(R.string.myShoppingCart);
+        titlebar.setTitleText(R.string.shoppingCart);
         titlebar.setRightText(R.string.edit);
         titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {

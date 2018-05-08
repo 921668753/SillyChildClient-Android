@@ -22,7 +22,7 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.common.cklibrary.utils.myview.ChildLiistView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.myview.HorizontalListView;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -134,7 +134,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     private TextView tv_moreLines;
 
     @BindView(id = R.id.clv_boutiqueLine)
-    private ChildLiistView clv_boutiqueLine;
+    private ChildListView clv_boutiqueLine;
 
     public LocationClient mLocationClient = null;
 

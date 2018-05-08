@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen55"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10">
+
+        <TextView
+            android:id="@+id/textView6"
+            style="@style/AutoMatch"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@drawable/shape_code"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/greenColors"
+            android:textSize="@dimen/textsize12" />
+
+
+        <TextView
+            style="@style/AutoMatch"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@drawable/shape_code1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize12" />
+
+        <TextView
+            style="@style/AutoMatch"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@drawable/shape_code1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize12" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        style="@style/MatchAuto" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen49"
+        android:background="@color/whiteColors"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/Image20"
+                android:scaleType="fitXY"
+                android:src="@mipmap/mallcart_shopxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/shop"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize11" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/Image20"
+                android:scaleType="fitXY"
+                android:src="@mipmap/mallkefuxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/customerService"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize11" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/Image20"
+                android:scaleType="fitXY"
+                android:src="@mipmap/mallguanzhuxxx" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/follow"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize11" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="@string/buyNow"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/redColors"
+            android:gravity="center"
+            android:text="@string/addShoppingCart"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize14" />
+    </LinearLayout>
+</LinearLayout>
