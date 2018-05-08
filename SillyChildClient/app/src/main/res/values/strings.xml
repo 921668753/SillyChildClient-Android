@@ -351,9 +351,10 @@
     <!--首页   全部路线  收银台 -->
     <string name="checkstand">收银台</string>
     <string name="orderAmount1">订单金额：</string>
-    <string name="optionPay">选择支付方式</string>
+    <string name="optionPay">付款方式</string>
     <string name="weChatPay">微信支付</string>
     <string name="alipayToPay">支付宝支付</string>
+    <string name="unionpayPay">银联支付</string>
     <string name="balancePay">余额支付</string>
     <string name="currentBalance">当前余额：</string>
     <string name="confirmPayment">确认支付</string>
@@ -700,9 +701,9 @@
     <string name="oneNight">/晚</string>
 
     <!-- 个人中心 我的钱包-->
-    <string name="accountBalance">账户余额(元)</string>
+    <string name="accountBalance">账户余额</string>
     <string name="recharge">充值</string>
-    <string name="withdraw">提现</string>
+    <string name="withdrawal">提现</string>
     <string name="ruleDescription">1，提现处理时间为5个工作日，具体到账时间以支付宝或者微信为准。\n\n2，因提现触发支付宝及微信对平台收取的费用，傻孩子平台将在每笔提现过程中收取千分之三的手续费。\n\n3，因充值可升级会员等级，故提现可能产生相应会员降级。</string>
     <string name="coupons">优惠券</string>
     <string name="goShopping">我要血拼</string>
@@ -720,7 +721,10 @@
     <string name="usableForStore">仅限商城使用</string>
     <string name="usableForHomestay">仅限民宿使用</string>
     <string name="couponCannotUsed">不符合使用条件，无法使用此优惠券!</string>
-
+    <string name="bankCard">银行卡</string>
+    <string name="myBankCard">我的银行卡</string>
+    <string name="revalidation">重新验证</string>
+    <string name="toResend">s后重发</string>
 
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>
@@ -735,8 +739,10 @@
     <string name="money3000">3000元</string>
     <string name="money5000">5000元</string>
     <string name="moneyOther">其它金额</string>
-    <string name="determinePay">确定充值</string>
+    <string name="determinePay">确认充值</string>
     <string name="inputAccount">请输入正确的充值账号</string>
+    <string name="pleaseRechargeAmount">请输入充值金额</string>
+    <string name="pleaseRechargeAmount1">请输入正确的充值金额</string>
     <string name="payParseError">支付失败！解析数据错误，您可以移步至客服！</string>
     <!-- 个人中心 提现-->
     <string name="withdrawalAmount">提现金额</string>
@@ -754,6 +760,90 @@
     <string name="CurrentBalanceNoSymbol">当前余额</string>
     <string name="withdrawErrorWord">提现失败！请完整填写提现信息</string>
     <string name="lackBalance">余额不足！</string>
+
+    <!--提现-->
+    <string name="withdrawalRecord1">请输入提现金额</string>
+    <string name="withdrawalAmount1">提现金额</string>
+    <string name="withdrawalAmount2">可提现金额</string>
+    <string name="withdrawalAmount3">零钱余额¥</string>
+    <string name="toBank">到账银行</string>
+    <string name="modification">修改</string>
+    <string name="noCard">暂无</string>
+    <string name="addCard">添加</string>
+    <string name="tail">尾号</string>
+    <string name="consent">同意</string>
+    <string name="driverWithdrawAgreement">《司机提现协议》</string>
+    <string name="withdrawalRecord">提现记录</string>
+    <string name="renminbi">¥</string>
+    <string name="accountingDate">到账需要2个工作日</string>
+
+    <!--我的银行卡-->
+    <string name="addBankCard">添加银行卡</string>
+
+    <!--添加银行卡-->
+    <string name="cardholder">持卡人</string>
+    <string name="pleaseFillOut">请填写</string>
+    <string name="accountHolderName1">请输入持卡人姓名</string>
+    <string name="bankCardNumber">银行卡号</string>
+    <string name="bankCardNumber1">请输入银行卡号</string>
+    <string name="hintName1">请输入正确的姓名</string>
+    <string name="withdrawalsBank">提现银行</string>
+    <string name="withdrawalsBank1">请输入提现银行</string>
+    <string name="openingBank">开户行</string>
+    <string name="openingBank1">请输入开户行</string>
+    <string name="accountText">请输入手机号</string>
+    <string name="confirmAdd">确认添加</string>
+    <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
+    <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
+    <string name="bankName">银行名称</string>
+    <string name="presentingBank">如农业银行，工商银行等</string>
+    <string name="presentingBank1">请输入正确的银行名称</string>
+    <string name="paymentAccount">收款账号</string>
+    <string name="promptAccount">如工商银行账号</string>
+    <string name="promptAccount1">请输入正确的收款账号</string>
+    <string name="openAccountName">开户名</string>
+    <string name="accountHolderName">开户人姓名</string>
+
+    <string name="hintWithdrawal">*请确认以上信息无误</string>
+    <string name="hintWithdrawal1">提现日期每月15号—20号</string>
+    <string name="withdrawalInstructions">提现说明</string>
+    <string name="confirmSubmit">确认提交</string>
+    <string name="confirmSubmit1">确认提交申请？</string>
+    <string name="confirmSubmit2">申请已提交成功！</string>
+    <string name="cancel1">&#160;&#160;&#160;取&#160;&#160;&#160;&#160;&#160;&#160;&#160;消&#160;&#160;&#160;</string>
+    <string name="confirm1">&#160;&#160;&#160;确&#160;&#160;&#160;&#160;&#160;&#160;&#160;定&#160;&#160;&#160;</string>
+
+    <!--设置支付密码-->
+    <string name="setPaymentPassword">设置支付密码</string>
+    <string name="pleaseEnterPaymentPassword">请输入支付密码</string>
+    <string name="pleaseEnterPaymentPassword1">请输入正确的支付密码</string>
+    <string name="oldPpaymentPasswordsNotMatch">新支付密码和旧支付密码不能一致</string>
+    <string name="pleaseEnterConfirm">请再次输入以确认</string>
+    <string name="paymentPasswordsNotMatch">两次输入的支付密码不一致</string>
+    <string name="notPaymentPassword">您还未设置支付密码，请先设置</string>
+
+    <!--修改支付密码-->
+    <string name="modifyPaymentPassword">修改支付密码</string>
+    <string name="doRememberAccountNumber">您是否记得账号</string>
+    <string name="currentPaymentPassword">当前使用的支付密码</string>
+    <string name="doNotRemember">不记得</string>
+    <string name="doNotRemember1">认证通过后，才能修改密码</string>
+    <string name="remember">记得</string>
+    <string name="enterCorrectVerificationCode">请输入正确的验证码</string>
+    <string name="verificationCodeMobilePhone">我们已发送验证码到您的手机</string>
+    <string name="fillIn">填写</string>
+    <string name="authenticate">验证身份</string>
+    <string name="pleaseEnterIdNumber">请输入证件号</string>
+    <string name="pleaseEnterOldPaymentPassword">请输入旧的支付密码</string>
+
+    <!--修改支付密码-->
+    <string name="pleaseEnterNewPaymentPassword">请输入新的支付密码</string>
+
+
+    <!--确认支付密码-->
+    <string name="confirmPaymentPassword">确认支付密码</string>
+    <string name="modifyPaymentPasswordSucceed">修改支付密码成功！</string>
+
 
     <!-- 个人中心 我的购物车-->
     <string name="subtract">-</string>

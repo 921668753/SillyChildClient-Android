@@ -80,6 +80,10 @@
     <color name="deliveryaddressaddress">#9c9c9e</color>
     <color name="deliveryaddressdefault">#636370</color>
     <color name="myWalletDriver">#ff7c7a</color>
+    <color name="darkGreen">#129130</color>
+
+
+
 
     <!--我的 意见反馈-->
     <color name="red">#fb7979</color>

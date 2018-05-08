@@ -441,13 +441,10 @@
             android:screenOrientation="portrait"></activity>
 
         <!--我的   我的钱包  提现-->
-        <activity
-            android:name="com.yinglan.scc.mine.mywallet.withdraw.WithdrawActivity"
-            android:screenOrientation="portrait"></activity>
 
         <!--我的   我的钱包  提现成功-->
         <activity
-            android:name="com.yinglan.scc.mine.mywallet.withdraw.WithdrawSuccessActivity"
+            android:name="com.yinglan.scc.mine.mywallet.withdrawal.WithdrawalSuccessActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--我的   个人资料-->

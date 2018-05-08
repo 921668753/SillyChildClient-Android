@@ -1,4 +1,4 @@
-package com.yinglan.scc.adapter;
+package com.yinglan.scc.adapter.mine;
 
 import android.content.Context;
 import android.view.View;

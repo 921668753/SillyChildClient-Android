@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_bankCardName"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:background="@drawable/shape_bankcardtop"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen35"
+        android:text="--"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen64"
+        android:background="@drawable/shape_bankcardbottom"
+        android:gravity="center">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen35"
+            android:text="****"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize25" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen35"
+            android:text="****"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize25" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen35"
+            android:text="****"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize25" />
+
+        <TextView
+            android:id="@+id/tv_tail"
+            style="@style/WrapWrap"
+            android:text="1687"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize25" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

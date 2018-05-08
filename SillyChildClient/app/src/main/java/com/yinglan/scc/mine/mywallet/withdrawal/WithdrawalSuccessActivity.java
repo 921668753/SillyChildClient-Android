@@ -1,4 +1,4 @@
-package com.yinglan.scc.mine.mywallet.withdraw;
+package com.yinglan.scc.mine.mywallet.withdrawal;
 
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +13,7 @@ import com.yinglan.scc.R;
  * Created by Administrator on 2017/9/2.
  */
 
-public class WithdrawSuccessActivity extends BaseActivity {
+public class WithdrawalSuccessActivity extends BaseActivity {
 
     @BindView(id=R.id.tv_withdrawalamount)
     private TextView tv_withdrawalamount;
@@ -23,7 +23,7 @@ public class WithdrawSuccessActivity extends BaseActivity {
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_withdrawsuccess);
+        setContentView(R.layout.activity_withdrawalsuccess);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class WithdrawSuccessActivity extends BaseActivity {
      * 设置标题
      */
     public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.withdraw),true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal),true, R.id.titlebar);
     }
 
 }

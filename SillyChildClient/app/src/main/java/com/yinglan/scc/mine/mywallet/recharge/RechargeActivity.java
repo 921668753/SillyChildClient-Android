@@ -38,9 +38,6 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
 
     private RechargeContract.Presenter mPresenter;
 
-    @BindView(id = R.id.et_phone)
-    private EditText et_phone;
-
     @BindView(id = R.id.btn_leftup, click = true)
     private Button btn_leftup;
 
@@ -65,8 +62,11 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @BindView(id = R.id.btn_middledown, click = true)
     private Button btn_middledown;
 
-    @BindView(id = R.id.et_rightdown, click = true)
-    private EditText et_rightdown;
+    @BindView(id = R.id.btn_rightdown, click = true)
+    private Button btn_rightdown;
+
+    @BindView(id = R.id.et_pleaseRechargeAmount)
+    private EditText et_pleaseRechargeAmount;
 
     @BindView(id = R.id.ll_payweixin, click = true)
     private LinearLayout ll_payweixin;
@@ -81,6 +81,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @BindView(id = R.id.tv_determinepay, click = true)
     private TextView tv_determinepay;
     private double rechargemoney = 0;
+
     private String payWay;
     private String choosemoney;
     private InputMethodManager inputmanager;
@@ -105,13 +106,11 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         super.initWidget();
         initTitle();
         decimalLimit = new DecimalLimit();
-        et_rightdown.setFilters(decimalLimit.getFilter(NumericConstants.DECIMAL_DIGITS));
-        et_rightdown.setOnTouchListener(this);
-        et_phone.setOnTouchListener(this);
+        et_pleaseRechargeAmount.setFilters(decimalLimit.getFilter(NumericConstants.DECIMAL_DIGITS));
+        et_pleaseRechargeAmount.setOnTouchListener(this);
         clearBtns(btn_leftup);
         clearimg(iv_payweixin);
         payWay = StringNewConstants.WeiXinPay;
-        et_phone.setText(getIntent().getStringExtra("accountname"));
 
     }
 
@@ -161,10 +160,10 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
 
             case R.id.tv_determinepay:
                 showLoadingDialog(getResources().getString(R.string.submissionLoad));
-                if (!TextUtils.isEmpty(et_rightdown.getText().toString())) {
-                    rechargemoney = StringUtils.toDouble(et_rightdown.getText().toString());
+                if (!TextUtils.isEmpty(et_pleaseRechargeAmount.getText().toString())) {
+                    rechargemoney = StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString());
                 }
-                mPresenter.doRecharge(et_phone.getText().toString(), payWay, rechargemoney);
+                //  mPresenter.doRecharge(et_phone.getText().toString(), payWay, rechargemoney);
                 break;
         }
     }
@@ -188,12 +187,11 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         btn_middledown.setTextColor(getResources().getColor(R.color.textColor));
 
         if (btn == null) {
-            et_rightdown.setCursorVisible(true);
+            et_pleaseRechargeAmount.setCursorVisible(true);
         } else {
-            inputmanager.hideSoftInputFromWindow(et_rightdown.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            et_rightdown.setText("");
-            et_rightdown.setCursorVisible(false);
-            et_phone.setCursorVisible(false);
+            inputmanager.hideSoftInputFromWindow(et_pleaseRechargeAmount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            et_pleaseRechargeAmount.setText("");
+            et_pleaseRechargeAmount.setCursorVisible(false);
             btn.setBackgroundResource(R.drawable.shape_login1);
             btn.setTextColor(getResources().getColor(R.color.whiteColors));
             choosemoney = btn.getText().toString();
@@ -215,21 +213,21 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @Override
     public void getSuccess(String success, int flag) {
         AlipayBean alipaybean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
-        if (alipaybean==null||alipaybean.getResult()==null){
+        if (alipaybean == null || alipaybean.getResult() == null) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.payParseError));
-        }else{
+        } else {
             if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.WeiXinPay)) {
                 AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = alipaybean.getResult().getWxPayParams();
-                if (wxPayParamsBean==null){
+                if (wxPayParamsBean == null) {
                     dismissLoadingDialog();
                     ViewInject.toast(getString(R.string.payParseError));
-                }else{
+                } else {
                     if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
                     dismissLoadingDialog();
                     payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
                 }
-               } else if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.ZhiFuBaoPay)) {
+            } else if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.ZhiFuBaoPay)) {
                 if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
                 dismissLoadingDialog();
                 payUtils.doPay(alipaybean.getResult().getAliPayParams());
@@ -255,22 +253,14 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
             switch (view.getId()) {
-                case R.id.et_rightdown:
+                case R.id.et_pleaseRechargeAmount:
                     clearBtns(null);
-                    et_rightdown.setCursorVisible(true);// 再次点击显示光标
-                    break;
-                case R.id.et_phone:
-                    et_phone.setCursorVisible(true);// 再次点击显示光标
+                    et_pleaseRechargeAmount.setCursorVisible(true);// 再次点击显示光标
                     break;
             }
 
         }
         return false;
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override

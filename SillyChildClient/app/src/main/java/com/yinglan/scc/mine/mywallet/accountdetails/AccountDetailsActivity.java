@@ -12,17 +12,15 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.AccountDetailsAdapter;
-import com.yinglan.scc.entity.AccountDetailsBean;
-import com.yinglan.scc.entity.AccountDetailsBean.ResultBean.ListBean;
+import com.yinglan.scc.adapter.mine.mywallet.AccountDetailsAdapter;
+import com.yinglan.scc.entity.mine.mywallet.AccountDetailsBean;
+import com.yinglan.scc.entity.mine.mywallet.AccountDetailsBean.ResultBean.ListBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 import java.util.Calendar;

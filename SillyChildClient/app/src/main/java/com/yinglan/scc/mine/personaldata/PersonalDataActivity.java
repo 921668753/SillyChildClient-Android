@@ -76,14 +76,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.ll_personaldatadq,click = true)
     private LinearLayout ll_personaldatadq;
 
-    @BindView(id = R.id.ll_personaldatabdyx,click = true)
-    private LinearLayout ll_personaldatabdyx;
-
     @BindView(id = R.id.ll_personaldatagxqm,click = true)
     private LinearLayout ll_personaldatagxqm;
 
-    @BindView(id = R.id.ll_personaldataxgmm,click = true)
-    private LinearLayout ll_personaldataxgmm;
 
     @BindView(id = R.id.iv_personaltx,click = true)
     private ImageView iv_personaltx;
@@ -103,11 +98,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.tv_personaldiqu,click = true)
     private TextView tv_personaldiqu;
 
-    @BindView(id = R.id.tv_personalemail,click = true)
-    private TextView tv_personalemail;
-
-    @BindView(id = R.id.tv_personalqianming,click = true)
-    private TextView tv_personalqianming;
     private PictureSourceDialog pictureSourceDialog;
     private ServicePhoneDialog servicephonedialog;
     private VIPPermissionsDialog vippermissionsdialog;
@@ -193,8 +183,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 address+=resultBean.getCity();
             }
             tv_personaldiqu.setText(address);
-            tv_personalemail.setText(resultBean.getEmail());
-            tv_personalqianming.setText(resultBean.getPersonalized_signature());
 
             String headpic=resultBean.getHead_pic();
             if (TextUtils.isEmpty(headpic)){
@@ -248,23 +236,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 jumpintent.putExtra("showinland",true);
                 startActivityForResult(jumpintent, STATUS);
                 break;
-            case R.id.tv_personalemail:
-            case R.id.ll_personaldatabdyx:
-                updataSHZCode();
-                showActivityForResult(this, BindEmailActivity.class,1);
-                break;
-            case R.id.tv_personalqianming:
             case R.id.ll_personaldatagxqm:
                 updataSHZCode();
                 jumpintent=new Intent(this,SetSignatureActivity.class);
-                jumpintent.putExtra("signature",tv_personalqianming.getText().toString());
+            //    jumpintent.putExtra("signature",tv_personalqianming.getText().toString());
                 showActivityForResult(this, jumpintent,2);
-                break;
-            case R.id.ll_personaldataxgmm:
-                updataSHZCode();
-                jumpintent=new Intent(this,ForgotPasswordActivity1.class);
-                jumpintent.putExtra("title",getString(R.string.changepassword));
-                showActivity(this,jumpintent);
                 break;
         }
     }
@@ -462,12 +438,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                         }
                     }else{
                         PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-                        tv_personalemail.setText(data.getStringExtra("email"));
                     }
                     break;
                 case 2:
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-                    tv_personalqianming.setText(data.getStringExtra("signature"));
+                  //  tv_personalqianming.setText(data.getStringExtra("signature"));
                     break;
                 case 3:
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+
+    <LinearLayout
+        style="@style/Match50"
+        android:layout_marginTop="@dimen/dimen13"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/cardholder"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <EditText
+            android:id="@+id/et_cardholder"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:paddingLeft="@dimen/dimen78"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <include layout="@layout/common_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match50"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/bankCardNumber"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_bankCardNumber"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:digits="0123456789"
+            android:hint="@string/pleaseFillOut"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen62"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <include layout="@layout/common_dividerwidth1" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_withdrawalsBank"
+        style="@style/Match50"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/withdrawalsBank"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <TextView
+            android:id="@+id/tv_withdrawalsBank"
+            style="@style/AutoMatch"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/pleaseSelect"
+            android:paddingLeft="@dimen/dimen62"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <ImageView
+            style="@style/Image812"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/ic_arrow" />
+
+    </LinearLayout>
+
+
+    <include layout="@layout/common_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match50"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/openingBank"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <EditText
+            android:id="@+id/et_openingBank"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:paddingLeft="@dimen/dimen78"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/Match50"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/accountNumber"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:digits="0123456789"
+            android:hint="@string/pleaseFillOut"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:paddingLeft="@dimen/dimen78"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <include layout="@layout/common_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match50"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/verificationCode"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <EditText
+            android:id="@+id/et_verificationCode"
+            style="@style/AutoMatch"
+            android:background="@android:color/transparent"
+            android:digits="0123456789"
+            android:hint="@string/pleaseFillOut"
+            android:inputType="number"
+            android:maxLength="6"
+            android:paddingLeft="@dimen/dimen78"
+            android:paddingRight="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+
+        <TextView
+            android:id="@+id/tv_verificationCode"
+            style="@style/WrapMatch"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/dimen15"
+            android:text="@string/testGetCode"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_prepaidImmediately"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen25"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/confirmAdd"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>
