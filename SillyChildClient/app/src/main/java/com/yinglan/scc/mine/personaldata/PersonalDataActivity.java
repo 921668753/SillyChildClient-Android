@@ -3,21 +3,21 @@ package com.yinglan.scc.mine.personaldata;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.common.cklibrary.utils.BitmapCoreUtil;
-import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
@@ -26,13 +26,10 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
-import com.nanchen.compresshelper.FileUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.dialog.VIPPermissionsDialog;
 import com.yinglan.scc.entity.UploadImageBean;
 import com.yinglan.scc.entity.UserInfoBean;
-import com.yinglan.scc.homepage.addressselection.AddressSelectionActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scc.mine.personaldata.setnickname.SetNickNameActivity;
@@ -40,8 +37,8 @@ import com.yinglan.scc.mine.personaldata.setsex.SetSexActivity;
 import com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity;
 import com.yinglan.scc.mine.personaldata.setsillycode.SetSillyCodeActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
+import com.yinglan.scc.utils.PickerViewUtil;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +48,6 @@ import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_MINUSALL;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_GET;
-import static com.yinglan.scc.constant.NumericConstants.STATUS;
 
 /**
  * 个人资料
@@ -59,6 +55,7 @@ import static com.yinglan.scc.constant.NumericConstants.STATUS;
  */
 
 public class PersonalDataActivity extends BaseActivity implements PersonalDataContract.View {
+
     private UserInfoBean.ResultBean resultBean;
     private PersonalDataContract.Presenter mPresenter;
 
@@ -108,8 +105,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private String touxiangpath;//所更换的头像的路径
     private UploadImageBean uploadimagebean;
 
-    private long birthday;//生日
-    private Calendar birthdaycalendar;//生日
+    private long birthday = 0;//生日
+    private Calendar birthdaycalendar = null;//生日
 
     private String pickeraddress;//选择器返回的地址
 
@@ -117,6 +114,13 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private String shzcode;//傻孩子号
 
     private int updatanum = 0;
+    private TimePickerView pvCustomTime = null;
+    private PickerViewUtil pickerViewUtil = null;
+
+    private int currentLocationAreaItemPosition = 0;
+    private int currentLocationCityItemPosition = 0;
+    private int currentLocationProvinceItemPosition = 0;
+
 
     @Override
     public void setRootView() {
@@ -137,6 +141,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         }
         mPresenter = new PersonalDataPresenter(this);
         initImagePicker();
+        initCustomTimePicker();
+        initOptionPicker();
     }
 
     /**
@@ -236,12 +242,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 startActivityForResult(setSexIntent, RESULT_CODE_BASKET_MINUS);
                 break;
             case R.id.ll_personaldatasr:
-                departureTime();
+                pvCustomTime.show(tv_personalbirthday);
                 break;
             case R.id.ll_personaldatadq:
-//                Intent addressIntent = new Intent(this, AddressSelectionActivity.class);
-//                addressIntent.putExtra("showinland", true);
-//                startActivityForResult(addressIntent, STATUS);
+                pickerViewUtil.onoptionsSelectListener();
+                pickerViewUtil.onoptionsSelect(currentLocationProvinceItemPosition, currentLocationCityItemPosition, currentLocationAreaItemPosition);
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
@@ -334,29 +339,61 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     /**
      * 选择时间的控件
      */
-    private void departureTime() {
-        if (pvTime == null) {
-            //TimePicker
-            //控制时间范围
-            boolean[] type = new boolean[]{true, true, true, false, false, false};
-//            pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
-//
-//                @Override
-//                public void onTimeSelect(Date date, View v) {//选中事件回调
-//                    birthday = date.getTime();
-//                    if (dateformat == null) dateformat = new SimpleDateFormat("yyyy-MM-dd");
-//                    fixbirthday = dateformat.format(date);
-//                    showLoadingDialog(getString(R.string.saveLoad));
-//                    mPresenter.setupInfo("birthday", fixbirthday, 1);
-//                }
-//            }).setType(type).build();
-        }
-        if (birthday != 0) {
-            if (birthdaycalendar == null) birthdaycalendar = Calendar.getInstance();
-            birthdaycalendar.setTimeInMillis(birthday);
-         //   pvTime.setDate(birthdaycalendar);
-        }
-      //  pvTime.show();
+    private void initCustomTimePicker() {
+
+        /**
+         * @description
+         *
+         * 注意事项：
+         * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
+         * 具体可参考demo 里面的两个自定义layout布局。
+         * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+         * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+         */
+        birthdaycalendar = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(birthdaycalendar.get(Calendar.YEAR) - 99, birthdaycalendar.get(Calendar.MONTH), birthdaycalendar.get(Calendar.DAY_OF_MONTH));
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(birthdaycalendar.get(Calendar.YEAR), birthdaycalendar.get(Calendar.MONTH), birthdaycalendar.get(Calendar.DAY_OF_MONTH));
+        //时间选择器 ，自定义布局
+        pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                birthday = date.getTime() / 1000;
+                birthdaycalendar.setTime(date);
+                ((TextView) v).setText(format.format(date));
+            }
+        })
+                .setDate(birthdaycalendar)
+                .setRangDate(startDate, endDate)
+                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        final Button btnSubmit = (Button) v.findViewById(R.id.btnSubmit);
+                        Button btnCancel = (Button) v.findViewById(R.id.btnCancel);
+                        btnSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime.returnData();
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setContentTextSize(18)
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "时", "分", "秒")
+                .setTextXOffset(0, 0, 0, 40, 0, -40)
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(0xFFd5d5d5)
+                .build();
     }
 
     /**
@@ -376,6 +413,19 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             birthday = 0;
             return "";
         }
+    }
+
+
+    private void initOptionPicker() {//条件选择器初始化
+        pickerViewUtil = new PickerViewUtil(this, 0) {
+            @Override
+            public void getAddress(String address, int province, int city, int area) {
+                tv_personaldiqu.setText(address);
+                currentLocationProvinceItemPosition = province;
+                currentLocationCityItemPosition = city;
+                currentLocationAreaItemPosition = area;
+            }
+        };
     }
 
 
@@ -443,6 +493,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         if (pictureSourceDialog != null) {
             pictureSourceDialog.cancel();
         }
+        pickerViewUtil.onDestroy();
         pictureSourceDialog = null;
         GlideCatchUtil.getInstance().cleanImageDisk();
         GlideCatchUtil.getInstance().cleanCatchDisk();

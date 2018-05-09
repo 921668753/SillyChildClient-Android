@@ -468,6 +468,11 @@
             android:name="com.yinglan.scc.mine.personaldata.setsillycode.SetSillyCodeActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--我的   个人资料  设置性别-->
+        <activity
+            android:name="com.yinglan.scc.mine.personaldata.setsex.SetSexActivity"
+            android:screenOrientation="portrait"></activity>
+
         <!--我的   个人资料  修改个性签名-->
         <activity
             android:name="com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity"
