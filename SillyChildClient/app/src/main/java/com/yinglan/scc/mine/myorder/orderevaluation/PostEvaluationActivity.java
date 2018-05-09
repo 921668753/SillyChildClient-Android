@@ -34,7 +34,7 @@ import com.yinglan.scc.dialog.ImagePopupWindow;
 import com.yinglan.scc.dialog.PublicPromptDialog;
 import com.yinglan.scc.entity.UploadImageBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.myorder.orderdetails.OrderDetailsActivity;
+import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import java.io.File;

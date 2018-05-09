@@ -11,10 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
+import com.contrarywind.view.WheelView;
 
 import java.util.List;
 
@@ -125,7 +125,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
         this.backgroundId = builder.backgroundId;
-        this.decorView = builder.decorView;
+       // this.decorView = builder.decorView;
         initView(builder.context);
     }
 
@@ -394,9 +394,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     private void initView(Context context) {
-        setDialogOutSideCancelable(cancelable);
-        initViews(backgroundId);
-        init();
+//        setDialogOutSideCancelable(cancelable);
+//        initViews(backgroundId);
+//        init();
         initEvents();
         if (customListener == null) {
             LayoutInflater.from(context).inflate(layoutRes, contentContainer);
@@ -420,10 +420,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             tvTitle.setText(TextUtils.isEmpty(Str_Title) ? "" : Str_Title);//默认为空
 
             //设置color
-            btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
-            btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
-            tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
-            rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
+//            btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
+//            btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
+//            tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
+//            rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
 
             //设置文字大小
             btnSubmit.setTextSize(Size_Submit_Cancel);
@@ -436,7 +436,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(com.bigkoo.pickerview.R.id.optionspicker);
-        optionsPicker.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
+      //  optionsPicker.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
         wheelOptions = new WheelOptions(optionsPicker, linkage);
         wheelOptions.setTextContentSize(Size_Content);

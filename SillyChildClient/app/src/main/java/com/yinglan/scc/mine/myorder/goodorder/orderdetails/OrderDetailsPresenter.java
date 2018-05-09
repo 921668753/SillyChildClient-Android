@@ -1,8 +1,9 @@
-package com.yinglan.scc.mine.myorder.orderdetails;
+package com.yinglan.scc.mine.myorder.goodorder.orderdetails;
 
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsContract;
 import com.yinglan.scc.retrofit.RequestClient;
 
 /**

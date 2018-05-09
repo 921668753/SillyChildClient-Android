@@ -96,7 +96,7 @@ dependencies {
      * https://github.com/Bigkoo/Android-PickerView
      * 滚动PickerView选择控件
      */
-    compile 'com.contrarywind:Android-PickerView:3.2.6'
+    compile 'com.contrarywind:Android-PickerView:4.1.3'
 
     /**
      * https://github.com/mcxtzhang/SuspensionIndexBar

@@ -29,7 +29,7 @@ public interface PersonalDataContract {
         /**
          * 上传图片
          */
-        void upPictures(String paramname, File voule, int resultsource);
+        void upPictures(String paramname,int resultsource);
 
         /**
          *更改傻孩子账号

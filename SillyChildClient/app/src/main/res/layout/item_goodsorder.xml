@@ -1,201 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MatchMatch"
+    style="@style/MatchWrap"
     android:orientation="vertical">
 
     <LinearLayout
-        style="@style/MatchMatch"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:orientation="vertical">
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen10"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen10">
 
-        <View style="@style/DividerWidth" />
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/orderNumber1"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize13" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen44"
-            android:background="@color/whiteColors"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
+        <TextView
+            android:id="@+id/tv_orderNumber"
+            style="@style/AutoWrap"
+            android:singleLine="true"
+            android:text="201804290939"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize13" />
 
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/orderNumber"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize13" />
+        <TextView
+            android:id="@+id/tv_goodStatus"
+            style="@style/WrapWrap"
+            android:text="@string/obligation"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize13" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_good_code"
-                style="@style/AutoWrap"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize13" />
+    <TextView style="@style/DividerWidth" />
 
-            <TextView
-                android:id="@+id/tv_good_status"
-                style="@style/WrapWrap"
-                android:textColor="@color/guideShapeColors"
-                android:textSize="@dimen/textsize14" />
-        </LinearLayout>
+    <com.common.cklibrary.utils.myview.ChildListView
+        android:id="@+id/clv_shopgoods"
+        style="@style/MatchWrap"
+        android:divider="@color/dividercolors2"
+        android:dividerHeight="@dimen/dimen1"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_shopgoodsup" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen105"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-            <HorizontalScrollView
-                android:id="@+id/hsv_goodpic"
-                style="@style/MatchWrap"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:scrollbars="none"
-                android:visibility="gone">
-
-                <ListView
-                    android:id="@+id/lv_goodpic"
-                    style="@style/MatchWrap"
-                    android:dividerHeight="@dimen/dimen10"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    tools:listitem="@layout/item_goodsorder_images" />
-            </HorizontalScrollView>
+    <TextView style="@style/DividerWidth" />
 
 
-            <RelativeLayout
-                android:id="@+id/rl_good"
-                style="@style/MatchMatch">
-
-                <ImageView
-                    android:id="@+id/iv_goodsicon"
-                    android:layout_width="@dimen/dimen81"
-                    android:layout_height="@dimen/dimen81"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/placeholderfigure1" />
-
-                <LinearLayout
-                    style="@style/WrapWrap"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen15"
-                    android:layout_toRightOf="@id/iv_goodsicon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_good_title"
-                        style="@style/WrapWrap"
-                        android:maxLines="2"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize15" />
-
-                    <TextView
-                        android:id="@+id/tv_good_describe"
-                        style="@style/WrapWrap"
-                        android:layout_marginTop="@dimen/dimen18"
-                        android:singleLine="true"
-                        android:textColor="@color/hintColors"
-                        android:textSize="@dimen/textsize12" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </RelativeLayout>
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen15">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen35"
-            android:background="@color/whiteColors"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
+            style="@style/WrapWrap"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen10">
 
             <TextView
-                android:id="@+id/tv_good_datetime"
+                android:id="@+id/tv_goodNumber"
                 style="@style/WrapWrap"
-                android:textColor="@color/hintColors"
-                android:textSize="@dimen/textsize12" />
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="共2件商品"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
 
             <LinearLayout
-                style="@style/AutoWrap"
-                android:gravity="right"
+                style="@style/WrapWrap"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/WrapWrap"
-                    android:text="@string/totalOnlyWord"
-                    android:textColor="@color/hintColors"
-                    android:textSize="@dimen/textsize12" />
-
-                <TextView
-                    android:id="@+id/tv_good_num"
-                    style="@style/WrapWrap"
-                    android:maxEms="3"
-                    android:paddingLeft="@dimen/dimen3"
-                    android:paddingRight="@dimen/dimen3"
-                    android:singleLine="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize12" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:text="@string/goods"
-                    android:textColor="@color/hintColors"
-                    android:textSize="@dimen/textsize12" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen10"
                     android:text="@string/actualPaymentInCart"
-                    android:textColor="@color/hintColors"
-                    android:textSize="@dimen/textsize12" />
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
 
                 <TextView
-                    android:id="@+id/tv_good_paymoney"
                     style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:text="@string/renminbi"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_goodsMoney"
+                    style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:maxWidth="@dimen/dimen90"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize14" />
+                    android:text="1314.00"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
             </LinearLayout>
+
+
         </LinearLayout>
 
-        <include layout="@layout/common_dividerwidth1" />
+        <include layout="@layout/gooddetails_bottombar" />
 
-        <LinearLayout
-            style="@style/MatchWrap"
-            android:background="@color/whiteColors"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_leftbtn"
-                android:layout_width="@dimen/dimen75"
-                android:layout_height="@dimen/dimen30"
-                android:layout_marginBottom="@dimen/dimen10"
-                android:layout_marginRight="@dimen/dimen15"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/shape_code1"
-                android:gravity="center"
-                android:text="@string/payment"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize13" />
-
-            <TextView
-                android:id="@+id/tv_rightbtn"
-                android:layout_width="@dimen/dimen75"
-                android:layout_height="@dimen/dimen30"
-                android:layout_marginBottom="@dimen/dimen10"
-                android:layout_marginRight="@dimen/dimen15"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/shape_guidelabels"
-                android:gravity="center"
-                android:text="@string/payment"
-                android:textColor="@color/guideShapeColors"
-                android:textSize="@dimen/textsize13" />
-        </LinearLayout>
-
-        <View style="@style/DividerWidth" />
     </LinearLayout>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen10"
+        android:background="@color/background" />
+
+</LinearLayout>

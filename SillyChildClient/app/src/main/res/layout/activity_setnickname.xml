@@ -21,11 +21,12 @@
             style="@style/AutoMatch"
             android:background="@color/whiteColors"
             android:hint="@string/nicknamehint"
+            android:maxLength="11"
             android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen15"
-            android:maxLength="11"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize16" />
 
         <ImageView

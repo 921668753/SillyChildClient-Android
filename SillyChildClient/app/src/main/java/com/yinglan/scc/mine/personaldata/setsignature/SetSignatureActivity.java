@@ -17,6 +17,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
+import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -72,6 +73,7 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
+                SoftKeyboardUtils.packUpKeyboard(aty);
                 aty.finish();
             }
 
@@ -79,6 +81,7 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
+                SoftKeyboardUtils.packUpKeyboard(aty);
                 mPresenter.setupInfo(et_signature.getText().toString());
             }
         };

@@ -1,8 +1,9 @@
 package com.yinglan.scc.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,25 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
+import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.dialog.VIPPermissionsDialog;
 import com.yinglan.scc.entity.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.fansattention.FansAttentionActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
-import com.yinglan.scc.mine.myrelease.MyReleaseActivity;
 import com.yinglan.scc.mine.mywallet.MyWalletActivity;
 import com.yinglan.scc.mine.personaldata.PersonalDataActivity;
 import com.yinglan.scc.mine.setup.SetUpActivity;
@@ -38,17 +40,37 @@ import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static android.app.Activity.RESULT_OK;
+import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE;
+import static com.yinglan.scc.constant.NumericConstants.STATUS;
+
 /**
  * 个人中心
  * Created by Admin on 2017/8/10.
  */
-
-public class MineFragment extends BaseFragment implements MineContract.View, BGARefreshLayout.BGARefreshLayoutDelegate {
+@SuppressLint("NewApi")
+public class MineFragment extends BaseFragment implements MineContract.View, View.OnScrollChangeListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private MainActivity aty;
 
     @BindView(id = R.id.mRefreshLayout, click = true)
     private BGARefreshLayout mRefreshLayout;
+
+
+    @BindView(id = R.id.sv_mine)
+    private ScrollView sv_mine;
+
+    @BindView(id = R.id.rl_title)
+    private RelativeLayout rl_title;
+
+    @BindView(id = R.id.tv_title)
+    private TextView tv_title;
+
+    @BindView(id = R.id.tv_editData1, click = true)
+    private TextView tv_editData1;
+
+    @BindView(id = R.id.tv_divider)
+    private TextView tv_divider;
 
     @BindView(id = R.id.tv_editData, click = true)
     private TextView tv_editData;
@@ -94,9 +116,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     private boolean isRefreshMineFragment;
     private boolean isReLogin;
     private String headpic;
-    private String address;
-    private Intent intentjump;
-
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -108,14 +127,14 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     protected void initData() {
         super.initData();
         mPresenter = new MinePresenter(this);
-        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
-        mRefreshLayout.beginRefreshing();
     }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
+        mRefreshLayout.beginRefreshing();
+        sv_mine.setOnScrollChangeListener(this);
     }
 
 
@@ -123,6 +142,26 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.tv_editData:
+                Intent intent = new Intent(aty, PersonalDataActivity.class);
+                // 获取内容
+//                intent.putExtra("selectCity", cityName.getName());
+//                intent.putExtra("selectCityId", cityName.getId());
+//                intent.putExtra("selectCountry", getString(R.string.china));
+//                intent.putExtra("selectCountryId", cityName.getCountry_id());
+                // 设置结果 结果码，一个数据
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.tv_editData1:
+                Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
+                // 获取内容
+//                intent.putExtra("selectCity", cityName.getName());
+//                intent.putExtra("selectCityId", cityName.getId());
+//                intent.putExtra("selectCountry", getString(R.string.china));
+//                intent.putExtra("selectCountryId", cityName.getCountry_id());
+                // 设置结果 结果码，一个数据
+                startActivityForResult(personalDataIntent, REQUEST_CODE);
+                break;
             case R.id.ll_mineshopping:
                 ViewInject.toast(getActivity().getString(R.string.noDevelopment));
                 //   aty.showActivity(aty, MyShoppingCartActivity.class);
@@ -133,7 +172,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
             case R.id.ll_mineorder:
                 aty.showActivity(aty, MyOrderActivity.class);
                 break;
-
             case R.id.ll_minecollection:
                 aty.showActivity(aty, MyCollectionActivity.class);
                 break;
@@ -252,7 +290,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 
     @Override
     public void setPresenter(MineContract.Presenter presenter) {
-        mPresenter = (MinePresenter) presenter;
+        mPresenter = presenter;
     }
 
     @Override
@@ -265,14 +303,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         if (userInfoBean != null && userInfoBean.getResult() != null) {
             saveUserInfo();
             tv_nickname.setText(userInfoBean.getResult().getNickname());
-            address = "";
-            if (!TextUtils.isEmpty(userInfoBean.getResult().getCountry())) {
-                address += userInfoBean.getResult().getCountry() + "•";
-            }
-            if (!TextUtils.isEmpty(userInfoBean.getResult().getCity())) {
-                address += userInfoBean.getResult().getCity();
-            }
-
             if (TextUtils.isEmpty(userInfoBean.getResult().getHead_pic())) {
                 iv_minetouxiang.setImageResource(R.mipmap.avatar);
                 headpic = null;
@@ -280,7 +310,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 headpic = userInfoBean.getResult().getHead_pic();
                 GlideImageLoader.glideLoader(aty, headpic, iv_minetouxiang, 0, R.mipmap.avatar);
             }
-
         } else {
             ViewInject.toast(getString(R.string.noHaveUserInfo));
             initDefaultInfo();
@@ -290,17 +319,11 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 
     @Override
     public void errorMsg(String msg, int flag) {
-        mRefreshLayout.endRefreshing();
         dismissLoadingDialog();
         if (isLogin(msg)) {
             initDefaultInfo();
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            aty.showActivity(aty, LoginActivity.class);
             return;
         }
-        initDefaultInfo();
         ViewInject.toast(msg);
     }
 
@@ -322,14 +345,88 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        //    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
+        mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
         ((MinePresenter) mPresenter).getInfo();
-        mRefreshLayout.endRefreshing();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         return false;
     }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if (scrollY <= 0) {
+            rl_title.setBackgroundColor(Color.TRANSPARENT);
+            //                          设置文字颜色，黑色，加透明度
+            tv_title.setTextColor(Color.TRANSPARENT);
+            tv_editData1.setTextColor(Color.TRANSPARENT);
+            tv_divider.setBackgroundColor(Color.TRANSPARENT);
+            Log.e("111", "y <= 0");
+        } else if (scrollY > 0 && scrollY <= 200) {
+            float scale = (float) scrollY / 200;
+            float alpha = (255 * scale);
+            // 只是layout背景透明(仿知乎滑动效果)白色透明
+            rl_title.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+            //                          设置文字颜色，黑色，加透明度
+            tv_title.setTextColor(Color.argb((int) alpha, 0, 0, 0));
+            tv_editData1.setTextColor(Color.argb((int) alpha, 0, 0, 0));
+            tv_divider.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+            Log.e("111", "y > 0 && y <= imageHeight");
+        } else {
+//                          白色不透明
+            rl_title.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+            //                          设置文字颜色
+            //黑色
+            tv_title.setTextColor(Color.argb((int) 255, 0, 0, 0));
+            tv_editData1.setTextColor(Color.argb((int) 255, 0, 0, 0));
+            tv_divider.setBackgroundColor(getResources().getColor(R.color.dividercolors2));
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
+            String selectCity = data.getStringExtra("selectCity");
+            int selectCityId = data.getIntExtra("selectCityId", 0);
+            String selectCountry = data.getStringExtra("selectCountry");
+            int selectCountryId = data.getIntExtra("selectCountryId", 0);
+//            Intent intent = new Intent();
+//            // 获取内容
+//            intent.putExtra("selectCity", selectCity);
+//            intent.putExtra("selectCityId", selectCityId);
+//            intent.putExtra("selectCountry", selectCountry);
+//            intent.putExtra("selectCountryId", selectCountryId);
+//            // 设置结果 结果码，一个数据
+//            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+        }
+    }
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    sv_mine.scrollTo(0, 1);
+//                    mRefreshLayout.beginRefreshing();
+//                }
+//            }, 600);
+        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
+            if (!StringUtils.isEmpty(avatar)) {
+//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
+            }
+        }
+    }
+
 }

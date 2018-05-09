@@ -24,6 +24,7 @@
             android:padding="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
 

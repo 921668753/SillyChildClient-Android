@@ -47,7 +47,7 @@ public class AboutUsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         webViewLayout.removeAllViews();
-        webViewLayout=null;
+        webViewLayout = null;
     }
 
     /**

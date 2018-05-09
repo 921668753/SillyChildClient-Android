@@ -243,9 +243,9 @@
                 <ImageView
                     android:layout_width="@dimen/dimen37"
                     android:layout_height="@dimen/dimen21"
-                    android:layout_marginBottom="@dimen/dimen13"
+                    android:layout_marginBottom="@dimen/dimen20"
                     android:layout_marginLeft="@dimen/dimen15"
-                    android:layout_marginTop="@dimen/dimen13"
+                    android:layout_marginTop="@dimen/dimen20"
                     android:src="@mipmap/mine_zfbxxx" />
 
 

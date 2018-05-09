@@ -140,7 +140,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/fl_goodorder"
+        android:id="@+id/order_content"
         style="@style/MatchMatch"/>
 
 </LinearLayout>

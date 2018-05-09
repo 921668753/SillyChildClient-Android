@@ -1,10 +1,7 @@
-package com.yinglan.scc.adapter;
+package com.yinglan.scc.adapter.mine.myorder.orderdetails;
 
 import android.content.Context;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.OrderDetailBean.ResultBean.ListBean;
@@ -14,27 +11,24 @@ import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 /**
- * 司导消息 适配器
+ * 订单详情 适配器
  * Created by Admin on 2017/8/15.
  */
 
 public class OrderDetailGoodAdapter extends BGAAdapterViewAdapter<ListBean> {
-    private Context context;
 
     public OrderDetailGoodAdapter(Context context) {
         super(context, R.layout.item_shopgoodsup);
-        this.context = context;
     }
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
 
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getAvatar(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
         viewHolderHelper.setText(R.id.tv_goodtitle, listBean.getAvatar());
-        viewHolderHelper.setText(R.id.tv_gooddescribe, listBean.getAvatar());
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getAvatar(), (ImageView) viewHolderHelper.getView(R.id.iv_goodsicon), R.mipmap.placeholderfigure1);
-        viewHolderHelper.setText(R.id.tv_money, listBean.getAvatar());
         viewHolderHelper.setText(R.id.tv_number, listBean.getAvatar());
-//        adapter.addNewData(charterOrderBean.getResult().getList());
+        viewHolderHelper.setText(R.id.tv_goodDescribe, mContext.getString(R.string.general) + 2 + mContext.getString(R.string.items));
+        viewHolderHelper.setText(R.id.tv_money, listBean.getAvatar());
 
 //        /**
 //         * 图片

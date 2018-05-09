@@ -19,7 +19,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.CharterOrderAdapter;
+import com.yinglan.scc.adapter.mine.myorder.GoodsOrderAdapter;
 import com.yinglan.scc.entity.CharterOrderBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
@@ -35,9 +35,11 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 
 public class ObligationGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener,BGARefreshLayout.BGARefreshLayoutDelegate,CharterOrderContract.View{
+
+
     private MyOrderActivity aty;
-    private CharterOrderAdapter mAdapter;
-    private CharterOrderContract.Presenter mPresenter;
+
+    private GoodsOrderAdapter mAdapter;
 
     @BindView(id=R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -56,6 +58,7 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
     private TextView tv_hintText;
 
     private CharterOrderBean charterOrderBean;
+
     private List<CharterOrderBean.ResultBean.ListBean> databean;
 
     @Override
@@ -68,9 +71,7 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
     protected void initData() {
         super.initData();
         mPresenter = new CharterOrderPresenter(this);
-        mAdapter = new CharterOrderAdapter(aty);
-
-
+        mAdapter = new GoodsOrderAdapter(aty);
     }
 
     @Override
@@ -146,8 +147,7 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
         ll_commonError.setVisibility(View.GONE);
         mAdapter.clear();
         databean=charterOrderBean.getResult().getList();
-        mAdapter.addNewData(databean);
-
+     //   mAdapter.addNewData(databean);
         dismissLoadingDialog();
 
     }

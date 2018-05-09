@@ -1,4 +1,4 @@
-package com.yinglan.scc.mine.myorder.orderdetails;
+package com.yinglan.scc.mine.myorder.goodorder.orderdetails;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;

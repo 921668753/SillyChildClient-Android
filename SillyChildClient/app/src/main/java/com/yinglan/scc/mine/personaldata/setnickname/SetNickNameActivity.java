@@ -17,6 +17,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
+import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -36,7 +37,7 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
     private EditText et_nickname;
 
 
-    @BindView(id = R.id.img_quxiao)
+    @BindView(id = R.id.img_quxiao, click = true)
     private ImageView img_quxiao;
 
 
@@ -74,6 +75,7 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
+                SoftKeyboardUtils.packUpKeyboard(aty);
                 aty.finish();
             }
 
@@ -81,12 +83,22 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
+                SoftKeyboardUtils.packUpKeyboard(aty);
                 mPresenter.setupInfo(et_nickname.getText().toString());
             }
         };
         titlebar.setDelegate(simpleDelegate);
     }
 
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.img_quxiao:
+                et_nickname.setText("");
+                break;
+        }
+    }
 
     @Override
     public void setPresenter(SetNickNameContract.Presenter presenter) {

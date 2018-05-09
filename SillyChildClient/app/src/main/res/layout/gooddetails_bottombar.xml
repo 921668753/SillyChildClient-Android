@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match50"
+    android:background="@color/whiteColors"
+    android:gravity="center_vertical|right"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/dimen15">
+
+    <TextView
+        android:id="@+id/tv_leftbtn"
+        style="@style/Match9035"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/cancelOrder"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="visible" />
+
+    <TextView
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/payment"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="visible" />
+
+
+    <TextView
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/remindDelivery"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+
+    <TextView
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/checkLogistics"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_rightbtn"
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/confirmReceipt"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+    <TextView
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/applyAfterSales"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+    <TextView
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/appraiseOrder"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+
+</LinearLayout>

@@ -1,19 +1,19 @@
 package com.yinglan.scc.mine.myorder;
 
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.mine.myorder.charterorder.CharterOrderFragment;
-import com.yinglan.scc.mine.myorder.goodorder.GoodOrderFragment;
-import com.yinglan.scc.mine.myorder.homestayorder.HomestayOrderFragment;
+import com.yinglan.scc.mine.myorder.goodorder.AfterSaleGoodFragment;
+import com.yinglan.scc.mine.myorder.goodorder.AllGoodFragment;
+import com.yinglan.scc.mine.myorder.goodorder.CompletedGoodFragment;
+import com.yinglan.scc.mine.myorder.goodorder.ObligationGoodFragment;
+import com.yinglan.scc.mine.myorder.goodorder.SendGoodsGoodFragment;
+import com.yinglan.scc.mine.myorder.goodorder.WaitGoodsGoodFragment;
 
 /**
  * 我的订单
@@ -22,43 +22,36 @@ import com.yinglan.scc.mine.myorder.homestayorder.HomestayOrderFragment;
 
 public class MyOrderActivity extends BaseActivity {
 
-    @BindView(id = R.id.iv_back, click = true)
-    private ImageView iv_back;
+    @BindView(id = R.id.tv_good_obligation, click = true)
+    private TextView tv_good_obligation;
 
-    @BindView(id = R.id.fl_myorder)
-    private FrameLayout fl_myorder;
+    @BindView(id = R.id.tv_good_send, click = true)
+    private TextView tv_good_send;
 
-    @BindView(id = R.id.tv_goodorder)
-    private TextView tv_goodorder;
 
-    @BindView(id = R.id.v_goodorder)
-    private View v_goodorder;
+    @BindView(id = R.id.tv_good_wait, click = true)
+    private TextView tv_good_wait;
 
-    @BindView(id = R.id.tv_charterorder)
-    private TextView tv_charterorder;
 
-    @BindView(id = R.id.v_charterorder)
-    private View v_charterorder;
+    @BindView(id = R.id.tv_good_completed, click = true)
+    private TextView tv_good_completed;
 
-    @BindView(id = R.id.tv_homestayorder)
-    private TextView tv_homestayorder;
 
-    @BindView(id = R.id.v_homestayorder)
-    private View v_homestayorder;
+    @BindView(id = R.id.tv_good_afterSale, click = true)
+    private TextView tv_good_afterSale;
 
-    @BindView(id = R.id.ll_order_good, click = true)
-    private LinearLayout ll_order_good;
 
-    @BindView(id = R.id.ll_order_charter, click = true)
-    private LinearLayout ll_order_charter;
+    @BindView(id = R.id.tv_good_all, click = true)
+    private TextView tv_good_all;
 
-    @BindView(id = R.id.ll_order_homestay, click = true)
-    private LinearLayout ll_order_homestay;
 
-    private CharterOrderFragment charterOrderFragment;
-    private GoodOrderFragment goodOrderFragment;
-    private HomestayOrderFragment homestayOrderFragment;
-    private int chageIcon;
+    private BaseFragment obligationGoodFragment;
+    private BaseFragment sendGoodsGoodFragment;
+    private BaseFragment waitGoodsGoodFragment;
+    private BaseFragment completedGoodFragment;
+    private BaseFragment afterSaleGoodFragment;
+    private BaseFragment allGoodFragment;
+    private int chageIcon = 0;
 
     @Override
     public void setRootView() {
@@ -68,50 +61,69 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        charterOrderFragment = new CharterOrderFragment();
-        homestayOrderFragment = new HomestayOrderFragment();
-        goodOrderFragment = new GoodOrderFragment();
-        chageIcon = getIntent().getIntExtra("chageIcon", 0);
+        obligationGoodFragment = new ObligationGoodFragment();
+        sendGoodsGoodFragment = new SendGoodsGoodFragment();
+        waitGoodsGoodFragment = new WaitGoodsGoodFragment();
+        completedGoodFragment = new CompletedGoodFragment();
+        afterSaleGoodFragment = new AfterSaleGoodFragment();
+        allGoodFragment = new AllGoodFragment();
+        chageIcon = aty.getIntent().getIntExtra("chageIcon", 0);
 
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        cleanColors();
-        changeFragment(charterOrderFragment);
+        initTitle();
+        cleanColors(0);
+        changeFragment(obligationGoodFragment);
+        chageIcon = 0;
+    }
 
+    /**
+     * 设置标题
+     */
+    public void initTitle() {
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.myOrder), true, R.id.titlebar);
     }
 
     public void changeFragment(BaseFragment targetFragment) {
-        super.changeFragment(R.id.fl_myorder, targetFragment);
+        super.changeFragment(R.id.order_content, targetFragment);
     }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_order_charter:
+            case R.id.tv_good_obligation:
+                cleanColors(0);
+                changeFragment(obligationGoodFragment);
                 chageIcon = 0;
-                cleanColors();
-                changeFragment(charterOrderFragment);
-
                 break;
-            case R.id.ll_order_homestay:
-                ViewInject.toast(getString(R.string.noDevelopment));
-//                chageIcon = 1;
-//                cleanColors();
-//                changeFragment(homestayOrderFragment);
+            case R.id.tv_good_send:
+                cleanColors(1);
+                changeFragment(sendGoodsGoodFragment);
+                chageIcon = 1;
                 break;
-            case R.id.ll_order_good:
-                ViewInject.toast(getString(R.string.noDevelopment));
-//                chageIcon = 2;
-//                cleanColors();
-//                changeFragment(goodOrderFragment);
-
+            case R.id.tv_good_wait:
+                cleanColors(2);
+                changeFragment(waitGoodsGoodFragment);
+                chageIcon = 2;
                 break;
-            case R.id.iv_back:
-                finish();
+            case R.id.tv_good_completed:
+                cleanColors(3);
+                changeFragment(completedGoodFragment);
+                chageIcon = 3;
+                break;
+            case R.id.tv_good_afterSale:
+                cleanColors(4);
+                changeFragment(afterSaleGoodFragment);
+                chageIcon = 4;
+                break;
+            case R.id.tv_good_all:
+                cleanColors(5);
+                changeFragment(allGoodFragment);
+                chageIcon = 5;
                 break;
         }
 
@@ -121,24 +133,26 @@ public class MyOrderActivity extends BaseActivity {
      * 清除颜色，并添加颜色
      */
     @SuppressWarnings("deprecation")
-    public void cleanColors() {
-        tv_charterorder.setTextColor(getResources().getColor(R.color.hintColors));
-        v_charterorder.setBackgroundResource(android.R.color.transparent);
-        tv_homestayorder.setTextColor(getResources().getColor(R.color.hintColors));
-        v_homestayorder.setBackgroundResource(android.R.color.transparent);
-        tv_goodorder.setTextColor(getResources().getColor(R.color.hintColors));
-        v_goodorder.setBackgroundResource(android.R.color.transparent);
+    public void cleanColors(int chageIcon) {
+        tv_good_obligation.setTextColor(getResources().getColor(R.color.textColor));
+        tv_good_send.setTextColor(getResources().getColor(R.color.textColor));
+        tv_good_wait.setTextColor(getResources().getColor(R.color.textColor));
+        tv_good_completed.setTextColor(getResources().getColor(R.color.textColor));
+        tv_good_afterSale.setTextColor(getResources().getColor(R.color.textColor));
+        tv_good_all.setTextColor(getResources().getColor(R.color.textColor));
         if (chageIcon == 0) {
-            tv_charterorder.setTextColor(getResources().getColor(R.color.text_color));
-            v_charterorder.setBackgroundResource(R.color.text_color);
+            tv_good_obligation.setTextColor(getResources().getColor(R.color.greenColors));
         } else if (chageIcon == 1) {
-            tv_homestayorder.setTextColor(getResources().getColor(R.color.text_color));
-            v_homestayorder.setBackgroundResource(R.color.text_color);
+            tv_good_send.setTextColor(getResources().getColor(R.color.greenColors));
         } else if (chageIcon == 2) {
-            tv_goodorder.setTextColor(getResources().getColor(R.color.text_color));
-            v_goodorder.setBackgroundResource(R.color.text_color);
+            tv_good_wait.setTextColor(getResources().getColor(R.color.greenColors));
+        } else if (chageIcon == 3) {
+            tv_good_completed.setTextColor(getResources().getColor(R.color.greenColors));
+        } else if (chageIcon == 4) {
+            tv_good_afterSale.setTextColor(getResources().getColor(R.color.greenColors));
+        } else if (chageIcon == 5) {
+            tv_good_all.setTextColor(getResources().getColor(R.color.greenColors));
         }
     }
-
-
 }
+

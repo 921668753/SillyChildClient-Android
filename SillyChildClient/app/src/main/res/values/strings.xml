@@ -16,7 +16,7 @@
 
     <!--公共的-->
     <string name="imagePathError">图片路径错误</string>
-
+    <string name="noData">没有数据</string>
 
     <!--登录-->
     <string name="login">登录</string>
@@ -855,6 +855,7 @@
     <string name="submitOrder">提交订单</string>
     <string name="multiply">X</string>
     <string name="complete">完成</string>
+    <string name="items">件商品</string>
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
@@ -888,7 +889,7 @@
     <string name="atRegion">地区</string>
     <string name="bindEmail">绑定邮箱</string>
     <string name="personalizedSignature">个性签名</string>
-    <string name="personalizedSignatureHint">一句话描述你的个性签名</string>
+    <string name="personalizedSignatureHint">一句话描述你的个性签名(最多30个字)</string>
     <string name="changepassword">修改密码</string>
     <string name="fillSignature">请填写您的个性签名</string>
     <string name="bindEmailHint">请输入认证邮箱</string>
@@ -974,6 +975,7 @@
 
     <!-- 个人中心 我的订单  商品订单-->
     <string name="orderNumber">订单编号：</string>
+    <string name="orderNumber1">订单号：</string>
     <string name="totalOnlyWord">共</string>
     <string name="goods">件商品</string>
     <string name="payment">确认付款</string>
@@ -984,6 +986,9 @@
     <string name="applyAfterSales">申请售后</string>
     <string name="appraise">评价</string>
     <string name="confirmCompleted">确认完成</string>
+    <string name="appraiseOrder">评价订单</string>
+    <string name="cancelOrder">取消订单</string>
+
 
     <!-- 个人中心 我的订单  包车订单-->
     <string name="ongoing">进行中</string>
@@ -1008,6 +1013,7 @@
 
     <!-- 个人中心 我的订单  订单详情-->
     <string name="orderDetails">订单详情</string>
+    <string name="waitSending">等待发货</string>
     <string name="orderNumberThreeWord">订单号：</string>
     <string name="orderTime">下单时间：</string>
     <string name="goodsTotal">商品总额</string>
@@ -1040,6 +1046,23 @@
     <string name="serviceStartTime">服务开始时间：</string>
     <string name="noExplanation">暂无相关说明，敬请期待！</string>
     <string name="scheduleDetails">行程详情</string>
+
+    <string name="orderInformation">订单信息</string>
+    <string name="commodityInformation">商品信息</string>
+    <string name="goodsTogether">商品合计：</string>
+    <string name="freight1">运费：</string>
+    <string name="coupons1">优惠券：</string>
+    <string name="usable1">一张可用</string>
+    <string name="preferentialActivities">活动优惠：</string>
+    <string name="submitTime">提交时间：</string>
+    <string name="amountRealPay">实付金额：</string>
+    <string name="paymentTime">付款时间：</string>
+    <string name="deliveryTime">发货时间：</string>
+
+    <string name="waitingPayment">等待买家付款</string>
+    <string name="lateCancelled">请在50分钟内付款，逾期订单将被取消</string>
+    <string name="payment1">付款</string>
+    <string name="checkLogistics">查看物流</string>
 
 
     <!-- 个人中心  我的发布  动态-->
