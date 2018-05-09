@@ -1,26 +1,22 @@
 package com.yinglan.scc.mine.mywallet.mybankcard;
 
-import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
-
-import java.util.List;
 
 /**
  * 添加银行卡
@@ -138,14 +134,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      */
     @SuppressWarnings("unchecked")
     private void selectBankName() {
-        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-//                bank_id = bankList.get(options1).getId();
-//                ((TextView) v).setText(bankList.get(options1).getBank());
-            }
-        }).build();
+//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+////                bank_id = bankList.get(options1).getId();
+////                ((TextView) v).setText(bankList.get(options1).getBank());
+//            }
+//        }).build();
     }
 
     /* 定义一个倒计时的内部类 */

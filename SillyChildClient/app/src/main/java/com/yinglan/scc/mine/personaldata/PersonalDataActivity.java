@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
@@ -339,24 +339,24 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             //TimePicker
             //控制时间范围
             boolean[] type = new boolean[]{true, true, true, false, false, false};
-            pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
-
-                @Override
-                public void onTimeSelect(Date date, View v) {//选中事件回调
-                    birthday = date.getTime();
-                    if (dateformat == null) dateformat = new SimpleDateFormat("yyyy-MM-dd");
-                    fixbirthday = dateformat.format(date);
-                    showLoadingDialog(getString(R.string.saveLoad));
-                    mPresenter.setupInfo("birthday", fixbirthday, 1);
-                }
-            }).setType(type).build();
+//            pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
+//
+//                @Override
+//                public void onTimeSelect(Date date, View v) {//选中事件回调
+//                    birthday = date.getTime();
+//                    if (dateformat == null) dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//                    fixbirthday = dateformat.format(date);
+//                    showLoadingDialog(getString(R.string.saveLoad));
+//                    mPresenter.setupInfo("birthday", fixbirthday, 1);
+//                }
+//            }).setType(type).build();
         }
         if (birthday != 0) {
             if (birthdaycalendar == null) birthdaycalendar = Calendar.getInstance();
             birthdaycalendar.setTimeInMillis(birthday);
-            pvTime.setDate(birthdaycalendar);
+         //   pvTime.setDate(birthdaycalendar);
         }
-        pvTime.show();
+      //  pvTime.show();
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.yinglan.scc.entity;
 
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.common.cklibrary.entity.BaseResult;
+import com.contrarywind.interfaces.IPickerViewData;
 
 import java.util.List;
 

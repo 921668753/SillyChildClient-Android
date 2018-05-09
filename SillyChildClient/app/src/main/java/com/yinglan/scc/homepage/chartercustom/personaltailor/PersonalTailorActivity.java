@@ -6,8 +6,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
@@ -447,19 +447,19 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
         Calendar endDate = Calendar.getInstance();
         endDate.set(calendar.get(Calendar.YEAR) + 1, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pvTime = null;
-        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
-
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (date.getTime() <= System.currentTimeMillis()) {
-                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
-                    return;
-                }
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                travelTime = date.getTime() / 1000;
-                ((TextView) v).setText(format.format(date));
-            }
-        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
+//        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
+//
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                if (date.getTime() <= System.currentTimeMillis()) {
+//                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
+//                    return;
+//                }
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//                travelTime = date.getTime() / 1000;
+//                ((TextView) v).setText(format.format(date));
+//            }
+//        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
         pvTime.setDate(calendar);
     }
 
@@ -468,14 +468,14 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
      */
     @SuppressWarnings("unchecked")
     private void travelPreferences() {
-        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-                ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
-            }
-        }).build();
+//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
+//            }
+//        }).build();
     }
 
     /**
@@ -483,14 +483,14 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
      */
     @SuppressWarnings("unchecked")
     private void recommendRestaurant() {
-        pvOptions1 = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-                ((TextView) v).setText(restaurant_chooseList.get(options1).getDescription());
-            }
-        }).build();
+//        pvOptions1 = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                ((TextView) v).setText(restaurant_chooseList.get(options1).getDescription());
+//            }
+//        }).build();
     }
 
     /**
@@ -498,14 +498,14 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
      */
     @SuppressWarnings("unchecked")
     private void recommendedAccommodation() {
-        pvOptions2 = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-                ((TextView) v).setText(sleep_chooseList.get(options1).getDescription());
-            }
-        }).build();
+//        pvOptions2 = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                ((TextView) v).setText(sleep_chooseList.get(options1).getDescription());
+//            }
+//        }).build();
     }
 
 

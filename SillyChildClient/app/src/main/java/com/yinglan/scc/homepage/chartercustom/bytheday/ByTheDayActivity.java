@@ -6,8 +6,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
@@ -366,20 +366,20 @@ public class ByTheDayActivity extends BaseActivity implements ByTheDayContract.V
         Calendar endDate = Calendar.getInstance();
         endDate.set(calendar.get(Calendar.YEAR) + 1, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pvTime = null;
-        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
-
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (date.getTime() <= System.currentTimeMillis()) {
-                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
-                    return;
-                }
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                pack_time = date.getTime() / 1000;
-                ((TextView) v).setText(format.format(date));
-            }
-        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
-        pvTime.setDate(calendar);
+//        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
+//
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                if (date.getTime() <= System.currentTimeMillis()) {
+//                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
+//                    return;
+//                }
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//                pack_time = date.getTime() / 1000;
+//                ((TextView) v).setText(format.format(date));
+//            }
+//        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
+//        pvTime.setDate(calendar);
     }
 
 

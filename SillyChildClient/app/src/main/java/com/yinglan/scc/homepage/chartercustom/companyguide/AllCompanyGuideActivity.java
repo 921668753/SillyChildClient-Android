@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
@@ -299,19 +299,19 @@ public class AllCompanyGuideActivity extends BaseActivity implements AllCompanyG
         Calendar endDate = Calendar.getInstance();
         endDate.set(calendar.get(Calendar.YEAR) + 1, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pvTime = null;
-        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (date.getTime() <= System.currentTimeMillis()) {
-                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
-                    return;
-                }
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                ((TextView) v).setText(format.format(date));
-                showLoadingDialog(getString(R.string.dataLoad));
-                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
-            }
-        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
+//        pvTime = new TimePickerView.Builder(aty, new TimePickerView.OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                if (date.getTime() <= System.currentTimeMillis()) {
+//                    ViewInject.toast(aty.getString(R.string.greateThanCurrentTime));
+//                    return;
+//                }
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                ((TextView) v).setText(format.format(date));
+//                showLoadingDialog(getString(R.string.dataLoad));
+//                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
+//            }
+//        }).setType(type).setRangDate(startDate, endDate).setLabel("", "", "", "", "", "").build();
     }
 
 
@@ -320,15 +320,15 @@ public class AllCompanyGuideActivity extends BaseActivity implements AllCompanyG
      */
     @SuppressWarnings("unchecked")
     private void travelNumber() {
-        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                ((TextView) v).setText(carInfoBean.getResult().get(options1).getSite_num() + "人");
-                travelNumber = carInfoBean.getResult().get(options1).getSite_num();
-                showLoadingDialog(getString(R.string.dataLoad));
-                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
-            }
-        }).build();
+//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+//                ((TextView) v).setText(carInfoBean.getResult().get(options1).getSite_num() + "人");
+//                travelNumber = carInfoBean.getResult().get(options1).getSite_num();
+//                showLoadingDialog(getString(R.string.dataLoad));
+//                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
+//            }
+//        }).build();
     }
 }

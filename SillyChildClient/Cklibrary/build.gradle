@@ -52,7 +52,7 @@ dependencies {
     //gosn json解析
 
     //SweetAlertDialog弹框  https://github.com/F0RIS/sweet-alert-dialog
-    compile 'com.github.f0ris.sweetalert:library:1.5.2'
+    compile 'com.github.f0ris.sweetalert:library:1.5.3'
 
     //图片选择器  https://github.com/jeasonlzy/ImagePicker
     compile 'com.lzy.widget:imagepicker:0.6.1'
