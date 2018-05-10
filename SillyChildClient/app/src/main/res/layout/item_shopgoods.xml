@@ -1,107 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen109"
+    android:layout_height="@dimen/dimen108"
+    android:background="@color/whiteColors"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingRight="@dimen/dimen10"
     android:paddingLeft="@dimen/dimen10"
-    android:background="@color/whiteColors">
+    android:paddingRight="@dimen/dimen10">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen108"
-            android:gravity="center_vertical">
-            <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/arrow"/>
-        </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/dimen40"
+        android:layout_height="@dimen/dimen40"
+        android:padding="@dimen/dimen11"
+        android:src="@mipmap/mineaddress_selectxxx" />
+
+
+    <ImageView
+        android:layout_width="@dimen/dimen81"
+        android:layout_height="@dimen/dimen81"
+        android:background="@drawable/shape_boutiqueline"
+        android:padding="@dimen/dimen1"
+        android:scaleType="fitXY"
+        android:src="@mipmap/default_image" />
+
+    <LinearLayout
+        style="@style/MatchMatch"
+        android:layout_marginLeft="@dimen/dimen13"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dimen14">
+
+        <TextView
+            style="@style/MatchWrap"
+            android:singleLine="true"
+            android:text="纪梵希 Givench 禁忌\n之吻口红纪梵希纪梵希纪梵希纪梵希"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen8"
+            android:singleLine="true"
+            android:text="纪梵希 Givench 禁忌之吻口红"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize12" />
+
 
         <LinearLayout
             style="@style/MatchMatch"
-            android:orientation="vertical"
-            android:layout_marginLeft="@dimen/dimen12">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/renminbi"
+                android:textColor="@color/fF3542Colors"
+                android:textSize="@dimen/textsize15" />
+
+            <TextView
+                style="@style/AutoWrap"
+                android:singleLine="true"
+                android:text="429"
+                android:textColor="@color/fF3542Colors"
+                android:textSize="@dimen/textsize15" />
 
             <LinearLayout
-                style="@style/MatchAuto"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingTop="@dimen/dimen14"
-                android:paddingBottom="@dimen/dimen14">
-                <ImageView
-                    style="@style/WrapWrap"
-                    android:src="@mipmap/default_image"/>
-                <LinearLayout
-                    style="@style/MatchMatch"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/dimen14">
-                    <LinearLayout
-                        style="@style/MatchAuto"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/WrapWrap"
-                            android:text="纪梵希 Givench 禁忌\n之吻口红"
-                            android:textSize="@dimen/textsize14"
-                            android:textColor="@color/textColor"
-                            android:maxLines="2"/>
-                        <TextView
-                            style="@style/WrapWrap"
-                            android:text="纪梵希 Givench 禁忌之吻口红"
-                            android:textSize="@dimen/textsize12"
-                            android:textColor="@color/hintColors"
-                            android:layout_marginTop="@dimen/dimen8"
-                            android:singleLine="true"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        style="@style/MatchWrap"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="bottom">
-                        <TextView
-                            style="@style/WrapWrap"
-                            android:text="@string/moneySign"
-                            android:textColor="@color/redColors"
-                            android:textSize="@dimen/textsize15"/>
-                        <TextView
-                            style="@style/AutoWrap"
-                            android:text="429"
-                            android:textColor="@color/redColors"
-                            android:textSize="@dimen/textsize15"/>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dimen23"
-                            android:minWidth="@dimen/dimen85"
-                            android:orientation="horizontal"
-                            android:background="@drawable/shape_addshoppingcarte">
-                            <TextView
-                                android:layout_width="@dimen/dimen23"
-                                android:layout_height="match_parent"
-                                android:text="@string/subtract"
-                                android:textColor="@color/hintColors"
-                                android:textSize="@dimen/textsize15"
-                                android:gravity="center"/>
-                            <View
-                                style="@style/DividerHeight"/>
-                            <TextView
-                                style="@style/AutoMatch"
-                                android:text="1"
-                                android:textColor="@color/textColor"
-                                android:textSize="@dimen/textsize15"
-                                android:gravity="center"/>
-                            <View
-                                style="@style/DividerHeight"/>
-                            <TextView
-                                android:layout_width="@dimen/dimen23"
-                                android:layout_height="match_parent"
-                                android:text="@string/add"
-                                android:textColor="@color/textColor"
-                                android:textSize="@dimen/textsize15"
-                                android:gravity="center"/>
-                        </LinearLayout>
-                    </LinearLayout>
+                android:layout_width="@dimen/dimen85"
+                android:layout_height="@dimen/dimen23"
+                android:background="@drawable/shape_addshoppingcarte"
+                android:minWidth="@dimen/dimen85"
+                android:orientation="horizontal">
 
-                </LinearLayout>
+                <TextView
+                    android:layout_width="@dimen/dimen23"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/subtract"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize15" />
+
+                <View style="@style/DividerHeight" />
+
+                <TextView
+                    style="@style/AutoMatch"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <View style="@style/DividerHeight" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen23"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/add"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
             </LinearLayout>
-            <View
-                style="@style/DividerWidth"/>
         </LinearLayout>
+
+    </LinearLayout>
+
+
 </LinearLayout>
