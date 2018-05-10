@@ -1,4 +1,4 @@
-package com.yinglan.scc.adapter;
+package com.yinglan.scc.adapter.mine.mywallet.coupons;
 
 import android.content.Context;
 import android.view.View;

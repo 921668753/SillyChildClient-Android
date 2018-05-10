@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist;
+package com.yinglan.scc.homepage.goodslist.goodsdetails;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.JsonUtil;
@@ -8,7 +8,7 @@ import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
-import com.yinglan.scc.homepage.goodslist.GoodsDetailsContract;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsContract;
 import com.yinglan.scc.retrofit.RequestClient;
 
 import java.util.HashMap;

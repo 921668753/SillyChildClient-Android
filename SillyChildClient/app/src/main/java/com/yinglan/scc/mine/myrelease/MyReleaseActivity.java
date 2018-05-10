@@ -31,69 +31,69 @@ import com.yinglan.scc.utils.GlideImageLoader;
 
 public class MyReleaseActivity extends BaseActivity {
 
-    @BindView(id=R.id.iv_back ,click = true)
+    @BindView(id = R.id.iv_back, click = true)
     private ImageView iv_back;
 
-    @BindView(id=R.id.iv_minetouxiang )
+    @BindView(id = R.id.iv_minetouxiang)
     private ImageView iv_minetouxiang;
 
-    @BindView(id=R.id.iv_minetype )
+    @BindView(id = R.id.iv_minetype)
     private ImageView iv_minetype;
 
-    @BindView(id=R.id.tv_mineusername ,click = true)
+    @BindView(id = R.id.tv_mineusername, click = true)
     private TextView tv_mineusername;
 
-    @BindView(id=R.id.iv_minesexicon )
+    @BindView(id = R.id.iv_minesexicon)
     private ImageView iv_minesexicon;
 
     @BindView(id = R.id.tv_address)
     private TextView tv_address;
 
-    @BindView(id = R.id.ll_fensi , click = true)
+    @BindView(id = R.id.ll_fensi, click = true)
     private LinearLayout ll_fensi;
     @BindView(id = R.id.tv_minefsnum)
     private TextView tv_minefsnum;
 
-    @BindView(id = R.id.ll_guanzhu , click = true)
+    @BindView(id = R.id.ll_guanzhu, click = true)
     private LinearLayout ll_guanzhu;
     @BindView(id = R.id.tv_minegznum)
     private TextView tv_minegznum;
 
-    @BindView(id=R.id.tv_minebznum )
+    @BindView(id = R.id.tv_minebznum)
     private TextView tv_minebznum;
 
-    @BindView(id=R.id.tv_minebscnum )
+    @BindView(id = R.id.tv_minebscnum)
     private TextView tv_minebscnum;
 
-    @BindView(id=R.id.ll_dynamicstate ,click = true)
+    @BindView(id = R.id.ll_dynamicstate, click = true)
     private LinearLayout ll_dynamicstate;
-    @BindView(id=R.id.tv_dynamicstate )
+    @BindView(id = R.id.tv_dynamicstate)
     private TextView tv_dynamicstate;
-    @BindView(id=R.id.v_dynamicstate )
+    @BindView(id = R.id.v_dynamicstate)
     private View v_dynamicstate;
 
-    @BindView(id=R.id.ll_strate ,click = true)
+    @BindView(id = R.id.ll_strate, click = true)
     private LinearLayout ll_strate;
-    @BindView(id=R.id.tv_strate )
+    @BindView(id = R.id.tv_strate)
     private TextView tv_strate;
-    @BindView(id=R.id.v_strate )
+    @BindView(id = R.id.v_strate)
     private View v_strate;
 
-    @BindView(id=R.id.ll_collectiondynamic ,click = true)
+    @BindView(id = R.id.ll_collectiondynamic, click = true)
     private LinearLayout ll_collectiondynamic;
-    @BindView(id=R.id.tv_collectiondynamic )
+    @BindView(id = R.id.tv_collectiondynamic)
     private TextView tv_collectiondynamic;
-    @BindView(id=R.id.v_collectiondynamic)
+    @BindView(id = R.id.v_collectiondynamic)
     private View v_collectiondynamic;
 
-    @BindView(id=R.id.ll_collectionstrate ,click = true)
+    @BindView(id = R.id.ll_collectionstrate, click = true)
     private LinearLayout ll_collectionstrate;
-    @BindView(id=R.id.tv_collectionstrate )
+    @BindView(id = R.id.tv_collectionstrate)
     private TextView tv_collectionstrate;
-    @BindView(id=R.id.v_collectionstrate )
+    @BindView(id = R.id.v_collectionstrate)
     private View v_collectionstrate;
 
-    private int chageIcon=0;
+    private int chageIcon = 0;
     private DynamicStateFragment dynamicStateFragment;
     private StrateFragment strateFragment;
     private CollectionDynamicFragment collectionDynamicFragment;
@@ -113,17 +113,17 @@ public class MyReleaseActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        spacesItemDecoration=new SpacesItemDecoration(5);
+        spacesItemDecoration = new SpacesItemDecoration(5);
         reSetData();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        dynamicStateFragment=new DynamicStateFragment();
-        strateFragment=new StrateFragment();
-        collectionDynamicFragment=new CollectionDynamicFragment();
-        collectionStrateFragment=new CollectionStrateFragment();
+        dynamicStateFragment = new DynamicStateFragment();
+        strateFragment = new StrateFragment();
+        collectionDynamicFragment = new CollectionDynamicFragment();
+        collectionStrateFragment = new CollectionStrateFragment();
         chageIcon = aty.getIntent().getIntExtra("chageIcon", 0);
         cleanColors();
 
@@ -132,40 +132,40 @@ public class MyReleaseActivity extends BaseActivity {
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_dynamicstate:
-                chageIcon=0;
+                chageIcon = 0;
                 cleanColors();
                 break;
             case R.id.ll_strate:
-                chageIcon=1;
+                chageIcon = 1;
                 cleanColors();
                 break;
             case R.id.ll_collectiondynamic:
-                chageIcon=2;
+                chageIcon = 2;
                 cleanColors();
                 break;
             case R.id.ll_collectionstrate:
-                chageIcon=3;
+                chageIcon = 3;
                 cleanColors();
                 break;
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_mineusername:
-                if (!TextUtils.isEmpty(tv_mineusername.getText().toString())&&tv_mineusername.getText().toString().equals(getString(R.string.loginOrRegister))){
+                if (!TextUtils.isEmpty(tv_mineusername.getText().toString()) && tv_mineusername.getText().toString().equals(getString(R.string.loginOrRegister))) {
                     PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshMineFragment", false);
-                    showActivity(this,LoginActivity.class);
+                    showActivity(this, LoginActivity.class);
                 }
                 break;
             case R.id.ll_fensi:
-                intentjump=new Intent(aty, FansAttentionActivity.class);
-                intentjump.putExtra("chageIcon",0);
+                intentjump = new Intent(aty, FansAttentionActivity.class);
+                intentjump.putExtra("chageIcon", 0);
                 showActivity(aty, intentjump);
                 break;
             case R.id.ll_guanzhu:
-                intentjump=new Intent(aty, FansAttentionActivity.class);
-                intentjump.putExtra("chageIcon",1);
+                intentjump = new Intent(aty, FansAttentionActivity.class);
+                intentjump.putExtra("chageIcon", 1);
                 showActivity(aty, intentjump);
                 break;
         }
@@ -196,12 +196,14 @@ public class MyReleaseActivity extends BaseActivity {
             tv_collectiondynamic.setTextColor(getResources().getColor(R.color.greenColors));
             v_collectiondynamic.setBackgroundResource(R.color.greenColors);
             changeFragment(collectionDynamicFragment);
-            if (collectionDynamicFragment.getFragmentJumpBetween()!=null)collectionDynamicFragment.getFragmentJumpBetween().fragmentPosition();
-        }else if (chageIcon == 3) {
+            if (collectionDynamicFragment.getFragmentJumpBetween() != null)
+                collectionDynamicFragment.getFragmentJumpBetween().fragmentPosition();
+        } else if (chageIcon == 3) {
             tv_collectionstrate.setTextColor(getResources().getColor(R.color.greenColors));
             v_collectionstrate.setBackgroundResource(R.color.greenColors);
             changeFragment(collectionStrateFragment);
-            if (collectionStrateFragment.getFragmentJumpBetween()!=null)collectionStrateFragment.getFragmentJumpBetween().fragmentPosition();
+            if (collectionStrateFragment.getFragmentJumpBetween() != null)
+                collectionStrateFragment.getFragmentJumpBetween().fragmentPosition();
         }
     }
 
@@ -212,7 +214,7 @@ public class MyReleaseActivity extends BaseActivity {
     /**
      * 将显示的个人信息设置到默认状态
      */
-    private void initDefaultInfo(){
+    private void initDefaultInfo() {
         tv_mineusername.setText(getString(R.string.loginOrRegister));
         tv_address.setText("");
         iv_minesexicon.setVisibility(View.GONE);
@@ -227,31 +229,31 @@ public class MyReleaseActivity extends BaseActivity {
     /**
      * 重新填充数据
      */
-    private void reSetData(){
-        boolean isReLogin=PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isReLogin", false);
-        if (isReLogin){
+    private void reSetData() {
+        boolean isReLogin = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isReLogin", false);
+        if (isReLogin) {
             initDefaultInfo();
-        }else{
+        } else {
             String head_pic = PreferenceHelper.readString(aty, StringConstants.FILENAME, "head_pic");
-            if (TextUtils.isEmpty(head_pic)){
+            if (TextUtils.isEmpty(head_pic)) {
                 iv_minetouxiang.setImageResource(R.mipmap.avatar);
-            }else{
-                GlideImageLoader.glideLoader(aty,head_pic,iv_minetouxiang,0);
+            } else {
+                GlideImageLoader.glideLoader(aty, head_pic, iv_minetouxiang, 0);
             }
             tv_mineusername.setText(PreferenceHelper.readString(aty, StringConstants.FILENAME, "nickname"));
-            country=PreferenceHelper.readString(aty, StringConstants.FILENAME, "country");
-            city=PreferenceHelper.readString(aty, StringConstants.FILENAME, "city");
-            address="";
-            if (!TextUtils.isEmpty(country)){
-                address+=country+"•";
+            country = PreferenceHelper.readString(aty, StringConstants.FILENAME, "country");
+            city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "city");
+            address = "";
+            if (!TextUtils.isEmpty(country)) {
+                address += country + "•";
             }
-            if (!TextUtils.isEmpty(city)){
-                address+=city;
+            if (!TextUtils.isEmpty(city)) {
+                address += city;
             }
             tv_address.setText(address);
 
             iv_minetype.setVisibility(View.VISIBLE);
-            int level=PreferenceHelper.readInt(aty, StringConstants.FILENAME, "level");
+            int level = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "level");
             switch (level) {
                 case 1:
                     iv_minetype.setImageResource(R.mipmap.minepthyxxx);
@@ -275,7 +277,7 @@ public class MyReleaseActivity extends BaseActivity {
                     iv_minetype.setVisibility(View.INVISIBLE);
                     break;
             }
-            int sex=PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sex");
+            int sex = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sex");
             switch (sex) {
                 case 1:
                     iv_minesexicon.setVisibility(View.VISIBLE);
@@ -307,18 +309,18 @@ public class MyReleaseActivity extends BaseActivity {
      */
     public static class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
-        private int space;
+                private int space;
 
-        public SpacesItemDecoration(int space) {
-            this.space=space;
-        }
+                public SpacesItemDecoration(int space) {
+                    this.space = space;
+                }
 
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left=space;
-            outRect.right=space;
-            outRect.bottom=space;
-            outRect.top=space;
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    outRect.left = space;
+                    outRect.right = space;
+                    outRect.bottom = space;
+                    outRect.top = space;
         }
     }
 
@@ -330,28 +332,28 @@ public class MyReleaseActivity extends BaseActivity {
         return chageIcon;
     }
 
-    public void initAmount(String fans_num,String attention_num,String good_num,String collection_num){
-        if (TextUtils.isEmpty(fans_num)){
+    public void initAmount(String fans_num, String attention_num, String good_num, String collection_num) {
+        if (TextUtils.isEmpty(fans_num)) {
             tv_minefsnum.setText("0");
-        }else{
+        } else {
             tv_minefsnum.setText(fans_num);
         }
 
-        if (TextUtils.isEmpty(attention_num)){
+        if (TextUtils.isEmpty(attention_num)) {
             tv_minegznum.setText("0");
-        }else{
+        } else {
             tv_minegznum.setText(attention_num);
         }
 
-        if (TextUtils.isEmpty(good_num)){
+        if (TextUtils.isEmpty(good_num)) {
             tv_minebznum.setText("0");
-        }else{
+        } else {
             tv_minebznum.setText(good_num);
         }
 
-        if (TextUtils.isEmpty(collection_num)){
+        if (TextUtils.isEmpty(collection_num)) {
             tv_minebscnum.setText("0");
-        }else{
+        } else {
             tv_minebscnum.setText(collection_num);
         }
     }

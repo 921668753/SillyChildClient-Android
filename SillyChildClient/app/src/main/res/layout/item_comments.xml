@@ -16,12 +16,14 @@
         android:paddingRight="@dimen/dimen15">
 
         <ImageView
+            android:id="@+id/img_head"
             android:layout_width="@dimen/dimen35"
             android:layout_height="@dimen/dimen35"
             android:scaleType="fitXY"
             android:src="@mipmap/placeholderfigure1" />
 
         <TextView
+            android:id="@+id/tv_name"
             style="@style/AutoWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:singleLine="true"
@@ -32,6 +34,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_time"
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen10"
         android:text="2018-12-12"
@@ -40,11 +43,12 @@
 
 
     <TextView
+        android:id="@+id/tv_commentscContent"
         style="@style/MatchWrap"
-        android:layout_marginBottom="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen15"
+        android:layout_marginBottom="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen10"
         android:paddingRight="@dimen/dimen15"
-        android:text="2018-12-12"
+        android:text="店家发货很速度，东西很不错，赞"
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize15" />
 
@@ -73,9 +77,10 @@
         android:textSize="@dimen/textsize13" />
 
     <TextView
+        android:id="@+id/tv_additionalReviewContent"
         style="@style/MatchWrap"
         android:paddingRight="@dimen/dimen15"
-        android:text="2018-12-12"
+        android:text="很喜欢很喜欢很喜欢很喜欢很喜欢"
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize15" />
 
@@ -94,6 +99,7 @@
         tools:listitem="@layout/item_imgcomment" />
 
     <LinearLayout
+        android:id="@+id/ll_revert"
         style="@style/WrapWrap"
         android:layout_gravity="right"
         android:gravity="center_vertical"

@@ -8,12 +8,14 @@
     android:paddingBottom="@dimen/dimen15">
 
     <ImageView
+        android:id="@+id/img_classification"
         android:layout_width="@dimen/dimen108"
         android:layout_height="@dimen/dimen75"
         android:scaleType="fitXY"
         android:src="@mipmap/placeholderfigure1" />
 
     <TextView
+        android:id="@+id/tv_classificationName"
         android:layout_width="@dimen/dimen65"
         android:layout_height="@dimen/dimen25"
         android:layout_centerHorizontal="true"

@@ -5,12 +5,14 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/img_good"
         style="@style/MatchWrap"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/placeholderfigure" />
 
 
     <TextView
+        android:id="@+id/tv_goodName"
         style="@style/MatchWrap"
         android:padding="@dimen/dimen10"
         android:text="兰蔻菁纯柔润丝缎唇膏口红"
@@ -18,6 +20,7 @@
         android:textSize="@dimen/textsize12" />
 
     <TextView
+        android:id="@+id/tv_goodSynopsis"
         style="@style/MatchWrap"
         android:paddingBottom="@dimen/dimen10"
         android:paddingLeft="@dimen/dimen10"
@@ -29,9 +32,11 @@
 
     <LinearLayout
         style="@style/MatchWrap"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen9">
 
         <TextView
+            android:id="@+id/tv_goodMoney"
             style="@style/WrapWrap"
             android:maxWidth="@dimen/dimen90"
             android:paddingLeft="@dimen/dimen10"
@@ -42,6 +47,7 @@
 
 
         <TextView
+            android:id="@+id/tv_brand"
             style="@style/AutoWrap"
             android:gravity="right"
             android:paddingLeft="@dimen/dimen10"
@@ -55,12 +61,13 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_bottomLabel"
         style="@style/MatchWrap"
-        android:layout_marginTop="@dimen/dimen9"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen9">
 
         <TextView
+            android:id="@+id/tv_proprietary"
             android:layout_width="@dimen/dimen22"
             android:layout_height="@dimen/dimen11"
             android:layout_marginLeft="@dimen/dimen10"
@@ -72,6 +79,7 @@
 
 
         <TextView
+            android:id="@+id/tv_timedSpecials"
             android:layout_width="@dimen/dimen42"
             android:layout_height="@dimen/dimen11"
             android:layout_marginLeft="@dimen/dimen10"

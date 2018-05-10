@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch"
     android:background="@color/background"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/include_fangwei"
-        layout="@layout/common_title" />
+    <include layout="@layout/common_title" />
 
-    <View
-        android:id="@+id/view_topdivider"
-        style="@style/DividerWidth"
-        android:layout_below="@id/include_fangwei" />
+    <View style="@style/DividerWidth" />
+
+    <com.common.cklibrary.utils.myview.WebViewLayout1
+        android:id="@+id/web_content"
+        style="@style/MatchAuto"
+        android:scrollbars="none" />
+
+    <View style="@style/DividerWidth" />
 
     <LinearLayout
-        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen49"
         android:layout_alignParentBottom="true"
@@ -24,6 +24,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_shop"
             style="@style/AutoMatch"
             android:gravity="center"
             android:orientation="vertical">
@@ -43,6 +44,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_customerService"
             style="@style/AutoMatch"
             android:gravity="center"
             android:orientation="vertical">
@@ -61,6 +63,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_follow"
             style="@style/AutoMatch"
             android:gravity="center"
             android:orientation="vertical">
@@ -79,6 +82,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_buyNow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -89,6 +93,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_addShoppingCart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -99,17 +104,4 @@
             android:textSize="@dimen/textsize14" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/divider_bottom"
-        style="@style/DividerWidth"
-        android:layout_above="@id/ll_bottom" />
-
-    <com.common.cklibrary.utils.myview.WebViewLayout1
-        android:id="@+id/web_content"
-        style="@style/MatchMatch"
-        android:layout_above="@id/divider_bottom"
-        android:layout_below="@id/view_topdivider"
-        android:scrollbars="none" />
-
-
-</RelativeLayout>
+</LinearLayout>

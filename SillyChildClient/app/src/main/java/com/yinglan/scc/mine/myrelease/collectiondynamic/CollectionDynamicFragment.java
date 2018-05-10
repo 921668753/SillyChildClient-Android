@@ -39,23 +39,23 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class CollectionDynamicFragment extends BaseFragment implements CollectionDynamicContract.View,MasonryAdapter.MasonryItemOnClickListener,PullLoadMoreRecyclerView.PullLoadMoreListener{
+public class CollectionDynamicFragment extends BaseFragment implements CollectionDynamicContract.View, MasonryAdapter.MasonryItemOnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
     private MyReleaseActivity aty;
 
-    @BindView(id = R.id.pullLoadMoreRecyclerView,click = true)
+    @BindView(id = R.id.pullLoadMoreRecyclerView, click = true)
     private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
 
     private List<ListBean> listbean;
     private MasonryAdapter adapter;
-    private int pagenum=NumericConstants.START_PAGE_NUMBER;
+    private int pagenum = NumericConstants.START_PAGE_NUMBER;
     private boolean isloadmore;
     private DynamicStateBean dsBean;
     private boolean isresume;
     private Intent jumpintent;
     private PublicPromptDialog publicPromptDialog;
-    private int currentpostion=0;//当前操作的位置
+    private int currentpostion = 0;//当前操作的位置
     private UserInfoBean userInfoBean;
-    private int itemposition=0;
+    private int itemposition = 0;
     private FragmentJumpBetween fragmentJumpBetween;
 
     @Override
@@ -67,12 +67,13 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
     @Override
     protected void initData() {
         super.initData();
-        mPresenter=new CollectionDynamicPresenter(this);
-        fragmentJumpBetween=new FragmentJumpBetween() {
+        mPresenter = new CollectionDynamicPresenter(this);
+        fragmentJumpBetween = new FragmentJumpBetween() {
             @Override
             public void fragmentPosition() {
                 pullLoadMoreRecyclerView.refresh();
             }
+
             @Override
             public void doAttention() {
 
@@ -85,11 +86,11 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
         };
 
         pullLoadMoreRecyclerView.setStaggeredGridLayout(2);
-        listbean=new ArrayList<>();
-        adapter=new MasonryAdapter(aty,listbean,this,false);
+        listbean = new ArrayList<>();
+        adapter = new MasonryAdapter(aty, listbean, this, false);
         pullLoadMoreRecyclerView.setAdapter(adapter);
         //设置item之间的间隔
-        pullLoadMoreRecyclerView.addItemDecoration(((MyReleaseActivity)getActivity()).getSpacesItemDecoration());
+        pullLoadMoreRecyclerView.addItemDecoration(((MyReleaseActivity) getActivity()).getSpacesItemDecoration());
         pullLoadMoreRecyclerView.setOnPullLoadMoreListener(this);
     }
 
@@ -101,34 +102,34 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
 
     @Override
     public void setPresenter(CollectionDynamicContract.Presenter presenter) {
-        mPresenter=(CollectionDynamicPresenter)presenter;
+        mPresenter = (CollectionDynamicPresenter) presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
-        if (flag==1){
+        if (flag == 1) {
             listbean.remove(currentpostion);
             adapter.notifyDataSetChanged();
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.uncollectible));
-        }else if (flag==2){
+        } else if (flag == 2) {
             userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean!=null&&userInfoBean.getResult()!=null){
-                aty.initAmount(userInfoBean.getResult().getFans_num(),userInfoBean.getResult().getAttention_num(),userInfoBean.getResult().getGood_num(),userInfoBean.getResult().getCollection_num());
+            if (userInfoBean != null && userInfoBean.getResult() != null) {
+                aty.initAmount(userInfoBean.getResult().getFans_num(), userInfoBean.getResult().getAttention_num(), userInfoBean.getResult().getGood_num(), userInfoBean.getResult().getCollection_num());
             }
-            ((CollectionDynamicPresenter)mPresenter).getCollectionDynamicList(pagenum,NumericConstants.LOADCOUNT);
-        }else{
+            ((CollectionDynamicPresenter) mPresenter).getCollectionDynamicList(pagenum, NumericConstants.LOADCOUNT);
+        } else {
             pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-            dsBean=(DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
-            if (dsBean==null){
+            dsBean = (DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
+            if (dsBean == null) {
                 refreshListBean(null);
                 ViewInject.toast(getString(R.string.otherError));
                 return;
             }
-            if (dsBean.getResult()==null||dsBean.getResult().getList()==null||dsBean.getResult().getList().size()==0){
-                if (isloadmore){
+            if (dsBean.getResult() == null || dsBean.getResult().getList() == null || dsBean.getResult().getList().size() == 0) {
+                if (isloadmore) {
                     ViewInject.toast(getString(R.string.noMoreData));
-                }else{
+                } else {
                     refreshListBean(null);
                 }
                 return;
@@ -141,16 +142,16 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
     @Override
     public void errorMsg(String msg, int flag) {
         pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-        if (isLogin(msg)){
+        if (isLogin(msg)) {
             ViewInject.toast(getString(R.string.reloginPrompting));
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            aty.showActivity(aty,LoginActivity.class);
+            aty.showActivity(aty, LoginActivity.class);
             return;
         }
-        if (isresume){
-            isresume=false;
-        }else{
+        if (isresume) {
+            isresume = false;
+        } else {
             ViewInject.toast(msg);
         }
     }
@@ -158,31 +159,31 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
     /**
      * 刷新数据
      */
-    private void refreshListBean(List<ListBean> addlist){
-        if (isloadmore){
-            if (pagenum==1){
+    private void refreshListBean(List<ListBean> addlist) {
+        if (isloadmore) {
+            if (pagenum == 1) {
                 listbean.clear();
-                if (addlist!=null&&addlist.size()>0){
+                if (addlist != null && addlist.size() > 0) {
                     listbean.addAll(addlist);
-                    if (addlist.size()<NumericConstants.LOADCOUNT){
+                    if (addlist.size() < NumericConstants.LOADCOUNT) {
                         ViewInject.toast(getString(R.string.noMoreData));
                     }
                 }
-            }else{
+            } else {
                 int listbeansize = listbean.size();
-                for (int i=((pagenum-1)*NumericConstants.LOADCOUNT);i<listbeansize;i++){
+                for (int i = ((pagenum - 1) * NumericConstants.LOADCOUNT); i < listbeansize; i++) {
                     listbean.remove(i);
                 }
-                if (addlist!=null&&addlist.size()>0){
+                if (addlist != null && addlist.size() > 0) {
                     listbean.addAll(addlist);
-                    if (addlist.size()<NumericConstants.LOADCOUNT){
+                    if (addlist.size() < NumericConstants.LOADCOUNT) {
                         ViewInject.toast(getString(R.string.noMoreData));
                     }
                 }
             }
-        }else{
+        } else {
             listbean.clear();
-            if (addlist!=null&&addlist.size()>0){
+            if (addlist != null && addlist.size() > 0) {
                 listbean.addAll(addlist);
             }
         }
@@ -191,22 +192,22 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
 
     @Override
     public void masonryOnItemClick(View view, int postion) {
-        itemposition=postion;
-        if (jumpintent==null) jumpintent=new Intent(aty, DynamicsDetailsActivity.class);
-        jumpintent.putExtra("act_id",listbean.get(postion).getId());
-        startActivityForResult(jumpintent,0);
+        itemposition = postion;
+        if (jumpintent == null) jumpintent = new Intent(aty, DynamicsDetailsActivity.class);
+        jumpintent.putExtra("act_id", listbean.get(postion).getId());
+        startActivityForResult(jumpintent, 0);
     }
 
     @Override
     public void masonryOnLongItemClick(View view, int postion) {
-        currentpostion=postion;
+        currentpostion = postion;
         //删除
-        if (publicPromptDialog ==null){
-            publicPromptDialog =new PublicPromptDialog(aty) {
+        if (publicPromptDialog == null) {
+            publicPromptDialog = new PublicPromptDialog(aty) {
                 @Override
                 public void doAction() {
                     showLoadingDialog(getString(R.string.submissionLoad));
-                    ((CollectionDynamicPresenter)mPresenter).doDelete(listbean.get(postion).getId(),1);
+                    ((CollectionDynamicPresenter) mPresenter).doDelete(listbean.get(postion).getId(), 1);
                 }
             };
         }
@@ -218,24 +219,24 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
     @Override
     public void onRefresh() {
         //刷新
-        isloadmore=false;
-        pagenum=NumericConstants.START_PAGE_NUMBER;
-        ((CollectionDynamicPresenter)mPresenter).getInfo();
+        isloadmore = false;
+        pagenum = NumericConstants.START_PAGE_NUMBER;
+        ((CollectionDynamicPresenter) mPresenter).getInfo();
     }
 
     @Override
     public void onLoadMore() {
         //加载更多
-        isloadmore=true;
-        pagenum=(listbean.size()/NumericConstants.LOADCOUNT)+1;
-        ((CollectionDynamicPresenter)mPresenter).getCollectionDynamicList(pagenum,NumericConstants.LOADCOUNT);
+        isloadmore = true;
+        pagenum = (listbean.size() / NumericConstants.LOADCOUNT) + 1;
+        ((CollectionDynamicPresenter) mPresenter).getCollectionDynamicList(pagenum, NumericConstants.LOADCOUNT);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        isresume=true;
-        if (aty.getChageIcon()==2){
+        isresume = true;
+        if (aty.getChageIcon() == 2) {
             pullLoadMoreRecyclerView.refresh();
         }
     }
@@ -243,7 +244,7 @@ public class CollectionDynamicFragment extends BaseFragment implements Collectio
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==0&&resultCode==0&&data!=null){
+        if (requestCode == 0 && resultCode == 0 && data != null) {
             listbean.remove(currentpostion);
             adapter.notifyDataSetChanged();
         }

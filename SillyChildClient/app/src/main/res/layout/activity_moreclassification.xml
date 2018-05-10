@@ -10,7 +10,6 @@
 
     <TextView style="@style/DividerWidth" />
 
-
     <LinearLayout
         style="@style/MatchMatch"
         android:orientation="horizontal">

@@ -19,10 +19,10 @@ import cn.jpush.android.api.JPushInterface;
  * Created by ruitu on 2016/9/24.
  */
 
-public class CommentsPresenter implements CommentsContract.Presenter {
-    private CommentsContract.View mView;
+public class GoodsListPresenter implements GoodsListContract.Presenter {
+    private GoodsListContract.View mView;
 
-    public CommentsPresenter(CommentsContract.View view) {
+    public GoodsListPresenter(GoodsListContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }

@@ -39,6 +39,8 @@
     <color name="guideShapeColors">#ff7f19</color>
     <color name="lightYellowColor">#efcf82</color>
     <color name="userShapeColors">#ff4551</color>
+    <color name="dFFDE6Colors">#DFFDE6</color>
+
 
     <!--首页-->
     <color name="translucent">#50000000</color>

@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/lv_coupons"
-            style="@style/MatchWrap"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            tools:listitem="@layout/item_coupons" />
+    <ListView
+        android:id="@+id/lv_coupons"
+        style="@style/MatchWrap"
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/dimen10"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_coupons" />
 
-        <include layout="@layout/common_error" />
+    <include layout="@layout/common_error" />
 
 </LinearLayout>

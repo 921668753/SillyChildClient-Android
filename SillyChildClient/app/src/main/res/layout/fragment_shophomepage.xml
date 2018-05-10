@@ -14,7 +14,7 @@
         <cn.bingoogolapple.bgabanner.BGABanner
             android:id="@+id/banner_ad"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen160"
+            android:layout_height="@dimen/dimen150"
             android:background="@mipmap/placeholderfigure"
             app:banner_pageChangeDuration="2000"
             app:banner_pointAutoPlayAble="false"
@@ -23,16 +23,12 @@
             app:banner_pointTopBottomMargin="2dp"
             app:banner_transitionEffect="alpha" />
 
-
-        <com.common.cklibrary.utils.myview.NoScrollGridView
-            android:id="@+id/lv_mall"
-            style="@style/MatchWrap"
-            android:horizontalSpacing="@dimen/dimen5"
-            android:numColumns="2"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:verticalSpacing="@dimen/dimen5"
-            tools:listitem="@layout/item_mall" />
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/pullLoadMoreRecyclerView"
+            style="@style/MatchMatch"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@android:color/transparent"
+            tools:listitem="@layout/item_mallhomepage" />
     </LinearLayout>
 
 </ScrollView>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_moreClassification"
     style="@style/MatchWrap"
     android:background="@color/f1F4F6Colors"
     android:orientation="horizontal">
 
     <TextView
+        android:id="@+id/tv_tab"
         android:layout_width="@dimen/dimen2"
         android:layout_height="@dimen/dimen22"
         android:layout_marginBottom="@dimen/dimen12"
@@ -12,6 +14,7 @@
         android:background="@color/greenColors" />
 
     <TextView
+        android:id="@+id/tv_moreClassification"
         style="@style/MatchMatch"
         android:gravity="center"
         android:text="护肤彩妆"

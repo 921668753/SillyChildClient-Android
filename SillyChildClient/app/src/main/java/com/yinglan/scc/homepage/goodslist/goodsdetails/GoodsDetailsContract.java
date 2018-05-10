@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist;
+package com.yinglan.scc.homepage.goodslist.goodsdetails;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
@@ -7,7 +7,7 @@ import com.common.cklibrary.common.BaseView;
  * Created by ruitu on 2016/9/24.
  */
 
-public interface CommentsContract {
+public interface GoodsDetailsContract {
     interface Presenter extends BasePresenter {
         /**
          * 账号登录

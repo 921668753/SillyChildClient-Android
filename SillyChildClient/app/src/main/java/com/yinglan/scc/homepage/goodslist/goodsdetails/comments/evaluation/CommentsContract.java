@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist.evaluation;
+package com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation;
 
 import android.app.Activity;
 

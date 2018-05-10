@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist.evaluation;
+package com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +14,9 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
+import com.yinglan.scc.adapter.homepage.goodslist.evaluation.CommentsViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.homepage.goodslist.CommentsActivity;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.CommentsActivity;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -27,8 +28,6 @@ public class AllCommentsFragment extends BaseFragment implements CommentsContrac
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
-
-    //private BillViewAdapter mAdapter;
 
     private CommentsActivity aty;
 
@@ -61,6 +60,8 @@ public class AllCommentsFragment extends BaseFragment implements CommentsContrac
      */
     private boolean isShowLoadingMore = false;
 
+    private CommentsViewAdapter mAdapter = null;
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (CommentsActivity) getActivity();
@@ -71,7 +72,7 @@ public class AllCommentsFragment extends BaseFragment implements CommentsContrac
     protected void initData() {
         super.initData();
         mPresenter = new CommentsPresenter(this);
-        //  mAdapter = new BillViewAdapter(getActivity());
+        mAdapter = new CommentsViewAdapter(getActivity());
     }
 
     @Override
@@ -140,8 +141,9 @@ public class AllCommentsFragment extends BaseFragment implements CommentsContrac
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        mAdapter.clear();
-//        mAdapter = null;
+        mAdapter.cancelAllComments();
+        mAdapter.clear();
+        mAdapter = null;
     }
 
     @Override

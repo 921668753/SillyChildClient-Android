@@ -20,7 +20,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.CouponsAdapter;
+import com.yinglan.scc.adapter.mine.mywallet.coupons.CouponsAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.entity.CouponsBean;

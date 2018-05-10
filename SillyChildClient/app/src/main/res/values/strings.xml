@@ -151,6 +151,12 @@
     <string name="locationRelatedPermission">您拒绝了「定位」所需要的相关权限!</string>
     <string name="notOpenPositionSwitch">未打开位置开关，可能导致定位失败或定位不准，请打开GPS</string>
 
+
+    <string name="moreClassification">更多分类</string>
+
+
+
+
     <!--国外城市列表-->
     <string name="currentState">当前国家</string>
     <string name="currentLocation">GPS当前定位：</string>
@@ -428,8 +434,6 @@
     <string name="viewDetails">查看详情</string>
 
     <!--首页   接送机-->
-
-
     <string name="pleaseSelectModel">请选择车型</string>
     <string name="greateThanCurrentTime">预约的时间要大于当前时间</string>
     <string name="pleaseAddLuggage">请添加行李个数</string>
@@ -701,6 +705,7 @@
     <string name="oneNight">/晚</string>
 
     <!-- 个人中心 我的钱包-->
+    <string name="instructions">使用说明</string>
     <string name="accountBalance">账户余额</string>
     <string name="recharge">充值</string>
     <string name="withdrawal">提现</string>

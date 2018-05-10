@@ -25,7 +25,7 @@ public class MoreClassificationPresenter implements MoreClassificationContract.P
         RequestClient.getInfo(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+                mView.getSuccess(response, 0);
             }
 
             @Override

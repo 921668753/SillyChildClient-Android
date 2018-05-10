@@ -1,0 +1,119 @@
+package com.yinglan.scc.homepage.goodslist.goodsdetails.comments;
+
+import android.view.View;
+import android.widget.TextView;
+
+import com.common.cklibrary.common.BaseActivity;
+import com.common.cklibrary.common.BaseFragment;
+import com.common.cklibrary.common.BindView;
+import com.yinglan.scc.R;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation.AddCommentsFragment;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation.AllCommentsFragment;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation.HavePicturesCommentsFragment;
+
+/**
+ * 评论
+ * Created by Admin on 2017/8/21.
+ */
+
+public class CommentsActivity extends BaseActivity {
+
+    @BindView(id = R.id.tv_all, click = true)
+    private TextView tv_all;
+
+    @BindView(id = R.id.tv_havePictures, click = true)
+    private TextView tv_havePictures;
+
+    @BindView(id = R.id.tv_additionalReview, click = true)
+    private TextView tv_additionalReview;
+
+    private BaseFragment contentFragment;
+    private BaseFragment contentFragment1;
+    private BaseFragment contentFragment2;
+
+    private int chageIcon = 0;
+
+    @Override
+    public void setRootView() {
+        setContentView(R.layout.activity_comments);
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        contentFragment = new AllCommentsFragment();
+        contentFragment1 = new HavePicturesCommentsFragment();
+        contentFragment2 = new AddCommentsFragment();
+        chageIcon = getIntent().getIntExtra("chageIcon", 0);
+    }
+
+    @Override
+    public void initWidget() {
+        super.initWidget();
+        if (chageIcon == 0) {
+            cleanColors(0);
+            changeFragment(contentFragment);
+            chageIcon = 0;
+        } else if (chageIcon == 1) {
+            cleanColors(1);
+            changeFragment(contentFragment1);
+            chageIcon = 1;
+        } else if (chageIcon == 2) {
+            cleanColors(2);
+            changeFragment(contentFragment2);
+            chageIcon = 2;
+        }
+    }
+
+    public void changeFragment(BaseFragment targetFragment) {
+        super.changeFragment(R.id.main_content, targetFragment);
+    }
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_all:
+                cleanColors(0);
+                changeFragment(contentFragment);
+                chageIcon = 0;
+                break;
+            case R.id.tv_havePictures:
+                cleanColors(1);
+                changeFragment(contentFragment1);
+                chageIcon = 1;
+                break;
+            case R.id.tv_additionalReview:
+                cleanColors(2);
+                changeFragment(contentFragment2);
+                chageIcon = 2;
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 清除颜色，并添加颜色
+     */
+    @SuppressWarnings("deprecation")
+    public void cleanColors(int chageIcon) {
+        tv_all.setTextColor(getResources().getColor(R.color.titletextcolors));
+        tv_all.setBackground(getResources().getDrawable(R.drawable.shape_comments1));
+        tv_havePictures.setTextColor(getResources().getColor(R.color.titletextcolors));
+        tv_havePictures.setBackground(getResources().getDrawable(R.drawable.shape_comments1));
+        tv_additionalReview.setTextColor(getResources().getColor(R.color.titletextcolors));
+        tv_additionalReview.setBackground(getResources().getDrawable(R.drawable.shape_comments1));
+
+        if (chageIcon == 0) {
+            tv_all.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+        } else if (chageIcon == 1) {
+            tv_havePictures.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+        } else if (chageIcon == 2) {
+            tv_additionalReview.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+        } else {
+            tv_all.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+        }
+    }
+}
