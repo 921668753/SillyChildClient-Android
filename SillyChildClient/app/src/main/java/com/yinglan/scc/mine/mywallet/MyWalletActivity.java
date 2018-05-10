@@ -14,11 +14,9 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.hyphenate.helpdesk.easeui.widget.TitleBar;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.UserInfoBean;
-import com.yinglan.scc.homepage.chartercustom.CharterCustomActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.mine.mywallet.accountdetails.AccountDetailsActivity;
@@ -108,7 +106,6 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     public void initWidget() {
         super.initWidget();
         initTitle();
-
     }
 
     /**

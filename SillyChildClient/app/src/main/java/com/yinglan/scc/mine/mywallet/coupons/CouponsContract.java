@@ -2,7 +2,6 @@ package com.yinglan.scc.mine.mywallet.coupons;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
-import com.yinglan.scc.mine.myorder.MyOrderActivity;
 
 /**
  * Created by ruitu on 2016/9/24.

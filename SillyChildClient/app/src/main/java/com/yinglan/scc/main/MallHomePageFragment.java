@@ -155,6 +155,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         super.initData();
         mPresenter = new HomePagePresenter(this);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
+        mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
         mPullLoadMoreRecyclerView.setRefreshing(false);
         mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);

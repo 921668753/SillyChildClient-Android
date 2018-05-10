@@ -8,13 +8,14 @@ import android.widget.LinearLayout;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.MyBankCardBean;
+
+import cn.bingoogolapple.titlebar.BGATitleBar;
 
 
 /**
@@ -24,6 +25,10 @@ import com.yinglan.scc.entity.mine.mywallet.mybankcard.MyBankCardBean;
 
 public class MyBankCardActivity extends BaseActivity implements MyBankCardContract.View, AdapterView.OnItemClickListener {
 
+
+    @BindView(id = R.id.titlebar)
+    private BGATitleBar titlebar;
+
     /**
      * 银行卡列表
      */
@@ -31,12 +36,6 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     private ChildListView lv_bankCard;
 
     private MyBankCardViewAdapter myBankCardViewAdapter;
-
-    /**
-     * 添加银行卡
-     */
-    @BindView(id = R.id.ll_addBankCard, click = true)
-    private LinearLayout ll_addBankCard;
 
     private int type = 0;
     private Handler handler = null;
@@ -60,18 +59,39 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.myBankCard), true, R.id.titlebar);
+        // ActivityTitleUtils.initToolbar(aty, getString(R.string.myBankCard), true, R.id.titlebar);
+        initTitle();
         lv_bankCard.setAdapter(myBankCardViewAdapter);
         lv_bankCard.setOnItemClickListener(this);
     }
+
+    private void initTitle() {
+        titlebar.setTitleText(R.string.myBankCard);
+        titlebar.setRightDrawable(R.mipmap.ic_launcher_round);
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                aty.finish();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+                showActivity(aty, AddBankCardActivity.class);
+            }
+        };
+        titlebar.setDelegate(simpleDelegate);
+    }
+
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_addBankCard:
-                showActivity(aty, AddBankCardActivity.class);
-                break;
+//            case R.id.ll_addBankCard:
+//
+//                break;
         }
     }
 

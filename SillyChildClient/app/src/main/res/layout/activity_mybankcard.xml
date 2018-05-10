@@ -8,57 +8,16 @@
 
     <include layout="@layout/common_title" />
 
-    <ScrollView
-        style="@style/MatchMatch"
-        android:scrollbars="none">
+    <TextView style="@style/DividerWidth" />
 
-        <LinearLayout
-            style="@style/MatchWrap"
-            android:layout_marginLeft="@dimen/dimen15"
-            android:layout_marginRight="@dimen/dimen15"
-            android:layout_marginTop="@dimen/dimen10"
-            android:orientation="vertical">
-
-            <com.ruitukeji.zwbs.utils.myview.ChildListView
-                android:id="@+id/lv_bankCard"
-                style="@style/MatchWrap"
-                android:background="@color/background"
-                android:divider="@color/background"
-                android:dividerHeight="@dimen/dimen10"
-                android:overScrollMode="never"
-                android:paddingBottom="@dimen/dimen10"
-                android:scrollbars="none"
-                tools:listitem="@layout/item_bankcard" />
-
-
-            <LinearLayout
-                android:id="@+id/ll_addBankCard"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen70"
-                android:layout_marginBottom="@dimen/dimen10"
-                android:background="@color/mainColor"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen17"
-                    android:layout_height="@dimen/dimen17"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher_round" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:paddingLeft="@dimen/dimen5"
-                    android:text="@string/addBankCard"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize18" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
+    <ListView
+        android:id="@+id/lv_bankCard"
+        style="@style/MatchWrap"
+        android:background="@color/background"
+        android:divider="@color/background"
+        android:dividerHeight="@dimen/dimen10"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_bankcard" />
 
 </LinearLayout>

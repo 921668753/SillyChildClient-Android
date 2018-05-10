@@ -1,54 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MatchWrap"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen140"
+    android:background="@color/whiteColors"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen10"
+    android:paddingLeft="@dimen/dimen15"
+    android:paddingRight="@dimen/dimen15"
+    android:paddingTop="@dimen/dimen10">
+
+    <TextView
+        style="@style/MatchMatch"
+        android:background="@drawable/shape_login" />
+
+    <TextView
+        android:id="@+id/tv_cardName"
+        style="@style/WrapWrap"
+        android:paddingLeft="@dimen/dimen78"
+        android:paddingTop="@dimen/dimen30"
+        android:text="*某"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize17" />
 
     <TextView
         android:id="@+id/tv_bankCardName"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen45"
-        android:background="@drawable/shape_bankcardtop"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dimen35"
-        android:text="--"
-        android:textColor="@color/mainColor"
-        android:textSize="@dimen/textsize16" />
+        style="@style/WrapWrap"
+        android:layout_below="@id/tv_cardName"
+        android:paddingLeft="@dimen/dimen78"
+        android:paddingTop="@dimen/dimen10"
+        android:text="建设银行"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize15" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen64"
-        android:background="@drawable/shape_bankcardbottom"
-        android:gravity="center">
-
-        <TextView
-            style="@style/WrapWrap"
-            android:layout_marginRight="@dimen/dimen35"
-            android:text="****"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize25" />
-
-        <TextView
-            style="@style/WrapWrap"
-            android:layout_marginRight="@dimen/dimen35"
-            android:text="****"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize25" />
-
-        <TextView
-            style="@style/WrapWrap"
-            android:layout_marginRight="@dimen/dimen35"
-            android:text="****"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize25" />
-
-        <TextView
-            android:id="@+id/tv_tail"
-            style="@style/WrapWrap"
-            android:text="1687"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize25" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_tail"
+        style="@style/WrapWrap"
+        android:layout_below="@id/tv_bankCardName"
+        android:layout_marginRight="@dimen/dimen35"
+        android:paddingLeft="@dimen/dimen78"
+        android:paddingTop="@dimen/dimen5"
+        android:text="621700**********6342"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize13" />
 
 
-</LinearLayout>
+</RelativeLayout>

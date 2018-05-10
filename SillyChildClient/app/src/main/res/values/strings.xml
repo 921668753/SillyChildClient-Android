@@ -155,8 +155,6 @@
     <string name="moreClassification">更多分类</string>
 
 
-
-
     <!--国外城市列表-->
     <string name="currentState">当前国家</string>
     <string name="currentLocation">GPS当前定位：</string>
@@ -322,7 +320,6 @@
     <string name="passportNum">护照号</string>
     <string name="pleaseFillPassportNum">请填写您的护照号</string>
     <string name="pleaseFillPassportNum1">请输入您的护照号</string>
-    <string name="idNumber">身份证号</string>
     <string name="pleaseFillIdNumber">请填写您的身份证号</string>
     <string name="pleaseFillIdNumber1">请填写正确的身份证号</string>
     <string name="pleaseFillPassportNum2">请输入您的身份证号</string>
@@ -424,7 +421,7 @@
     <string name="addBag">新增行李</string>
     <string name="yourName">您的姓名</string>
     <string name="yourName1">请输入您的姓名</string>
-    <string name="contactWay">联系方式</string>
+    <string name="contactWay">联系电话</string>
     <string name="contactWay1">请输入联系方式</string>
     <string name="costsThat">费用说明</string>
     <string name="view">查看</string>
@@ -680,16 +677,19 @@
     <string name="self">自己</string>
 
     <!--个人中心  收货地址-->
-    <string name="defaultAddress">设为默认地址</string>
+    <string name="defaultAddress">设为默认</string>
+    <string name="defaultAddress1">设为默认地址</string>
     <string name="addAddress">添加新地址</string>
     <string name="edit">编辑</string>
     <string name="delete">删除</string>
     <string name="newAddress">新增地址</string>
     <string name="consignee">收货人</string>
+    <string name="consignee1">请输入收货人姓名</string>
     <string name="region">所在地区</string>
     <string name="regionHint">省市-城市-地区</string>
     <string name="contactWayHint">请输入收货人手机号码</string>
-    <string name="regiondetail">请输入详细的地址信息</string>
+    <string name="detailedAddress">详细地址</string>
+    <string name="regiondetail">请输入详细地址信息、如道路门牌号、小区、楼栋号、单元室等</string>
     <string name="saveanduse">保存并使用</string>
 
     <!-- 个人中心 我的收藏-->
@@ -786,17 +786,23 @@
     <string name="addBankCard">添加银行卡</string>
 
     <!--添加银行卡-->
-    <string name="cardholder">持卡人</string>
+    <string name="realName">真实姓名</string>
     <string name="pleaseFillOut">请填写</string>
     <string name="accountHolderName1">请输入持卡人姓名</string>
+    <string name="idNumber">身份证号</string>
+    <string name="pleaseidNumber">请正确填写身份证号码</string>
     <string name="bankCardNumber">银行卡号</string>
     <string name="bankCardNumber1">请输入银行卡号</string>
     <string name="hintName1">请输入正确的姓名</string>
     <string name="withdrawalsBank">提现银行</string>
     <string name="withdrawalsBank1">请输入提现银行</string>
-    <string name="openingBank">开户行</string>
+    <string name="openingBank">开户银行</string>
     <string name="openingBank1">请输入开户行</string>
-    <string name="accountText">请输入手机号</string>
+    <string name="phone1">手机号</string>
+    <string name="accountText">请填写预留手机号</string>
+    <string name="ensureSamePerson">请确保姓名、身份证、银行卡开户人为同一个人</string>
+
+    <string name="enterVerifyCode">请输入验证码</string>
     <string name="confirmAdd">确认添加</string>
     <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
     <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
@@ -875,6 +881,11 @@
     <string name="newVersion">有新版本</string>
     <string name="updateVersion">有新版本是否更新</string>
     <string name="update">&#160;&#160;&#160;更&#160;&#160;&#160;&#160;&#160;&#160;&#160;新&#160;&#160;&#160;</string>
+    <string name="determineClearCache">确定清除系统缓存</string>
+
+
+
+
 
 
     <!-- 个人中心 个人资料-->

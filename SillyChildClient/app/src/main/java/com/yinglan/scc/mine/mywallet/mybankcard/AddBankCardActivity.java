@@ -6,6 +6,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
@@ -32,24 +34,24 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private EditText et_cardholder;
 
     /**
+     * 身份证号
+     */
+    @BindView(id = R.id.et_idNumber)
+    private EditText et_idNumber;
+
+    /**
      * 银行卡号
      */
     @BindView(id = R.id.et_bankCardNumber)
     private EditText et_bankCardNumber;
 
     /**
-     * 提现银行
+     * 开户银行
      */
-    @BindView(id = R.id.ll_withdrawalsBank, click = true)
-    private LinearLayout ll_withdrawalsBank;
-    @BindView(id = R.id.tv_withdrawalsBank)
-    private TextView tv_withdrawalsBank;
-
-    /**
-     * 开户行
-     */
-    @BindView(id = R.id.et_openingBank)
-    private EditText et_openingBank;
+    @BindView(id = R.id.ll_openingBank, click = true)
+    private LinearLayout ll_openingBank;
+    @BindView(id = R.id.tv_openingBank)
+    private TextView tv_openingBank;
 
     /**
      * 手机号
@@ -82,7 +84,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private TextView tv_prepaidImmediately;
 
     private OptionsPickerView pvOptions;
-   // private List<BankBean.ResultBean> bankList;
+    // private List<BankBean.ResultBean> bankList;
 
     private int bank_id = 0;
 
@@ -111,9 +113,9 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_withdrawalsBank:
+            case R.id.ll_openingBank:
                 SoftKeyboardUtils.packUpKeyboard(this);
-                pvOptions.show(tv_withdrawalsBank);
+                pvOptions.show(tv_openingBank);
                 break;
             case R.id.tv_verificationCode:
                 showLoadingDialog(getString(R.string.sendingLoad));
@@ -121,9 +123,9 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
                 break;
             case R.id.tv_prepaidImmediately:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
-                        bank_id, et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
-                        et_verificationCode.getText().toString().trim());
+//                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
+//                        bank_id, et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
+//                        et_verificationCode.getText().toString().trim());
                 break;
         }
     }
@@ -134,14 +136,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      */
     @SuppressWarnings("unchecked")
     private void selectBankName() {
-//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-//                //返回的分别是三个级别的选中位置
-////                bank_id = bankList.get(options1).getId();
-////                ((TextView) v).setText(bankList.get(options1).getBank());
-//            }
-//        }).build();
+        pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+//                bank_id = bankList.get(options1).getId();
+//                ((TextView) v).setText(bankList.get(options1).getBank());
+            }
+        }).build();
     }
 
     /* 定义一个倒计时的内部类 */
@@ -154,14 +156,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         public void onFinish() {// 计时完毕时触发
             tv_verificationCode.setText(getString(R.string.revalidation));
             tv_verificationCode.setClickable(true);
-           // tv_verificationCode.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            // tv_verificationCode.setTextColor(getResources().getColor(R.color.announcementCloseColors));
         }
 
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             tv_verificationCode.setClickable(false);
             tv_verificationCode.setText(millisUntilFinished / 1000 + getString(R.string.toResend));
-          //  tv_verificationCode.setTextColor(getResources().getColor(R.color.hintcolors));
+            //  tv_verificationCode.setTextColor(getResources().getColor(R.color.hintcolors));
         }
     }
 
@@ -190,12 +192,12 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 //            intent.putExtra("bankCardName", tv_withdrawalsBank.getText().toString());
 //            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 5));
 //            intent.putExtra("bankCardId", addBankCardBean.getResult().getBank_id());
-            // 设置结果 结果码，一个数据
-       //     setResult(RESULT_OK, intent);
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
-            finish();
-            return;
-     //   }
+        // 设置结果 结果码，一个数据
+        //     setResult(RESULT_OK, intent);
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
+        finish();
+        return;
+        //   }
     }
 
     @Override

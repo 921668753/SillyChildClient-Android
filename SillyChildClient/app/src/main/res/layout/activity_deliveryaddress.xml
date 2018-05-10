@@ -6,7 +6,9 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/common_title"/>
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
@@ -16,6 +18,8 @@
         <ListView
             android:id="@+id/lv_address"
             style="@style/MatchMatch"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
             android:scrollbars="none"
             tools:listitem="@layout/item_deliveryaddress" />
@@ -23,26 +27,25 @@
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen61"
-        android:orientation="vertical"
+        style="@style/Match50"
+        android:layout_alignParentBottom="true"
         android:background="@color/whiteColors"
-        android:layout_alignParentBottom="true">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <View style="@style/DividerWidth"/>
+        <View style="@style/DividerWidth" />
 
         <TextView
             android:id="@+id/tv_newaddress"
-            style="@style/MatchMatch"
-            android:background="@drawable/shape_login1"
+            android:layout_width="@dimen/dimen230"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginBottom="@dimen/dimen5"
+            android:layout_marginTop="@dimen/dimen5"
+            android:background="@drawable/shape_determinepay"
             android:gravity="center"
-            android:layout_marginRight="@dimen/dimen15"
-            android:layout_marginLeft="@dimen/dimen15"
-            android:layout_marginTop="@dimen/dimen10"
-            android:layout_marginBottom="@dimen/dimen10"
             android:text="@string/newAddress"
             android:textColor="@color/whiteColors"
-            android:textSize="@dimen/textsize16"/>
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 
 </LinearLayout>
