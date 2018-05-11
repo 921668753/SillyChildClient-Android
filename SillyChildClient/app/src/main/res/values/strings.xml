@@ -575,8 +575,6 @@
 
     <string name="proprietary">自营</string>
     <string name="timedSpecials">限时特价</string>
-
-
     <string name="goodParameters">商品参数</string>
     <string name="userEvaluation">用户评价</string>
     <string name="leftbracket">（</string>
@@ -584,6 +582,12 @@
     <string name="seeMore">查看更多</string>
     <string name="buyNow">立即购买</string>
     <string name="customerService">客服</string>
+
+    <!--商城  店铺首页  全部商品 商品详情-->
+    <string name="GoodsDetails">商品详情</string>
+    <string name="color">颜色</string>
+    <string name="selectColor">请选择颜色</string>
+    <string name="inventoryEnough">库存充足</string>
 
 
     <!--商城  店铺首页  全部商品-->
@@ -981,12 +985,13 @@
     <string name="afterSale">售后</string>
     <string name="all">全部</string>
     <string name="anonymousEvaluation">匿名评价</string>
+    <string name="evaluationOtherFriends">你的评价能帮助其他小伙伴呦</string>
     <string name="scoring">评分</string>
     <string name="GoodsScoring">产品评分</string>
     <string name="guideScoring">司导评分</string>
     <string name="routesScoring">线路评分</string>
     <string name="groupPhoto">晒合照</string>
-    <string name="evaluationHint">亲，您的评价对别人的帮助很大哦</string>
+    <string name="evaluationHint">亲，您的评价对别人帮助很大哦</string>
     <string name="postEvaluation">发布评价</string>
     <string name="youNo">您还没有该类数据哟~</string>
     <string name="sillyChildReply">傻孩子回复：</string>
