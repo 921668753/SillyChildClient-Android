@@ -20,6 +20,7 @@ import com.kymjs.common.SystemTool;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.loginregister.LoginActivity;
+import com.yinglan.scc.mine.setup.dialog.ClearCacheDialog;
 import com.yinglan.scc.mine.setup.feedback.FeedbackActivity;
 import com.yinglan.scc.utils.FileNewUtil;
 
@@ -59,12 +60,13 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     @BindView(id = R.id.tv_cache)
     private TextView tv_cache;
 
-    @BindView(id = R.id.ll_feedback , click = true)
+    @BindView(id = R.id.ll_feedback, click = true)
     private LinearLayout ll_feedback;
 
     private String updateAppUrl = null;
     private boolean isUpdateApp = false;
     private SweetAlertDialog sweetAlertDialog = null;
+    private ClearCacheDialog clearCacheDialog = null;
 
     @Override
     public void setRootView() {
@@ -120,13 +122,9 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 }
                 ViewInject.toast(getString(R.string.latestVersion));
                 break;
-
             case R.id.ll_clearCache:
-                DataCleanManager.clearAllCache(aty);
-                tv_cache.setText("(0KB)");
-                ViewInject.toast(getString(R.string.clearSuccess));
+                showClearCacheDialog();
                 break;
-
             case R.id.ll_help:
                 showActivity(this, HelpCenterActivity.class);
                 break;
@@ -151,6 +149,26 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             tv_cache.setText("(" + DataCleanManager.getTotalCacheSize(aty) + ")");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 清除缓存弹框
+     */
+    public void showClearCacheDialog() {
+        if (clearCacheDialog == null) {
+            clearCacheDialog = new ClearCacheDialog(this) {
+                @Override
+                public void clearCacheDo() {
+                    DataCleanManager.clearAllCache(aty);
+                    tv_cache.setText("(0KB)");
+                    ViewInject.toast(getString(R.string.clearSuccess));
+                }
+            };
+        }
+        if (clearCacheDialog != null && !clearCacheDialog.isShowing()) {
+            clearCacheDialog.show();
         }
     }
 

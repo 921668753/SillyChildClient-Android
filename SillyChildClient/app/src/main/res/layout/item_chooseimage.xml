@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WrapWrap">
 
-    <RelativeLayout
-        style="@style/WrapWrap">
-        <ImageView
-            android:id="@+id/iv_img"
-            style="@style/MatchWrap"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/dimen10"
-            android:src="@mipmap/mine_xiangjiaddxxx"
-            android:layout_centerInParent="true"/>
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_width="@dimen/dimen20"
-            android:layout_height="@dimen/dimen20"
-            android:src="@mipmap/mine_dislodge"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_img"
+        style="@style/MatchWrap"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:padding="@dimen/dimen10"
+        android:src="@mipmap/mine_xiangjiaddxxx" />
 
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/dimen20"
+        android:layout_height="@dimen/dimen20"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/mine_dislodge" />
 
-</LinearLayout>
+</RelativeLayout>

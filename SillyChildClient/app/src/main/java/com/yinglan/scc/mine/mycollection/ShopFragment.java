@@ -13,11 +13,11 @@ import com.yinglan.scc.R;
  */
 
 public class ShopFragment extends BaseFragment {
-    private MyCollectionActivity aty;
+    private MyCollectionActivity1 aty;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (MyCollectionActivity) getActivity();
+        aty = (MyCollectionActivity1) getActivity();
         return View.inflate(aty, R.layout.fragment_shop, null);
     }
 }

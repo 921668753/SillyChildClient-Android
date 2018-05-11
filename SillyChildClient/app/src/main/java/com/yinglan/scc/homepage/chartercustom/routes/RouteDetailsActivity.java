@@ -19,7 +19,7 @@ import com.yinglan.scc.entity.CollectLineBean;
 import com.yinglan.scc.entity.RouteDetailsBean;
 import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -320,7 +320,7 @@ public class RouteDetailsActivity extends BaseActivity implements RouteDetailsCo
      */
     private void resultToCollectionRoute() {
         if (action.equals("collect")) {
-            intentresult = new Intent(this, MyCollectionActivity.class);
+            intentresult = new Intent(this, MyCollectionActivity1.class);
             setResult(0, intentresult);
         }
     }

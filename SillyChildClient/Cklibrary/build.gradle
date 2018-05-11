@@ -89,6 +89,9 @@ dependencies {
     //刷新框架
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
 
+    //侧滑删除
+    compile 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'
+
     //UINavigationBar 风格的 Titlebar
     compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
 

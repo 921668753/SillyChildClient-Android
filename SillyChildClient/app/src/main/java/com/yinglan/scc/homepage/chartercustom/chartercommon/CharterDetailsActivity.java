@@ -22,7 +22,7 @@ import com.yinglan.scc.homepage.chartercustom.bytheday.ByTheDayActivity;
 import com.yinglan.scc.homepage.chartercustom.transfer.TransferActivity;
 import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -359,7 +359,7 @@ public class CharterDetailsActivity extends BaseActivity implements CharterDetai
      */
     private void resultToCollectionRoute() {
         if (isCollect == 0) {
-            intentresult = new Intent(this, MyCollectionActivity.class);
+            intentresult = new Intent(this, MyCollectionActivity1.class);
             setResult(0, intentresult);
         }
     }

@@ -2,7 +2,6 @@ package com.yinglan.scc.mine.mycollection;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +51,7 @@ public class RouteFragment extends BaseFragment implements BGARefreshLayout.BGAR
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
 
-    private MyCollectionActivity aty;
+    private MyCollectionActivity1 aty;
     private AllLineViewAdapter mAdapter;
     private Intent jumpintent;
     private boolean isShowLoadingMore;
@@ -64,7 +63,7 @@ public class RouteFragment extends BaseFragment implements BGARefreshLayout.BGAR
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (MyCollectionActivity) getActivity();
+        aty = (MyCollectionActivity1) getActivity();
         return View.inflate(aty, R.layout.fragment_route, null);
     }
 

@@ -227,6 +227,7 @@
                 <LinearLayout
                     android:id="@+id/ll_minesetup"
                     style="@style/Match50"
+                    android:layout_marginBottom="@dimen/dimen15"
                     android:background="@color/whiteColors"
                     android:gravity="center_vertical">
 
@@ -257,7 +258,8 @@
                     android:gravity="center"
                     android:text="@string/vipEmergencyCall"
                     android:textColor="@color/whiteColors"
-                    android:textSize="@dimen/textsize13" />
+                    android:textSize="@dimen/textsize13"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>
@@ -292,7 +294,7 @@
         <TextView
             android:id="@+id/tv_divider"
             style="@style/DividerWidth"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </RelativeLayout>

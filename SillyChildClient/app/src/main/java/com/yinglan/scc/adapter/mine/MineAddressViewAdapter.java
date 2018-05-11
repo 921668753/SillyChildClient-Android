@@ -19,10 +19,10 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class MineAddressAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class MineAddressViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
 
-    public MineAddressAdapter(Context context) {
+    public MineAddressViewAdapter(Context context) {
         super(context, R.layout.item_deliveryaddress);
     }
 

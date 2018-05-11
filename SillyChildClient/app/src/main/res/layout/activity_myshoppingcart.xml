@@ -16,7 +16,7 @@
         android:background="@color/background">
         <!-- item_companyguidemassage -->
         <ListView
-            android:id="@+id/lv_companyGuideMassage"
+            android:id="@+id/lv_myShoppingCart"
             style="@style/MatchMatch"
             android:dividerHeight="@dimen/dimen1"
             android:overScrollMode="never"
@@ -24,6 +24,10 @@
             tools:listitem="@layout/item_shopgoods" />
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <include
+        style="@style/MatchAuto"
+        layout="@layout/common_error" />
 
     <View style="@style/DividerWidth" />
 
@@ -53,13 +57,15 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/tv_delete"
             android:layout_width="@dimen/dimen90"
             android:layout_height="@dimen/dimen35"
             android:background="@drawable/shape_cart"
             android:gravity="center"
             android:text="@string/delete"
             android:textColor="@color/fF0000Colors"
-            android:textSize="@dimen/textsize16" />
+            android:textSize="@dimen/textsize16"
+            android:visibility="gone" />
 
 
         <TextView

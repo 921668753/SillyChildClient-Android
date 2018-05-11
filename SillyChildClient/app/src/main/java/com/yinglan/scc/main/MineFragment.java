@@ -25,11 +25,10 @@ import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.dialog.VIPPermissionsDialog;
 import com.yinglan.scc.entity.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
 import com.yinglan.scc.mine.mywallet.MyWalletActivity;
 import com.yinglan.scc.mine.personaldata.PersonalDataActivity;
@@ -42,7 +41,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE;
-import static com.yinglan.scc.constant.NumericConstants.STATUS;
 
 /**
  * 个人中心
@@ -173,7 +171,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
                 aty.showActivity(aty, MyOrderActivity.class);
                 break;
             case R.id.ll_minecollection:
-                aty.showActivity(aty, MyCollectionActivity.class);
+                aty.showActivity(aty, MyCollectionActivity1.class);
                 break;
             case R.id.ll_mineshare:
                 aty.showActivity(aty, SharingCeremonyActivity.class);

@@ -2,178 +2,199 @@ package com.yinglan.scc.mine.mycollection;
 
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
-import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
-import com.yinglan.scc.mine.myorder.charterorder.CharterOrderFragment;
-import com.yinglan.scc.mine.myorder.goodorder.GoodOrderFragment;
-import com.yinglan.scc.mine.myorder.homestayorder.HomestayOrderFragment;
+import com.yinglan.scc.adapter.mine.mycollection.MyCollectionViewAdapter;
+import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
+import com.yinglan.scc.loginregister.LoginActivity;
+
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 我的收藏
+ * 我的收藏中的商品
  * Created by Administrator on 2017/9/2.
  */
 
-public class MyCollectionActivity extends BaseActivity {
+public class MyCollectionActivity extends BaseActivity implements MyCollectionContract.View, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    @BindView(id=R.id.ll_charter ,click = true)
-    private LinearLayout ll_charter;
-    @BindView(id=R.id.tv_charter )
-    private TextView tv_charter;
-    @BindView(id=R.id.v_charter )
-    private View v_charter;
+    @BindView(id = R.id.mRefreshLayout)
+    private BGARefreshLayout mRefreshLayout;
 
-    @BindView(id=R.id.ll_route ,click = true)
-    private LinearLayout ll_route;
-    @BindView(id=R.id.tv_route )
-    private TextView tv_route;
-    @BindView(id=R.id.v_route )
-    private View v_route;
+    private MyCollectionViewAdapter mAdapter;
 
-    @BindView(id=R.id.ll_good ,click = true)
-    private LinearLayout ll_good;
-    @BindView(id=R.id.tv_good )
-    private TextView tv_good;
-    @BindView(id=R.id.v_good )
-    private View v_good;
+    @BindView(id = R.id.lv_myCollection)
+    private ListView lv_myCollection;
 
-    @BindView(id=R.id.ll_house ,click = true)
-    private LinearLayout ll_house;
-    @BindView(id=R.id.tv_house )
-    private TextView tv_house;
-    @BindView(id=R.id.v_house)
-    private View v_house;
+    /**
+     * 错误提示页
+     */
+    @BindView(id = R.id.ll_commonError)
+    private LinearLayout ll_commonError;
+    @BindView(id = R.id.tv_hintText, click = true)
+    private TextView tv_hintText;
 
-    @BindView(id=R.id.ll_shop ,click = true)
-    private LinearLayout ll_shop;
-    @BindView(id=R.id.tv_shop )
-    private TextView tv_shop;
-    @BindView(id=R.id.v_shop )
-    private View v_shop;
-    private GoodFragment goodFragment;
-    private RouteFragment routeFragment;
-    private HouseFragment houseFragment;
-    private ShopFragment shopFragment;
-    private int chageIcon;
-    private CharterCollectionFragment charterCollectionFragment;
+    /**
+     * 当前页码
+     */
+    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+    /**
+     * 总页码
+     */
+    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
 
+    /**
+     * 是否加载更多
+     */
+    private boolean isShowLoadingMore = false;
+
+    private int positionItem = 0;
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_mycollection);
+        setContentView(R.layout.fragment_good);
     }
 
     @Override
     public void initData() {
         super.initData();
-        charterCollectionFragment=new CharterCollectionFragment();
-        routeFragment = new RouteFragment();
-        houseFragment = new HouseFragment();
-        goodFragment = new GoodFragment();
-        shopFragment = new ShopFragment();
-        chageIcon = getIntent().getIntExtra("chageIcon", 0);
+        mPresenter = new MyCollectionPresenter(this);
+        mAdapter = new MyCollectionViewAdapter(this);
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        cleanColors();
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.myCollection), true, R.id.titlebar);
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
+        lv_myCollection.setAdapter(mAdapter);
+        lv_myCollection.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
+        showLoadingDialog(getString(R.string.dataLoad));
+        //((MyCollectionContract.Presenter) mPresenter).get(mMorePageNumber);
+
     }
 
     @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+        mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
+        // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endLoadingMore();
+        if (!isShowLoadingMore) {
+            return false;
+        }
+        mMorePageNumber++;
+        if (mMorePageNumber > totalPageNumber) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            return false;
+        }
+        showLoadingDialog(getString(R.string.dataLoad));
+        //  ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        return true;
+    }
+
+    /**
+     * 控件监听事件
+     */
+    @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-        switch (v.getId()){
-            case R.id.ll_charter:
-                chageIcon=0;
-                cleanColors();
-                break;
-            case R.id.ll_route:
-                chageIcon=1;
-                cleanColors();
-                break;
-            case R.id.ll_house:
-                ViewInject.toast(getString(R.string.noDevelopment));
-//                chageIcon=2;
-//                cleanColors();
-                break;
-            case R.id.ll_good:
-                ViewInject.toast(getString(R.string.noDevelopment));
-//                chageIcon=3;
-//                cleanColors();
-                break;
-            case R.id.ll_shop:
-                ViewInject.toast(getString(R.string.noDevelopment));
-//                chageIcon=4;
-//                cleanColors();
+        switch (v.getId()) {
+            case R.id.tv_hintText:
+                mRefreshLayout.beginRefreshing();
                 break;
         }
     }
 
-    public void changeFragment(BaseFragment targetFragment) {
-        super.changeFragment(R.id.fl_mycollection, targetFragment);
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        // ViewInject.toast("1");
+        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
+        //    intent.putExtra("messageId", mAdapter.getItem(position).getId());
+        intent.putExtra("name", "RxBusOrderMessageDetailsEvent");
+        showActivity(aty, intent);
     }
 
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.myCollection), true, R.id.titlebar);
-    }
-
-    /**
-     * 清除颜色，并添加颜色
-     */
-    @SuppressWarnings("deprecation")
-    public void cleanColors() {
-        tv_charter.setTextColor(getResources().getColor(R.color.hintColors));
-        v_charter.setBackgroundResource(android.R.color.transparent);
-        tv_route.setTextColor(getResources().getColor(R.color.hintColors));
-        v_route.setBackgroundResource(android.R.color.transparent);
-        tv_house.setTextColor(getResources().getColor(R.color.hintColors));
-        v_house.setBackgroundResource(android.R.color.transparent);
-        tv_good.setTextColor(getResources().getColor(R.color.hintColors));
-        v_good.setBackgroundResource(android.R.color.transparent);
-        tv_shop.setTextColor(getResources().getColor(R.color.hintColors));
-        v_shop.setBackgroundResource(android.R.color.transparent);
-        switch (chageIcon){
-            case 0:
-                tv_charter.setTextColor(getResources().getColor(R.color.greenColors));
-                v_charter.setBackgroundResource(R.color.greenColors);
-                changeFragment(charterCollectionFragment);
-                break;
-            case 1:
-                tv_route.setTextColor(getResources().getColor(R.color.greenColors));
-                v_route.setBackgroundResource(R.color.greenColors);
-                changeFragment(routeFragment);
-                break;
-            case 2:
-                tv_house.setTextColor(getResources().getColor(R.color.greenColors));
-                v_house.setBackgroundResource(R.color.greenColors);
-                changeFragment(houseFragment);
-                break;
-            case 3:
-                tv_good.setTextColor(getResources().getColor(R.color.greenColors));
-                v_good.setBackgroundResource(R.color.greenColors);
-                changeFragment(goodFragment);
-                break;
-            case 4:
-                tv_shop.setTextColor(getResources().getColor(R.color.greenColors));
-                v_shop.setBackgroundResource(R.color.greenColors);
-                changeFragment(shopFragment);
-                break;
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        positionItem = position;
+        if (childView.getId() == R.id.img_delete) {
+            mAdapter.removeItem(positionItem);
+        } else if (childView.getId() == R.id.img_shoppingCart) {
+            //   showLoadingDialog(getString(R.string.dataLoad));
+            //   ((MyShoppingCartContract.Presenter) mPresenter).postDeleteGood(mAdapter.getData());
         }
     }
 
-    public int getChageIcon() {
-        return chageIcon;
+
+    @Override
+    public void setPresenter(MyCollectionContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        isShowLoadingMore = true;
+        ll_commonError.setVisibility(View.GONE);
+        mRefreshLayout.setVisibility(View.VISIBLE);
+//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
+//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
+//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
+//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
+//            error(getString(R.string.serverReturnsDataNull));
+//            return;
+//        }
+//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+//            mRefreshLayout.endRefreshing();
+//            mAdapter.clear();
+//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
+//        } else {
+//            mRefreshLayout.endLoadingMore();
+//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
+//        }
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        if (isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+            return;
+        }
+        isShowLoadingMore = false;
+        mRefreshLayout.setVisibility(View.GONE);
+        ll_commonError.setVisibility(View.VISIBLE);
+        tv_hintText.setText(msg + getString(R.string.clickRefresh));
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+        } else {
+            mRefreshLayout.endLoadingMore();
+        }
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.clear();
+        mAdapter = null;
     }
 
 }

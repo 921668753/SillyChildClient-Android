@@ -19,7 +19,7 @@ import com.yinglan.scc.adapter.dynamics.DynamicsDetailsCommentarieViewAdapter;
 import com.yinglan.scc.entity.DynamicsDetailsBean;
 import com.yinglan.scc.entity.DynamicsDetailsBean.ResultBean.CommentsBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
@@ -444,7 +444,7 @@ public class DynamicsDetailsActivity extends BaseActivity implements DynamicsDet
      */
     private void resultToCollectionRoute() {
         if (isCollectDynamic == 0) {
-            if (intentresult == null) intentresult = new Intent(this, MyCollectionActivity.class);
+            if (intentresult == null) intentresult = new Intent(this, MyCollectionActivity1.class);
             setResult(0, intentresult);
         }
     }

@@ -14,7 +14,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.mine.MineAddressAdapter;
+import com.yinglan.scc.adapter.mine.MineAddressViewAdapter;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
@@ -37,7 +37,7 @@ public class DeliveryAddressActivity extends BaseActivity implements MineAddress
 
     @BindView(id=R.id.tv_newaddress,click = true)
     private TextView tv_newaddress;
-    private MineAddressAdapter mAdapter;
+    private MineAddressViewAdapter mAdapter;
 
     @Override
     public void setRootView() {
@@ -48,7 +48,7 @@ public class DeliveryAddressActivity extends BaseActivity implements MineAddress
     public void initData() {
         super.initData();
         mPresenter=new MineAddressPresenter(this);
-        mAdapter=new MineAddressAdapter(this);
+        mAdapter=new MineAddressViewAdapter(this);
         mAdapter.setOnItemChildClickListener(this);
 
     }

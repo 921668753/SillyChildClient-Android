@@ -659,6 +659,8 @@
     <string name="myWallet">我的钱包</string>
     <string name="accountDetails">账户明细</string>
     <string name="shoppingCart">购物车</string>
+    <string name="confirmDeletionGoods">确定删除商品</string>
+    <string name="delete2">您还未选择任何商品！无法删除商品！</string>
     <string name="myOrder">我的订单</string>
     <string name="myRelease">我的发布</string>
     <string name="myCollection">我的收藏</string>
@@ -681,6 +683,7 @@
     <string name="defaultAddress1">设为默认地址</string>
     <string name="addAddress">添加新地址</string>
     <string name="edit">编辑</string>
+    <string name="noInformation">暂无信息</string>
     <string name="delete">删除</string>
     <string name="newAddress">新增地址</string>
     <string name="consignee">收货人</string>
@@ -884,10 +887,6 @@
     <string name="determineClearCache">确定清除系统缓存</string>
 
 
-
-
-
-
     <!-- 个人中心 个人资料-->
     <string name="personaData">个人资料</string>
     <string name="headPortrait">头像</string>
@@ -924,10 +923,16 @@
     <string name="confirmChange">确认修改</string>
 
     <!-- 设置  意见反馈-->
-    <string name="feedbackType">反馈问题类型</string>
+    <string name="feedbackType">选择反馈类型</string>
     <string name="noHaveFeedBackType">没有反馈问题类型可选，无法进行反馈操作！将关闭此页面，请移步至客服。</string>
     <string name="getFeedBackTypeError">无法进行反馈操作！将关闭此页面，您可以移步至客服。</string>
     <string name="selectorType">请选择反馈问题类型</string>
+
+    <string name="dysfunction">功能异常</string>
+    <string name="experienceProblem">体验问题</string>
+    <string name="newFeatureRecommendations">新功能建议</string>
+    <string name="other">其他</string>
+    <string name="hintCommentsSuggestions">傻孩子APP的每一次进步，都离不开您的意见和建议.</string>
     <string name="wordLimit">500</string>
     <string name="takephoto">拍照</string>
     <string name="chooseFromAlbum">从手机相册选择</string>

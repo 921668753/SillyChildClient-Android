@@ -19,7 +19,7 @@ import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.dialog.ShareBouncedDialog;
 import com.yinglan.scc.entity.StrategyDetailsBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -223,7 +223,7 @@ public class StrategyDetailsActivity extends BaseActivity implements StrategyDet
      */
     private void resultToCollectionRoute() {
         if (isCollect == 0) {
-            if (intentresult == null) intentresult = new Intent(this, MyCollectionActivity.class);
+            if (intentresult == null) intentresult = new Intent(this, MyCollectionActivity1.class);
             setResult(0, intentresult);
         }
     }

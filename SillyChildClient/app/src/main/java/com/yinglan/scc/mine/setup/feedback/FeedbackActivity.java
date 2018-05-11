@@ -12,12 +12,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
@@ -30,6 +30,7 @@ import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.FeedBackTypeAdapter;
@@ -51,26 +52,45 @@ import java.util.List;
  * Created by Administrator on 2017/9/2.
  */
 
-public class FeedbackActivity extends BaseActivity implements TextWatcher,ImagePickerAdapter.OnRecyclerViewItemClickListener,FeedbackContract.View,AdapterView.OnItemClickListener{
-    @BindView(id = R.id.ll_allactivity)
-    private LinearLayout ll_allactivity;
+public class FeedbackActivity extends BaseActivity implements TextWatcher, ImagePickerAdapter.OnRecyclerViewItemClickListener, FeedbackContract.View, AdapterView.OnItemClickListener {
 
-    @BindView(id = R.id.noscrollgridview)
-    private NoScrollGridView noscrollgridview;
+
+    @BindView(id = R.id.ll_dysfunction, click = true)
+    private LinearLayout ll_dysfunction;
+    @BindView(id = R.id.img_dysfunction)
+    private ImageView img_dysfunction;
+
+
+    @BindView(id = R.id.ll_experienceProblem, click = true)
+    private LinearLayout ll_experienceProblem;
+    @BindView(id = R.id.img_experienceProblem)
+    private ImageView img_experienceProblem;
+
+    @BindView(id = R.id.ll_newFeatureRecommendations, click = true)
+    private LinearLayout ll_newFeatureRecommendations;
+    @BindView(id = R.id.img_newFeatureRecommendations)
+    private ImageView img_newFeatureRecommendations;
+
+    @BindView(id = R.id.ll_other, click = true)
+    private LinearLayout ll_other;
+    @BindView(id = R.id.img_other)
+    private ImageView img_other;
 
     @BindView(id = R.id.tv_feed)
     private EditText tv_feed;
+
     @BindView(id = R.id.tv_currentwords)
     private TextView tv_currentwords;
+
     @BindView(id = R.id.tv_wordLimit)
     private TextView tv_wordLimit;
 
     @BindView(id = R.id.recyclerView)
     private RecyclerView recyclerView;
 
-    @BindView(id = R.id.tvbtn_submit , click = true)
-    private TextView tvbtn_submit;
-    
+    @BindView(id = R.id.tv_submit, click = true)
+    private TextView tv_submit;
+
     private String feedcontent;
     private int wordLimit;
     private List<ImageItem> selImageList;
@@ -81,10 +101,9 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
     private ImagePopupWindow imagePopupWindow;
     private UploadImageBean uploadimagebean;
     private String urls;
-    private FeedBackTypeAdapter feedBackTypeAdapter;
-    private int currentposition=-1;
-    private int FLAGSUBMIT=9;
-    private int FLAGTYPE=10;
+    private int currentposition = -1;
+    private int FLAGSUBMIT = 9;
+    private int FLAGTYPE = 10;
 
     @Override
     public void setRootView() {
@@ -94,8 +113,8 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
     @Override
     public void initData() {
         super.initData();
-        mPresenter=new FeedbackPresenter(this);
-        wordLimit=StringUtils.toInt(tv_wordLimit.getText().toString(),500);
+        mPresenter = new FeedbackPresenter(this);
+        wordLimit = StringUtils.toInt(tv_wordLimit.getText().toString(), 500);
     }
 
     @Override
@@ -104,38 +123,15 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
         initTitle();
         tv_feed.addTextChangedListener(this);
         tv_feed.setMovementMethod(ScrollingMovementMethod.getInstance());
-
         initImagePicker();
         selImageList = new ArrayList<>();
-        urllist=new ArrayList<>();
-        adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE,R.mipmap.mine_xiangjiaddxxx);
+        urllist = new ArrayList<>();
+        adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.mine_xiangjiaddxxx);
         adapter.setOnItemClickListener(this);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(this, 4);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-
-        feedBackTypeAdapter=new FeedBackTypeAdapter(this);
-        noscrollgridview.setAdapter(feedBackTypeAdapter);
-        noscrollgridview.setOnItemClickListener(this);
-        //获取意见反馈类型
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((FeedbackPresenter)mPresenter).getTypes(FLAGTYPE);
-
-    }
-
-    @Override
-    public void widgetClick(View v) {
-        super.widgetClick(v);
-        switch (v.getId()){
-            case R.id.tvbtn_submit:
-                if (currentposition==-1){
-                    ViewInject.toast(getString(R.string.selectorType));
-                }else{
-                    pullEvaluation();
-                }
-                break;
-        }
     }
 
     /**
@@ -144,6 +140,45 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
     public void initTitle() {
         ActivityTitleUtils.initToolbar(aty, getString(R.string.feedback), true, R.id.titlebar);
     }
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.ll_dysfunction:
+                img_dysfunction.setImageResource(R.mipmap.mineaddress_selectxxx);
+                img_experienceProblem.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_newFeatureRecommendations.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_other.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                break;
+            case R.id.ll_experienceProblem:
+                img_dysfunction.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_experienceProblem.setImageResource(R.mipmap.mineaddress_selectxxx);
+                img_newFeatureRecommendations.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_other.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                break;
+            case R.id.ll_newFeatureRecommendations:
+                img_dysfunction.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_experienceProblem.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_newFeatureRecommendations.setImageResource(R.mipmap.mineaddress_selectxxx);
+                img_other.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                break;
+            case R.id.ll_other:
+                img_dysfunction.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_experienceProblem.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_newFeatureRecommendations.setImageResource(R.mipmap.mineaddress_unselectxxx);
+                img_other.setImageResource(R.mipmap.mineaddress_selectxxx);
+                break;
+            case R.id.tv_submit:
+                if (currentposition == -1) {
+                    ViewInject.toast(getString(R.string.selectorType));
+                } else {
+                    pullEvaluation();
+                }
+                break;
+        }
+    }
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
@@ -160,43 +195,27 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
         //start 输入框中改变后的字符串的起始位置
         //before 输入框中改变前的字符串的位置 默认为0
         //count 输入框中改变后的一共输入字符串的数量
-        if ((start+count)>wordLimit){
-            tv_currentwords.setText(wordLimit+"/");
-        }else{
-            tv_currentwords.setText(start+count+"/");
+        if ((start + count) > wordLimit) {
+            tv_currentwords.setText(wordLimit + "/");
+        } else {
+            tv_currentwords.setText(start + count + "/");
         }
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
         //edit  输入结束呈现在输入框中的信息
-        feedcontent=editable.toString();
-        if (feedcontent!=null&&feedcontent.length()>wordLimit){
-            tv_feed.setText(feedcontent.substring(0,wordLimit));
+        feedcontent = editable.toString();
+        if (feedcontent != null && feedcontent.length() > wordLimit) {
+            tv_feed.setText(feedcontent.substring(0, wordLimit));
             tv_feed.setSelection(wordLimit);
         }
     }
 
-//    /**
-//     * 清除颜色，并添加颜色
-//     */
-//    public void cleanColors(TextView currenttv) {
-//        tvbtn_dysfunction.setTextColor(getResources().getColor(R.color.textColor));
-//        tvbtn_dysfunction.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-//        tvbtn_experienceMatters.setTextColor(getResources().getColor(R.color.textColor));
-//        tvbtn_experienceMatters.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-//        tvbtn_newFeature.setTextColor(getResources().getColor(R.color.textColor));
-//        tvbtn_newFeature.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-//        tvbtn_otherthing.setTextColor(getResources().getColor(R.color.textColor));
-//        tvbtn_otherthing.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-//
-//        currenttv.setTextColor(getResources().getColor(R.color.greenColors));
-//        currenttv.setBackgroundResource(R.drawable.shape_code);
-//    }
 
     private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
-        GlideImageLoader glideImageLoader=new GlideImageLoader();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮
         imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
@@ -220,31 +239,30 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
             case NumericConstants.IMAGE_ITEM_ADD:
                 //打开选择,本次允许选择的数量
                 Intent intent1 = new Intent(this, ImageGridActivity.class);
-                                /* 如果需要进入选择的时候显示已经选中的图片，
-                                 * 详情请查看ImagePickerActivity
-                                 * */
+                /* 如果需要进入选择的时候显示已经选中的图片，
+                 * 详情请查看ImagePickerActivity
+                 * */
 //                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
                 startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
                 break;
             default:
-                if (view.getId()==R.id.iv_delete){
-                    if (selImageList != null&&selImageList.size()>position) {
+                if (view.getId() == R.id.iv_delete) {
+                    if (selImageList != null && selImageList.size() > position) {
                         selImageList.remove(position);
                         urllist.remove(position);
                         adapter.setImages(selImageList);
                     }
-                }else{
+                } else {
                     //打开预览
-                    imagePopupWindow = new ImagePopupWindow(this, getWindow(), urllist.get(position));
-                    imagePopupWindow.showAtLocation(ll_allactivity, Gravity.CENTER, 0, 0);
+//                    imagePopupWindow = new ImagePopupWindow(this, getWindow(), urllist.get(position));
+//                    imagePopupWindow.showAtLocation(ll_allactivity, Gravity.CENTER, 0, 0);
                     //打开预览
-//                    Intent intentPreview = new Intent(PostEvaluationActivity.this, ImagePreviewDelActivity.class);
-//                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
-//                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-//                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-//                    startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
+                    Intent intentPreview = new Intent(FeedbackActivity.this, ImagePreviewDelActivity.class);
+                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+                    startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
                 }
-
                 break;
         }
     }
@@ -256,11 +274,11 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
             //添加图片返回
             if (data != null && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
                 images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                if (images!=null){
-                    imagefile=new File(images.get(0).path);
+                if (images != null) {
+                    imagefile = new File(images.get(0).path);
                     imagefile = BitmapCoreUtil.customCompression(imagefile);
                     showLoadingDialog(getString(R.string.crossLoad));
-                    ((FeedbackPresenter)mPresenter).upPictures("file",imagefile,0);
+                    ((FeedbackPresenter) mPresenter).upPictures("file", imagefile, 0);
                 }
 
             }
@@ -279,25 +297,26 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
 
     @Override
     public void setPresenter(FeedbackContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
-        if (flag==FLAGSUBMIT){
+        if (flag == FLAGSUBMIT) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.submitSuccess));
             finish();
-        }else if (flag==FLAGTYPE){
+        } else if (flag == FLAGTYPE) {
             FeedBackTypeBean uploadimagebean = (FeedBackTypeBean) JsonUtil.getInstance().json2Obj(success, FeedBackTypeBean.class);
-            if (uploadimagebean!=null&&uploadimagebean.getResult()!=null&&uploadimagebean.getResult().getList()!=null&&uploadimagebean.getResult().getList().size()>0){
-                feedBackTypeAdapter.addNewData(uploadimagebean.getResult().getList());
+            if (uploadimagebean != null && uploadimagebean.getResult() != null && uploadimagebean.getResult().getList() != null && uploadimagebean.getResult().getList().size() > 0) {
+
+
                 dismissLoadingDialog();
-            }else{
+            } else {
                 dismissLoadingDialog();
                 initDialog(getString(R.string.noHaveFeedBackType));
             }
-        }else {
+        } else {
             GlideCatchUtil.getInstance().cleanImageDisk();
             uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (uploadimagebean != null && uploadimagebean.getResult() != null && uploadimagebean.getResult().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())) {
@@ -315,52 +334,48 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher,ImageP
     @Override
     public void errorMsg(String msg, int flag) {
         GlideCatchUtil.getInstance().cleanImageDisk();
-        Log.e("图片",msg);
-        if (isLogin(msg)){
+        Log.e("图片", msg);
+        if (isLogin(msg)) {
             ViewInject.toast(getString(R.string.reloginPrompting));
             PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshMineFragment", false);
             PreferenceHelper.write(this, StringConstants.FILENAME, "isReLogin", true);
-            showActivity(this,LoginActivity.class);
+            showActivity(this, LoginActivity.class);
             finish();
             return;
         }
-        if (flag==FLAGTYPE){
+        if (flag == FLAGTYPE) {
             dismissLoadingDialog();
-            initDialog(msg+getString(R.string.getFeedBackTypeError));
+            initDialog(msg + getString(R.string.getFeedBackTypeError));
             return;
         }
         dismissLoadingDialog();
-        ViewInject.toast(this,msg);
+        ViewInject.toast(this, msg);
     }
 
     /**
      * 上传评价
      */
-    private void pullEvaluation(){
-        urls="";
-        if (urllist.size()>0){
-            for (String s:urllist){
+    private void pullEvaluation() {
+        urls = "";
+        if (urllist.size() > 0) {
+            for (String s : urllist) {
                 if (!TextUtils.isEmpty(s)) {
                     urls += "|" + s;
                 }
             }
         }
         showLoadingDialog(getString(R.string.submissionLoad));
-        ((FeedbackPresenter)mPresenter).submitFeed(feedBackTypeAdapter.getItem(currentposition).getId(),urls,tv_feed.getText().toString(),FLAGSUBMIT);
+        // ((FeedbackPresenter) mPresenter).submitFeed(feedBackTypeAdapter.getItem(currentposition).getId(), urls, tv_feed.getText().toString(), FLAGSUBMIT);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (currentposition!=-1){
-            feedBackTypeAdapter.getItem(currentposition).setSelector(false);
-        }
-        feedBackTypeAdapter.getItem(i).setSelector(true);
-        feedBackTypeAdapter.notifyDataSetChanged();
-        currentposition=i;
+
+        currentposition = i;
     }
 
-    private void initDialog(String content){
-        VIPPermissionsDialog typedialog=new VIPPermissionsDialog(this) {
+    private void initDialog(String content) {
+        VIPPermissionsDialog typedialog = new VIPPermissionsDialog(this) {
             @Override
             public void doAction() {
                 finish();
