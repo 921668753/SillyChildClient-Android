@@ -8,7 +8,7 @@
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:padding="@dimen/dimen10"
-        android:src="@mipmap/mine_xiangjiaddxxx" />
+        android:src="@mipmap/feedback_add_pictures" />
 
     <ImageView
         android:id="@+id/iv_delete"

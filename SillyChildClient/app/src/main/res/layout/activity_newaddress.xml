@@ -171,9 +171,8 @@
             android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen15"
             android:paddingTop="@dimen/dimen9"
-            android:src="@mipmap/mineaddress_unselectxxx" />
+            android:src="@mipmap/address_set_as_default_selected" />
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/tv_save"

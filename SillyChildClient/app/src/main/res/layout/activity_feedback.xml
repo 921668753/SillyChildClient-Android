@@ -17,7 +17,6 @@
             style="@style/MatchWrap"
             android:orientation="vertical">
 
-
             <TextView
                 style="@style/WrapWrap"
                 android:layout_marginBottom="@dimen/dimen15"
@@ -33,7 +32,6 @@
                 android:background="@color/whiteColors"
                 android:orientation="horizontal">
 
-
                 <LinearLayout
                     android:id="@+id/ll_dysfunction"
                     style="@style/WrapMatch"
@@ -46,7 +44,7 @@
                         android:id="@+id/img_dysfunction"
                         android:layout_width="@dimen/dimen10"
                         android:layout_height="@dimen/dimen10"
-                        android:src="@mipmap/mineaddress_selectxxx" />
+                        android:src="@mipmap/feedback_selected" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -68,7 +66,7 @@
                         android:id="@+id/img_experienceProblem"
                         android:layout_width="@dimen/dimen10"
                         android:layout_height="@dimen/dimen10"
-                        android:src="@mipmap/mineaddress_unselectxxx" />
+                        android:src="@mipmap/feedback_unselected" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -91,7 +89,7 @@
                         android:id="@+id/img_newFeatureRecommendations"
                         android:layout_width="@dimen/dimen10"
                         android:layout_height="@dimen/dimen10"
-                        android:src="@mipmap/mineaddress_unselectxxx" />
+                        android:src="@mipmap/feedback_unselected" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -115,7 +113,7 @@
                         android:id="@+id/img_other"
                         android:layout_width="@dimen/dimen10"
                         android:layout_height="@dimen/dimen10"
-                        android:src="@mipmap/mineaddress_unselectxxx" />
+                        android:src="@mipmap/feedback_unselected" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -128,17 +126,6 @@
 
 
             </LinearLayout>
-
-
-            <!--<com.common.cklibrary.utils.myview.NoScrollGridView-->
-            <!--android:id="@+id/noscrollgridview"-->
-            <!--style="@style/MatchWrap"-->
-            <!--android:background="@color/whiteColors"-->
-            <!--android:horizontalSpacing="@dimen/dimen5"-->
-            <!--android:listSelector="@android:color/transparent"-->
-            <!--android:numColumns="4"-->
-            <!--android:verticalSpacing="@dimen/dimen5"-->
-            <!--tools:listitem="@layout/item_feedback_type" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -12,7 +12,9 @@
 
     <TextView style="@style/DividerWidth" />
 
-    <ScrollView style="@style/MatchAuto">
+    <ScrollView
+        style="@style/MatchAuto"
+        android:scrollbars="none">
 
         <LinearLayout
             style="@style/MatchMatch"
@@ -50,10 +52,9 @@
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15">
 
-
                 <ImageView
                     style="@style/Image20"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/order_to_be_shipped_icon" />
 
                 <TextView
                     style="@style/WrapWrap"

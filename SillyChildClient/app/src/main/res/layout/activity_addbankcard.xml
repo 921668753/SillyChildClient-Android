@@ -204,7 +204,7 @@
             android:layout_height="@dimen/dimen33"
             android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginRight="@dimen/dimen15"
-            android:background="@drawable/shape_code"
+            android:background="@drawable/shape_login"
             android:gravity="center"
             android:text="@string/testGetCode"
             android:textColor="@color/whiteColors"

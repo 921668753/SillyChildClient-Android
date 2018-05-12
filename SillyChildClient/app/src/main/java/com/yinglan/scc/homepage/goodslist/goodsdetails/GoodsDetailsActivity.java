@@ -7,13 +7,15 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.CommentsActivity;
 import com.yinglan.scc.homepage.goodslist.shop.ShopActivity;
 import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.yinglan.scc.utils.SoftKeyboardUtils;
+
+import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
  * 商品详情
@@ -21,6 +23,9 @@ import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
  */
 
 public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsContract.View, WebViewLayout1.WebViewCallBack {
+
+    @BindView(id = R.id.titlebar)
+    private BGATitleBar titlebar;
 
     @BindView(id = R.id.web_content)
     private WebViewLayout1 webViewLayout;
@@ -42,6 +47,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     @BindView(id = R.id.tv_addShoppingCart, click = true)
     private TextView tv_addShoppingCart;
 
+    private String goodName = "";
+
 
     @Override
     public void setRootView() {
@@ -55,6 +62,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     public void initData() {
         super.initData();
         mPresenter = new GoodsDetailsPresenter(this);
+        goodName = getIntent().getStringExtra("goodName");
     }
 
     /**
@@ -67,12 +75,31 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         initView();
     }
 
+
     /**
      * 设置标题
      */
     public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderDetails), true, R.id.titlebar);
+        titlebar.setTitleText(goodName);
+        titlebar.setRightDrawable(getResources().getDrawable(R.mipmap.product_details_share));
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                SoftKeyboardUtils.packUpKeyboard(aty);
+                aty.finish();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+                //分享
+
+            }
+        };
+        titlebar.setDelegate(simpleDelegate);
     }
+
 
     public void initView() {
         webViewLayout.setTitleVisibility(false);

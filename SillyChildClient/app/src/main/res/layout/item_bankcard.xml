@@ -11,7 +11,7 @@
 
     <TextView
         style="@style/MatchMatch"
-        android:background="@drawable/shape_login" />
+        android:background="@mipmap/bank_card_default" />
 
     <TextView
         android:id="@+id/tv_cardName"
@@ -42,6 +42,15 @@
         android:text="621700**********6342"
         android:textColor="@color/whiteColors"
         android:textSize="@dimen/textsize13" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen15"
+        android:layout_height="@dimen/dimen10"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen15"
+        android:src="@mipmap/bank_card_check_number"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

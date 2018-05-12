@@ -60,7 +60,7 @@
                 android:id="@+id/iv_deliveryaddresschose"
                 style="@style/WrapWrap"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/mineaddress_unselectxxx" />
+                android:src="@mipmap/address_address_select" />
 
             <TextView
                 android:id="@+id/tv_promptcharacters"
@@ -80,8 +80,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/mineaddress_deletexxx" />
+                android:layout_width="@dimen/dimen16"
+                android:layout_height="@dimen/dimen15"
+                android:src="@mipmap/address_delete" />
 
             <TextView
                 style="@style/WrapWrap"
@@ -101,8 +102,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/mineaddress_editxxx" />
+                android:layout_width="@dimen/dimen15"
+                android:layout_height="@dimen/dimen16"
+                android:src="@mipmap/address_edit" />
 
             <TextView
                 style="@style/WrapWrap"

@@ -7,18 +7,15 @@
     android:paddingRight="@dimen/dimen15">
 
     <RelativeLayout
-        android:id="@+id/rl_left"
-        android:layout_width="@dimen/dimen120"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/iv_colorimage"
-            style="@style/MatchMatch" />
+        android:id="@+id/rl_coupons"
+        style="@style/MatchWrap"
+        android:background="@mipmap/coupon_used">
 
         <LinearLayout
-            style="@style/WrapWrap"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
+            android:id="@+id/ll_useconditions"
+            android:layout_width="@dimen/dimen120"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
@@ -43,71 +40,70 @@
             <TextView
                 android:id="@+id/tv_useconditions"
                 style="@style/WrapWrap"
-                android:layout_marginTop="@dimen/dimen12"
                 android:text="满50可用"
                 android:textColor="@color/whiteColors"
                 android:textSize="@dimen/dimen12" />
         </LinearLayout>
-    </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/MatchMatch"
-        android:layout_toRightOf="@id/rl_left"
-        android:background="@color/whiteColors"
-        android:paddingLeft="@dimen/dimen13"
-        android:paddingTop="@dimen/dimen14">
-
-        <TextView
-            android:id="@+id/tv_couponstype"
-            style="@style/WrapWrap"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="通用红包"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize14" />
-
-        <LinearLayout
-            android:id="@+id/ll_expirydate"
-            style="@style/WrapWrap"
-            android:layout_below="@id/tv_couponstype"
-            android:layout_marginTop="@dimen/dimen12"
-            android:orientation="horizontal">
+        <RelativeLayout
+            style="@style/MatchMatch"
+            android:layout_toRightOf="@id/ll_useconditions"
+            android:background="@color/whiteColors"
+            android:paddingLeft="@dimen/dimen13"
+            android:paddingTop="@dimen/dimen14">
 
             <TextView
-                style="@style/WrapWrap"
-                android:text="@string/expiryDate"
-                android:textColor="@color/hintColors"
-                android:textSize="@dimen/textsize11" />
-
-            <TextView
-                android:id="@+id/tv_expirydate"
+                android:id="@+id/tv_couponstype"
                 style="@style/WrapWrap"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="2018-06-10"
+                android:text="通用红包"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize14" />
+
+            <LinearLayout
+                android:id="@+id/ll_expirydate"
+                style="@style/WrapWrap"
+                android:layout_below="@id/tv_couponstype"
+                android:layout_marginTop="@dimen/dimen12"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/expiryDate"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize11" />
+
+                <TextView
+                    android:id="@+id/tv_expirydate"
+                    style="@style/WrapWrap"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="2018-06-10"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize11" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_couponsexplain"
+                style="@style/WrapWrap"
+                android:layout_below="@id/ll_expirydate"
+                android:layout_marginTop="@dimen/dimen12"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="仅限12345678910用户使用"
                 android:textColor="@color/hintColors"
                 android:textSize="@dimen/textsize11" />
-        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_couponsexplain"
-            style="@style/WrapWrap"
-            android:layout_below="@id/ll_expirydate"
-            android:layout_marginTop="@dimen/dimen12"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="仅限12345678910用户使用"
-            android:textColor="@color/hintColors"
-            android:textSize="@dimen/textsize11" />
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="@dimen/dimen44"
+                android:layout_height="@dimen/dimen44"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen15"
+                android:src="@mipmap/mine_yishiyongxxx" />
 
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="@dimen/dimen70"
-            android:layout_height="@dimen/dimen70"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimen12"
-            android:src="@mipmap/mine_yishiyongxxx" />
-
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation;
+package com.yinglan.scc.mine.myorder.goodorder.orderevaluation;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
@@ -9,7 +9,7 @@ import java.io.File;
  * Created by ruitu on 2016/9/24.
  */
 
-public interface PostEvaluationContract {
+public interface PostCommentsContract {
     interface Presenter extends BasePresenter {
         /**
          * 上传图片

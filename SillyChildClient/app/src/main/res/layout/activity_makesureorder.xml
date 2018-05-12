@@ -48,7 +48,6 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
                     style="@style/MatchWrap"
                     android:layout_below="@id/ll_name"

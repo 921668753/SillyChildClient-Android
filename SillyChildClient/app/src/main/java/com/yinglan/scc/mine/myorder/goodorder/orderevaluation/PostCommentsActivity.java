@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist.goodsdetails.comments.evaluation;
+package com.yinglan.scc.mine.myorder.goodorder.orderevaluation;
 
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,7 +46,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/15.
  */
 
-public class PostCommentsActivity extends BaseActivity implements ImagePickerAdapter.OnRecyclerViewItemClickListener, PostEvaluationContract.View {
+public class PostCommentsActivity extends BaseActivity implements ImagePickerAdapter.OnRecyclerViewItemClickListener, PostCommentsContract.View {
 
 
     @BindView(id = R.id.ll_allactivity)
@@ -122,7 +122,7 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new PostEvaluationPresenter(this);
+        mPresenter = new PostCommentsPresenter(this);
         orderid = getIntent().getStringExtra("air_id");
         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {
@@ -306,7 +306,7 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
                     imagefile = new File(images.get(0).path);
                     imagefile = BitmapCoreUtil.customCompression(imagefile);
                     showLoadingDialog(getString(R.string.crossLoad));
-                    ((PostEvaluationContract.Presenter) mPresenter).upPictures("file", imagefile, 0);
+                    ((PostCommentsContract.Presenter) mPresenter).upPictures("file", imagefile, 0);
                 }
 
             }
@@ -367,7 +367,7 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
 //    }
 
     @Override
-    public void setPresenter(PostEvaluationContract.Presenter presenter) {
+    public void setPresenter(PostCommentsContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -483,7 +483,7 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
             }
         }
         showLoadingDialog(getString(R.string.submissionLoad));
-        ((PostEvaluationContract.Presenter) mPresenter).postEvaluation(orderid, type, rb_rating_guide.getStar(), rb_rating.getStar(), urls, anonymous, et_content.getText().toString(), 9);
+        ((PostCommentsContract.Presenter) mPresenter).postEvaluation(orderid, type, rb_rating_guide.getStar(), rb_rating.getStar(), urls, anonymous, et_content.getText().toString(), 9);
 
 //        }
     }

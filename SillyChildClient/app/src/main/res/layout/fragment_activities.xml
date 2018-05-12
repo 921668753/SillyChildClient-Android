@@ -86,7 +86,7 @@
                     <TextView
                         android:layout_width="@dimen/dimen79"
                         android:layout_height="@dimen/dimen25"
-                        android:background="@color/red"
+                        android:background="@mipmap/activity_box"
                         android:paddingLeft="@dimen/dimen8"
                         android:text="@string/bargain"
                         android:textColor="@color/whiteColors"
@@ -132,13 +132,12 @@
                     <TextView
                         android:layout_width="@dimen/dimen79"
                         android:layout_height="@dimen/dimen25"
-                        android:background="@color/red"
+                        android:background="@mipmap/activity_box"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dimen8"
                         android:text="@string/productl"
                         android:textColor="@color/whiteColors"
                         android:textSize="@dimen/textsize15" />
-
 
                     <TextView
                         style="@style/AutoWrap"

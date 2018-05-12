@@ -9,7 +9,9 @@
 
     <View style="@style/DividerWidth" />
 
-    <ScrollView style="@style/MatchAuto">
+    <ScrollView
+        style="@style/MatchAuto"
+        android:scrollbars="none">
 
         <LinearLayout
             style="@style/MatchMatch"
@@ -192,7 +194,7 @@
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
-                    android:src="@mipmap/mineaddress_selectxxx" />
+                    android:src="@mipmap/top_ups_selected" />
 
             </LinearLayout>
 
@@ -214,7 +216,6 @@
                     android:layout_marginTop="@dimen/dimen13"
                     android:src="@mipmap/mine_zfbxxx" />
 
-
                 <TextView
                     style="@style/AutoWrap"
                     android:paddingLeft="@dimen/dimen10"
@@ -227,7 +228,7 @@
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
-                    android:src="@mipmap/mineaddress_unselectxxx" />
+                    android:src="@mipmap/top_ups_unselected" />
 
             </LinearLayout>
 
@@ -246,8 +247,7 @@
                     android:layout_marginBottom="@dimen/dimen20"
                     android:layout_marginLeft="@dimen/dimen15"
                     android:layout_marginTop="@dimen/dimen20"
-                    android:src="@mipmap/mine_zfbxxx" />
-
+                    android:src="@mipmap/mine_unionpayxxx" />
 
                 <TextView
                     style="@style/AutoWrap"
@@ -261,7 +261,7 @@
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
-                    android:src="@mipmap/mineaddress_unselectxxx" />
+                    android:src="@mipmap/top_ups_unselected" />
 
             </LinearLayout>
 

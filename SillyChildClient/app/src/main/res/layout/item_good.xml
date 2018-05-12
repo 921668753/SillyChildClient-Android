@@ -43,7 +43,7 @@
                 android:paddingLeft="@dimen/dimen14"
                 android:paddingRight="@dimen/dimen14"
                 android:scaleType="fitXY"
-                android:src="@mipmap/mineaddress_deletexxx" />
+                android:src="@mipmap/collection_delete" />
         </LinearLayout>
 
         <TextView
@@ -97,8 +97,7 @@
                 android:layout_width="@dimen/dimen45"
                 android:layout_height="@dimen/dimen20"
                 android:paddingRight="@dimen/dimen15"
-                android:src="@mipmap/placeholderfigure" />
-
+                android:src="@mipmap/collection_shopping_cart" />
 
         </LinearLayout>
 

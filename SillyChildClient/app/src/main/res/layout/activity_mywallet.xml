@@ -5,11 +5,10 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen290"
-        android:background="@color/lightRedColors">
+        android:background="@mipmap/my_wallet_background">
 
         <include layout="@layout/common_title" />
 
@@ -47,13 +46,15 @@
             <LinearLayout
                 android:id="@+id/ll_withdraw"
                 style="@style/AutoMatch"
+                android:layout_marginLeft="@dimen/dimen40"
+                android:background="@drawable/shape_mywallet"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/dimen20"
                     android:layout_height="@dimen/dimen20"
-                    android:src="@mipmap/mine_tixianxxx" />
+                    android:src="@mipmap/my_wallet_withdrawals" />
 
                 <TextView
                     style="@style/WrapWrap"
@@ -67,13 +68,16 @@
             <LinearLayout
                 android:id="@+id/ll_recharge"
                 style="@style/AutoMatch"
+                android:layout_marginLeft="@dimen/dimen25"
+                android:layout_marginRight="@dimen/dimen40"
+                android:background="@drawable/shape_mywallet"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/dimen20"
                     android:layout_height="@dimen/dimen20"
-                    android:src="@mipmap/mine_chongzhixxx" />
+                    android:src="@mipmap/my_wallet_top_ups" />
 
                 <TextView
                     style="@style/WrapWrap"
@@ -101,8 +105,7 @@
                 android:layout_width="@dimen/dimen20"
                 android:layout_height="@dimen/dimen14"
                 android:scaleType="fitXY"
-                android:src="@mipmap/minewallet_couponxxx" />
-
+                android:src="@mipmap/my_wallet_coupon" />
 
             <LinearLayout
                 style="@style/WrapWrap"
@@ -139,8 +142,7 @@
                 android:layout_width="@dimen/dimen20"
                 android:layout_height="@dimen/dimen14"
                 android:scaleType="fitXY"
-                android:src="@mipmap/minewallet_couponxxx" />
-
+                android:src="@mipmap/my_wallet_bank_card" />
 
             <LinearLayout
                 style="@style/WrapWrap"

@@ -41,6 +41,8 @@
     <color name="userShapeColors">#ff4551</color>
     <color name="dFFDE6Colors">#DFFDE6</color>
     <color name="fF4E00Colors">#FF4E00</color>
+    <color name="c9FFD2Colors">#C9FFD2</color>
+
 
     <!--首页-->
     <color name="translucent">#50000000</color>

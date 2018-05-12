@@ -112,14 +112,13 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen16"
-                        android:layout_height="@dimen/dimen20"
+                        style="@style/Image20"
                         android:layout_marginLeft="@dimen/dimen15"
                         android:src="@mipmap/mineorderxxx" />
 
                     <TextView
                         style="@style/WrapWrap"
-                        android:layout_marginLeft="@dimen/dimen18"
+                        android:layout_marginLeft="@dimen/dimen17"
                         android:text="@string/myOrder"
                         android:textColor="@color/titletextcolors"
                         android:textSize="@dimen/textsize13" />
