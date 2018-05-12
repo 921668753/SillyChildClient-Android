@@ -110,12 +110,14 @@
 
                 <TextView
                     style="@style/WrapWrap"
+                    android:maxWidth="@dimen/dimen170"
                     android:text="小仙女"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
                     style="@style/WrapWrap"
+                    android:maxWidth="@dimen/dimen130"
                     android:paddingLeft="@dimen/dimen12"
                     android:text="138****6699"
                     android:textColor="@color/textColor"
@@ -146,7 +148,7 @@
                     <TextView
                         android:id="@+id/tv_tagpersonname"
                         style="@style/WrapWrap"
-                        android:singleLine="true"
+                        android:maxWidth="@dimen/dimen300"
                         android:text="上海市 闵行区 放鹤路1088号"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/textsize13" />
@@ -155,16 +157,12 @@
                         android:id="@+id/tv_tagpersonaddress"
                         style="@style/WrapWrap"
                         android:layout_marginTop="@dimen/dimen5"
-                        android:singleLine="true"
+                        android:maxWidth="@dimen/dimen300"
                         android:text="博济园区7号楼301"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/textsize13" />
                 </LinearLayout>
 
-                <ImageView
-                    style="@style/WrapWrap"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/minearrowxxx" />
 
             </LinearLayout>
 

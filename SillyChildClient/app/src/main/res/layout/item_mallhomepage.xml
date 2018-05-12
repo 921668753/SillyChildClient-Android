@@ -10,7 +10,6 @@
         android:scaleType="fitXY"
         android:src="@mipmap/placeholderfigure" />
 
-
     <TextView
         android:id="@+id/tv_goodName"
         style="@style/MatchWrap"

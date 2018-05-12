@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WrapWrap"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dimen130"
+        android:layout_height="@dimen/dimen105"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_proprietary"
+            android:layout_width="@dimen/dimen22"
+            android:layout_height="@dimen/dimen11"
+            android:background="@drawable/shape_proprietary"
+            android:gravity="center"
+            android:text="@string/proprietary"
+            android:textColor="@color/whiteColors"
+            android:textSize="@dimen/textsize9" />
+
+        <TextView
+            android:id="@+id/tv_goodName"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen5"
+            android:singleLine="true"
+            android:text="luna mini2洁面仪"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize12" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/renminbi"
+            android:textColor="@color/fF0000Colors"
+            android:textSize="@dimen/textsize9" />
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:maxWidth="@dimen/dimen50"
+            android:singleLine="true"
+            android:text="998.000000000000"
+            android:textColor="@color/fF0000Colors"
+            android:textSize="@dimen/textsize12" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen5"
+            android:maxWidth="@dimen/dimen60"
+            android:singleLine="true"
+            android:text="¥998.00"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize11" />
+        <!--tv = (TextView) this .findViewById(R.id. text_view );-->
+        <!--中间加横线-->
+        <!--tv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );-->
+        <!--底部加横线：-->
+        <!--tv .getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );-->
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

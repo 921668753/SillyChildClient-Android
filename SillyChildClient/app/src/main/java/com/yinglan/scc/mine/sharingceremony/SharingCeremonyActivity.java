@@ -34,18 +34,18 @@ import com.umeng.socialize.utils.Log;
 
 public class SharingCeremonyActivity extends BaseActivity implements MineContract.View {
 
-    @BindView(id = R.id.tv_shardecode)
-    private TextView tv_shardecode;
-
-    @BindView(id = R.id.tv_rules)
-    private TextView tv_rules;
+//    @BindView(id = R.id.tv_shardecode)
+//    private TextView tv_shardecode;
+//
+//    @BindView(id = R.id.tv_rules)
+//    private TextView tv_rules;
 
     @BindView(id = R.id.ll_loginweixin, click = true)
     private LinearLayout ll_loginweixin;
-    @BindView(id = R.id.ll_loginpengyouquan, click = true)
-    private LinearLayout ll_loginpengyouquan;
-    @BindView(id = R.id.ll_loginweibo, click = true)
-    private LinearLayout ll_loginweibo;
+    //    @BindView(id = R.id.ll_loginpengyouquan, click = true)
+//    private LinearLayout ll_loginpengyouquan;
+//    @BindView(id = R.id.ll_loginweibo, click = true)
+//    private LinearLayout ll_loginweibo;
     @BindView(id = R.id.ll_loginqq, click = true)
     private LinearLayout ll_loginqq;
     private String apply_code;
@@ -66,7 +66,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
             showLoadingDialog(getString(R.string.dataLoad));
             ((MinePresenter) mPresenter).getInfo();
         } else {
-            tv_shardecode.setText(apply_code);
+            // tv_shardecode.setText(apply_code);
         }
     }
 
@@ -94,13 +94,13 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
                 case R.id.ll_loginweixin:
                     umShare(SHARE_MEDIA.WEIXIN);
                     break;
-                case R.id.ll_loginpengyouquan:
-                    umShare(SHARE_MEDIA.WEIXIN_CIRCLE);
-                    break;
-                case R.id.ll_loginweibo:
-                    ViewInject.toast("尚待开发，敬请期待！");
-//                    umShare(SHARE_MEDIA.SINA);
-                    break;
+//                case R.id.ll_loginpengyouquan:
+//                    umShare(SHARE_MEDIA.WEIXIN_CIRCLE);
+//                    break;
+//                case R.id.ll_loginweibo:
+//                    ViewInject.toast("尚待开发，敬请期待！");
+////                    umShare(SHARE_MEDIA.SINA);
+//                    break;
                 case R.id.ll_loginqq:
                     umShare(SHARE_MEDIA.QQ);
                     break;
@@ -168,7 +168,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
     public void getSuccess(String success, int flag) {
         UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
         if (userInfoBean != null) {
-            tv_shardecode.setText(apply_code);
+            //   tv_shardecode.setText(apply_code);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "apply_code", userInfoBean.getResult().getApply_code());
         } else {
             ViewInject.toast(getString(R.string.noHaveApplyCode));

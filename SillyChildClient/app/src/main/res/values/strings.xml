@@ -108,6 +108,10 @@
     <string name="alipay_succeed">支付成功</string>
     <string name="wxappinstalled">请先安装微信再进行支付</string>
 
+    <!--充值 充值成功 -->
+    <string name="rechargeSuccess">充值成功</string>
+    <string name="rechargeFailure">充值失败</string>
+
     <!--app权限-->
     <string name="readAndWrite">这款应用需要获取读写权限，才能使用</string>
     <string name="sdPermission">您拒绝了「SD卡读写权限」所需要的相关权限!请到「设置」开启权限</string>
@@ -355,6 +359,7 @@
     <string name="checkstand">收银台</string>
     <string name="orderAmount1">订单金额：</string>
     <string name="optionPay">付款方式</string>
+    <string name="choosePaymentMethod">选择支付方式</string>
     <string name="weChatPay">微信支付</string>
     <string name="alipayToPay">支付宝支付</string>
     <string name="unionpayPay">银联支付</string>
@@ -599,6 +604,11 @@
     <string name="comprehensive">综合</string>
     <string name="sales">销量</string>
 
+    <!--活动-->
+    <string name="bargain">特价商品</string>
+    <string name="productl">当季热销</string>
+
+
     <!--商城   评价-->
     <string name="revert">回复</string>
     <string name="additionalReview">用户当天追评</string>
@@ -756,6 +766,7 @@
     <string name="pleaseRechargeAmount">请输入充值金额</string>
     <string name="pleaseRechargeAmount1">请输入正确的充值金额</string>
     <string name="payParseError">支付失败！解析数据错误，您可以移步至客服！</string>
+
     <!-- 个人中心 提现-->
     <string name="withdrawalAmount">提现金额</string>
     <string name="withdrawalAmountHint">请输入提现金额</string>
@@ -788,6 +799,10 @@
     <string name="withdrawalRecord">提现记录</string>
     <string name="renminbi">¥</string>
     <string name="accountingDate">到账需要2个工作日</string>
+
+    <!--提现成功-->
+    <string name="withdrawalSuccess1">提现成功</string>
+    <string name="withdrawalFailure">提现失败</string>
 
     <!--我的银行卡-->
     <string name="addBankCard">添加银行卡</string>
@@ -871,7 +886,7 @@
     <string name="settleAccounts">去结算</string>
     <string name="actualPaymentInCart">实付款：</string>
     <string name="submitOrder">提交订单</string>
-    <string name="multiply">X</string>
+    <string name="multiply">x</string>
     <string name="complete">完成</string>
     <string name="items">件商品</string>
 

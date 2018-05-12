@@ -1,202 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     style="@style/MatchMatch"
+    android:background="@color/whiteColors"
     android:fitsSystemWindows="true"
-    android:background="@color/whiteColors">
-    
-    <include layout="@layout/common_title"/>
+    android:orientation="vertical">
 
-    <ScrollView
-        style="@style/MatchMatch">
-        <LinearLayout
-            style="@style/MatchWrap"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/dimen20">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen238">
-                <ImageView
-                    style="@style/MatchMatch"
-                    android:src="@mipmap/minebg_sharexxx"/>
-                <TextView
-                    android:id="@+id/tv_shardecode"
-                    style="@style/WrapWrap"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize15"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dimen130"/>
-            </RelativeLayout>
+    <include layout="@layout/common_title" />
 
-            <RelativeLayout
-                style="@style/MatchWrap"
-                android:layout_marginLeft="@dimen/dimen20"
-                android:layout_marginRight="@dimen/dimen20"
-                android:layout_marginTop="@dimen/dimen33">
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:minHeight="@dimen/dimen130"
-                    android:layout_marginTop="@dimen/dimen10"
-                    android:orientation="horizontal">
-                    <View
-                        style="@style/DividerHeight"/>
-                    <LinearLayout
-                        style="@style/AutoMatch"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            style="@style/MatchWrap"
-                            android:orientation="horizontal">
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="@dimen/dimen1"
-                                android:background="@color/dividercolors1"/>
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="@dimen/dimen1"
-                                android:background="@color/dividercolors1"
-                                android:layout_marginLeft="@dimen/dimen90"/>
-                        </LinearLayout>
-                        <TextView
-                            android:id="@+id/tv_rules"
-                            style="@style/MatchAuto"
-                            android:text="尚未拿到文案！待开发......"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/dimen14"
-                            android:padding="@dimen/dimen15"/>
-                        <View
-                            style="@style/DividerWidth"/>
-                    </LinearLayout>
-                    <View
-                        style="@style/DividerHeight"/>
-                </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen20"
-                    android:text="@string/activityRules"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/dimen14"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"/>
-            </RelativeLayout>
+    <TextView style="@style/DividerWidth" />
 
-            <!--分享给好友-->
-            <LinearLayout
-                style="@style/MatchWrap"
-                android:layout_marginTop="@dimen/dimen38"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dimen55"
-                android:paddingRight="@dimen/dimen55">
 
-                <View
-                    style="@style/AutoMatch"
-                    android:layout_height="@dimen/dimen1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/longinotherdividerbg" />
+    <com.common.cklibrary.utils.myview.WebViewLayout1
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-                <TextView
-                    style="@style/WrapWrap"
-                    android:paddingLeft="@dimen/dimen15"
-                    android:paddingRight="@dimen/dimen15"
-                    android:text="@string/shareTo"
-                    android:textColor="@color/hintColors"
-                    android:textSize="@dimen/textsize14" />
 
-                <View
-                    style="@style/AutoMatch"
-                    android:layout_height="@dimen/dimen1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/longinotherdividerbg" />
-            </LinearLayout>
+    <!--<ScrollView style="@style/MatchMatch">-->
 
-            <LinearLayout
-                style="@style/WrapWrap"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen20"
-                android:orientation="horizontal">
+    <!--<LinearLayout-->
+    <!--style="@style/MatchWrap"-->
+    <!--android:orientation="vertical"-->
+    <!--android:paddingBottom="@dimen/dimen20">-->
 
-                <LinearLayout
-                    android:id="@+id/ll_loginweixin"
-                    style="@style/WrapWrap"
-                    android:gravity="center"
-                    android:orientation="vertical">
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dimen238">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/dimen50"
-                        android:layout_height="@dimen/dimen50"
-                        android:src="@mipmap/weixin" />
+    <!--<ImageView-->
+    <!--style="@style/MatchMatch"-->
+    <!--android:src="@mipmap/minebg_sharexxx" />-->
 
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:layout_marginTop="@dimen/dimen14"
-                        android:text="@string/weChatFriends"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize15"  />
-                </LinearLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/tv_shardecode"-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="@dimen/dimen130"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/textsize15" />-->
+    <!--</RelativeLayout>-->
 
-                <LinearLayout
-                    android:id="@+id/ll_loginpengyouquan"
-                    style="@style/WrapWrap"
-                    android:layout_marginLeft="@dimen/dimen32"
-                    android:gravity="center"
-                    android:orientation="vertical">
+    <!--<RelativeLayout-->
+    <!--style="@style/MatchWrap"-->
+    <!--android:layout_marginLeft="@dimen/dimen20"-->
+    <!--android:layout_marginRight="@dimen/dimen20"-->
+    <!--android:layout_marginTop="@dimen/dimen33">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/dimen50"
-                        android:layout_height="@dimen/dimen50"
-                        android:src="@mipmap/weixin_circlexxx" />
+    <!--<LinearLayout-->
+    <!--style="@style/MatchWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen10"-->
+    <!--android:minHeight="@dimen/dimen130"-->
+    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:layout_marginTop="@dimen/dimen14"
-                        android:text="@string/circleFriends"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize15"  />
-                </LinearLayout>
+    <!--<View style="@style/DividerHeight" />-->
 
-                <LinearLayout
-                    android:id="@+id/ll_loginweibo"
-                    style="@style/WrapWrap"
-                    android:layout_marginLeft="@dimen/dimen32"
-                    android:gravity="center"
-                    android:orientation="vertical">
+    <!--<LinearLayout-->
+    <!--style="@style/AutoMatch"-->
+    <!--android:orientation="vertical">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/dimen50"
-                        android:layout_height="@dimen/dimen50"
-                        android:src="@mipmap/weibo" />
+    <!--<LinearLayout-->
+    <!--style="@style/MatchWrap"-->
+    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:layout_marginTop="@dimen/dimen14"
-                        android:text="@string/SinaWeibo"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize15" />
-                </LinearLayout>
+    <!--<View-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="@dimen/dimen1"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/dividercolors1" />-->
 
-                <LinearLayout
-                    android:id="@+id/ll_loginqq"
-                    style="@style/WrapWrap"
-                    android:layout_marginLeft="@dimen/dimen32"
-                    android:gravity="center"
-                    android:orientation="vertical">
+    <!--<View-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="@dimen/dimen1"-->
+    <!--android:layout_marginLeft="@dimen/dimen90"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/dividercolors1" />-->
+    <!--</LinearLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/dimen50"
-                        android:layout_height="@dimen/dimen50"
-                        android:src="@mipmap/qq" />
+    <!--<TextView-->
+    <!--android:id="@+id/tv_rules"-->
+    <!--style="@style/MatchAuto"-->
+    <!--android:padding="@dimen/dimen15"-->
+    <!--android:text="尚未拿到文案！待开发......"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/dimen14" />-->
 
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:layout_marginTop="@dimen/dimen14"
-                        android:text="@string/QQFriends"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize15" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+    <!--<View style="@style/DividerWidth" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View style="@style/DividerHeight" />-->
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="@dimen/dimen20"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/activityRules"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/dimen14" />-->
+    <!--</RelativeLayout>-->
+
+    <!--&lt;!&ndash;分享给好友&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--style="@style/MatchWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen38"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="@dimen/dimen55"-->
+    <!--android:paddingRight="@dimen/dimen55">-->
+
+    <!--<View-->
+    <!--style="@style/AutoMatch"-->
+    <!--android:layout_height="@dimen/dimen1"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@color/longinotherdividerbg" />-->
+
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:paddingLeft="@dimen/dimen15"-->
+    <!--android:paddingRight="@dimen/dimen15"-->
+    <!--android:text="@string/shareTo"-->
+    <!--android:textColor="@color/hintColors"-->
+    <!--android:textSize="@dimen/textsize14" />-->
+
+    <!--<View-->
+    <!--style="@style/AutoMatch"-->
+    <!--android:layout_height="@dimen/dimen1"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@color/longinotherdividerbg" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="@dimen/dimen20"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_loginweixin"-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/dimen50"-->
+    <!--android:layout_height="@dimen/dimen50"-->
+    <!--android:src="@mipmap/weixin" />-->
+
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen14"-->
+    <!--android:text="@string/weChatFriends"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/textsize15" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_loginpengyouquan"-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginLeft="@dimen/dimen32"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/dimen50"-->
+    <!--android:layout_height="@dimen/dimen50"-->
+    <!--android:src="@mipmap/weixin_circlexxx" />-->
+
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen14"-->
+    <!--android:text="@string/circleFriends"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/textsize15" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_loginweibo"-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginLeft="@dimen/dimen32"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/dimen50"-->
+    <!--android:layout_height="@dimen/dimen50"-->
+    <!--android:src="@mipmap/weibo" />-->
+
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen14"-->
+    <!--android:text="@string/SinaWeibo"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/textsize15" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_loginqq"-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginLeft="@dimen/dimen32"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/dimen50"-->
+    <!--android:layout_height="@dimen/dimen50"-->
+    <!--android:src="@mipmap/qq" />-->
+
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginTop="@dimen/dimen14"-->
+    <!--android:text="@string/QQFriends"-->
+    <!--android:textColor="@color/textColor"-->
+    <!--android:textSize="@dimen/textsize15" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
 
 
 </LinearLayout>
