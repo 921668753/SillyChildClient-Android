@@ -1,13 +1,18 @@
 package com.yinglan.scc.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,6 +25,7 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.myview.ScrollInterceptScrollView;
 import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -49,12 +55,35 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 商城首页
  * Created by Admin on 2017/8/10.
  */
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, MallHomePageGoodAdapter.GoodsListItemOnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+@SuppressLint("NewApi")
+public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, MallHomePageGoodAdapter.GoodsListItemOnClickListener {
 
     private MainActivity aty;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
+
+    @BindView(id = R.id.ll_title)
+    private LinearLayout ll_title;
+
+    @BindView(id = R.id.img_search)
+    private ImageView img_search;
+
+    @BindView(id = R.id.et_search)
+    private EditText et_search;
+
+    @BindView(id = R.id.ll_title1)
+    private LinearLayout ll_title1;
+
+    @BindView(id = R.id.img_search1)
+    private ImageView img_search1;
+
+    @BindView(id = R.id.et_search1)
+    private EditText et_search1;
+
+
+    @BindView(id = R.id.sv_home)
+    private ScrollInterceptScrollView sv_home;
 
     /**
      * 轮播图
@@ -147,6 +176,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         return View.inflate(aty, R.layout.fragment_mall, null);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initData() {
         super.initData();
@@ -163,11 +193,10 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(false);
-
-
         listbean = new ArrayList<>();
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         mallHomePageGoodAdapter = new MallHomePageGoodAdapter(aty, addList(), this);
+        sv_home.setOnScrollChangeListener(this);
     }
 
     /**
@@ -447,24 +476,33 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+
         return false;
     }
 
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
 
     @Override
     public void goodsListOnItemClick(View view, int postion) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
         // intent.putExtra("good_id", listbean.get(postion));
         aty.showActivity(aty, intent);
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if (scrollY <= 0) {
+            ll_title1.setVisibility(View.VISIBLE);
+            ll_title.setVisibility(View.GONE);
+//            ll_title.setBackgroundColor(Color.TRANSPARENT);
+//            img_search.setImageDrawable(null);
+//            et_search.setHintTextColor(Color.TRANSPARENT);
+        } else {
+            ll_title1.setVisibility(View.GONE);
+            ll_title.setVisibility(View.VISIBLE);
+//            ll_title.setBackgroundColor(Color.TRANSPARENT);
+//            img_search.setImageDrawable(null);
+//            et_search.setHintTextColor(getResources().getColor(R.color.hintColors));
+        }
     }
 
 
