@@ -21,13 +21,13 @@ import java.util.List;
  * Created by Administrator on 2017/9/6.
  */
 
-public class MallHomePageGoodAdapter extends RecyclerView.Adapter<MallHomePageGoodAdapter.GoodsListView> {
+public class MallHomePageTopBarViewAdapter extends RecyclerView.Adapter<MallHomePageTopBarViewAdapter.GoodsListView> {
 
     private List<ListBean> list;
     private Context mcontext;
     private GoodsListItemOnClickListener listener;
 
-    public MallHomePageGoodAdapter(Context mcontext, List<ListBean> list, GoodsListItemOnClickListener listener) {
+    public MallHomePageTopBarViewAdapter(Context mcontext, List<ListBean> list, GoodsListItemOnClickListener listener) {
         this.list = list;
         this.mcontext = mcontext;
         this.listener = listener;
@@ -42,9 +42,9 @@ public class MallHomePageGoodAdapter extends RecyclerView.Adapter<MallHomePageGo
 
     @Override
     public void onBindViewHolder(GoodsListView goodsListView, int position) {
-        GlideImageLoader.glideOrdinaryLoader(mcontext, list.get(position).getPrice(), goodsListView.img_good, R.mipmap.placeholderfigure);
+        GlideImageLoader.glideOrdinaryLoader(mcontext, list.get(position).getImgs(), goodsListView.img_good, R.mipmap.placeholderfigure);
         goodsListView.tv_goodName.setText(list.get(position).getTitle());
-        goodsListView.tv_goodSynopsis.setText(list.get(position).getTitle());
+        goodsListView.tv_goodSynopsis.setText(list.get(position).getPriceFmt());
         goodsListView.tv_goodMoney.setText(list.get(position).getTitle());
         goodsListView.tv_brand.setText(list.get(position).getTitle());
         if (TextUtils.isEmpty(list.get(position).getTitle())) {
@@ -79,8 +79,8 @@ public class MallHomePageGoodAdapter extends RecyclerView.Adapter<MallHomePageGo
             super(itemView);
             img_good = (ImageView) itemView.findViewById(R.id.img_good);
             tv_goodName = (TextView) itemView.findViewById(R.id.tv_goodName);
-            tv_goodMoney = (TextView) itemView.findViewById(R.id.tv_goodMoney);
             tv_goodSynopsis = (TextView) itemView.findViewById(R.id.tv_goodSynopsis);
+            tv_goodMoney = (TextView) itemView.findViewById(R.id.tv_goodMoney);
             tv_brand = (TextView) itemView.findViewById(R.id.tv_brand);
             ll_bottomLabel = (LinearLayout) itemView.findViewById(R.id.ll_bottomLabel);
             tv_proprietary = (TextView) itemView.findViewById(R.id.tv_proprietary);

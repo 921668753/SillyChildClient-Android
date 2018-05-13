@@ -3,13 +3,12 @@ package com.yinglan.scc.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -25,15 +24,19 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import com.yinglan.scc.R;
+import com.yinglan.scc.adapter.addressselection.HeaderRecyclerAndFooterWrapperAdapter;
+import com.yinglan.scc.adapter.addressselection.OnItemClickListener;
+import com.yinglan.scc.adapter.addressselection.ViewHolder;
+import com.yinglan.scc.adapter.main.MallHomePageGood1Adapter;
 import com.yinglan.scc.adapter.main.MallHomePageGoodAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.HomePageBean;
 import com.yinglan.scc.entity.HomePageBean.ResultBean.AdBean;
-import com.yinglan.scc.entity.main.MallHomePageBean;
+import com.yinglan.scc.entity.InlandTopHeaderBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.ResultBean.ListBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
 import com.yinglan.scc.homepage.goodslist.SpacesItemDecoration;
-import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
@@ -49,85 +52,88 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 商城首页
  * Created by Admin on 2017/8/10.
  */
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, MallHomePageGoodAdapter.GoodsListItemOnClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class MallHomePageFragment1 extends BaseFragment implements EasyPermissions.PermissionCallbacks, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, OnItemClickListener, PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private MainActivity aty;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    /**
-     * 轮播图
-     */
-    @BindView(id = R.id.banner_ad)
-    private BGABanner mForegroundBanner;
+    @BindView(id = R.id.rv)
+    private RecyclerView mRv;
 
-    /**
-     * 护肤彩妆
-     */
-    @BindView(id = R.id.ll_cosmetics, click = true)
-    private LinearLayout ll_cosmetics;
-
-    /**
-     * 个人护理
-     */
-    @BindView(id = R.id.ll_personalCare, click = true)
-    private LinearLayout ll_personalCare;
-
-    /**
-     * 母婴
-     */
-    @BindView(id = R.id.ll_maternalAndInfant, click = true)
-    private LinearLayout ll_maternalAndInfant;
-
-    /**
-     * 包包配饰
-     */
-    @BindView(id = R.id.ll_bagAccessories, click = true)
-    private LinearLayout ll_bagAccessories;
-
-    /**
-     * 服装鞋帽
-     */
-    @BindView(id = R.id.ll_clothingAndShoes, click = true)
-    private LinearLayout ll_clothingAndShoes;
-
-    /**
-     * 家电数码
-     */
-    @BindView(id = R.id.ll_homeApplianceDigital, click = true)
-    private LinearLayout ll_homeApplianceDigital;
-
-    /**
-     * 家居
-     */
-    @BindView(id = R.id.ll_household, click = true)
-    private LinearLayout ll_household;
-
-    /**
-     * 美颜保健
-     */
-    @BindView(id = R.id.ll_beautyCare, click = true)
-    private LinearLayout ll_beautyCare;
-
-    /**
-     * 美食
-     */
-    @BindView(id = R.id.ll_food, click = true)
-    private LinearLayout ll_food;
-
-    /**
-     * 更多
-     */
-    @BindView(id = R.id.ll_more, click = true)
-    private LinearLayout ll_more;
+//    /**
+//     * 轮播图
+//     */
+//    @BindView(id = R.id.banner_ad)
+//    private BGABanner mForegroundBanner;
+//
+//    /**
+//     * 护肤彩妆
+//     */
+//    @BindView(id = R.id.ll_cosmetics, click = true)
+//    private LinearLayout ll_cosmetics;
+//
+//    /**
+//     * 个人护理
+//     */
+//    @BindView(id = R.id.ll_personalCare, click = true)
+//    private LinearLayout ll_personalCare;
+//
+//    /**
+//     * 母婴
+//     */
+//    @BindView(id = R.id.ll_maternalAndInfant, click = true)
+//    private LinearLayout ll_maternalAndInfant;
+//
+//    /**
+//     * 包包配饰
+//     */
+//    @BindView(id = R.id.ll_bagAccessories, click = true)
+//    private LinearLayout ll_bagAccessories;
+//
+//    /**
+//     * 服装鞋帽
+//     */
+//    @BindView(id = R.id.ll_clothingAndShoes, click = true)
+//    private LinearLayout ll_clothingAndShoes;
+//
+//    /**
+//     * 家电数码
+//     */
+//    @BindView(id = R.id.ll_homeApplianceDigital, click = true)
+//    private LinearLayout ll_homeApplianceDigital;
+//
+//    /**
+//     * 家居
+//     */
+//    @BindView(id = R.id.ll_household, click = true)
+//    private LinearLayout ll_household;
+//
+//    /**
+//     * 美颜保健
+//     */
+//    @BindView(id = R.id.ll_beautyCare, click = true)
+//    private LinearLayout ll_beautyCare;
+//
+//    /**
+//     * 美食
+//     */
+//    @BindView(id = R.id.ll_food, click = true)
+//    private LinearLayout ll_food;
+//
+//    /**
+//     * 更多
+//     */
+//    @BindView(id = R.id.ll_more, click = true)
+//    private LinearLayout ll_more;
 
     /**
      * 商品列表
      */
 
-    @BindView(id = R.id.rv)
-    private RecyclerView recyclerview;
+    @BindView(id = R.id.pullLoadMoreRecyclerView)
+    private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
 
     public LocationClient mLocationClient = null;
 
@@ -138,7 +144,9 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     private List listbean;
     private SpacesItemDecoration spacesItemDecoration = null;
 
-    private MallHomePageGoodAdapter mallHomePageGoodAdapter = null;
+    private MallHomePageGood1Adapter mallHomePageGoodAdapter = null;
+    private HeaderRecyclerAndFooterWrapperAdapter mHeaderAdapter;
+    private LinearLayoutManager mManager;
 
 
     @Override
@@ -150,78 +158,98 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initData() {
         super.initData();
-        mForegroundBanner.setFocusable(true);
-        mForegroundBanner.setFocusableInTouchMode(true);
-        mForegroundBanner.requestFocus();
-        mForegroundBanner.requestFocusFromTouch();
-        mPresenter = new HomePagePresenter(this);
+//        mForegroundBanner.setFocusable(true);
+//        mForegroundBanner.setFocusableInTouchMode(true);
+//        mForegroundBanner.requestFocus();
+//        mForegroundBanner.requestFocusFromTouch();
+        mPresenter = new MallHomePagePresenter(this);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setAutoMeasureEnabled(true);
-        recyclerview.setLayoutManager(layoutManager);
-        recyclerview.setHasFixedSize(true);
-        recyclerview.setNestedScrollingEnabled(false);
 
-
+//        mManager = new LinearLayoutManager(aty);
+//        mRv.setLayoutManager(mManager);
         listbean = new ArrayList<>();
+        mallHomePageGoodAdapter = new MallHomePageGood1Adapter(aty, R.layout.item_mallhomepage, listbean);
+        mallHomePageGoodAdapter.setOnItemClickListener(this);
+        mHeaderAdapter = new HeaderRecyclerAndFooterWrapperAdapter(mallHomePageGoodAdapter) {
+            @Override
+            protected void onBindHeaderHolder(ViewHolder holder, int headerPos, int layoutId, Object o) {
+                switch (layoutId) {
+//                    case R.layout.fragment_mallhomepage_topbar1:
+//                        // final MallHomePageBean meituanHeaderBean = (MallHomePageBean) o;
+//                        //网格
+//                        PullLoadMoreRecyclerView mPullLoadMoreRecyclerView = holder.getView(R.id.pullLoadMoreRecyclerView);
+////                        mPullLoadMoreRecyclerView.setAdapter(mallHomePageGoodAdapter);
+//                        mPullLoadMoreRecyclerView.setRefreshing(false);
+//                        mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);
+//                        spacesItemDecoration = new SpacesItemDecoration(5, 10);
+//                        mPullLoadMoreRecyclerView.setAdapter(mallHomePageGoodAdapter);
+//                        //设置item之间的间隔
+//                        mPullLoadMoreRecyclerView.addItemDecoration(spacesItemDecoration);
+////                        mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(this);
+//                        addList();
+//                        mallHomePageGoodAdapter.notifyDataSetChanged();
+//                        break;
+                    case R.layout.fragment_mallhomepage_topbar:
+                        // String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
+//                        textView = holder.getView(R.id.tvCurrent);
+//                        textView.setText(locationCity);
+//                        LinearLayout ll_localize = holder.getView(R.id.ll_localize);
+//                        ll_localize.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                //      PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", textView.getText().toString());
+//                                Intent intent = new Intent();
+//                                // 获取内容
+//                                intent.putExtra("selectCity", textView.getText().toString());
+//                                intent.putExtra("selectCityId", 1);
+//                                intent.putExtra("selectCountry", "");
+//                                intent.putExtra("selectCountryId", 1);
+//                                // 设置结果 结果码，一个数据
+//                                aty.setResult(RESULT_OK, intent);
+//                                // 结束该activity 结束之后，前面的activity才可以处理结果
+//                                aty.finish();
+//                            }
+//                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        mHeaderAdapter.setHeaderView(0, R.layout.fragment_mallhomepage_topbar, new InlandTopHeaderBean(""));
+        View view = View.inflate(aty, R.layout.fragment_mallhomepage_topbar1, null);
+        PullLoadMoreRecyclerView mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
+//                        mPullLoadMoreRecyclerView.setAdapter(mallHomePageGoodAdapter);
+        mPullLoadMoreRecyclerView.setRefreshing(false);
+        mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
-        mallHomePageGoodAdapter = new MallHomePageGoodAdapter(aty, addList(), this);
-    }
+        mPullLoadMoreRecyclerView.setAdapter(mallHomePageGoodAdapter);
+        //设置item之间的间隔
+        mPullLoadMoreRecyclerView.addItemDecoration(spacesItemDecoration);
+        mHeaderAdapter.addHeaderView(R.layout.fragment_mallhomepage_topbar1, addList());
+        //  mHeaderAdapter.setHeaderView(2, R.layout.fragment_mallhomepage_topbar1, listbean);
+        //PullLoadMoreRecyclerView mPullLoadMoreRecyclerView = holder.getView(mHeaderAdapter.getItemViewType(1));
+        mRv.setAdapter(mHeaderAdapter);
+//        mRv.addItemDecoration(mDecoration);
+//
+//        mHeaderAdapter.notifyItemChanged(1,addList());
 
-    /**
-     * 填充数据
-     */
-    private List addList() {
-        listbean.clear();
-        MallHomePageBean.ResultBean.ListBean initbean = new MallHomePageBean.ResultBean.ListBean();
-        initbean.setTitle(getString(R.string.newStrategy));
-        initbean.setPrice("45212");
-        initbean.setId(0);
-        initbean.setPriceFmt("452111");
-        listbean.add(initbean);
-        MallHomePageBean.ResultBean.ListBean initbean1 = new MallHomePageBean.ResultBean.ListBean();
-        initbean1.setTitle(getString(R.string.newStrategy));
-        initbean1.setPrice("http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png");
-        initbean1.setId(0);
-        initbean1.setPriceFmt("452111");
-        listbean.add(initbean1);
-        MallHomePageBean.ResultBean.ListBean initbean2 = new MallHomePageBean.ResultBean.ListBean();
-        initbean2.setTitle(getString(R.string.newStrategy));
-        initbean2.setPrice("http://news.cnhubei.com/ctjb/ctjbsgk/ctjb40/200808/W020080822221006461534.jpg");
-        initbean2.setId(0);
-        initbean2.setPriceFmt("452111");
-        listbean.add(initbean2);
-        MallHomePageBean.ResultBean.ListBean initbean3 = new MallHomePageBean.ResultBean.ListBean();
-        initbean3.setTitle(getString(R.string.newStrategy));
-        initbean3.setPrice("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505470629546&di=194a9a92bfcb7754c5e4d19ff1515355&imgtype=0&src=http%3A%2F%2Fpics.jiancai.com%2Fimgextra%2Fimg01%2F656928666%2Fi1%2FT2_IffXdxaXXXXXXXX_%2521%2521656928666.jpg");
-        initbean3.setId(0);
-        initbean3.setPriceFmt("452111");
-        listbean.add(initbean3);
-        MallHomePageBean.ResultBean.ListBean initbean4 = new MallHomePageBean.ResultBean.ListBean();
-        initbean4.setTitle(getString(R.string.newStrategy));
-        initbean4.setPrice("http://img.taopic.com/uploads/allimg/140714/234975-140G4155Z571.jpg");
-        initbean4.setId(0);
-        initbean4.setPriceFmt("452111");
-        listbean.add(initbean4);
-        return listbean;
-    }
 
+    }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         initBanner();
-        recyclerview.setAdapter(mallHomePageGoodAdapter);
-        //设置item之间的间隔
-        recyclerview.addItemDecoration(spacesItemDecoration);
+
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         //注册监听函数
-        ((HomePagePresenter) mPresenter).initLocation(aty, mLocationClient);
+        ((MallHomePageContract.Presenter) mPresenter).initLocation(aty, mLocationClient);
         showLoadingDialog(aty.getString(R.string.dataLoad));
-        ((HomePagePresenter) mPresenter).getHomePage("");
+        ((MallHomePageContract.Presenter) mPresenter).getHomePage("");
         //   EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BuildConfig.HUANXIN_IM);
         //    try {
         //    if (conversation.getUnreadMsgCount() > 0) {
@@ -234,10 +262,51 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         //    }
     }
 
+
+    /**
+     * 填充数据
+     */
+    private List addList() {
+        listbean.clear();
+        ListBean initbean = new ListBean();
+        initbean.setTitle(getString(R.string.newStrategy));
+        initbean.setPrice("45212");
+        initbean.setId(0);
+        initbean.setPriceFmt("452111");
+        listbean.add(initbean);
+        ListBean initbean1 = new ListBean();
+        initbean1.setTitle(getString(R.string.newStrategy));
+        initbean1.setPrice("45212");
+        initbean1.setId(0);
+        initbean1.setPriceFmt("452111");
+        listbean.add(initbean1);
+        ListBean initbean2 = new ListBean();
+        initbean2.setTitle(getString(R.string.newStrategy));
+        initbean2.setPrice("45212");
+        initbean2.setId(0);
+        initbean2.setPriceFmt("452111");
+        listbean.add(initbean2);
+        ListBean initbean3 = new ListBean();
+        initbean3.setTitle(getString(R.string.newStrategy));
+        initbean3.setPrice("45212");
+        initbean3.setId(0);
+        initbean3.setPriceFmt("452111");
+        listbean.add(initbean3);
+        ListBean initbean4 = new ListBean();
+        initbean4.setTitle(getString(R.string.newStrategy));
+        initbean4.setPrice("45212");
+        initbean4.setId(0);
+        initbean4.setPriceFmt("452111");
+        listbean.add(initbean4);
+        return listbean;
+    }
+
+
     /**
      * @param v 控件监听事件
      */
     @Override
+
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
@@ -295,7 +364,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     }
 
     @Override
-    public void setPresenter(HomePageContract.Presenter presenter) {
+    public void setPresenter(MallHomePageContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -351,13 +420,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
      */
 
     public void initBanner() {
-        mForegroundBanner.setAutoPlayAble(true);
-        mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        mForegroundBanner.setAllowUserScrollable(true);
-        mForegroundBanner.setAutoPlayInterval(3000);
-        // 初始化方式1：配置数据源的方式1：通过传入数据模型并结合 Adapter 的方式配置数据源。这种方式主要用于加载网络图片，以及实现少于3页时的无限轮播
-        mForegroundBanner.setAdapter(this);
-        mForegroundBanner.setDelegate(this);
+//        mForegroundBanner.setAutoPlayAble(true);
+//        mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
+//        mForegroundBanner.setAllowUserScrollable(true);
+//        mForegroundBanner.setAutoPlayInterval(3000);
+//        // 初始化方式1：配置数据源的方式1：通过传入数据模型并结合 Adapter 的方式配置数据源。这种方式主要用于加载网络图片，以及实现少于3页时的无限轮播
+//        mForegroundBanner.setAdapter(this);
+//        mForegroundBanner.setDelegate(this);
     }
 
     /**
@@ -365,17 +434,17 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
      */
     @SuppressWarnings("unchecked")
     private void processLogic(List<AdBean> list) {
-        if (list != null && list.size() > 0) {
-            if (list.size() == 1) {
-                mForegroundBanner.setAutoPlayAble(false);
-                mForegroundBanner.setAllowUserScrollable(false);
-            } else {
-                mForegroundBanner.setAutoPlayAble(true);
-                mForegroundBanner.setAllowUserScrollable(true);
-            }
-            mForegroundBanner.setBackground(null);
-            mForegroundBanner.setData(list, null);
-        }
+//        if (list != null && list.size() > 0) {
+//            if (list.size() == 1) {
+//                mForegroundBanner.setAutoPlayAble(false);
+//                mForegroundBanner.setAllowUserScrollable(false);
+//            } else {
+//                mForegroundBanner.setAutoPlayAble(true);
+//                mForegroundBanner.setAllowUserScrollable(true);
+//            }
+//            mForegroundBanner.setBackground(null);
+//            mForegroundBanner.setData(list, null);
+//        }
     }
 
 
@@ -383,7 +452,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     public void onResume() {
         super.onResume();
         if (aty.getChageIcon() == 0) {
-            mForegroundBanner.startAutoPlay();
+            //   mForegroundBanner.startAutoPlay();
         }
     }
 
@@ -392,7 +461,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     public void onPause() {
         super.onPause();
         if (aty.getChageIcon() == 0) {
-            mForegroundBanner.stopAutoPlay();
+            //  mForegroundBanner.stopAutoPlay();
         }
     }
 
@@ -439,7 +508,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "selectCity", getString(R.string.allAeservationNumber));
         showLoadingDialog(getString(R.string.dataLoad));
         //   if (tv_address.getText().toString().equals(getString(R.string.allAeservationNumber))) {
-        ((HomePageContract.Presenter) mPresenter).getHomePage("");
+        ((MallHomePageContract.Presenter) mPresenter).getHomePage("");
 //        } else {
 //            ((HomePageContract.Presenter) mPresenter).getHomePage(tv_address.getText().toString());
 //        }
@@ -460,11 +529,21 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     }
 
+//    @Override
+//    public void goodsListOnItemClick(View view, int postion) {
+//        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
+//        // intent.putExtra("good_id", listbean.get(postion));
+//        aty.showActivity(aty, intent);
+//    }
+
     @Override
-    public void goodsListOnItemClick(View view, int postion) {
-        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
-        aty.showActivity(aty, intent);
+    public void onItemClick(ViewGroup parent, View view, Object o, int position) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(ViewGroup parent, View view, Object o, int position) {
+        return false;
     }
 
 

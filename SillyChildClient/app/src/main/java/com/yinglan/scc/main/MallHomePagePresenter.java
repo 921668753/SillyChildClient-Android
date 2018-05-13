@@ -23,10 +23,10 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by ruitu on 2016/9/24.
  */
 
-public class MallHomePagePresenter implements HomePageContract.Presenter {
-    private HomePageContract.View mView;
+public class MallHomePagePresenter implements MallHomePageContract.Presenter {
+    private MallHomePageContract.View mView;
 
-    public MallHomePagePresenter(HomePageContract.View view) {
+    public MallHomePagePresenter(MallHomePageContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
