@@ -153,6 +153,10 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initData() {
         super.initData();
+        mForegroundBanner.setFocusable(true);
+        mForegroundBanner.setFocusableInTouchMode(true);
+        mForegroundBanner.requestFocus();
+        mForegroundBanner.requestFocusFromTouch();
         mPresenter = new HomePagePresenter(this);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
@@ -393,6 +397,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endRefreshing();
         String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "selectCity", getString(R.string.allAeservationNumber));
         showLoadingDialog(getString(R.string.dataLoad));
         //   if (tv_address.getText().toString().equals(getString(R.string.allAeservationNumber))) {

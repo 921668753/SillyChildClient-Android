@@ -55,6 +55,9 @@ import java.util.List;
 public class FeedbackActivity extends BaseActivity implements TextWatcher, ImagePickerAdapter.OnRecyclerViewItemClickListener, FeedbackContract.View, AdapterView.OnItemClickListener {
 
 
+    @BindView(id = R.id.tv_feedbackType)
+    private TextView tv_feedbackType;
+
     @BindView(id = R.id.ll_dysfunction, click = true)
     private LinearLayout ll_dysfunction;
     @BindView(id = R.id.img_dysfunction)
@@ -121,6 +124,10 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     public void initWidget() {
         super.initWidget();
         initTitle();
+        tv_feedbackType.setFocusable(true);
+        tv_feedbackType.setFocusableInTouchMode(true);
+        tv_feedbackType.requestFocus();
+        tv_feedbackType.requestFocusFromTouch();
         tv_feed.addTextChangedListener(this);
         tv_feed.setMovementMethod(ScrollingMovementMethod.getInstance());
         initImagePicker();
