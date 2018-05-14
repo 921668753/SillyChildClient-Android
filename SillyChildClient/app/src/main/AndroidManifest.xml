@@ -4,47 +4,53 @@
     package="com.yinglan.scc">
 
     <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 查看 Wi-Fi 状态-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 查看网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 访问网络，网络定位需要上网-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 控制振动器 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 防止设备休眠 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
+    <!--融云 GCM 配置开始  -->
     <permission
-        android:name="com.easemob.helpdeskdemo.permission.C2D_MESSAGE"
+        android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.easemob.helpdeskdemo.permission.C2D_MESSAGE" />
-
-    <!-- 其中的com.easemob.helpdeskdemo需要换为自己的包名 -->
+    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />
     <permission
-        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signatureOrSystem" />
-    <!-- 其中的com.easemob.helpdeskdemo需要换为自己的包名 -->
-    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
+        android:name="cn.rongcloud.im.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" />
+    <!--融云 GCM 配置开始  -->
+
 
     <!--用户端-->
     <application
@@ -148,15 +154,15 @@
             android:name="com.yinglan.scc.homepage.addressselection.newoverseas.NewOverseasCityActivity"
             android:screenOrientation="portrait"></activity>
 
-        <!--首页   客服过渡页-->
-        <activity
-            android:name="com.yinglan.scc.homepage.customerservice.OverleafActivity"
-            android:screenOrientation="portrait"></activity>
+        <!--&lt;!&ndash;首页   客服过渡页&ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="com.yinglan.scc.homepage.customerservice.OverleafActivity"-->
+        <!--android:screenOrientation="portrait"></activity>-->
 
-        <!--首页   客服聊天页-->
-        <activity
-            android:name="com.yinglan.scc.homepage.customerservice.CustomerServiceActivity"
-            android:screenOrientation="portrait"></activity>
+        <!--&lt;!&ndash;首页   客服聊天页&ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="com.yinglan.scc.homepage.customerservice.CustomerServiceActivity"-->
+        <!--android:screenOrientation="portrait"></activity>-->
 
         <!--首页   地址搜索-->
         <activity
@@ -315,17 +321,10 @@
             android:screenOrientation="portrait"></activity>
 
         <!--消息   司导信息-->
-        <activity
-            android:name="com.yinglan.scc.message.ChatMessageActivity"
-            android:screenOrientation="portrait"></activity>
+        <!--<activity-->
+        <!--android:name="com.yinglan.scc.message.ChatMessageActivity"-->
+        <!--android:screenOrientation="portrait"></activity>-->
 
-        <activity
-            android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
-            android:screenOrientation="portrait"></activity>
 
         <!--消息   司导信息详情-->
 
@@ -542,6 +541,63 @@
             android:name="com.yinglan.scc.mine.vipemergencycall.VipEmergencyCallActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--融云start-->
+        <!--融云start-->
+        <!--融云start-->
+        <activity
+            android:name=".common.view.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnspecified|adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.sillykid.app"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <!--会话界面-->
+        <activity
+            android:name=".message.rongcloud.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.sillykid.app"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!--聚合会话列表-->
+        <activity
+            android:name=".message.rongcloud.SubConversationListActivtiy"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.sillykid.app"
+                    android:pathPrefix="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <!--融云end-->
+        <!--融云end-->
+        <!--融云end-->
+
 
         <!--支付宝支付-->
         <!--支付宝支付-->
@@ -550,12 +606,13 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
+
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
 
         <!--支付宝支付-->
         <!--支付宝支付-->
@@ -609,7 +666,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -675,60 +732,22 @@
         <!--百度地图-->
         <!--百度地图-->
 
-        <!--环信客服-->
-        <!--环信客服-->
-        <!-- 设置环信应用的AppKey -->
+        <!-- 配置高德地图 -->
+        <!-- 配置高德地图 -->
+        <!--<meta-data-->
+        <!--android:name="com.amap.api.v2.apikey"-->
+        <!--android:value="ea2574e80fe9637c27d95a3c6f8da33b" />-->
+        <!-- 配置高德地图 -->
+        <!-- 配置高德地图 -->
+
+
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
         <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="${HUANXIN_APPKEY}" />
-
-        <receiver
-            android:name="com.hyphenate.chat.EMGCMBroadcastReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.hyphenate.chatuidemo" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.hyphenate.chat.EMGCMListenerService"
-            android:exported="false" />
-        <!-- 地图 -->
-        <!--<activity-->
-        <!--android:name=".utils.activity.EaseBaiduMapActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/horizontal_slide" />-->
-        <!-- 设置环信应用的AppKey -->
-
-        <!-- 声明SDK所需的service SDK核心功能-->
-        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true" />
-
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 声明SDK所需的receiver -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <!-- 可选filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-
-        <!--环信客服-->
-        <!--环信客服-->
-
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="bmdehs6pbrfqs" />
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
 
         <!--Anrroid 7.0SD卡路径-->
         <!--Anrroid 7.0SD卡路径-->
@@ -745,9 +764,14 @@
         <!--Anrroid 7.0SD卡路径-->
         <!--Anrroid 7.0SD卡路径-->
 
+
+        <!-- 配置glide缓存 -->
+        <!-- 配置glide缓存 -->
         <meta-data
             android:name="com.yinglan.scc.utils.MyGlideModule"
             android:value="GlideModule" />
+        <!-- 配置glide缓存 -->
+        <!-- 配置glide缓存 -->
 
     </application>
 

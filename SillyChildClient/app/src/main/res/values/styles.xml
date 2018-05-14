@@ -121,4 +121,12 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="dialogFullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="HeadImageStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 </resources>

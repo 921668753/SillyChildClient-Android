@@ -14,7 +14,6 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.dialog.CalendarControlBouncedDialog;
 import com.yinglan.scc.dialog.chartercustom.CompensationChangeBackDialog;
 import com.yinglan.scc.dialog.chartercustom.CostsThatDialog;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
@@ -302,7 +301,7 @@ public class FillInBasicInformationActivity extends BaseActivity implements Fill
                 showActivity(aty, intent);
                 break;
             case 1:
-                showActivity(aty, OverleafActivity.class);
+              //  showActivity(aty, OverleafActivity.class);
                 break;
 
 

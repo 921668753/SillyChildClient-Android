@@ -20,7 +20,6 @@ import com.yinglan.scc.dialog.ShareBouncedDialog;
 import com.yinglan.scc.entity.CharterDetailsBean;
 import com.yinglan.scc.homepage.chartercustom.bytheday.ByTheDayActivity;
 import com.yinglan.scc.homepage.chartercustom.transfer.TransferActivity;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.umeng.socialize.ShareAction;
@@ -185,7 +184,7 @@ public class CharterDetailsActivity extends BaseActivity implements CharterDetai
             ((CharterDetailsContract.Presenter) mPresenter).postCollectCharter(id + "", isCollect);
             return;
         } else if (flag == 2) {
-            showActivity(aty, OverleafActivity.class);
+         //   showActivity(aty, OverleafActivity.class);
         } else if (flag == 3) {
             jumpPage(type);
         } else if (flag == 4) {

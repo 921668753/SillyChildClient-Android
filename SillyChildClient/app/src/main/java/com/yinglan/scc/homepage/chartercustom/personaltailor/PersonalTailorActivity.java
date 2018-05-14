@@ -23,7 +23,6 @@ import com.yinglan.scc.dialog.chartercustom.CostsThatDialog;
 import com.yinglan.scc.entity.AirportDropOffBean;
 import com.yinglan.scc.entity.DriverPackConfigBean;
 import com.yinglan.scc.entity.UnsubscribeCostBean;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
@@ -369,27 +368,27 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
             tv_submit.setClickable(true);
             AirportDropOffBean airportDropOffBean = (AirportDropOffBean) JsonUtil.getInstance().json2Obj(success, AirportDropOffBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "chatMessage", 3);
-            Intent intent = new Intent(aty, OverleafActivity.class);
-            intent.putExtra("travelTime", tv_travelTime.getText().toString().trim());
-            intent.putExtra("origin", et_origin.getText().toString().trim());
-            intent.putExtra("destination", et_destination.getText().toString().trim());
-            intent.putExtra("playNumberDays", et_playNumberDays.getText().toString().trim());
-            intent.putExtra("fewAdults", tv_adultNum.getText().toString().trim());
-            intent.putExtra("severalChildren", tv_childrenNum.getText().toString().trim());
-            intent.putExtra("travelPreferences", tv_travelPreferences.getText().toString().trim());
-            intent.putExtra("recommendRestaurant", tv_recommendRestaurant.getText().toString().trim());
-            intent.putExtra("recommendedAccommodation", tv_recommendedAccommodation.getText().toString().trim());
-//            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
-//            intent.putExtra("twenty_four", tv_bags3.getText().toString());
-//            intent.putExtra("twenty_six", tv_bags2.getText().toString());
-            intent.putExtra("id", airportDropOffBean.getResult().getId());
-//            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
-//            intent.putExtra("thirty", tv_bags.getText().toString());
-//            intent.putExtra("name", et_name.getText().toString());
-//            intent.putExtra("contactWay", et_contactWay.getText().toString().trim());
-//            intent.putExtra("remark", et_remark.getText().toString().trim());
-            intent.putExtra("chatMessage", "3");
-            showActivity(aty, intent);
+//            Intent intent = new Intent(aty, OverleafActivity.class);
+//            intent.putExtra("travelTime", tv_travelTime.getText().toString().trim());
+//            intent.putExtra("origin", et_origin.getText().toString().trim());
+//            intent.putExtra("destination", et_destination.getText().toString().trim());
+//            intent.putExtra("playNumberDays", et_playNumberDays.getText().toString().trim());
+//            intent.putExtra("fewAdults", tv_adultNum.getText().toString().trim());
+//            intent.putExtra("severalChildren", tv_childrenNum.getText().toString().trim());
+//            intent.putExtra("travelPreferences", tv_travelPreferences.getText().toString().trim());
+//            intent.putExtra("recommendRestaurant", tv_recommendRestaurant.getText().toString().trim());
+//            intent.putExtra("recommendedAccommodation", tv_recommendedAccommodation.getText().toString().trim());
+////            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
+////            intent.putExtra("twenty_four", tv_bags3.getText().toString());
+////            intent.putExtra("twenty_six", tv_bags2.getText().toString());
+//            intent.putExtra("id", airportDropOffBean.getResult().getId());
+////            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
+////            intent.putExtra("thirty", tv_bags.getText().toString());
+////            intent.putExtra("name", et_name.getText().toString());
+////            intent.putExtra("contactWay", et_contactWay.getText().toString().trim());
+////            intent.putExtra("remark", et_remark.getText().toString().trim());
+//            intent.putExtra("chatMessage", "3");
+//            showActivity(aty, intent);
         } else if (flag == 1) {
             tv_submit.setClickable(true);
             DriverPackConfigBean driverPackConfigBean = (DriverPackConfigBean) JsonUtil.json2Obj(success, DriverPackConfigBean.class);
@@ -412,7 +411,7 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
 
             // ((PersonalTailorContract.Presenter) mPresenter).getUnsubscribeCost(1);
         } else if (flag == 2) {
-            showActivity(aty, OverleafActivity.class);
+           // showActivity(aty, OverleafActivity.class);
         } else if (flag == 3) {
             UnsubscribeCostBean unsubscribeCostBean = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, UnsubscribeCostBean.class);
             compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getResult().getPolicy().getContent());

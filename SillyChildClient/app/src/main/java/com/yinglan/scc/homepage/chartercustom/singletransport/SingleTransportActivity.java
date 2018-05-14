@@ -25,7 +25,6 @@ import com.yinglan.scc.entity.CarInfoBean;
 import com.yinglan.scc.entity.CarListBean;
 import com.yinglan.scc.entity.UnsubscribeCostBean;
 import com.yinglan.scc.entity.VehicleTypeBean;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
@@ -414,24 +413,24 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
             tv_submit.setClickable(true);
             AirportDropOffBean airportDropOffBean = (AirportDropOffBean) JsonUtil.getInstance().json2Obj(success, AirportDropOffBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "chatMessage", 2);
-            Intent intent = new Intent(aty, OverleafActivity.class);
-            intent.putExtra("vehicleTime", tv_vehicleTime.getText().toString().trim());
-            intent.putExtra("fewAdults", tv_adultNum.getText().toString().trim());
-            intent.putExtra("severalChildren", tv_childrenNum.getText().toString().trim());
-            intent.putExtra("selectModels", tv_selectModels.getText().toString().trim());
-            intent.putExtra("whereDoYouStart", et_whereDoYouStart.getText().toString().trim());
-            intent.putExtra("whereAreGoing", et_whereAreGoing.getText().toString().trim());
-            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
-            intent.putExtra("id", airportDropOffBean.getResult().getId());
-            intent.putExtra("twenty_four", tv_bags3.getText().toString());
-            intent.putExtra("twenty_six", tv_bags2.getText().toString());
-            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
-            intent.putExtra("thirty", tv_bags.getText().toString());
-            intent.putExtra("name", et_name.getText().toString());
-            intent.putExtra("contactWay", et_contactWay.getText().toString().trim());
-            intent.putExtra("remark", et_remark.getText().toString().trim());
-            intent.putExtra("chatMessage", "2");
-            showActivity(aty, intent);
+//            Intent intent = new Intent(aty, OverleafActivity.class);
+//            intent.putExtra("vehicleTime", tv_vehicleTime.getText().toString().trim());
+//            intent.putExtra("fewAdults", tv_adultNum.getText().toString().trim());
+//            intent.putExtra("severalChildren", tv_childrenNum.getText().toString().trim());
+//            intent.putExtra("selectModels", tv_selectModels.getText().toString().trim());
+//            intent.putExtra("whereDoYouStart", et_whereDoYouStart.getText().toString().trim());
+//            intent.putExtra("whereAreGoing", et_whereAreGoing.getText().toString().trim());
+//            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
+//            intent.putExtra("id", airportDropOffBean.getResult().getId());
+//            intent.putExtra("twenty_four", tv_bags3.getText().toString());
+//            intent.putExtra("twenty_six", tv_bags2.getText().toString());
+//            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
+//            intent.putExtra("thirty", tv_bags.getText().toString());
+//            intent.putExtra("name", et_name.getText().toString());
+//            intent.putExtra("contactWay", et_contactWay.getText().toString().trim());
+//            intent.putExtra("remark", et_remark.getText().toString().trim());
+//            intent.putExtra("chatMessage", "2");
+//            showActivity(aty, intent);
         } else if (flag == 1) {
             tv_submit.setClickable(true);
             carListBean = (CarListBean) JsonUtil.json2Obj(success, CarListBean.class);
@@ -450,7 +449,7 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
                 //   ((SingleTransportContract.Presenter) mPresenter).getUnsubscribeCost(0);
             }
         } else if (flag == 2) {
-            showActivity(aty, OverleafActivity.class);
+           // showActivity(aty, OverleafActivity.class);
         } else if (flag == 3) {
             UnsubscribeCostBean unsubscribeCostBean = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, UnsubscribeCostBean.class);
             compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getResult().getPolicy().getContent());

@@ -3,7 +3,6 @@ package com.yinglan.scc.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -11,23 +10,14 @@ import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
-import com.hyphenate.easeui.EaseUI;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.yinglan.scc.BuildConfig;
-import com.yinglan.scc.utils.easeim.DemoHelper;
 
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
-
-import java.util.Iterator;
-import java.util.List;
-
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 import static com.umeng.socialize.utils.Log.LOGTAG;
 
@@ -64,7 +54,6 @@ public class MyApplication extends Application {
         instance = this;
         mContext = getApplicationContext();
         UMShareAPI.get(this);//友盟分享
-        initHuanXinSDK();
         testMemoryInfo();
     }
 
@@ -120,59 +109,48 @@ public class MyApplication extends Application {
     }
 
     /**
-     * 环信即时通讯客服所需
+     *调用融云初始化方法
      */
-    private void initHuanXinSDK() {
-        //环信客服Kefu sdk 初始化简写方式：
-        ChatClient.Options options1 = new ChatClient.Options().setAppkey(BuildConfig.HUANXIN_APPKEY).setTenantId(BuildConfig.HUANXIN_TENANTID);
-        // 环信客服 SDK 初始化, 初始化成功后再调用环信下面的内容
-        if (ChatClient.getInstance().init(this, options1)) {
-            //设为调试模式，打成正式包时，最好设为false，以免消耗额外的资源
-            ChatClient.getInstance().setDebugMode(true);
-            UIProvider.getInstance().init(this);
-        }
-        //   DemoKFHelper.getInstance().init(this);
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        int pid = android.os.Process.myPid();
-        String processAppName = getAppName(pid);
-        // 如果APP启用了远程的service，此application:onCreate会被调用2次
-        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
-        // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
-        if (processAppName == null || !processAppName.equalsIgnoreCase(getPackageName())) {
-//            Log.e(TAG, "enter the service process!");
-            // 则此application::onCreate 是被service 调用的，直接返回
-            return;
-        }
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
-        //
-        EaseUI.getInstance().init(this, options);
-        //
-        DemoHelper.getInstance().init(this);
-    }
-
-    private String getAppName(int pID) {
-        String processName = null;
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        List l = am.getRunningAppProcesses();
-        Iterator i = l.iterator();
-        PackageManager pm = getPackageManager();
-        while (i.hasNext()) {
-            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
-            try {
-                if (info.pid == pID) {
-                    processName = info.processName;
-                    return processName;
-                }
-            } catch (Exception e) {
-                // Log.d("Process", "Error>> :"+ e.toString());
-            }
-        }
-        return processName;
+    private void initRongCloud() {
+        RongIM.init(this);
+//        SealAppContext.init(this);//初始化融云相关监听 事件集合类
+//        openSealDBIfHasCachedToken();//打开融云本地数据库
+//        String rcToken = UserUtil.getResTokenInfo(this);
+//        if (!TextUtils.isEmpty(rcToken)) {
+//            RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
+//
+//                /**
+//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+//                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+//                 */
+//                @Override
+//                public void onTokenIncorrect() {
+//                }
+//
+//                /**
+//                 * 连接融云成功
+//                 * @param userid 当前 token 对应的用户 id
+//                 */
+//                @Override
+//                public void onSuccess(String userid) {
+//                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+//                    com.sillykid.app.mine.data.UserInfo.Data userData = UserUtil.getUserData(getApplicationContext());
+//                    if (RongIM.getInstance() != null && userData != null) {
+//                        RongIM.getInstance().setCurrentUserInfo(new io.rong.imlib.model.UserInfo(userData.i_id, userData.n_name, Uri.parse(Config.IMG_URL + userData.head_img)));
+//                    }
+//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+//                }
+//
+//                /**
+//                 * 连接融云失败
+//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+//                 */
+//                @Override
+//                public void onError(RongIMClient.ErrorCode errorCode) {
+//                    Log.i("XJ", "--errorCode" + errorCode);
+//                }
+//            });
+ //       }
     }
 
 

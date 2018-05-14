@@ -10,8 +10,6 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.constant.StringNewConstants;
@@ -105,36 +103,36 @@ public class MainService extends Service {
     }
 
     protected boolean loadConversationList(String response) {
-        try{
-            HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
-            if (hxUserListBean == null || hxUserListBean.getResult() == null || hxUserListBean.getResult().size() == 0) {
-                return false;
-            }
-            List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getResult();
-            Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-            synchronized (conversations) {
-                for (EMConversation conversation : conversations.values()) {
-                    if (conversation.getAllMessages().size() != 0) {
-                        try {
-                            for (int i = 0; i < hxUserList.size(); i++) {
-                                if (hxUserList.get(i).getHxName().equals(conversation.conversationId())) {
-                                    Log.d("tag1111", conversation.conversationId());
-                                    if (conversation.getUnreadMsgCount() > 0) {
-                                        return true;
-                                    }
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return false;
-                        }
-                    }
-                }
-            }
+//        try{
+//            HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
+//            if (hxUserListBean == null || hxUserListBean.getResult() == null || hxUserListBean.getResult().size() == 0) {
+//                return false;
+//            }
+//            List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getResult();
+//            Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+//            synchronized (conversations) {
+//                for (EMConversation conversation : conversations.values()) {
+//                    if (conversation.getAllMessages().size() != 0) {
+//                        try {
+//                            for (int i = 0; i < hxUserList.size(); i++) {
+//                                if (hxUserList.get(i).getHxName().equals(conversation.conversationId())) {
+//                                    Log.d("tag1111", conversation.conversationId());
+//                                    if (conversation.getUnreadMsgCount() > 0) {
+//                                        return true;
+//                                    }
+//                                }
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+//            return false;
+//        }catch (Exception e){
             return false;
-        }catch (Exception e){
-            return false;
-        }
+//        }
 
     }
 

@@ -24,8 +24,6 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.myview.HorizontalListView;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.BuildConfig;
@@ -39,7 +37,6 @@ import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.addressselection.newoverseas.NewOverseasCityActivity;
 import com.yinglan.scc.homepage.airportpickup.AirportPickupActivity;
 import com.yinglan.scc.homepage.boutiqueline.BoutiqueLineActivity;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.homepage.localtalent.LocalTalentActivity;
 import com.yinglan.scc.homepage.localtalent.LocalTalentDetailsActivity;
 import com.yinglan.scc.homepage.popularstrategy.HotStrategyActivity;
@@ -178,16 +175,16 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         ((HomePagePresenter) mPresenter).initLocation(aty, mLocationClient);
         showLoadingDialog(aty.getString(R.string.dataLoad));
         ((HomePagePresenter) mPresenter).getHomePage("");
-        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BuildConfig.HUANXIN_IM);
-        try {
-            if (conversation.getUnreadMsgCount() > 0) {
-                tv_tag.setVisibility(View.GONE);
-            } else {
-                tv_tag.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            tv_tag.setVisibility(View.GONE);
-        }
+//        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BuildConfig.HUANXIN_IM);
+//        try {
+//            if (conversation.getUnreadMsgCount() > 0) {
+//                tv_tag.setVisibility(View.GONE);
+//            } else {
+//                tv_tag.setVisibility(View.GONE);
+//            }
+//        } catch (Exception e) {
+//            tv_tag.setVisibility(View.GONE);
+//        }
     }
 
     /**
@@ -278,7 +275,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         } else if (flag == 1) {
             dismissLoadingDialog();
             tv_tag.setVisibility(View.GONE);
-            aty.showActivity(aty, OverleafActivity.class);
+           // aty.showActivity(aty, OverleafActivity.class);
         }
         dismissLoadingDialog();
 

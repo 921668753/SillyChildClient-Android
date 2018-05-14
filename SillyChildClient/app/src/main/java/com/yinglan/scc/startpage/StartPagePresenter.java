@@ -9,10 +9,6 @@ import com.baidu.location.LocationClientOption;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.HxUserListBean;
@@ -142,11 +138,11 @@ public class StartPagePresenter implements StartPageContract.Presenter {
         RequestClient.getHxUserList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                if (loadConversationList(response)) {
-                    mView.getSuccess(response, 0);
-                } else {
-                    mView.errorMsg(response, 0);
-                }
+//                if (loadConversationList(response)) {
+//                    mView.getSuccess(response, 0);
+//                } else {
+//                    mView.errorMsg(response, 0);
+//                }
             }
 
             @Override
@@ -158,73 +154,10 @@ public class StartPagePresenter implements StartPageContract.Presenter {
 
     @Override
     public void getChatManagerListener() {
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+       // EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
-    EMMessageListener msgListener = new EMMessageListener() {
 
-        @Override
-        public void onMessageReceived(List<EMMessage> messages) {
-            Log.d("tag1111", JsonUtil.obj2JsonString(messages.get(messages.size() - 1)).getBytes().toString());
-            //收到消息
-            getGuideMessage();
-        }
 
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            //收到透传消息
-//            refresh();
-        }
 
-        @Override
-        public void onMessageRead(List<EMMessage> messages) {
-            //收到已读回执
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> message) {
-            //收到已送达回执
-        }
-
-        @Override
-        public void onMessageRecalled(List<EMMessage> messages) {
-            //消息被撤回
-            getGuideMessage();
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage message, Object change) {
-            //消息状态变动
-        }
-    };
-
-    protected boolean loadConversationList(String response) {
-        HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
-        if (hxUserListBean == null || hxUserListBean.getResult() == null || hxUserListBean.getResult().size() == 0) {
-            return false;
-        }
-        List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getResult();
-        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-        synchronized (conversations) {
-            for (EMConversation conversation : conversations.values()) {
-                if (conversation.getAllMessages().size() != 0) {
-                    try {
-                        for (int i = 0; i < hxUserList.size(); i++) {
-                            if (hxUserList.get(i).getHxName().equals(conversation.conversationId())) {
-                                Log.d("tag1111", conversation.conversationId());
-                                if (conversation.getUnreadMsgCount() > 0) {
-                                    return true;
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return false;
-                    }
-                }
-            }
-        }
-        EMClient.getInstance().chatManager().addMessageListener(null);
-        return false;
-    }
 }

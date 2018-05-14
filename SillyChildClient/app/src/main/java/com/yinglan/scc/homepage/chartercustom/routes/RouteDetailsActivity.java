@@ -17,7 +17,6 @@ import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.dialog.ShareBouncedDialog;
 import com.yinglan.scc.entity.CollectLineBean;
 import com.yinglan.scc.entity.RouteDetailsBean;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.umeng.socialize.ShareAction;
@@ -295,7 +294,7 @@ public class RouteDetailsActivity extends BaseActivity implements RouteDetailsCo
             intent.putExtra("playDay", playDay);
             showActivity(aty, intent);
         } else if (flag == 4) {
-            showActivity(aty, OverleafActivity.class);
+           // showActivity(aty, OverleafActivity.class);
         }
         dismissLoadingDialog();
     }

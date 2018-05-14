@@ -6,8 +6,6 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.helpdesk.callback.Callback;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scc.R;
@@ -62,30 +60,30 @@ public class SetUpPresenter implements SetUpContract.Presenter {
 
     @Override
     public void logOutHuanXin(Activity activity) {
-        if (ChatClient.getInstance().isLoggedInBefore()) {
-            //已经登录，可以直接进入会话界面
-            ChatClient.getInstance().logout(true, new Callback() {
-                @Override
-                public void onSuccess() {
-                    /**
-                     * 退出app退出登录
-                     */
-                    logOutAppService(activity);
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    logOutHuanXin(activity);
-                }
-
-                @Override
-                public void onProgress(int i, String s) {
-
-                }
-            });
-            return;
-        }
-        logOutAppService(activity);
+//        if (ChatClient.getInstance().isLoggedInBefore()) {
+//            //已经登录，可以直接进入会话界面
+//            ChatClient.getInstance().logout(true, new Callback() {
+//                @Override
+//                public void onSuccess() {
+//                    /**
+//                     * 退出app退出登录
+//                     */
+//                    logOutAppService(activity);
+//                }
+//
+//                @Override
+//                public void onError(int i, String s) {
+//                    logOutHuanXin(activity);
+//                }
+//
+//                @Override
+//                public void onProgress(int i, String s) {
+//
+//                }
+//            });
+//            return;
+//        }
+//        logOutAppService(activity);
     }
 
     /**

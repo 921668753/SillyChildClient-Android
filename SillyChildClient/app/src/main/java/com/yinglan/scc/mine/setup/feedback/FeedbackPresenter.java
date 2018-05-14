@@ -7,8 +7,6 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.helpdesk.callback.Callback;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;

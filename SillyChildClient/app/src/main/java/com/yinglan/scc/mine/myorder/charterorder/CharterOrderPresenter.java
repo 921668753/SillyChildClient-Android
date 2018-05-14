@@ -11,7 +11,6 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
 import com.yinglan.scc.homepage.chartercustom.routes.CheckstandActivity;
-import com.yinglan.scc.message.ChatMessageActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
 import com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity;
 import com.yinglan.scc.mine.myorder.orderevaluation.PostEvaluationActivity;
@@ -78,26 +77,26 @@ public class CharterOrderPresenter implements CharterOrderContract.Presenter {
 
     @Override
     public void toChart(MyOrderActivity aty, String hxusername, String nickname,String defaultnickname, String avatar) {
-        if (TextUtils.isEmpty(hxusername)) {
-            mView.errorMsg(aty.getResources().getString(R.string.doNotChat), 1);
-            return;
-        }
-        jumpintent = new Intent(aty, ChatMessageActivity.class);
-        jumpintent.putExtra("userId", hxusername);
-        if (TextUtils.isEmpty(nickname)) {
-            if (TextUtils.isEmpty(defaultnickname)){
-                mView.errorMsg(aty.getResources().getString(R.string.doNotChat), 1);
-                return;
-            }else{
-                jumpintent.putExtra("nickname", defaultnickname);
-            }
-        }else{
-            jumpintent.putExtra("nickname", nickname);
-        }
-        if (!TextUtils.isEmpty(avatar)) {
-            jumpintent.putExtra("avatar", avatar);
-        }
-        aty.showActivity(aty, jumpintent);
+//        if (TextUtils.isEmpty(hxusername)) {
+//            mView.errorMsg(aty.getResources().getString(R.string.doNotChat), 1);
+//            return;
+//        }
+//        jumpintent = new Intent(aty, ChatMessageActivity.class);
+//        jumpintent.putExtra("userId", hxusername);
+//        if (TextUtils.isEmpty(nickname)) {
+//            if (TextUtils.isEmpty(defaultnickname)){
+//                mView.errorMsg(aty.getResources().getString(R.string.doNotChat), 1);
+//                return;
+//            }else{
+//                jumpintent.putExtra("nickname", defaultnickname);
+//            }
+//        }else{
+//            jumpintent.putExtra("nickname", nickname);
+//        }
+//        if (!TextUtils.isEmpty(avatar)) {
+//            jumpintent.putExtra("avatar", avatar);
+//        }
+//        aty.showActivity(aty, jumpintent);
     }
 
     @Override

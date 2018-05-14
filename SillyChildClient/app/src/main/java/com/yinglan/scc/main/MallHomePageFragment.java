@@ -241,6 +241,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(mallHomePageViewAdapter);
         mallHomePageViewAdapter.setOnRVItemClickListener(this);
+        mallHomePageViewAdapter.addMoreData(addList());
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         //注册监听函数

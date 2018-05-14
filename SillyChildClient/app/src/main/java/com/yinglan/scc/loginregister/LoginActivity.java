@@ -48,6 +48,12 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     /**
+     * 返回
+     */
+    @BindView(id = R.id.img_back, click = true)
+    private ImageView img_back;
+
+    /**
      * 账号
      */
     @BindView(id = R.id.et_accountNumber)
@@ -139,8 +145,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
             case R.id.tv_forgotPassword:
                 showActivity(aty, RetrievePasswordActivity.class);
                 break;
@@ -181,7 +189,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void getSuccess(String s, int flag) {
-
         if (flag == 0) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
 //            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());

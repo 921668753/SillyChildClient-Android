@@ -1,6 +1,5 @@
 package com.yinglan.scc.mine.setup.feedback;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.message.ChatMessageActivity;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -81,22 +79,22 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
             ViewInject.toast(getString(R.string.infoMissing));
             return;
         }
-        Intent jumpintent = new Intent(aty, ChatMessageActivity.class);
-        jumpintent.putExtra("userId", hxusername);
-        if (TextUtils.isEmpty(nickname)) {
-            if (TextUtils.isEmpty(defaultnickname)){
-                ViewInject.toast(getString(R.string.infoMissing));
-                return;
-            }else{
-                jumpintent.putExtra("nickname", defaultnickname);
-            }
-        }else{
-            jumpintent.putExtra("nickname", nickname);
-        }
-        if (!TextUtils.isEmpty(avatar)) {
-            jumpintent.putExtra("avatar", avatar);
-        }
-        showActivity(aty, jumpintent);
+//        Intent jumpintent = new Intent(aty, ChatMessageActivity.class);
+//        jumpintent.putExtra("userId", hxusername);
+//        if (TextUtils.isEmpty(nickname)) {
+//            if (TextUtils.isEmpty(defaultnickname)){
+//                ViewInject.toast(getString(R.string.infoMissing));
+//                return;
+//            }else{
+//                jumpintent.putExtra("nickname", defaultnickname);
+//            }
+//        }else{
+//            jumpintent.putExtra("nickname", nickname);
+//        }
+//        if (!TextUtils.isEmpty(avatar)) {
+//            jumpintent.putExtra("avatar", avatar);
+//        }
+//        showActivity(aty, jumpintent);
     }
 
     @Override

@@ -3,8 +3,6 @@ package com.yinglan.scc.loginregister.register;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.helpdesk.callback.Callback;
 import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -154,51 +152,51 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void loginHuanXin(String phone, String pwd) {
 
-        if (ChatClient.getInstance().isLoggedInBefore()) {
-            //已经登录，可以直接进入会话界面
-
-            ChatClient.getInstance().logout(true, new Callback() {
-                @Override
-                public void onSuccess() {
-                    loginHuanXin1(phone, pwd);
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 2);
-                }
-
-                @Override
-                public void onProgress(int i, String s) {
-
-                }
-            });
-            return;
-        }
-        loginHuanXin1(phone, pwd);
+//        if (ChatClient.getInstance().isLoggedInBefore()) {
+//            //已经登录，可以直接进入会话界面
+//
+//            ChatClient.getInstance().logout(true, new Callback() {
+//                @Override
+//                public void onSuccess() {
+//                    loginHuanXin1(phone, pwd);
+//                }
+//
+//                @Override
+//                public void onError(int i, String s) {
+//                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 2);
+//                }
+//
+//                @Override
+//                public void onProgress(int i, String s) {
+//
+//                }
+//            });
+//            return;
+//        }
+//        loginHuanXin1(phone, pwd);
     }
 
 
     public void loginHuanXin1(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 0);
-            return;
-        }
-        ChatClient.getInstance().login(phone, pwd, new Callback() {
-            @Override
-            public void onSuccess() {
-                mView.getSuccess("", 2);
-            }
-
-            @Override
-            public void onError(int code, String error) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 2);
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-        });
+//        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 0);
+//            return;
+//        }
+//        ChatClient.getInstance().login(phone, pwd, new Callback() {
+//            @Override
+//            public void onSuccess() {
+//                mView.getSuccess("", 2);
+//            }
+//
+//            @Override
+//            public void onError(int code, String error) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 2);
+//            }
+//
+//            @Override
+//            public void onProgress(int progress, String status) {
+//
+//            }
+//        });
     }
 }

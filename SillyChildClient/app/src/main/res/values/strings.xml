@@ -53,6 +53,8 @@
     <string name="authoriseErr3">没有安装应用</string>
     <string name="loginErr">登录失败，请重新登录</string>
 
+    <string name="failedCloudInformation">获取融云信息失败</string>
+
 
     <!--选择国家或地区-->
     <string name="selectCountry">选择国家或地区</string>
@@ -1138,5 +1140,23 @@
     <string name="zan1">次赞</string>
     <string name="collect">次收藏</string>
 
-
+    <!--融云start-->
+    <string name="server_exception">服务器异常</string>
+    <string name="clear_success">清除成功</string>
+    <string name="clear_failure">清除失败</string>
+    <string name="no_read_message">"···"</string>
+    <string name="de_actionbar_system">"系统消息"</string>
+    <string name="main_customer">意见反馈</string>
+    <string name="de_actionbar_sub_defult">"聊天"</string>
+    <string name="cs_evaluation">评价</string>
+    <string name="cs_submit_evaluation">提交评价</string>
+    <string name="cs_evaluate_resolved_title">请问客服是否解决了您的问题</string>
+    <string name="cs_evaluate_resolved">已解决</string>
+    <string name="cs_evaluate_unresolved">未解决</string>
+    <string name="cs_evaluate_star_title">请您对客服进行评价</string>
+    <string name="cs_evaluate_problem_title">存在哪些问题</string>
+    <string name="cs_evaluate_tag_must">必须选择标签</string>
+    <string name="cs_evaluate_input_must">必须输入建议</string>
+    <string name="cs_evaluate_select_must">必选</string>
+    <!--融云end-->
 </resources>

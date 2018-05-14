@@ -9,7 +9,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.yinglan.scc.R;
-import com.yinglan.scc.homepage.customerservice.OverleafActivity;
 import com.yinglan.scc.main.HomePageContract;
 import com.yinglan.scc.main.HomePagePresenter;
 
@@ -149,7 +148,7 @@ public class TransferActivity extends BaseActivity implements HomePageContract.V
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 1) {
-            showActivity(aty, OverleafActivity.class);
+           // showActivity(aty, OverleafActivity.class);
         }
         dismissLoadingDialog();
     }

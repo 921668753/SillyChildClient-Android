@@ -1,6 +1,10 @@
 package com.yinglan.scc.main;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,9 @@ import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.message.InteractiveMessageFragment;
 import com.yinglan.scc.message.SystemMessageFragment;
+
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 消息
@@ -29,6 +36,11 @@ public class MessageFragment extends BaseFragment {
     @BindView(id = R.id.tv_systemMessage, click = true)
     private TextView tv_systemMessage;
 
+    private int ID = R.id.ll_container;
+
+    private static final String TAB_SYSTEM_MSG = "systemMsg";
+    private static final String TAB_CUSTOM_MSG = "customMsg";
+
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
 
@@ -37,6 +49,10 @@ public class MessageFragment extends BaseFragment {
      * 用来表示移动的Fragment
      */
     private int chageIcon;
+
+    private ConversationListFragment mConversationListFragment;
+    private Conversation.ConversationType[] mConversationsTypes;
+    private FragmentManager fragmentManager;
 
 
     @Override
@@ -48,8 +64,9 @@ public class MessageFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
-        contentFragment = new InteractiveMessageFragment();
-        contentFragment1 = new SystemMessageFragment();
+        fragmentManager = aty.getSupportFragmentManager();
+        //   mConversationListFragment = new InteractiveMessageFragment();
+        //  contentFragment1 = new SystemMessageFragment();
         chageIcon = aty.getIntent().getIntExtra("chageIcon", 20);
     }
 
@@ -60,22 +77,25 @@ public class MessageFragment extends BaseFragment {
         if (chageIcon == 20) {
             chageIcon = 20;
             cleanColors(20);
-            changeFragment(contentFragment);
+            setTabSelection(0);
+            //   changeFragment(contentFragment);
         } else if (chageIcon == 21) {
             chageIcon = 21;
             cleanColors(21);
-            changeFragment(contentFragment1);
+            setTabSelection(1);
+            //   changeFragment(contentFragment1);
         } else {
             chageIcon = 20;
             cleanColors(20);
-            changeFragment(contentFragment);
+            setTabSelection(0);
+            // changeFragment(contentFragment);
         }
     }
 
 
-    public void changeFragment(BaseFragment targetFragment) {
-        super.changeFragment(R.id.main_content, targetFragment);
-    }
+//    public void changeFragment(BaseFragment targetFragment) {
+//        super.changeFragment(R.id.main_content, targetFragment);
+//    }
 
 
     @Override
@@ -85,14 +105,16 @@ public class MessageFragment extends BaseFragment {
             case R.id.tv_interactiveMessage:
                 chageIcon = 20;
                 cleanColors(20);
-                changeFragment(contentFragment);
+                //  changeFragment(contentFragment);
+                setTabSelection(0);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMessageFragment", 20);
                 // ViewInject.toast(chageIcon + "");
                 break;
             case R.id.tv_systemMessage:
                 chageIcon = 21;
                 cleanColors(21);
-                changeFragment(contentFragment1);
+                setTabSelection(1);
+                // changeFragment(contentFragment1);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMessageFragment", 21);
                 break;
             default:
@@ -108,6 +130,33 @@ public class MessageFragment extends BaseFragment {
         super.onChange();
 
     }
+
+
+    private void setTabSelection(int index) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        hideFragment(fragmentTransaction);
+        switch (index) {
+            case 0:
+                chageIcon = 20;
+                cleanColors(20);
+                Fragment conversationListFragment = initConversationList(fragmentTransaction);
+                fragmentTransaction.show(conversationListFragment);
+                break;
+            case 1:
+                chageIcon = 21;
+                cleanColors(21);
+                SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
+                if (systemMsgFragment == null) {
+                    fragmentTransaction.add(ID, new SystemMessageFragment(), TAB_SYSTEM_MSG);
+                } else {
+                    fragmentTransaction.show(systemMsgFragment);
+                }
+                break;
+
+        }
+        fragmentTransaction.commit();
+    }
+
 
     /**
      * 清除颜色，并添加颜色
@@ -125,4 +174,62 @@ public class MessageFragment extends BaseFragment {
         }
     }
 
+    private void hideFragment(FragmentTransaction fragmentTransaction) {
+        SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
+        if (systemMsgFragment != null) {
+            fragmentTransaction.hide(systemMsgFragment);
+        }
+
+        ConversationListFragment conversationListFragment = (ConversationListFragment) fragmentManager.findFragmentByTag(TAB_CUSTOM_MSG);
+        if (conversationListFragment != null) {
+            fragmentTransaction.hide(conversationListFragment);
+        }
+    }
+
+    /**
+     * 刷新会话消息
+     */
+    public void refreshRedDot(int count) {
+//        if (count > 0) {
+//            tvCustomNotice.setVisibility(View.VISIBLE);
+//        } else {
+//            tvCustomNotice.setVisibility(View.INVISIBLE);
+//        }
+    }
+
+    /**
+     * 登陆成功后 刷新系统消息
+     */
+    public void refreshSystemMsg() {
+        SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
+        if (systemMsgFragment != null) {
+           //  systemMsgFragment.refreshAutoData();
+        }
+    }
+
+    private Fragment initConversationList(FragmentTransaction fragmentTransaction) {
+        if (mConversationListFragment == null) {
+            ConversationListFragment listFragment = new ConversationListFragment();
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
+                    .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
+                    .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
+                    .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                    .build();
+            mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
+                    Conversation.ConversationType.GROUP,
+                    Conversation.ConversationType.PUBLIC_SERVICE,
+                    Conversation.ConversationType.APP_PUBLIC_SERVICE,
+                    Conversation.ConversationType.SYSTEM
+            };
+            listFragment.setUri(uri);
+            mConversationListFragment = listFragment;
+            fragmentTransaction.add(ID, mConversationListFragment, TAB_CUSTOM_MSG);
+            return listFragment;
+        } else {
+            return mConversationListFragment;
+        }
+    }
 }

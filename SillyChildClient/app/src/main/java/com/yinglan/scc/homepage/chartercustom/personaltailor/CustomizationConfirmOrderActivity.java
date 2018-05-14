@@ -16,7 +16,6 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.dialog.chartercustom.CompensationChangeBackDialog;
 import com.yinglan.scc.dialog.chartercustom.CostsThatDialog;
 import com.yinglan.scc.homepage.chartercustom.routes.CheckstandActivity;
-import com.yinglan.scc.homepage.customerservice.CustomerServiceActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -276,7 +275,7 @@ public class CustomizationConfirmOrderActivity extends BaseActivity implements C
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         // ConfirmOrderBean confirmOrderBean = (ConfirmOrderBean) JsonUtil.json2Obj(success, ConfirmOrderBean.class);
-        KJActivityStack.create().finishActivity(CustomerServiceActivity.class);
+      //  KJActivityStack.create().finishActivity(CustomerServiceActivity.class);
         KJActivityStack.create().finishActivity(ScheduleDetailsActivity.class);
         Intent intent = new Intent(aty, CheckstandActivity.class);
         intent.putExtra("orderid", air_id);
