@@ -14,6 +14,11 @@ public interface MoreClassificationContract {
          * 获取更多分类信息
          */
         void getMoreClassification();
+
+        /**
+         * 获取分类信息
+         */
+        void getClassification();
     }
 
     interface View extends BaseView<Presenter, String> {

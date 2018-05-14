@@ -12,9 +12,9 @@ public interface ActivitiesContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取首页信息
+         * 获取活动信息
          */
-        void getHomePage(String city);
+        void getActivities(String city);
 
     }
 

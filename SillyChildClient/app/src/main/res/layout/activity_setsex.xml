@@ -28,12 +28,13 @@
 
         <ImageView
             android:id="@+id/img_nan"
-            android:layout_width="@dimen/dimen30"
+            android:layout_width="@dimen/dimen45"
             android:layout_height="@dimen/dimen30"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen15"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/set_gender_check_the_number" />
 
     </RelativeLayout>
 
@@ -56,12 +57,13 @@
 
         <ImageView
             android:id="@+id/img_nv"
-            android:layout_width="@dimen/dimen30"
+            android:layout_width="@dimen/dimen45"
             android:layout_height="@dimen/dimen30"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen15"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/set_gender_check_the_number" />
 
     </RelativeLayout>
 

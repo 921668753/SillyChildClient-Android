@@ -136,19 +136,6 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
         super.initWidget();
         initTitle();
         initImagePicker();
-//        ll_guideScoring.setVisibility(View.GONE);
-//        if(type==3){
-//            ll_guideScoring.setVisibility(View.VISIBLE);
-//            tv_scoringtype.setText(getString(R.string.routesScoring));
-//            selImageListguide = new ArrayList<>();
-//            adapterguide = new ImagePickerAdapter(this, selImageListguide, NumericConstants.MAXPICTURE,R.mipmap.mine_xiangjiaddxxx);
-//            adapterguide.setOnItemClickListener(this);
-//            GridLayoutManager gridLayoutManagerguide=new GridLayoutManager(this, 4);
-//            recyclerview_guide.setLayoutManager(gridLayoutManagerguide);
-//            recyclerview_guide.setHasFixedSize(true);
-//            recyclerview_guide.setAdapter(adapterguide);
-//            urllistguide=new ArrayList<>();
-//        }
         if (type != 4 && type != 5) {//单次接送&私人定制
             ll_scoring.setVisibility(View.VISIBLE);
         }
@@ -188,13 +175,6 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
                 finish();
                 break;
             case R.id.tv_publish:
-//                if (picturehandler==null)picturehandler=new upPictureHandler();
-//                totalnum=selImageList.size();
-//                urlsuccessnum=0;
-//                urlerrornum=0;
-//                pictureerror="";
-//                upOperation();
-
                 if ((rb_rating.getStar() == 0 && type != 4 && type != 5) || rb_rating_guide.getStar() == 0) {
                     if (publicPromptDialog == null) {
                         publicPromptDialog = new PublicPromptDialog(aty) {

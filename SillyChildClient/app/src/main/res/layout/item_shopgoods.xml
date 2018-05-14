@@ -38,7 +38,7 @@
             android:layout_width="@dimen/dimen40"
             android:layout_height="@dimen/dimen40"
             android:padding="@dimen/dimen11"
-            android:src="@mipmap/mineaddress_selectxxx" />
+            android:src="@mipmap/shopping_cart_unselected" />
 
 
         <ImageView

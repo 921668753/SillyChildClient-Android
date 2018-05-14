@@ -1,13 +1,10 @@
 package com.yinglan.scc.mine.myshoppingcart.makesureorder;
 
-import android.util.TypedValue;
 import android.view.View;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.yinglan.scc.R;
-
-import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
  * 我的购物车中的确认订单

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <TextView style="@style/DividerWidth" />
@@ -48,11 +49,19 @@
 
     <TextView style="@style/DividerWidth" />
 
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
 
-<include layout="@layout/fragment_shophomepage"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@android:color/transparent"
+            tools:listitem="@layout/item_mallhomepage" />
 
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-
-
+    <include layout="@layout/common_error" />
 
 </LinearLayout>

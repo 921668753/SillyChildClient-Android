@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MatchMatch"
-    android:background="@color/background"
-    android:orientation="vertical"
-    android:scrollbars="none">
+    android:id="@+id/mRefreshLayout"
+    style="@style/MatchMatch">
 
-    <LinearLayout
+    <ScrollView
         style="@style/MatchMatch"
-        android:orientation="vertical">
+        android:background="@color/background"
+        android:orientation="vertical"
+        android:scrollbars="none">
 
-        <cn.bingoogolapple.bgabanner.BGABanner
-            android:id="@+id/banner_ad"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen150"
-            android:background="@mipmap/placeholderfigure"
-            app:banner_pageChangeDuration="2000"
-            app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point"
-            app:banner_pointTopBottomMargin="2dp"
-            app:banner_transitionEffect="alpha" />
-
-        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-            android:id="@+id/pullLoadMoreRecyclerView"
+        <LinearLayout
             style="@style/MatchMatch"
-            android:layout_marginTop="@dimen/dimen10"
-            android:background="@android:color/transparent"
-            tools:listitem="@layout/item_mallhomepage" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-</ScrollView>
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_ad"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen150"
+                android:background="@mipmap/placeholderfigure"
+                app:banner_pageChangeDuration="2000"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+                app:banner_pointTopBottomMargin="2dp"
+                app:banner_transitionEffect="alpha" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen15"
+                android:background="@android:color/transparent"
+                tools:listitem="@layout/item_mallhomepage" />
+
+            <include layout="@layout/common_error" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+

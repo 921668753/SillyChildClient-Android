@@ -34,4 +34,20 @@ public class MoreClassificationPresenter implements MoreClassificationContract.P
             }
         });
     }
+
+    @Override
+    public void getClassification() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
 }

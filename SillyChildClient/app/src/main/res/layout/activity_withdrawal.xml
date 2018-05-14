@@ -34,17 +34,16 @@
             android:textColor="@color/fF0000Colors"
             android:textSize="@dimen/textsize14" />
 
-        <TextView
-            android:id="@+id/tv_modification"
-            style="@style/AutoMatch"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen15"
-            android:paddingTop="@dimen/dimen15"
-            android:text="+"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize17"
-            android:textStyle="bold" />
+        <TextView style="@style/AutoWrap" />
 
+
+        <ImageView
+            android:id="@+id/tv_modification"
+            android:layout_width="@dimen/dimen15"
+            android:layout_height="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen15"
+            android:src="@mipmap/withdrawals_plus_sign" />
 
     </LinearLayout>
 

@@ -18,7 +18,7 @@
         android:id="@+id/mRefreshLayout"
         style="@style/MatchMatch">
 
-        <ScrollView
+        <com.common.cklibrary.utils.myview.ScrollInterceptScrollView
             style="@style/MatchMatch"
             android:background="@color/background"
             android:scrollbars="none">
@@ -26,7 +26,6 @@
             <LinearLayout
                 style="@style/MatchWrap"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,18 +158,15 @@
 
                 </LinearLayout>
 
-                <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-                    android:id="@+id/pullLoadMoreRecyclerView"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
                     style="@style/MatchWrap"
-                    android:layout_below="@id/ll_icon1"
                     android:layout_marginTop="@dimen/dimen10"
-                    android:background="@android:color/transparent"
                     tools:listitem="@layout/item_mallhomepage" />
-
 
             </LinearLayout>
 
-        </ScrollView>
+        </com.common.cklibrary.utils.myview.ScrollInterceptScrollView>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
 

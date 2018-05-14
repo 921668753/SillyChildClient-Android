@@ -18,7 +18,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
-
     public MyCollectionViewAdapter(Context context) {
         super(context, R.layout.item_good);
     }

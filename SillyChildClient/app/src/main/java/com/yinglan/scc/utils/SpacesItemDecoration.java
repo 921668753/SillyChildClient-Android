@@ -1,4 +1,4 @@
-package com.yinglan.scc.homepage.goodslist;
+package com.yinglan.scc.utils;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

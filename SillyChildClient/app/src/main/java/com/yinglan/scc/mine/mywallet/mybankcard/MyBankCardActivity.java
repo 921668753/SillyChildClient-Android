@@ -67,7 +67,7 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
     private void initTitle() {
         titlebar.setTitleText(R.string.myBankCard);
-        titlebar.setRightDrawable(R.mipmap.ic_launcher_round);
+        titlebar.setRightDrawable(R.mipmap.bank_card_plus_sign);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {

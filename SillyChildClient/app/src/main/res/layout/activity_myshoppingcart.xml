@@ -42,7 +42,7 @@
 
         <ImageView
             style="@style/WrapWrap"
-            android:src="@mipmap/mineaddress_selectxxx" />
+            android:src="@mipmap/shopping_cart_selected" />
 
         <TextView
             style="@style/WrapWrap"

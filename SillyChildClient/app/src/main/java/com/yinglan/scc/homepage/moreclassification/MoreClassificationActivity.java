@@ -8,12 +8,17 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.moreclassification.ClassificationViewAdapter;
 import com.yinglan.scc.adapter.homepage.moreclassification.MoreClassificationViewAdapter;
+import com.yinglan.scc.entity.homepage.moreclassification.ClassificationBean;
+import com.yinglan.scc.entity.homepage.moreclassification.MoreClassificationBean;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
+
+import java.util.List;
 
 /**
  * 更多分类
@@ -21,7 +26,6 @@ import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
  */
 
 public class MoreClassificationActivity extends BaseActivity implements MoreClassificationContract.View, AdapterView.OnItemClickListener {
-
 
     /**
      * 分类
@@ -34,8 +38,10 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
      */
     @BindView(id = R.id.gv_classification)
     private NoScrollGridView gv_classification;
+
     private MoreClassificationViewAdapter moreClassificationViewAdapter = null;
     private ClassificationViewAdapter classificationViewAdapter = null;
+    private List<MoreClassificationBean.ResultBean.ListBean> moreClassificationList;
 
     @Override
     public void setRootView() {
@@ -67,7 +73,7 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (adapterView.getId() == R.id.lv_moreClassification) {
-            selectedlassification(i);
+            selectClassification(i);
         } else if (adapterView.getId() == R.id.gv_classification) {
             Intent goodsListIntent = new Intent(aty, GoodsListActivity.class);
             goodsListIntent.putExtra("classification", "");
@@ -83,16 +89,16 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-//            ConductorModelsBean conductorModelsBean = (ConductorModelsBean) JsonUtil.getInstance().json2Obj(s, ConductorModelsBean.class);
-//            lengthBeanlist = conductorModelsBean.getResult().getLength();
-//            if (lengthBeanlist != null && lengthBeanlist.size() > 0) {
-//                selectedLength(vehicleLengthId);
-//            }
-//            typeBeanlist = conductorModelsBean.getResult().getType();
-//            if (typeBeanlist != null && typeBeanlist.size() > 0) {
-//                selectedType(vehicleModelId);
-//            }
+            MoreClassificationBean moreClassificationBean = (MoreClassificationBean) JsonUtil.getInstance().json2Obj(success, MoreClassificationBean.class);
+            moreClassificationList = moreClassificationBean.getResult().getList();
+            if (moreClassificationList != null && moreClassificationList.size() > 0) {
+                selectClassification(0);
+            }
         } else if (flag == 1) {
+            ClassificationBean classificationBean = (ClassificationBean) JsonUtil.getInstance().json2Obj(success, ClassificationBean.class);
+
+            classificationViewAdapter.clear();
+            //classificationViewAdapter.addNewData();
             dismissLoadingDialog();
         }
     }
@@ -102,20 +108,19 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
      *
      * @param position
      */
-    private void selectedlassification(int position) {
-//        for (int i = 0; i < lengthBeanlist.size(); i++) {
-//            if (position == lengthBeanlist.get(i).getId() || position == i && position == 0) {
-//                lengthBean = lengthBeanlist.get(i);
-//                lengthBean.setStatus(1);
-        //      ((MoreClassificationContract.Presenter) mPresenter).getMoreClassification();
-//            } else {
-//                lengthBeanlist.get(i).setStatus(0);
-//            }
-//        }
-//        lengthsViewAdapter.clear();
-//        lengthsViewAdapter.addMoreData(lengthBeanlist);
+    private void selectClassification(int position) {
+        for (int i = 0; i < moreClassificationList.size(); i++) {
+            if (position == moreClassificationList.get(i).getId() || position == i && position == 0) {
+//                moreClassificationBean = moreClassificationList.get(i);
+//                moreClassificationBean.setStatus(1);
+                ((MoreClassificationContract.Presenter) mPresenter).getMoreClassification();
+            } else {
+              //  moreClassificationList.get(i).setStatus(0);
+            }
+        }
+        moreClassificationViewAdapter.clear();
+      //  moreClassificationViewAdapter.addNewData(lengthBeanlist);
     }
-
 
     @Override
     public void errorMsg(String msg, int flag) {

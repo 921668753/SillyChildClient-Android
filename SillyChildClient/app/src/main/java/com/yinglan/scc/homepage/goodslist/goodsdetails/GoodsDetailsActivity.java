@@ -48,8 +48,6 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private TextView tv_addShoppingCart;
 
     private String goodName = "";
-
-
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_goodsdetails);
@@ -142,12 +140,12 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @Override
     public void getSuccess(String success, int flag) {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-
+        dismissLoadingDialog();
     }
 
     @Override

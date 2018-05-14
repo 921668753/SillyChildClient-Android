@@ -43,8 +43,8 @@
                 a_zhon:image_width="@dimen/dimen49"
                 a_zhon:star="0"
                 a_zhon:star_count="5"
-                a_zhon:star_img="@mipmap/mine_likesen_pressedxxx"
-                a_zhon:unstar_img="@mipmap/mine_likesen_normalxxx" />
+                a_zhon:star_img="@mipmap/mine_likesen_normalxxx"
+                a_zhon:unstar_img="@mipmap/mine_likesen_pressedxxx" />
 
             <TextView style="@style/DividerWidth" />
 

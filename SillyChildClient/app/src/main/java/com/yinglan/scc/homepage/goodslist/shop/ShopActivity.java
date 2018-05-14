@@ -34,7 +34,7 @@ public class ShopActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        contentFragment = new ShopHomepageFragment();
+        contentFragment = new ShopHomePageFragment();
         contentFragment1 = new AllGoodsFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
     }
@@ -91,5 +91,9 @@ public class ShopActivity extends BaseActivity {
         } else {
             tv_shopHomepage.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
         }
+    }
+
+    public int getChageIcon() {
+        return chageIcon;
     }
 }

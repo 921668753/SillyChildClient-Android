@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    android:background="@color/background"
+    android:background="@color/whiteColors"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -22,6 +22,9 @@
             android:scrollbars="none"
             tools:listitem="@layout/item_moreclassification" />
 
+        <TextView
+            style="@style/DividerHeight"
+            android:layout_marginLeft="@dimen/dimen2" />
 
         <com.common.cklibrary.utils.myview.NoScrollGridView
             android:id="@+id/gv_classification"
@@ -29,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3.5"
             android:background="@android:color/white"
-            android:horizontalSpacing="15dp"
+            android:horizontalSpacing="@dimen/dimen15"
             android:numColumns="2"
             android:overScrollMode="never"
             android:paddingLeft="@dimen/dimen35"

@@ -2,7 +2,6 @@ package com.yinglan.scc.main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,16 +28,15 @@ import com.common.cklibrary.utils.myview.ScrollInterceptScrollView;
 import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
-import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.main.MallHomePageGoodAdapter;
+import com.yinglan.scc.adapter.main.MallHomePageViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.HomePageBean;
 import com.yinglan.scc.entity.HomePageBean.ResultBean.AdBean;
 import com.yinglan.scc.entity.main.MallHomePageBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
-import com.yinglan.scc.homepage.goodslist.SpacesItemDecoration;
+import com.yinglan.scc.utils.SpacesItemDecoration;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -47,6 +45,7 @@ import com.yinglan.scc.utils.GlideImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -56,7 +55,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Admin on 2017/8/10.
  */
 @SuppressLint("NewApi")
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, MallHomePageGoodAdapter.GoodsListItemOnClickListener {
+public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private MainActivity aty;
 
@@ -167,7 +166,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     private List listbean;
     private SpacesItemDecoration spacesItemDecoration = null;
 
-    private MallHomePageGoodAdapter mallHomePageGoodAdapter = null;
+    private MallHomePageViewAdapter mallHomePageViewAdapter = null;
 
 
     @Override
@@ -180,22 +179,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initData() {
         super.initData();
-        mForegroundBanner.setFocusable(true);
-        mForegroundBanner.setFocusableInTouchMode(true);
-        mForegroundBanner.requestFocus();
-        mForegroundBanner.requestFocusFromTouch();
         mPresenter = new HomePagePresenter(this);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setAutoMeasureEnabled(true);
-        recyclerview.setLayoutManager(layoutManager);
-        recyclerview.setHasFixedSize(true);
-        recyclerview.setNestedScrollingEnabled(false);
         listbean = new ArrayList<>();
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
-        mallHomePageGoodAdapter = new MallHomePageGoodAdapter(aty, addList(), this);
+        mallHomePageViewAdapter = new MallHomePageViewAdapter(recyclerview);
         sv_home.setOnScrollChangeListener(this);
     }
 
@@ -242,9 +232,15 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         initBanner();
-        recyclerview.setAdapter(mallHomePageGoodAdapter);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setAutoMeasureEnabled(true);
+        recyclerview.setLayoutManager(layoutManager);
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setNestedScrollingEnabled(false);
         //设置item之间的间隔
         recyclerview.addItemDecoration(spacesItemDecoration);
+        recyclerview.setAdapter(mallHomePageViewAdapter);
+        mallHomePageViewAdapter.setOnRVItemClickListener(this);
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         //注册监听函数
@@ -378,8 +374,11 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     /**
      * 初始化轮播图
      */
-
     public void initBanner() {
+        mForegroundBanner.setFocusable(true);
+        mForegroundBanner.setFocusableInTouchMode(true);
+        mForegroundBanner.requestFocus();
+        mForegroundBanner.requestFocusFromTouch();
         mForegroundBanner.setAutoPlayAble(true);
         mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mForegroundBanner.setAllowUserScrollable(true);
@@ -482,13 +481,6 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
 
     @Override
-    public void goodsListOnItemClick(View view, int postion) {
-        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
-        aty.showActivity(aty, intent);
-    }
-
-    @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         if (scrollY <= 0) {
             ll_title1.setVisibility(View.VISIBLE);
@@ -503,6 +495,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 //            img_search.setImageDrawable(null);
 //            et_search.setHintTextColor(getResources().getColor(R.color.hintColors));
         }
+    }
+
+    @Override
+    public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
+        // intent.putExtra("good_id", listbean.get(postion));
+        aty.showActivity(aty, intent);
     }
 
 

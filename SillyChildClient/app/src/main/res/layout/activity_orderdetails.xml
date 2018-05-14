@@ -292,7 +292,7 @@
                     android:layout_marginBottom="@dimen/dimen10"
                     android:layout_marginLeft="@dimen/dimen6"
                     android:layout_marginTop="@dimen/dimen4"
-                    android:src="@mipmap/arrow" />
+                    android:src="@mipmap/order_right_arrow" />
 
             </LinearLayout>
 

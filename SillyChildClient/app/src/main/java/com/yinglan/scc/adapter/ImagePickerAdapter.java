@@ -60,11 +60,11 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         else return mData;
     }
 
-    public ImagePickerAdapter(Context mContext, List<ImageItem> data, int maxImgCount,int initpicres) {
+    public ImagePickerAdapter(Context mContext, List<ImageItem> data, int maxImgCount, int initpicres) {
         this.mContext = mContext;
         this.maxImgCount = maxImgCount;
         this.mInflater = LayoutInflater.from(mContext);
-        this.initpicres=initpicres;
+        this.initpicres = initpicres;
         setImages(data);
     }
 
@@ -92,7 +92,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         public SelectedPicViewHolder(View itemView) {
             super(itemView);
             iv_img = (ImageView) itemView.findViewById(R.id.iv_img);
-            iv_delete=(ImageView) itemView.findViewById(R.id.iv_delete);
+            iv_delete = (ImageView) itemView.findViewById(R.id.iv_delete);
         }
 
         public void bind(int position) {

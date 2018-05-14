@@ -15,15 +15,12 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_proprietary"
+        <ImageView
+            android:id="@+id/img_proprietary"
             android:layout_width="@dimen/dimen22"
             android:layout_height="@dimen/dimen11"
-            android:background="@drawable/shape_proprietary"
-            android:gravity="center"
-            android:text="@string/proprietary"
-            android:textColor="@color/whiteColors"
-            android:textSize="@dimen/textsize9" />
+            android:layout_marginLeft="@dimen/dimen10"
+            android:src="@mipmap/home_self_support" />
 
         <TextView
             android:id="@+id/tv_goodName"
@@ -31,11 +28,11 @@
             android:layout_marginLeft="@dimen/dimen10"
             android:gravity="center"
             android:paddingBottom="@dimen/dimen5"
-            android:paddingTop="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen3"
             android:singleLine="true"
             android:text="luna mini2洁面仪"
             android:textColor="@color/titletextcolors"
-            android:textSize="@dimen/textsize12" />
+            android:textSize="@dimen/textsize11" />
     </LinearLayout>
 
 
@@ -75,13 +72,6 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
 
 
 </LinearLayout>

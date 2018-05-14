@@ -133,7 +133,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
         initImagePicker();
         selImageList = new ArrayList<>();
         urllist = new ArrayList<>();
-        adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.mine_xiangjiaddxxx);
+        adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
         adapter.setOnItemClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -377,7 +377,6 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
         currentposition = i;
     }
 

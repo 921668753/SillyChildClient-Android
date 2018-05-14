@@ -98,12 +98,13 @@
                 android:paddingRight="@dimen/dimen10"
                 android:textColor="@color/titletextcolors"
                 android:textColorHint="@color/hintColors"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize12" />
 
             <ImageView
-                style="@style/WrapWrap"
+                android:layout_width="@dimen/dimen6"
+                android:layout_height="@dimen/dimen12"
                 android:layout_marginRight="@dimen/dimen15"
-                android:src="@mipmap/arrow" />
+                android:src="@mipmap/order_right_arrow" />
         </LinearLayout>
 
     </LinearLayout>

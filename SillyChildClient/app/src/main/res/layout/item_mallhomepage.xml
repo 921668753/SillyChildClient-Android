@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MatchWrap"
     android:id="@+id/rcv_shoppingInfo"
+    style="@style/MatchWrap"
     android:background="@drawable/shape_mallhomepage"
     android:orientation="vertical">
 
@@ -29,7 +29,6 @@
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize12" />
 
-
     <LinearLayout
         style="@style/MatchWrap"
         android:orientation="horizontal"
@@ -41,7 +40,7 @@
             android:maxWidth="@dimen/dimen90"
             android:paddingLeft="@dimen/dimen10"
             android:singleLine="true"
-            android:text="270.000000000000000000000000000000"
+            android:text="270.00"
             android:textColor="@color/fF0000Colors"
             android:textSize="@dimen/textsize12" />
 
@@ -66,28 +65,20 @@
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen9">
 
-        <TextView
-            android:id="@+id/tv_proprietary"
+        <ImageView
+            android:id="@+id/img_proprietary"
             android:layout_width="@dimen/dimen22"
             android:layout_height="@dimen/dimen11"
             android:layout_marginLeft="@dimen/dimen10"
-            android:background="@drawable/shape_proprietary"
-            android:gravity="center"
-            android:text="@string/proprietary"
-            android:textColor="@color/whiteColors"
-            android:textSize="@dimen/textsize9" />
+            android:src="@mipmap/home_self_support" />
 
 
-        <TextView
-            android:id="@+id/tv_timedSpecials"
+        <ImageView
+            android:id="@+id/img_timedSpecials"
             android:layout_width="@dimen/dimen42"
             android:layout_height="@dimen/dimen11"
             android:layout_marginLeft="@dimen/dimen10"
-            android:background="@drawable/shape_timedspecials"
-            android:gravity="center"
-            android:text="@string/timedSpecials"
-            android:textColor="@color/fF0000Colors"
-            android:textSize="@dimen/textsize9" />
+            android:src="@mipmap/home_special_offer" />
 
 
     </LinearLayout>

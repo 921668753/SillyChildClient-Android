@@ -99,14 +99,10 @@
             android:name="com.yinglan.scc.loginregister.register.RegistrationAgreementActivity"
             android:screenOrientation="portrait"></activity>
 
-
         <!--登录 綁定账号-->
         <activity
             android:name="com.yinglan.scc.loginregister.bindingaccount.BindingAccountActivity"
             android:screenOrientation="portrait"></activity>
-
-
-
 
         <!--主界面-->
         <activity
@@ -117,6 +113,21 @@
 
         <!--主界面的后台-->
         <service android:name="com.yinglan.scc.services.MainService"></service>
+
+        <!--首页   更多分类-->
+        <activity
+            android:name="com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!--首页   商品列表-->
+        <activity
+            android:name="com.yinglan.scc.homepage.goodslist.GoodsListActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!--首页   商品详情-->
+        <activity
+            android:name="com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity"
+            android:screenOrientation="portrait"></activity>
 
         <!--首页   轮播图-->
         <activity
@@ -132,6 +143,7 @@
         <activity
             android:name="com.yinglan.scc.homepage.addressselection.overseas.OverseasCityActivity"
             android:screenOrientation="portrait"></activity>
+
         <activity
             android:name="com.yinglan.scc.homepage.addressselection.newoverseas.NewOverseasCityActivity"
             android:screenOrientation="portrait"></activity>
@@ -295,9 +307,6 @@
         <activity
             android:name="com.yinglan.scc.homepage.goodslist.shop.ShopActivity"
             android:screenOrientation="portrait"></activity>
-
-
-
 
 
         <!--消息   系统消息详情-->
@@ -598,20 +607,20 @@
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="false"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
-            android:name="com.sina.weibo.sdk.share.WbShareTransActivity">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />

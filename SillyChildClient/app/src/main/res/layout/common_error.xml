@@ -5,12 +5,12 @@
     android:background="@color/background"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/img_err"
         style="@style/MatchWrap"
-        android:src="@mipmap/nocontentxxx" />
+        android:src="@mipmap/no_network" />
 
     <TextView
         android:id="@+id/tv_hintText"

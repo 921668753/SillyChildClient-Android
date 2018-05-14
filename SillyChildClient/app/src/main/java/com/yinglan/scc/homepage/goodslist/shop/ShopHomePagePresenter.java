@@ -19,10 +19,10 @@ import cn.jpush.android.api.JPushInterface;
  * Created by ruitu on 2016/9/24.
  */
 
-public class ShopHomepagePresenter implements ShopHomepageContract.Presenter {
-    private ShopHomepageContract.View mView;
+public class ShopHomePagePresenter implements ShopHomePageContract.Presenter {
+    private ShopHomePageContract.View mView;
 
-    public ShopHomepagePresenter(ShopHomepageContract.View view) {
+    public ShopHomePagePresenter(ShopHomePageContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
