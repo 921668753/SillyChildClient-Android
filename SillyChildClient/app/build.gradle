@@ -8,7 +8,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
-        applicationId "com.yinglan.scc"
+        applicationId "com.sillykid.app"
         versionCode 37
         versionName "1.3.0.171201"
         multiDexEnabled true
@@ -22,11 +22,11 @@ android {
         }
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY  : "ae18520eca229fc7e23c5f86", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY  : "f33675352d0f85cb754fa4b7", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-                UMENG_APPKEY  : "59afa186bbea8314540013d7",//友盟分享上注册的包名对应的appkey.
+                UMENG_APPKEY  : "5ab1eccfb27b0a27bc000216",//友盟分享上注册的包名对应的appkey.
                 BAIDU_APPKEY  : "lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM",//百度定位上注册的包名对应的appkey.
-                HUANXIN_APPKEY: "1102170901115301#shahaizi"//环信客服上注册的包名对应的appkey.
+                RONGYUN_APPKEY: "bmdehs6pbrfqs"//融云即时通讯上注册的包名对应的appkey.
         ]
         //   useLibrary 'org.apache.http.legacy'
     }
@@ -80,15 +80,15 @@ android {
             signingConfig signingConfigs.debug
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
             buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
-            buildConfigField "String", "WEIXIN_APPSECRET", "\"8422d3feec9a93d0dd9465331715c963\""
-            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
-            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
-            buildConfigField "String", "QQ_APPID", "\"1106322329\""
-            buildConfigField "String", "QQ_APPKEY", "\"r8ko1f5pTrpZcFdY\""
-            buildConfigField "String", "HUANXIN_APPKEY", "\"1102170901115301#shahaizi\""
-            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
-            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
-            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
+            buildConfigField "String", "WEIXIN_APPSECRET", "\"6378e75dd1f12ee6aec861ba39929494\""
+//            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
+//            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
+            buildConfigField "String", "QQ_APPID", "\"1106793234\""
+            buildConfigField "String", "QQ_APPKEY", "\"Zb9UOFfeMfSrg1uq\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
+//            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
+//            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
+//            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
             proguardFiles 'proguard-rules.pro'
         }
         release {
@@ -103,15 +103,15 @@ android {
             signingConfig signingConfigs.release
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
             buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
-            buildConfigField "String", "WEIXIN_APPSECRET", "\"8422d3feec9a93d0dd9465331715c963\""
-            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
-            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
-            buildConfigField "String", "QQ_APPID", "\"1106322329\""
-            buildConfigField "String", "QQ_APPKEY", "\"r8ko1f5pTrpZcFdY\""
-            buildConfigField "String", "HUANXIN_APPKEY", "\"1102170901115301#shahaizi\""
-            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
-            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
-            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
+            buildConfigField "String", "WEIXIN_APPSECRET", "\"6378e75dd1f12ee6aec861ba39929494\""
+//            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
+//            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
+            buildConfigField "String", "QQ_APPID", "\"1106793234\""
+            buildConfigField "String", "QQ_APPKEY", "\"Zb9UOFfeMfSrg1uq\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
+//            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
+//            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
+//            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // proguardFiles 'proguard-rules.pro'
         }
@@ -180,9 +180,9 @@ dependencies {
 
     //融云-----start-----
     compile project(':IMKit')
-    compile project(':IMLib')
-    compile project(':CallKit')
-    compile project(':CallLib')
+//    compile project(':IMLib')
+//    compile project(':CallKit')
+//    compile project(':CallLib')
     compile project(':RedPacket')
     //融云-----end-----
 
@@ -191,7 +191,7 @@ dependencies {
      */
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    // compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
     implementation files('libs/open_sdk_r5788_lite.jar')
     implementation files('libs/SocialSDK_QQ_Full.jar')

@@ -29,8 +29,8 @@ public final class R {
     public static final class color {
         public static int notification_action_color_filter = 0x7f060001;
         public static int notification_icon_bg_color = 0x7f060002;
-        public static int ripple_material_light = 0x7f06003e;
-        public static int secondary_text_default_material_light = 0x7f060040;
+        public static int ripple_material_light = 0x7f06003f;
+        public static int secondary_text_default_material_light = 0x7f060041;
     }
     public static final class dimen {
         public static int compat_button_inset_horizontal_material = 0x7f080001;

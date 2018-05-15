@@ -27,7 +27,7 @@
     <color name="rc_voice_color">#0195ff</color>
     <color name="rc_voice_color_left">#4385bf</color>
     <color name="rc_voice_color_right">#a2a2a2</color>
-
+    <color name="rc_item_conversation_background">#f0f0f0</color>
     <color name="rc_voice_cancel"> #CC933432</color>
 
     <color name="rc_input_gap_color">#dbdbdd</color>

@@ -340,6 +340,7 @@
         android:layout_marginTop="@dimen/dimen7"
         android:background="@drawable/shape_search"
         android:focusable="true"
+        android:visibility="gone"
         android:focusableInTouchMode="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">

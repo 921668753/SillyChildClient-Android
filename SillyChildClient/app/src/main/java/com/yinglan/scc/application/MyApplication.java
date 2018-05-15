@@ -4,20 +4,26 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.BuildConfig;
 
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.yinglan.scc.message.rongcloud.util.SealAppContext;
+import com.yinglan.scc.message.rongcloud.util.SealUserInfoManager;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 import static com.umeng.socialize.utils.Log.LOGTAG;
 
@@ -54,6 +60,7 @@ public class MyApplication extends Application {
         instance = this;
         mContext = getApplicationContext();
         UMShareAPI.get(this);//友盟分享
+        initRongCloud();
         testMemoryInfo();
     }
 
@@ -78,7 +85,7 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin(BuildConfig.WEIXIN_APPKEY, BuildConfig.WEIXIN_APPSECRET);
         // QQ和Qzone appid appkey
         PlatformConfig.setQQZone(BuildConfig.QQ_APPID, BuildConfig.QQ_APPKEY);
-        PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
+       // PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
         Config.DEBUG = true;
     }
 
@@ -109,50 +116,92 @@ public class MyApplication extends Application {
     }
 
     /**
-     *调用融云初始化方法
+     * 调用融云初始化方法
      */
     private void initRongCloud() {
         RongIM.init(this);
-//        SealAppContext.init(this);//初始化融云相关监听 事件集合类
-//        openSealDBIfHasCachedToken();//打开融云本地数据库
-//        String rcToken = UserUtil.getResTokenInfo(this);
-//        if (!TextUtils.isEmpty(rcToken)) {
-//            RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
+        SealAppContext.init(this);//初始化融云相关监听 事件集合类
+        openSealDBIfHasCachedToken();//打开融云本地数据库
+        String rcToken = UserUtil.getResTokenInfo(this);
+        if (!StringUtils.isEmpty(rcToken)) {
+            RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+                    /**
+                     //                     * 获取用户信息
+                     //                     */
+//                    HttpParams httpParams = new HttpParams();
+//                    RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+//                        @Override
+//                        public void onSuccess(String response) {
+//                            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.json2Obj(response, UserInfoBean.class);
+//                            if (RongIM.getInstance() != null && userInfoBean.getResult() != null && userInfoBean.getResult().getUser_id() > 0) {
+//                                UserInfo userInfo = new UserInfo(userInfoBean.getResult().getUser_id() + "", userInfoBean.getResult().getHx_user_name(), Uri.parse(userInfoBean.getResult().getHead_pic()));
+//                                RongIM.getInstance().setCurrentUserInfo(userInfo);
+//                            }
+//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+//                        }
 //
-//                /**
-//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-//                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-//                 */
-//                @Override
-//                public void onTokenIncorrect() {
-//                }
-//
-//                /**
-//                 * 连接融云成功
-//                 * @param userid 当前 token 对应的用户 id
-//                 */
-//                @Override
-//                public void onSuccess(String userid) {
-//                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+//                        @Override
+//                        public void onFailure(String msg) {
+//                            Log.d("RongYun", "onSuccess");
+//                            //  mView.errorMsg(msg, 0);
+//                        }
+//                    });
 //                    com.sillykid.app.mine.data.UserInfo.Data userData = UserUtil.getUserData(getApplicationContext());
 //                    if (RongIM.getInstance() != null && userData != null) {
 //                        RongIM.getInstance().setCurrentUserInfo(new io.rong.imlib.model.UserInfo(userData.i_id, userData.n_name, Uri.parse(Config.IMG_URL + userData.head_img)));
 //                    }
-//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                }
-//
-//                /**
-//                 * 连接融云失败
-//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-//                 */
-//                @Override
-//                public void onError(RongIMClient.ErrorCode errorCode) {
-//                    Log.i("XJ", "--errorCode" + errorCode);
-//                }
-//            });
- //       }
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.i("XJ", "--errorCode" + errorCode);
+                }
+            });
+        }
     }
 
+    private void openSealDBIfHasCachedToken() {
+        String rcToken = UserUtil.getResTokenInfo(this);
+        if (!TextUtils.isEmpty(rcToken)) {
+            String current = getCurProcessName(this);
+            String mainProcessName = getPackageName();
+            if (mainProcessName.equals(current)) {
+                SealUserInfoManager.getInstance().openDB();
+            }
+        }
+    }
+
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
 
     //查询缓存
     public void testMemoryInfo() {

@@ -76,12 +76,12 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
 
     private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
 
-    private static ArrayList<Activity> mActivities;
+  //  private static ArrayList<Activity> mActivities;
 
     public SealAppContext(Context mContext) {
         this.mContext = mContext;
         initListener();
-        mActivities = new ArrayList<>();
+      //  mActivities = new ArrayList<>();
         SealUserInfoManager.init(mContext);
     }
 
@@ -378,7 +378,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
      */
     @Override
     public UserInfo getUserInfo(String s) {
-        //UserInfoEngine.getInstance(mContext).startEngine(s);
+     //   UserInfoEngine.getInstance(mContext).startEngine(s);
         SealUserInfoManager.getInstance().getUserInfo(s);
         return null;
     }
@@ -478,33 +478,33 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
         }
     }
 
-    public void pushActivity(Activity activity) {
-        mActivities.add(activity);
-    }
+//    public void pushActivity(Activity activity) {
+//        mActivities.add(activity);
+//    }
+//
+//    public void popActivity(Activity activity) {
+//        if (mActivities.contains(activity)) {
+//            activity.finish();
+//            mActivities.remove(activity);
+//        }
+//    }
 
-    public void popActivity(Activity activity) {
-        if (mActivities.contains(activity)) {
-            activity.finish();
-            mActivities.remove(activity);
-        }
-    }
-
-    public void popAllActivity() {
-        try {
-            //暂时去掉xiao
-//            if (MainActivity.mViewPager != null) {
-//                MainActivity.mViewPager.setCurrentItem(0);
+//    public void popAllActivity() {
+//        try {
+//            //暂时去掉xiao
+////            if (MainActivity.mViewPager != null) {
+////                MainActivity.mViewPager.setCurrentItem(0);
+////            }
+//            for (Activity activity : mActivities) {
+//                if (activity != null) {
+//                    activity.finish();
+//                }
 //            }
-            for (Activity activity : mActivities) {
-                if (activity != null) {
-                    activity.finish();
-                }
-            }
-            mActivities.clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//            mActivities.clear();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public RongIMClient.ConnectCallback getConnectCallback() {
         RongIMClient.ConnectCallback connectCallback = new RongIMClient.ConnectCallback() {

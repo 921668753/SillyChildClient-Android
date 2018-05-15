@@ -47,7 +47,7 @@ public class UserUtil {
      * @return
      */
     public static String getResTokenInfo(Context context) {
-        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", "");
+        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", "4vHinW9AxeRovSolqdOniUgLxpt+nBW4IQ1aXmgroHahTJijh74RRDI5XGOgI0+rEffwEJaDPb/BoSPdb6sJrzdoyYFP+tgf");
         if (rongYunToken != null) {
             return rongYunToken;
         } else {

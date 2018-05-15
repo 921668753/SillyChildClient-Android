@@ -393,6 +393,7 @@
     <color name="rc_extension_normal">#f4f4f6</color>
     <color name="rc_input_bg">#F4F4F4</color>
     <color name="rc_input_gap_color">#dbdbdd</color>
+    <color name="rc_item_conversation_background">#f0f0f0</color>
     <color name="rc_location_text">#7F000000</color>
     <color name="rc_main_theme">#0195ff</color>
     <color name="rc_mentioned_color">#cc3333</color>
@@ -447,6 +448,7 @@
     <dimen name="rc_conversation_item_data_size">14sp</dimen>
     <dimen name="rc_conversation_item_name_size">16sp</dimen>
     <dimen name="rc_conversation_item_time_size">13sp</dimen>
+    <dimen name="rc_dimen_size_10">10dp</dimen>
     <dimen name="rc_dimen_size_18">18dp</dimen>
     <dimen name="rc_dimen_size_24">24dp</dimen>
     <dimen name="rc_dimen_size_3">3dp</dimen>

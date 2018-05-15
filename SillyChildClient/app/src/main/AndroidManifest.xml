@@ -544,21 +544,21 @@
         <!--融云start-->
         <!--融云start-->
         <!--融云start-->
-        <activity
-            android:name=".common.view.activity.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateUnspecified|adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
+        <!--<activity-->
+            <!--android:name=".common.view.activity.MainActivity"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateUnspecified|adjustPan">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data
-                    android:host="com.sillykid.app"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+                <!--<data-->
+                    <!--android:host="com.sillykid.app"-->
+                    <!--android:pathPrefix="/push_message"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <!--会话界面-->
         <activity
             android:name=".message.rongcloud.ConversationActivity"
@@ -571,7 +571,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.sillykid.app"
+                    android:host="@string/applicationId"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
@@ -589,7 +589,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.sillykid.app"
+                    android:host="@string/applicationId"
                     android:pathPrefix="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
@@ -652,7 +652,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1106322329" />
+                <data android:scheme="tencent1106793234" />
             </intent-filter>
         </activity>
         <activity
@@ -745,7 +745,7 @@
         <!--融云即时通讯-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="bmdehs6pbrfqs" />
+            android:value="${RONGYUN_APPKEY}" />
         <!--融云即时通讯-->
         <!--融云即时通讯-->
 

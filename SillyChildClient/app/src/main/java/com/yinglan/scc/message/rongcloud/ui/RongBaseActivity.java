@@ -17,17 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.common.cklibrary.common.I_KJActivity;
 import com.common.cklibrary.common.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scc.R;
-import com.yinglan.scc.main.ActivitiesContract;
 import com.yinglan.scc.message.rongcloud.SealAction;
 import com.yinglan.scc.message.rongcloud.network.async.AsyncTaskManager;
 import com.yinglan.scc.message.rongcloud.network.async.OnDataListener;
 import com.yinglan.scc.message.rongcloud.network.http.HttpException;
 
 
-public abstract class RongBaseActivity extends FragmentActivity implements OnDataListener {
+public abstract class RongBaseActivity extends FragmentActivity implements OnDataListener, I_KJActivity {
 
     protected Context mContext;
     public AsyncTaskManager mAsyncTaskManager;
@@ -68,7 +68,7 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
     @Override
     public void setContentView(View view) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         mContentView.addView(view, lp);
     }
 
@@ -170,9 +170,9 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
 //        return mBtnBackDrawable;
 //    }
 
-    public void setBackButtonDrawable(Drawable backButtonDrawable) {
-//        this.mBtnBackDrawable = backButtonDrawable;
-    }
+//    public void setBackButtonDrawable(Drawable backButtonDrawable) {
+//       this.mBtnBackDrawable = backButtonDrawable;
+//    }
 
     protected void onResume() {
         super.onResume();
@@ -199,10 +199,10 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
     /**
      * 发送请求（需要检查网络）
      *
-     * @param id 请求数据的用户ID或者groupID
+     * @param id          请求数据的用户ID或者groupID
      * @param requestCode 请求码
      */
-    public void request(String id , int requestCode) {
+    public void request(String id, int requestCode) {
         if (mAsyncTaskManager != null) {
             mAsyncTaskManager.request(id, requestCode, this);
         }
@@ -235,19 +235,20 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
     }
 
     @Override
-    public void onSuccess(int requestCode, Object result) {}
+    public void onSuccess(int requestCode, Object result) {
+    }
 
     @Override
     public void onFailure(int requestCode, int state, Object result) {
         switch (state) {
             // 网络不可用给出提示
             case AsyncTaskManager.HTTP_NULL_CODE:
-                ViewInject.toast( "当前网络不可用");
+                ViewInject.toast("当前网络不可用");
                 break;
 
             // 网络有问题给出提示
             case AsyncTaskManager.HTTP_ERROR_CODE:
-                ViewInject.toast( "网络问题请稍后重试");
+                ViewInject.toast("网络问题请稍后重试");
                 break;
 
             // 请求有问题给出提示
@@ -268,5 +269,30 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void setRootView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initDataFromThread() {
+
+    }
+
+    @Override
+    public void initWidget() {
+
+    }
+
+    @Override
+    public void widgetClick(View v) {
+
     }
 }
