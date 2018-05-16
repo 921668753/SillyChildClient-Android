@@ -22,17 +22,17 @@ public class MineAddressPresenter implements MineAddressContract.Presenter {
     @Override
     public void allAddress() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
     @Override

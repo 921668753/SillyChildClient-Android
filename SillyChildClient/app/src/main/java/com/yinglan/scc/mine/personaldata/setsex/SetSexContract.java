@@ -12,7 +12,7 @@ public interface SetSexContract {
         /**
          * 更改用户信息
          */
-        void setupInfo(String newnickname);
+        void setSex(int sex);
 
     }
 

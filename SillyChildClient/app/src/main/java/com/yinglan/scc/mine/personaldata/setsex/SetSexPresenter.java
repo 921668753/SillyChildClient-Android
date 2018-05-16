@@ -22,15 +22,10 @@ public class SetSexPresenter implements SetSexContract.Presenter {
     }
 
     @Override
-    public void setupInfo(String newnickname) {
-        if (TextUtils.isEmpty(newnickname)){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.nicknamehint),0);
-            return;
-        }
-
+    public void setSex(int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("nickname",newnickname);
-        RequestClient.putInfo(httpParams, new ResponseListener<String>() {
+        httpParams.put("sex", sex);
+        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

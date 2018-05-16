@@ -10,25 +10,25 @@ public class URLConstants {
     /**
      * 正式服务器地址URL
      */
-    public static String SERVERURL = "http://user.api.shahaizi.shop/";
-    public static String SERVERURLBUS = "http://business.api.shahaizi.shop/";
-    public static String SERVERURLADMIN = "http://admin.shahaizi.shop/";
+//    public static String SERVERURL = "http://user.api.shahaizi.shop/";
+//    public static String SERVERURLBUS = "http://business.api.shahaizi.shop/";
+//    public static String SERVERURLADMIN = "http://admin.shahaizi.shop/";
 
     /**
      * 测试服务器地址URL
      */
-//    public static String SERVERURL = "http://shz.api.user.ruitukeji.cn:8502/";
+    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
 //    public static String SERVERURLBUS = "http://shz.api.bussiness.ruitukeji.cn:8503/";
 //    public static String SERVERURLADMIN = "http://shz.admin.ruitukeji.cn:8504/";
 
     /**
      * 请求地址URL
      */
-    public static String APIURLFORPAY = SERVERURL + "index.php";
-    public static String APIURL = SERVERURL + "index.php?";
-    public static String APIURL1 = SERVERURLBUS;
-    public static String APIURL2 = SERVERURLADMIN;
-    public static String APIURL3 = SERVERURL;
+//    public static String APIURLFORPAY = SERVERURL + "index.php";
+    public static String APIURL = SERVERURL + "api/mobile/";
+//    public static String APIURL1 = SERVERURLBUS;
+//    public static String APIURL2 = SERVERURLADMIN;
+//    public static String APIURL3 = SERVERURL;
 
     /**
      * 应用配置参数
@@ -90,37 +90,37 @@ public class URLConstants {
     /**
      * 接机 聊天
      */
-    public static String RECEIVEORDER = APIURL2 + "index.php/admin/CarOrder/receive_order_info/air_id/";
-    public static String IMAGE_RECEIVEORDER_URL = "http://img.shahaizi.cn/system/package_order/jieji.png";
+//    public static String RECEIVEORDER = APIURL2 + "index.php/admin/CarOrder/receive_order_info/air_id/";
+//    public static String IMAGE_RECEIVEORDER_URL = "http://img.shahaizi.cn/system/package_order/jieji.png";
 
     /**
      * 送机 聊天
      */
-    public static String SENDORDERINFO = APIURL2 + "index.php/admin/CarOrder/send_order_info/air_id/";
-    public static String IMAGE_SENDORDERINFO_URL = "http://img.shahaizi.cn/system/package_order/songji.png";
+//    public static String SENDORDERINFO = APIURL2 + "index.php/admin/CarOrder/send_order_info/air_id/";
+//    public static String IMAGE_SENDORDERINFO_URL = "http://img.shahaizi.cn/system/package_order/songji.png";
 
     /**
      * 单次接送 聊天
      */
-    public static String ONCEORDER = APIURL2 + "index.php/admin/CarOrder/once_order_info/air_id/";
+    //  public static String ONCEORDER = APIURL2 + "index.php/admin/CarOrder/once_order_info/air_id/";
     public static String IMAGE_ONCEORDER_URL = "http://img.shahaizi.cn/system/package_order/dancijiesong.png";
 
     /**
      * 线路订单  聊天
      */
-    public static String LINEORDER = APIURL2 + "index.php/admin/CarOrder/line_order_info/air_id/";
+    // public static String LINEORDER = APIURL2 + "index.php/admin/CarOrder/line_order_info/air_id/";
     public static String IMAGE_LINEORDER_URL = "http://o8ugkv090.bkt.clouddn.com/hd_one.png";
 
     /**
      * 私人定制  聊天
      */
-    public static String PRIVATEORDER = APIURL2 + "index.php/admin/CarOrder/private_order_add/air_id/";
+    //  public static String PRIVATEORDER = APIURL2 + "index.php/admin/CarOrder/private_order_add/air_id/";
     public static String IMAGE_PRIVATEORDER_URL = "http://img.shahaizi.cn/system/package_order/siren.png";
 
     /**
      * 按天包车游 聊天
      */
-    public static String BYDAYORDER = APIURL2 + "index.php/admin/CarOrder/byday_order_info/air_id/";
+    // public static String BYDAYORDER = APIURL2 + "index.php/admin/CarOrder/byday_order_info/air_id/";
     public static String IMAGE_BYDAYORDER_URL = "http://img.shahaizi.cn/system/package_order/antian.png";
 
     /**
@@ -141,7 +141,7 @@ public class URLConstants {
     /**
      * 首页--当地达人点赞
      */
-    public static String LOCALTALENTPRAISE = APIURL3 + "api/LocalTalent/praise";
+    //  public static String LOCALTALENTPRAISE = APIURL3 + "api/LocalTalent/praise";
 
     /**
      * 首页--热门攻略
@@ -168,7 +168,7 @@ public class URLConstants {
      * 首页--攻略详情
      * http://shz.api.user.ruitukeji.cn:8502/web/guide/detail?id=
      */
-    public static String GUIDEDETAIL = APIURL3 + "web/guide/detail?id=";
+    //  public static String GUIDEDETAIL = APIURL3 + "web/guide/detail?id=";
 
     /**
      * 首页--攻略收藏
@@ -179,7 +179,7 @@ public class URLConstants {
     /**
      * 首页--得到热门攻略详情----点赞
      */
-    public static String STRATEGYPRAISE = APIURL3 + "api/comment/doGoodByGuide";
+    //  public static String STRATEGYPRAISE = APIURL3 + "api/comment/doGoodByGuide";
 
     /**
      * 首页--包车定制
@@ -199,7 +199,7 @@ public class URLConstants {
     /**
      * 首页--包车定制---包车列表  接送机列表
      */
-    public static String PACKCARPRODUCT = APIURL3 + "api/packCarProduct";
+    //   public static String PACKCARPRODUCT = APIURL3 + "api/packCarProduct";
 
     /**
      * 首页----包车定制---收藏包车产品
@@ -209,7 +209,7 @@ public class URLConstants {
     /**
      * 首页--包车定制---包车详情
      */
-    public static String PACKCARPRODUCTDETAIL = APIURL3 + "web/PackCarProduct/detail?id=";
+    //  public static String PACKCARPRODUCTDETAIL = APIURL3 + "web/PackCarProduct/detail?id=";
 
     /**
      * 首页--包车定制--- 改退|费用补偿
@@ -275,7 +275,7 @@ public class URLConstants {
     /**
      * 首页--精品路线---线路详情
      */
-    public static String ROUTEDETAILS = APIURL3 + "web/PackLine/detail?id=";
+    //   public static String ROUTEDETAILS = APIURL3 + "web/PackLine/detail?id=";
 
     /**
      * 首页--精品路线---收藏取消路线操作
@@ -312,14 +312,14 @@ public class URLConstants {
      * 首页--包车定制--全部司导--司导详情
      */
     public static String COMPANYGUIDEDETAILS = APIURL + "m=Api&c=DriverPack&a=getDriverDetail";
-    public static String COMPANYGUIDEDETAILS1 = APIURL3 + "web/driver/detail?id=";
-    public static String COMPANYGUIDEDETAILS2 = APIURL3 + "web/driver/";
+    // public static String COMPANYGUIDEDETAILS1 = APIURL3 + "web/driver/detail?id=";
+    //  public static String COMPANYGUIDEDETAILS2 = APIURL3 + "web/driver/";
 
 
     /**
      * 首页----全部动态
      */
-    public static String ALLDYNAMICS = APIURL3 + "Api/Dynamic";
+    //   public static String ALLDYNAMICS = APIURL3 + "Api/Dynamic";
 
     /**
      * 首页-----动态详情
@@ -334,7 +334,7 @@ public class URLConstants {
     /**
      * 首页-----动态详情-----点赞
      */
-    public static String PRAISEDYNAMICS = APIURL3 + "api/comment/newActionTags";
+    //  public static String PRAISEDYNAMICS = APIURL3 + "api/comment/newActionTags";
 
     /**
      * 首页-----动态详情-----收藏
@@ -344,17 +344,17 @@ public class URLConstants {
     /**
      * 首页-----动态详情-----最新动态评论(回复)
      */
-    public static String NEWACTIONCOMMENT = APIURL3 + "api/comment/newActionComment";
+    //  public static String NEWACTIONCOMMENT = APIURL3 + "api/comment/newActionComment";
 
     /**
      * 首页-----动态详情-----对评论进行点赞
      */
-    public static String DOGOODBYCOMMENT = APIURL3 + "api/comment/doGoodByComment";
+    //  public static String DOGOODBYCOMMENT = APIURL3 + "api/comment/doGoodByComment";
 
     /**
      * 首页-----动态详情-----得到动态评论
      */
-    public static String DYNAMICSCOMMENTARIES = APIURL3 + "api/comment/getAllComment";
+    //  public static String DYNAMICSCOMMENTARIES = APIURL3 + "api/comment/getAllComment";
 
     /**
      * 出行
@@ -384,7 +384,12 @@ public class URLConstants {
     /**
      * 登录
      */
-    public static String USERLOGIN = APIURL + "m=Api&c=User&a=login";
+    public static String USERLOGIN = APIURL + "member/login.do";
+
+    /**
+     * 获取会员登录状态
+     */
+    public static String ISLOGIN = APIURL + "member/islogin.do";
 
     /**
      * 第三方登录
@@ -392,10 +397,16 @@ public class URLConstants {
     public static String USERTHIRDLOGIN = APIURL + "m=Api&c=User&a=thirdLogin";
 
     /**
-     * 发送验证码
+     * 短信验证码【手机号注册】
      * 验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.
      */
-    public static String SENDCAPTCHA = APIURL + "m=Api&c=BaseMessage&a=sendInterCaptcha";
+    public static String SENDREGISTER = APIURL + "member/send-register-code.do";
+
+    /**
+     * 短信验证码【找回、修改密码】
+     * 验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.
+     */
+    public static String SENDFINFDCODE = APIURL + "member/send-find-code.do";
 
     /**
      * 发送邮箱验证码
@@ -419,13 +430,13 @@ public class URLConstants {
      * 绑定手机号
      * 验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定邮箱.
      */
-    public static String BINDPHONE = APIURL3 + "Api/User/thirdBindPhone";
+    //  public static String BINDPHONE = APIURL3 + "Api/User/thirdBindPhone";
 
 
     /**
      * 用户注册
      */
-    public static String USERREG = APIURL + "m=Api&c=User&a=reg";
+    public static String REGISTER = APIURL + "member/mobile-register.do";
 
     /**
      * 得到国家区号
@@ -433,9 +444,9 @@ public class URLConstants {
     public static String COUNTRYNUMBER = APIURL + "m=Api&c=Config&a=getCountryNumber";
 
     /**
-     * 重置密码
+     * 更改密码【手机】
      */
-    public static String USERRESTPWD = APIURL + "m=Api&c=User&a=forgetPassword";
+    public static String USERRESTPWD = APIURL + "member/mobile-change-pass.do";
 
     public static String FORTGRTBYMAIL = APIURL + "m=Api&c=User&a=forgetPasswordByMail";
 
@@ -462,17 +473,17 @@ public class URLConstants {
     /**
      * 消息-得到进行中订单关联的环信用户列表
      */
-    public static String HXUSERLIST = APIURL3 + "Api/Message/getHxUserList";
+    //   public static String HXUSERLIST = APIURL3 + "Api/Message/getHxUserList";
 
     /**
      * 获取用户信息
      */
-    public static String USERINFO = APIURL + "m=Api&c=User&a=userInfo";
+    public static String USERINFO = APIURL + "member/info.do";
 
     /**
-     * 更新用户信息
+     * 会员资料保存
      */
-    public static String UPDATEINFO = APIURL + "m=Api&c=User&a=updateUserInfo";
+    public static String SAVEINFO = APIURL + "member/save.do";
 
     /**
      * 更改傻孩子账号
@@ -502,12 +513,12 @@ public class URLConstants {
     /**
      * 提交订单评论
      */
-    public static String UPEVALUATION = APIURL3 + "api/comment/orderComment";
+    //   public static String UPEVALUATION = APIURL3 + "api/comment/orderComment";
 
     /**
      * 提交订单评论，只用于订单类型为线路的订单
      */
-    public static String UPEVALUATIONLINE = APIURL3 + "api/comment/lineDrvComment";
+    //  public static String UPEVALUATIONLINE = APIURL3 + "api/comment/lineDrvComment";
 
     /**
      * 删除未支付的订单
@@ -517,7 +528,7 @@ public class URLConstants {
     /**
      * 优惠券列表
      */
-    public static String COUPONLIST = APIURLFORPAY;
+    //   public static String COUPONLIST = APIURLFORPAY;
 
     /**
      * 显示司机报价列表
@@ -587,7 +598,7 @@ public class URLConstants {
     /**
      * 充值
      */
-    public static String RECHARGEBYALIPAY = APIURLFORPAY + "/api/user/recharge";
+    //   public static String RECHARGEBYALIPAY = APIURLFORPAY + "/api/user/recharge";
 
     /**
      * 提现
@@ -607,7 +618,7 @@ public class URLConstants {
     /**
      * 查看账户明细
      */
-    public static String SHOWPAYRECORD = APIURLFORPAY;
+    //  public static String SHOWPAYRECORD = APIURLFORPAY;
 
     /**
      * 发布我的动态
@@ -637,12 +648,12 @@ public class URLConstants {
     /**
      * 帮助中心html5
      */
-    public static String HELPCENTERURL = APIURL3 + "web/help";
+    //  public static String HELPCENTERURL = APIURL3 + "web/help";
 
     /**
      * 关于我们html5
      */
-    public static String ABOUTUSURL = APIURL3 + "web/about";
+    //  public static String ABOUTUSURL = APIURL3 + "web/about";
 
     /**
      * 我的 设置 意见反馈 获取反馈类型

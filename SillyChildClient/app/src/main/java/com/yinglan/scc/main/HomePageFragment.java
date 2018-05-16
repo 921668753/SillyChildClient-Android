@@ -248,29 +248,29 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingChangeHomePageFragment", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
             HomePageBean homePageBean = (HomePageBean) JsonUtil.getInstance().json2Obj(success, HomePageBean.class);
-            processLogic(homePageBean.getResult().getAd());
-            if (homePageBean.getResult().getAction() == null) {
+            processLogic(homePageBean.getData().getAd());
+            if (homePageBean.getData().getAction() == null) {
                 dismissLoadingDialog();
                 return;
             }
-            if (homePageBean.getResult().getAction().getLocal() == null || homePageBean.getResult().getAction().getLocal().size() == 0 || homePageBean.getResult().getAction().getLocal().isEmpty()) {
+            if (homePageBean.getData().getAction().getLocal() == null || homePageBean.getData().getAction().getLocal().size() == 0 || homePageBean.getData().getAction().getLocal().isEmpty()) {
                 ll_hotRegion.setVisibility(View.GONE);
                 hlv_hotRegion.setVisibility(View.GONE);
             } else {
                 ll_hotRegion.setVisibility(View.VISIBLE);
                 hlv_hotRegion.setVisibility(View.VISIBLE);
                 hotRegionViewAdapter.clear();
-                homePageBean.getResult().getAction().getLocal().get(homePageBean.getResult().getAction().getLocal().size() - 1).setStatusL("last");
-                hotRegionViewAdapter.addNewData(homePageBean.getResult().getAction().getLocal());
+                homePageBean.getData().getAction().getLocal().get(homePageBean.getData().getAction().getLocal().size() - 1).setStatusL("last");
+                hotRegionViewAdapter.addNewData(homePageBean.getData().getAction().getLocal());
             }
-            if (homePageBean.getResult().getAction().getHot() == null || homePageBean.getResult().getAction().getHot().size() == 0 || homePageBean.getResult().getAction().getHot().isEmpty()) {
+            if (homePageBean.getData().getAction().getHot() == null || homePageBean.getData().getAction().getHot().size() == 0 || homePageBean.getData().getAction().getHot().isEmpty()) {
                 ll_boutiqueLine1.setVisibility(View.GONE);
                 clv_boutiqueLine.setVisibility(View.GONE);
             } else {
                 ll_boutiqueLine1.setVisibility(View.VISIBLE);
                 clv_boutiqueLine.setVisibility(View.VISIBLE);
                 boutiqueLineViewAdapter.clear();
-                boutiqueLineViewAdapter.addNewData(homePageBean.getResult().getAction().getHot());
+                boutiqueLineViewAdapter.addNewData(homePageBean.getData().getAction().getHot());
             }
         } else if (flag == 1) {
             dismissLoadingDialog();

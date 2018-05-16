@@ -1,18 +1,15 @@
 package com.yinglan.scc.mine.personaldata.setsex;
 
+import android.content.Intent;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.main.MainActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -21,16 +18,16 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 public class SetSexActivity extends BaseActivity implements SetSexContract.View {
 
-    private SetSexContract.Presenter mPresenter;
-
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
 
-    @BindView(id = R.id.img_nan)
+    @BindView(id = R.id.img_nan, click = true)
     private ImageView img_nan;
 
-    @BindView(id = R.id.img_nv)
+    @BindView(id = R.id.img_nv, click = true)
     private ImageView img_nv;
+
+    private int sex = 0;
 
     @Override
     public void setRootView() {
@@ -47,6 +44,14 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
     public void initWidget() {
         super.initWidget();
         initTitle();
+        sex = getIntent().getIntExtra("sex", 0);
+        if (sex == 0 || sex == 1) {
+            img_nan.setImageResource(R.mipmap.set_gender_check_the_number);
+            img_nv.setImageDrawable(null);
+        } else {
+            img_nan.setImageDrawable(null);
+            img_nv.setImageResource(R.mipmap.set_gender_check_the_number);
+        }
     }
 
     /**
@@ -68,7 +73,7 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
-                //  mPresenter.setupInfo(et_nickname.getText().toString());
+                ((SetSexContract.Presenter) mPresenter).setSex(sex);
             }
         };
         titlebar.setDelegate(simpleDelegate);
@@ -80,16 +85,16 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_nan:
-
-
+                sex = 1;
+                img_nan.setImageResource(R.mipmap.set_gender_check_the_number);
+                img_nv.setImageDrawable(null);
                 break;
             case R.id.img_nv:
-
-
+                sex = 2;
+                img_nan.setImageDrawable(null);
+                img_nv.setImageResource(R.mipmap.set_gender_check_the_number);
                 break;
         }
-
-
     }
 
     @Override
@@ -100,7 +105,8 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        //  setResult(0, getIntent().putExtra("nickname", et_nickname.getText().toString()));
+        Intent intent = getIntent().putExtra("sex", sex);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -108,11 +114,7 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);

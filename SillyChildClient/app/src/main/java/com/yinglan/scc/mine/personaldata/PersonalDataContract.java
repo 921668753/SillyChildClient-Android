@@ -11,28 +11,24 @@ import java.io.File;
 
 public interface PersonalDataContract {
     interface Presenter extends BasePresenter {
-        /**
-         * 获取用户信息
-         */
-        void getInfo();
 
         /**
-         * 更改用户信息
+         * 更改用户生日
          */
-        void setupInfo(String paramname, String voule, int resultsource);
+        void setBirthday(int birthday);
 
         /**
          * 更改用户地址
          */
-        void setupInfo(String country, String countryvoule, String city, String cityvoule, int resultsource);
+        void setRegion(String province, String province_id, String city, String city_id, String region, String region_id);
 
         /**
          * 上传图片
          */
-        void upPictures(String paramname,int resultsource);
+        void upPictures(String paramname);
 
         /**
-         *更改傻孩子账号
+         * 更改傻孩子账号
          */
         void changeShzCode(String shz_code);
 

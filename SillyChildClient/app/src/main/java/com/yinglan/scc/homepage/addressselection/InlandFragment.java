@@ -124,7 +124,7 @@ public class InlandFragment extends BaseFragment implements InlandContract.View,
                                         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                     //           PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", cityName.getName());
+                                                //           PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", cityName.getName());
                                                 saveHistory(cityName);
                                                 Intent intent = new Intent();
                                                 // 获取内容
@@ -150,7 +150,7 @@ public class InlandFragment extends BaseFragment implements InlandContract.View,
                         ll_localize.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                          //      PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", textView.getText().toString());
+                                //      PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", textView.getText().toString());
                                 Intent intent = new Intent();
                                 // 获取内容
                                 intent.putExtra("selectCity", textView.getText().toString());
@@ -211,10 +211,10 @@ public class InlandFragment extends BaseFragment implements InlandContract.View,
             historyCityList.remove(0);
         }
         BaseResult<List<InlandHotCityBean.ResultBean>> baseResult = new BaseResult<>();
-        baseResult.setMsg("成功");
-        baseResult.setStatus(1);
+        baseResult.setMessage("成功");
+        baseResult.setResult(1);
         Collections.reverse(historyCityList);
-        baseResult.setResult(historyCityList);
+        baseResult.setData(historyCityList);
         PreferenceHelper.write(aty, StringConstants.FILENAME, "inlandHistory", JsonUtil.getInstance().obj2JsonString(baseResult));
     }
 
@@ -230,10 +230,10 @@ public class InlandFragment extends BaseFragment implements InlandContract.View,
         }
         mHeaderAdapter.setHeaderView(1, R.layout.inland_item_header, mHeaderDatas.get(0));
         mHeaderAdapter.setHeaderView(2, R.layout.inland_item_header, mHeaderDatas.get(1));
-       // Log.d("tag111", inlandHistory);
+        // Log.d("tag111", inlandHistory);
         InlandHotCityBean indexCityBean = (InlandHotCityBean) JsonUtil.json2Obj(inlandHistory, InlandHotCityBean.class);
 //        if (indexCityBean != null && indexCityBean.getResult() != null && indexCityBean.getResult().size() > 0) {
-     //   Log.d("tag111", "size=" + indexCityBean.getResult().size());
+        //   Log.d("tag111", "size=" + indexCityBean.getResult().size());
         historyCityList = indexCityBean.getResult();
 //        }
     }
@@ -248,13 +248,13 @@ public class InlandFragment extends BaseFragment implements InlandContract.View,
         if (flag == 0) {
             InlandBean inlandBean = (InlandBean) JsonUtil.json2Obj(success, InlandBean.class);
             //   inlandBean.getResult()
-            if (!(inlandBean.getResult() != null && inlandBean.getResult().size() > 0)) {
+            if (!(inlandBean.getData() != null && inlandBean.getData().size() > 0)) {
                 errorMsg(aty.getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             //模拟线上加载数据
             mBodyDatas.clear();
-            mBodyDatas.addAll(inlandBean.getResult());
+            mBodyDatas.addAll(inlandBean.getData());
             ((InlandContract.Presenter) mPresenter).getChildHotCity();
         } else if (flag == 1) {
             InlandHotCityBean inlandHotCityBean = (InlandHotCityBean) JsonUtil.json2Obj(success, InlandHotCityBean.class);

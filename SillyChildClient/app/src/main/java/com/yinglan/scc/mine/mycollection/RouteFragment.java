@@ -146,23 +146,23 @@ public class RouteFragment extends BaseFragment implements BGARefreshLayout.BGAR
             errorMsg(getString(R.string.serverReturnsDataNull1), 0);
             return;
         }
-        totalPageNumber = allRoutesBean.getResult().getTotalPages();
-        mMorePageNumber = StringUtils.toInt(allRoutesBean.getResult().getP());
-        if (allRoutesBean.getResult().getList() == null || allRoutesBean.getResult().getList().size() == 0) {
+        totalPageNumber = allRoutesBean.getData().getTotalPages();
+        mMorePageNumber = StringUtils.toInt(allRoutesBean.getData().getP());
+        if (allRoutesBean.getData().getList() == null || allRoutesBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(allRoutesBean.getResult().getList());
+            mAdapter.addNewData(allRoutesBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(allRoutesBean.getResult().getList());
+            mAdapter.addMoreData(allRoutesBean.getData().getList());
         }
         mRefreshLayout.endRefreshing();
         mAdapter.clear();
-        mAdapter.addNewData(allRoutesBean.getResult().getList());
+        mAdapter.addNewData(allRoutesBean.getData().getList());
         dismissLoadingDialog();
     }
 

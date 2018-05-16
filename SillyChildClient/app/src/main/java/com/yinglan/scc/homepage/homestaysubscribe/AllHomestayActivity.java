@@ -143,19 +143,19 @@ public class AllHomestayActivity extends BaseActivity implements AllHomestayCont
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         AllHomestayBean allHomestayBean = (AllHomestayBean) JsonUtil.getInstance().json2Obj(success, AllHomestayBean.class);
-        mMorePageNumber = allHomestayBean.getResult().getPage();
-        totalPageNumber = allHomestayBean.getResult().getPageTotal();
-        if (allHomestayBean.getResult().getList() == null || allHomestayBean.getResult().getList().size() == 0) {
+        mMorePageNumber = allHomestayBean.getData().getPage();
+        totalPageNumber = allHomestayBean.getData().getPageTotal();
+        if (allHomestayBean.getData().getList() == null || allHomestayBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(allHomestayBean.getResult().getList());
+            mAdapter.addNewData(allHomestayBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(allHomestayBean.getResult().getList());
+            mAdapter.addMoreData(allHomestayBean.getData().getList());
         }
         dismissLoadingDialog();
     }

@@ -200,7 +200,7 @@ public class AccountDetailsActivity extends BaseActivity implements AdapterView.
             ViewInject.toast(getString(R.string.otherError));
             return;
         }
-        if (adBean.getResult()==null||adBean.getResult().getList()==null||adBean.getResult().getList().size()==0){
+        if (adBean.getData()==null||adBean.getData().getList()==null||adBean.getData().getList().size()==0){
             if (isloadmore){
                 ViewInject.toast(getString(R.string.noMoreData));
             }else{
@@ -212,9 +212,9 @@ public class AccountDetailsActivity extends BaseActivity implements AdapterView.
             return;
         }
         ll_empty.setVisibility(View.GONE);
-        datalist=adBean.getResult().getList();
-        pnumber=adBean.getResult().getP();
-        totalpages=adBean.getResult().getTotalPages();
+        datalist=adBean.getData().getList();
+        pnumber=adBean.getData().getP();
+        totalpages=adBean.getData().getTotalPages();
         if (isloadmore){
             adadapter.addMoreData(datalist);
         }else{

@@ -1,7 +1,7 @@
 package com.yinglan.scc.mine.personaldata.setsignature;
 
+import android.content.Intent;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,13 +10,10 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -49,8 +46,9 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
         super.initData();
         mPresenter = new SetSignaturePresenter(this);
         String signature = getIntent().getStringExtra("signature");
-        if (!TextUtils.isEmpty(signature)) {
+        if (!StringUtils.isEmpty(signature)) {
             et_signature.setText(signature);
+            et_signature.setSelection(et_signature.getText().length());
         }
     }
 
@@ -82,7 +80,7 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
                 SoftKeyboardUtils.packUpKeyboard(aty);
-                mPresenter.setupInfo(et_signature.getText().toString());
+                mPresenter.setSignature(et_signature.getText().toString());
             }
         };
         titlebar.setDelegate(simpleDelegate);
@@ -97,7 +95,8 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        setResult(0, getIntent().putExtra("signature", et_signature.getText().toString()));
+        Intent intent = getIntent().putExtra("signature", et_signature.getText().toString());
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -105,11 +104,7 @@ public class SetSignatureActivity extends BaseActivity implements SetSignatureCo
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);

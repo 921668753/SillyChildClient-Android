@@ -40,17 +40,17 @@ public class CharterCustomPresenter implements CharterCustomContract.Presenter {
 
     @Override
     public void isLogin(int flag) {
-        RequestClient.isLogin(new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, flag);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.isLogin(new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, flag);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
     }
 
     @Override

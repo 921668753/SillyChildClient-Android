@@ -9,10 +9,11 @@ import com.common.cklibrary.common.BaseView;
 
 public interface SetSignatureContract {
     interface Presenter extends BasePresenter {
+
         /**
          * 获取用户信息
          */
-        void setupInfo(String personalized_signature);
+        void setSignature(String personalized_signature);
 
     }
 

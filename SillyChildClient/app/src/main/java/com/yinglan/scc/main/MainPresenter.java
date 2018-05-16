@@ -36,11 +36,11 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void onSuccess(String response) {
                 SystemMessageBean systemMessageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(response, SystemMessageBean.class);
-                if (systemMessageBean.getResult().getList() == null || systemMessageBean.getResult().getList().size() == 0) {
+                if (systemMessageBean.getData().getList() == null || systemMessageBean.getData().getList().size() == 0) {
                     mView.errorMsg(response, 0);
                     return;
                 }
-                if (systemMessageBean.getResult().getUnread() > 0) {
+                if (systemMessageBean.getData().getUnread() > 0) {
                     mView.getSuccess("", 0);
                 } else {
                     boolean isRefreshingHomePageFragment = PreferenceHelper.readBoolean(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
@@ -127,10 +127,10 @@ public class MainPresenter implements MainContract.Presenter {
 
     protected boolean loadConversationList(String response) {
         HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
-        if (hxUserListBean == null || hxUserListBean.getResult() == null || hxUserListBean.getResult().size() == 0) {
+        if (hxUserListBean == null || hxUserListBean.getData() == null || hxUserListBean.getData().size() == 0) {
             return false;
         }
-        List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getResult();
+        List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getData();
 //        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
 //        synchronized (conversations) {
 //            for (EMConversation conversation : conversations.values()) {

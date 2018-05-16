@@ -2,8 +2,6 @@ package com.yinglan.scc.mine.myrelease.strate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.dialog.PublicPromptDialog;
 import com.yinglan.scc.entity.DynamicStateBean;
 import com.yinglan.scc.entity.DynamicStateBean.ResultBean.ListBean;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myrelease.MyReleaseActivity;
 import com.yinglan.scc.trip.strategy.StrategyDetailsActivity;
@@ -94,29 +92,29 @@ public class StrateFragment extends BaseFragment implements StrateContract.View,
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.deleteFinish));
         }else if (flag==2){
-            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean!=null&&userInfoBean.getResult()!=null){
-                aty.initAmount(userInfoBean.getResult().getFans_num(),userInfoBean.getResult().getAttention_num(),userInfoBean.getResult().getGood_num(),userInfoBean.getResult().getCollection_num());
-            }
-            ((StratePresenter)mPresenter).getStrateList(pagenum,NumericConstants.LOADCOUNT);
-        }else {
-            pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-            dsBean = (DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
-            if (dsBean == null) {
-                refreshListBean(null);
-                ViewInject.toast(getString(R.string.otherError));
-                return;
-            }
-            if (dsBean.getResult() == null || dsBean.getResult().getList() == null || dsBean.getResult().getList().size() == 0) {
-                if (isloadmore) {
-                    ViewInject.toast(getString(R.string.noMoreData));
-                } else {
-                    refreshListBean(null);
-                }
-                return;
-            }
-            List<ListBean> datalist = dsBean.getResult().getList();
-            refreshListBean(datalist);
+//            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+//            if (userInfoBean!=null&&userInfoBean.getData()!=null){
+//                aty.initAmount(userInfoBean.getData().getFans_num(),userInfoBean.getData().getAttention_num(),userInfoBean.getData().getGood_num(),userInfoBean.getData().getCollection_num());
+//            }
+//            ((StratePresenter)mPresenter).getStrateList(pagenum,NumericConstants.LOADCOUNT);
+//        }else {
+//            pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+//            dsBean = (DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
+//            if (dsBean == null) {
+//                refreshListBean(null);
+//                ViewInject.toast(getString(R.string.otherError));
+//                return;
+//            }
+//            if (dsBean.getData() == null || dsBean.getData().getList() == null || dsBean.getData().getList().size() == 0) {
+//                if (isloadmore) {
+//                    ViewInject.toast(getString(R.string.noMoreData));
+//                } else {
+//                    refreshListBean(null);
+//                }
+//                return;
+//            }
+//            List<ListBean> datalist = dsBean.getData().getList();
+//            refreshListBean(datalist);
         }
     }
 

@@ -136,7 +136,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
             dismissLoadingDialog();
             return;
         }
-        if (charterOrderBean.getResult().getList() == null || charterOrderBean.getResult().getList().size() == 0) {
+        if (charterOrderBean.getData().getList() == null || charterOrderBean.getData().getList().size() == 0) {
             ll_commonError.setVisibility(View.VISIBLE);
             tv_hintText.setText(getString(R.string.youNo));
             dismissLoadingDialog();
@@ -144,7 +144,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         }
         ll_commonError.setVisibility(View.GONE);
         mAdapter.clear();
-        databean=charterOrderBean.getResult().getList();
+        databean=charterOrderBean.getData().getList();
         mAdapter.addNewData(databean);
 
         dismissLoadingDialog();

@@ -384,18 +384,18 @@ public class AirportPickupFragment extends BaseFragment implements AirportPickup
 //            intent.putExtra("thirty", tv_bags.getText().toString());
 //            intent.putExtra("fewAdults", tv_adultNum.getText().toString());
 //            intent.putExtra("severalChildren", tv_childrenNum.getText().toString());
-//            intent.putExtra("id", airportDropOffBean.getResult().getId());
+//            intent.putExtra("id", airportDropOffBean.getData().getId());
 //            intent.putExtra("departureTime", tv_departureTime.getText().toString().trim());
 //            intent.putExtra("remark", et_remark.getText().toString().trim());
 //            intent.putExtra("chatMessage", "0");
             Intent intent = new Intent(aty, CharterOrderDetailsActivity.class);
             // intent.putExtra("paymoney", tv_price.getText().toString());
-            intent.putExtra("airid", airportDropOffBean.getResult().getId());
+            intent.putExtra("airid", airportDropOffBean.getData().getId());
             aty.skipActivity(aty, intent);
         } else if (flag == 1) {
             carBrandBean = (CarBrandBean) JsonUtil.json2Obj(success, CarBrandBean.class);
-            if (carBrandBean.getResult().getList() != null && carBrandBean.getResult().getList().size() > 0) {
-                List<CarBrandBean.ResultBean.ListBean> list = carBrandBean.getResult().getList();
+            if (carBrandBean.getData().getList() != null && carBrandBean.getData().getList().size() > 0) {
+                List<CarBrandBean.ResultBean.ListBean> list = carBrandBean.getData().getList();
                 for (int i = 0; i < list.size(); i++) {
                     String seatNum = list.get(i).getSeatNum();
                     String name = list.get(i).getName();

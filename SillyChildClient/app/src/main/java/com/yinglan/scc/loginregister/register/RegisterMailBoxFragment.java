@@ -17,7 +17,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.LoginBean;
+import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 /**
@@ -175,19 +175,19 @@ public class RegisterMailBoxFragment extends BaseFragment implements RegisterCon
         } else if (flag == 1) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_phone.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getData().getUser_id());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getData().getToken());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getData().getMobile());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getData().getHead_pic());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getData().getNickname());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getData().getExpireTime());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getData().getHx_user_name());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getData().getHx_password());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
       //      PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            ((RegisterContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
+         //   ((RegisterContract.Presenter) mPresenter).loginHuanXin(bean.getData().getHx_user_name(), bean.getData().getHx_password());
 //            dismissLoadingDialog();
 //            KJActivityStack.create().finishActivity(LoginActivity.class);
 //            aty.finish();

@@ -177,7 +177,7 @@ public class AttentionsFragment extends BaseFragment implements BGAOnItemChildCl
                     ViewInject.toast(getString(R.string.otherError));
                     return;
                 }
-                if (fansAndAttentionBean.getResult()==null||fansAndAttentionBean.getResult().getList()==null||fansAndAttentionBean.getResult().getList().size()==0){
+                if (fansAndAttentionBean.getData()==null||fansAndAttentionBean.getData().getList()==null||fansAndAttentionBean.getData().getList().size()==0){
                     if (isloadmore){
                         dismissLoadingDialog();
                         ViewInject.toast(getString(R.string.noMoreData));
@@ -186,25 +186,25 @@ public class AttentionsFragment extends BaseFragment implements BGAOnItemChildCl
                     }
                     return;
                 }
-                if (pagenum==fansAndAttentionBean.getResult().getP()){
+                if (pagenum==fansAndAttentionBean.getData().getP()){
                     if (pagenum==1){
                         fansInfoAdapter.clear();
-                        fansInfoAdapter.addNewData(fansAndAttentionBean.getResult().getList());
+                        fansInfoAdapter.addNewData(fansAndAttentionBean.getData().getList());
                     }else if (pagenum>1){
                         for (int i=(pagenum-1)*NumericConstants.LOADCOUNT;i<fansInfoAdapter.getData().size();i++){
                             fansInfoAdapter.getData().remove(i);
                         }
-                        fansInfoAdapter.addMoreData(fansAndAttentionBean.getResult().getList());
+                        fansInfoAdapter.addMoreData(fansAndAttentionBean.getData().getList());
                     }
                     dismissLoadingDialog();
                 }else{
-                    pagenum=fansAndAttentionBean.getResult().getP();
-                    totalpages=fansAndAttentionBean.getResult().getTotalPages();
+                    pagenum=fansAndAttentionBean.getData().getP();
+                    totalpages=fansAndAttentionBean.getData().getTotalPages();
                     if (isloadmore){
-                        fansInfoAdapter.addMoreData(fansAndAttentionBean.getResult().getList());
+                        fansInfoAdapter.addMoreData(fansAndAttentionBean.getData().getList());
                     }else{
                         fansInfoAdapter.clear();
-                        fansInfoAdapter.addNewData(fansAndAttentionBean.getResult().getList());
+                        fansInfoAdapter.addNewData(fansAndAttentionBean.getData().getList());
                     }
                     dismissLoadingDialog();
                 }

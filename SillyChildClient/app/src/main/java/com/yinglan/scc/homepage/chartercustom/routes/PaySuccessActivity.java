@@ -14,7 +14,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.mine.myorder.orderdetails.CharterOrderDetailsActivity;
@@ -109,10 +109,10 @@ public class PaySuccessActivity extends BaseActivity implements PaySuccessContra
     @Override
     public void getSuccess(String success, int flag) {
         UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-        if (userInfoBean!=null&&userInfoBean.getResult()!=null){
+        if (userInfoBean!=null&&userInfoBean.getData()!=null){
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getResult().getUser_money());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money_fmt", userInfoBean.getResult().getUser_money_fmt());
+          //  PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getData().getUser_money());
+          //  PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money_fmt", userInfoBean.getData().getUser_money_fmt());
         }
         dismissLoadingDialog();
 

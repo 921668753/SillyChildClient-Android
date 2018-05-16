@@ -8,24 +8,16 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.JsonUtil;
-import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.LoginBean;
-import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.loginregister.SelectCountryActivity;
-import com.yinglan.scc.main.MainActivity;
-
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
 
 /**
  * 找回密码
  * Created by Admin on 2017/8/10.
  */
 
-public class RetrievePasswordActivity extends BaseActivity implements ForgotPasswordContract.View {
+public class RetrievePasswordActivity extends BaseActivity implements RetrievePasswordContract.View {
 
 
     /**
@@ -82,7 +74,7 @@ public class RetrievePasswordActivity extends BaseActivity implements ForgotPass
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new ForgotPasswordPresenter(this);
+        mPresenter = new RetrievePasswordPresenter(this);
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
     }
 
@@ -93,19 +85,18 @@ public class RetrievePasswordActivity extends BaseActivity implements ForgotPass
         switch (v.getId()) {
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
-                ((ForgotPasswordContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), opt);
+                ((RetrievePasswordContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), opt);
                 break;
-            case R.id.tv_registe:
+            case R.id.tv_determine:
                 tv_determine.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
                 if (opt.equals("resetpwd")) {
-                    ((ForgotPasswordContract.Presenter) mPresenter).postResetpwd(et_accountNumber.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
+                    ((RetrievePasswordContract.Presenter) mPresenter).postResetpwd(et_accountNumber.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
                 }
                 break;
             default:
                 break;
         }
-
 
     }
 
@@ -120,7 +111,7 @@ public class RetrievePasswordActivity extends BaseActivity implements ForgotPass
         public void onFinish() {// 计时完毕时触发
             tv_code.setText("重新验证");
             tv_code.setClickable(true);
-            tv_code.setTextColor(getResources().getColor(R.color.greenColors));
+            tv_code.setTextColor(getResources().getColor(R.color.whiteColors));
             tv_code.setBackgroundResource(R.drawable.shape_code);
         }
 
@@ -141,20 +132,9 @@ public class RetrievePasswordActivity extends BaseActivity implements ForgotPass
             ViewInject.toast(getString(R.string.testget));
             time.start();
         } else if (flag == 1) {
-            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            KJActivityStack.create().finishActivity(LoginActivity.class);
-            aty.finish();
-        } else if (flag == 2) {
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
+            UserUtil.clearUserInfo(this);
             ViewInject.toast(getString(R.string.resetpwd));
             aty.finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
-
         }
     }
 
@@ -167,7 +147,7 @@ public class RetrievePasswordActivity extends BaseActivity implements ForgotPass
 
 
     @Override
-    public void setPresenter(ForgotPasswordContract.Presenter presenter) {
+    public void setPresenter(RetrievePasswordContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

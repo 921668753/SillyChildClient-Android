@@ -118,8 +118,8 @@ public class CompensationChange1BackDialog extends Dialog implements Compensatio
     public void getSuccess(String success, int flag) {
         CompensationChangeBackBean compensationChangeBackBean = (CompensationChangeBackBean) JsonUtil.getInstance().json2Obj(success, CompensationChangeBackBean.class);
         //   tv_title.setText(compensationChangeBackBean.getResult().getTitle());
-        if (!StringUtils.isEmpty(compensationChangeBackBean.getResult().getContent())) {
-            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + compensationChangeBackBean.getResult().getContent()
+        if (!StringUtils.isEmpty(compensationChangeBackBean.getData().getContent())) {
+            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + compensationChangeBackBean.getData().getContent()
                     + "</body></html>";
             web_view.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
         }

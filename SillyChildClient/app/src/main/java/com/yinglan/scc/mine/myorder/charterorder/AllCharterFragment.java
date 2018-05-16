@@ -189,8 +189,8 @@ public class AllCharterFragment extends BaseFragment implements AdapterView.OnIt
             ((CharterOrderContract.Presenter) mPresenter).toDetails(aty, databean.get(finishPosition).getAir_id());
         }else if (flag==3){
             charterOrderAngleBean = (CharterOrderAngleBean) JsonUtil.getInstance().json2Obj(success, CharterOrderAngleBean.class);
-            if (charterOrderAngleBean!=null&&charterOrderAngleBean.getResult()!=null){
-                charterOrderFragment.initAngle(charterOrderAngleBean.getResult().getUN_PAY()+"",charterOrderAngleBean.getResult().getDOING()+"",charterOrderAngleBean.getResult().getUN_COMMENT()+"");
+            if (charterOrderAngleBean!=null&&charterOrderAngleBean.getData()!=null){
+                charterOrderFragment.initAngle(charterOrderAngleBean.getData().getUN_PAY()+"",charterOrderAngleBean.getData().getDOING()+"",charterOrderAngleBean.getData().getUN_COMMENT()+"");
             }
             ((CharterOrderContract.Presenter) mPresenter).getChartOrder(StringNewConstants.All, mMorePageNumber);
         }else if (flag==4){//删除订单成功
@@ -205,7 +205,7 @@ public class AllCharterFragment extends BaseFragment implements AdapterView.OnIt
                 dismissLoadingDialog();
                 return;
             }
-            if (charterOrderBean.getResult().getList() == null || charterOrderBean.getResult().getList().size() == 0) {
+            if (charterOrderBean.getData().getList() == null || charterOrderBean.getData().getList().size() == 0) {
                 ll_commonError.setVisibility(View.VISIBLE);
                 tv_hintText.setText(getString(R.string.youNo));
                 dismissLoadingDialog();
@@ -214,8 +214,8 @@ public class AllCharterFragment extends BaseFragment implements AdapterView.OnIt
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-            databean = charterOrderBean.getResult().getList();
-            totalPageNumber = charterOrderBean.getResult().getTotalPages();
+            databean = charterOrderBean.getData().getList();
+            totalPageNumber = charterOrderBean.getData().getTotalPages();
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();

@@ -107,17 +107,17 @@ public class SingleTransportPresenter implements SingleTransportContract.Present
     @Override
     public void getCarBrand() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getCarList(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.getCarList(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
     }
 
     @Override
@@ -154,16 +154,16 @@ public class SingleTransportPresenter implements SingleTransportContract.Present
 
     @Override
     public void isLogin() {
-        RequestClient.isLogin(new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.isLogin(new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 2);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
     }
 }

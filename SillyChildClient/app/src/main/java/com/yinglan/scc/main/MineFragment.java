@@ -26,10 +26,14 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.dialog.VIPPermissionsDialog;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.mine.deliveryaddress.DeliveryAddressActivity;
+import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
+import com.yinglan.scc.mine.myshoppingcart.MyShoppingCartActivity;
 import com.yinglan.scc.mine.mywallet.MyWalletActivity;
 import com.yinglan.scc.mine.personaldata.PersonalDataActivity;
 import com.yinglan.scc.mine.setup.SetUpActivity;
@@ -54,7 +58,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     @BindView(id = R.id.mRefreshLayout, click = true)
     private BGARefreshLayout mRefreshLayout;
 
-
     @BindView(id = R.id.sv_mine)
     private ScrollView sv_mine;
 
@@ -63,6 +66,9 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
 
     @BindView(id = R.id.tv_title)
     private TextView tv_title;
+
+    @BindView(id = R.id.ll_notLogin, click = true)
+    private LinearLayout ll_notLogin;
 
     @BindView(id = R.id.tv_editData1, click = true)
     private TextView tv_editData1;
@@ -110,11 +116,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     @BindView(id = R.id.tv_vipEmergencyCall, click = true)
     private TextView tv_vipEmergencyCall;
 
-    private UserInfoBean userInfoBean;
-    private boolean isRefreshMineFragment;
-    private boolean isReLogin;
-    private String headpic;
-
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
@@ -141,148 +142,60 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_editData:
-                Intent intent = new Intent(aty, PersonalDataActivity.class);
-                // 获取内容
-//                intent.putExtra("selectCity", cityName.getName());
-//                intent.putExtra("selectCityId", cityName.getId());
-//                intent.putExtra("selectCountry", getString(R.string.china));
-//                intent.putExtra("selectCountryId", cityName.getCountry_id());
-                // 设置结果 结果码，一个数据
-                startActivityForResult(intent, REQUEST_CODE);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
                 break;
             case R.id.tv_editData1:
-                Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
-                // 获取内容
-//                intent.putExtra("selectCity", cityName.getName());
-//                intent.putExtra("selectCityId", cityName.getId());
-//                intent.putExtra("selectCountry", getString(R.string.china));
-//                intent.putExtra("selectCountryId", cityName.getCountry_id());
-                // 设置结果 结果码，一个数据
-                startActivityForResult(personalDataIntent, REQUEST_CODE);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
+                break;
+            case R.id.iv_minetouxiang:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
+                break;
+            case R.id.ll_notLogin:
+                aty.showActivity(aty, LoginActivity.class);
                 break;
             case R.id.ll_mineshopping:
-                ViewInject.toast(getActivity().getString(R.string.noDevelopment));
-                //   aty.showActivity(aty, MyShoppingCartActivity.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             case R.id.ll_minewallet:
-                aty.showActivity(aty, MyWalletActivity.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
             case R.id.ll_mineorder:
-                aty.showActivity(aty, MyOrderActivity.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);
                 break;
             case R.id.ll_minecollection:
-                aty.showActivity(aty, MyCollectionActivity1.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 5);
                 break;
             case R.id.ll_mineshare:
-                aty.showActivity(aty, SharingCeremonyActivity.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 6);
                 break;
             case R.id.ll_mineaddress:
-                ViewInject.toast(getActivity().getString(R.string.noDevelopment));
-                //   aty.showActivity(aty, DeliveryAddressActivity.class);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 7);
                 break;
             case R.id.ll_minesetup:
                 aty.showActivity(aty, SetUpActivity.class);
                 break;
             case R.id.tv_vipEmergencyCall:
-                if (userInfoBean == null) {
-                    ViewInject.toast(getString(R.string.reloginPrompting));
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-                    aty.showActivity(aty, LoginActivity.class);
-                } else {
-                    if (userInfoBean.getResult().getLevel() > 3) {
-                        aty.showActivity(aty, VipEmergencyCallActivity.class);
-                    } else {
-                        VIPPermissionsDialog vipPermissionsDialog = new VIPPermissionsDialog(aty) {
-                            @Override
-                            public void doAction() {
-
-                            }
-                        };
-                        vipPermissionsDialog.show();
-                    }
-                }
+//                if (userInfoBean == null) {
+//                    ViewInject.toast(getString(R.string.reloginPrompting));
+//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
+//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
+//                    aty.showActivity(aty, LoginActivity.class);
+//                } else {
+////                    if (userInfoBean.getData().getLevel() > 3) {
+////                        aty.showActivity(aty, VipEmergencyCallActivity.class);
+////                    } else {
+////                        VIPPermissionsDialog vipPermissionsDialog = new VIPPermissionsDialog(aty) {
+////                            @Override
+////                            public void doAction() {
+////
+////                            }
+////                        };
+////                        vipPermissionsDialog.show();
+////                    }
+//                }
                 break;
-            case R.id.iv_minetouxiang:
-                if (userInfoBean != null && userInfoBean.getResult() != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("userinfo", userInfoBean);
-                    aty.showActivity(aty, PersonalDataActivity.class, bundle);
-                } else {
-                    ViewInject.toast(aty.getResources().getString(R.string.login1));
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-                    aty.showActivity(aty, LoginActivity.class);
-                }
-                break;
-            case R.id.tv_nickname:
-                if (!TextUtils.isEmpty(tv_nickname.getText().toString()) && tv_nickname.getText().toString().equals(getString(R.string.loginOrRegister))) {
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-                    aty.showActivity(aty, LoginActivity.class);
-                }
-                break;
-        }
-    }
 
-    /**
-     * 用户信息本地化
-     */
-    private void saveUserInfo() {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "apply_code", userInfoBean.getResult().getApply_code());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", userInfoBean.getResult().getUser_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "email", userInfoBean.getResult().getEmail());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getResult().getBirthday() + "");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getResult().getUser_money());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money_fmt", userInfoBean.getResult().getUser_money_fmt());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", userInfoBean.getResult().getCountroy_code());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getResult().getMobile());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", userInfoBean.getResult().getHead_pic());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", userInfoBean.getResult().getNickname());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "level", userInfoBean.getResult().getLevel());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "shz_code", userInfoBean.getResult().getShz_code());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "personalized_signature", userInfoBean.getResult().getPersonalized_signature());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "fans_num", userInfoBean.getResult().getFans_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "attention_num", userInfoBean.getResult().getAttention_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "good_num", userInfoBean.getResult().getGood_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "collection_num", userInfoBean.getResult().getCollection_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "country", userInfoBean.getResult().getCountry());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "city", userInfoBean.getResult().getCity());
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (aty.getChageIcon() == 4) {
-            isReLogin = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isReLogin", false);
-            if (isReLogin) {
-                initDefaultInfo();
-                return;
-            }
-            isRefreshMineFragment = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            if (isRefreshMineFragment) {
-                mRefreshLayout.beginRefreshing();
-                return;
-            }
-//        boolean isRefreshMineFragment1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshMineFragment1", false);
-//        if (isRefreshMineFragment1) {
-//            String loginBean = PreferenceHelper.readString(aty, StringConstants.FILENAME, "loginBean");
-//            getSuccess(loginBean, 0);
-//            return;
-//        }
-            boolean isRefreshMineFragmentUserMoney = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshMineFragmentUserMoney", false);
-            if (isRefreshMineFragmentUserMoney) {
-                String user_money_fmt = PreferenceHelper.readString(aty, StringConstants.FILENAME, "user_money_fmt");
-                String user_money = PreferenceHelper.readString(aty, StringConstants.FILENAME, "user_money");
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragmentUserMoney", false);
-            }
-
-//        else{
-//            isRePersondata=PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRePersondata", false);
-//            if (isRePersondata){
-//                initDefaultInfo();
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRePersondata", false);
-//            }
-//        }
         }
     }
 
@@ -293,26 +206,63 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
 
     @Override
     public void getSuccess(String success, int flag) {
-        mRefreshLayout.endRefreshing();
-        Log.e("用户信息", "结果：" + success);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", false);
-        userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-        if (userInfoBean != null && userInfoBean.getResult() != null) {
-            saveUserInfo();
-            tv_nickname.setText(userInfoBean.getResult().getNickname());
-            if (TextUtils.isEmpty(userInfoBean.getResult().getHead_pic())) {
-                iv_minetouxiang.setImageResource(R.mipmap.avatar);
-                headpic = null;
-            } else if (!userInfoBean.getResult().getHead_pic().equals(headpic)) {
-                headpic = userInfoBean.getResult().getHead_pic();
-                GlideImageLoader.glideLoader(aty, headpic, iv_minetouxiang, 0, R.mipmap.avatar);
+        if (flag == 0) {
+            Log.e("用户信息", "结果：" + success);
+            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+            if (userInfoBean != null && userInfoBean.getData() != null) {
+                ll_notLogin.setVisibility(View.GONE);
+                tv_editData.setVisibility(View.VISIBLE);
+                tv_editData1.setVisibility(View.VISIBLE);
+                iv_minetouxiang.setVisibility(View.VISIBLE);
+                tv_nickname.setVisibility(View.VISIBLE);
+                tv_serialNumber.setVisibility(View.VISIBLE);
+                saveUserInfo(userInfoBean);
+                tv_nickname.setText(userInfoBean.getData().getNick_name());
+                if (StringUtils.isEmpty(userInfoBean.getData().getFace())) {
+                    iv_minetouxiang.setImageResource(R.mipmap.avatar);
+                } else {
+                    GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), iv_minetouxiang, 0, R.mipmap.avatar);
+                }
+                tv_serialNumber.setText(userInfoBean.getData().getUsername());
             }
-        } else {
-            ViewInject.toast(getString(R.string.noHaveUserInfo));
-            initDefaultInfo();
+        } else if (flag == 1) {
+            Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
+            // 获取内容
+            // 设置结果 结果码，一个数据
+            startActivityForResult(personalDataIntent, REQUEST_CODE);
+        } else if (flag == 2) {
+            aty.showActivity(aty, MyShoppingCartActivity.class);
+        } else if (flag == 3) {
+            aty.showActivity(aty, MyWalletActivity.class);
+        } else if (flag == 4) {
+            aty.showActivity(aty, MyOrderActivity.class);
+        } else if (flag == 5) {
+            aty.showActivity(aty, MyCollectionActivity.class);
+        } else if (flag == 6) {
+            aty.showActivity(aty, SharingCeremonyActivity.class);
+        } else if (flag == 7) {
+            aty.showActivity(aty, DeliveryAddressActivity.class);
         }
         dismissLoadingDialog();
+    }
+
+    /**
+     * 用户信息本地化
+     */
+    private void saveUserInfo(UserInfoBean userInfoBean) {
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "username", userInfoBean.getData().getUsername());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "nick_name", userInfoBean.getData().getNick_name());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getData().getBirthday());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "face", userInfoBean.getData().getFace());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getData().getSex());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "province", userInfoBean.getData().getProvince());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "province_id", userInfoBean.getData().getProvince_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "city", userInfoBean.getData().getCity());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "city_id", userInfoBean.getData().getCity_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "region", userInfoBean.getData().getRegion());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", userInfoBean.getData().getRegion_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "address", userInfoBean.getData().getAddress());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getData().getMobile());
     }
 
     @Override
@@ -322,30 +272,31 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             initDefaultInfo();
             return;
         }
-        ViewInject.toast(msg);
+        if (flag == 0) {
+            ViewInject.toast(msg);
+        } else {
+            aty.showActivity(aty, LoginActivity.class);
+        }
     }
 
     /**
      * 将显示的个人信息设置到默认状态
      */
     private void initDefaultInfo() {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
-//            PreferenceHelper.write(context, StringConstants.FILENAME, "refreshToken", "");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-        tv_nickname.setText(getString(R.string.loginOrRegister));
+        UserUtil.clearUserInfo(aty);
+        tv_editData.setVisibility(View.GONE);
+        tv_editData1.setVisibility(View.GONE);
+        iv_minetouxiang.setVisibility(View.GONE);
+        tv_nickname.setVisibility(View.GONE);
         tv_serialNumber.setVisibility(View.GONE);
-        iv_minetouxiang.setImageResource(R.mipmap.avatar);
-        headpic = null;
-        userInfoBean = null;
+        ll_notLogin.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MinePresenter) mPresenter).getInfo();
+        ((MinePresenter) mPresenter).getInfo(aty);
     }
 
     @Override
@@ -388,19 +339,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
-            String selectCity = data.getStringExtra("selectCity");
-            int selectCityId = data.getIntExtra("selectCityId", 0);
-            String selectCountry = data.getStringExtra("selectCountry");
-            int selectCountryId = data.getIntExtra("selectCountryId", 0);
-//            Intent intent = new Intent();
-//            // 获取内容
-//            intent.putExtra("selectCity", selectCity);
-//            intent.putExtra("selectCityId", selectCityId);
-//            intent.putExtra("selectCountry", selectCountry);
-//            intent.putExtra("selectCountryId", selectCountryId);
-//            // 设置结果 结果码，一个数据
-//            setResult(RESULT_OK, intent);
-            // 结束该activity 结束之后，前面的activity才可以处理结果
+            ((MinePresenter) mPresenter).getInfo(aty);
         }
     }
 
@@ -411,13 +350,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    sv_mine.scrollTo(0, 1);
-//                    mRefreshLayout.beginRefreshing();
-//                }
-//            }, 600);
+            ((MinePresenter) mPresenter).getInfo(aty);
         } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
             String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
             if (!StringUtils.isEmpty(avatar)) {

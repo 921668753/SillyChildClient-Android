@@ -383,13 +383,13 @@ public class PostEvaluationActivity extends BaseActivity implements ImagePickerA
         }else{
             GlideCatchUtil.getInstance().cleanImageDisk();
             uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean!=null&&uploadimagebean.getResult()!=null&&uploadimagebean.getResult().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())) {
+            if (uploadimagebean!=null&&uploadimagebean.getData()!=null&&uploadimagebean.getData().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
                 if(isguide){
-                    urllistguide.add(uploadimagebean.getResult().getFile().getUrl());
+                    urllistguide.add(uploadimagebean.getData().getFile().getUrl());
                     selImageListguide.addAll(images);
                     adapterguide.setImages(selImageListguide);
                 }else{
-                    urllist.add(uploadimagebean.getResult().getFile().getUrl());
+                    urllist.add(uploadimagebean.getData().getFile().getUrl());
                     selImageList.addAll(images);
                     adapter.setImages(selImageList);
                 }
@@ -400,8 +400,8 @@ public class PostEvaluationActivity extends BaseActivity implements ImagePickerA
             }
 
 //
-//            if (uploadimagebean!=null&&uploadimagebean.getResult()!=null&&uploadimagebean.getResult().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())){
-//                urls+="|"+uploadimagebean.getResult().getFile().getUrl();
+//            if (uploadimagebean!=null&&uploadimagebean.getData()!=null&&uploadimagebean.getData().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())){
+//                urls+="|"+uploadimagebean.getData().getFile().getUrl();
 //                urlsuccessnum++;
 //                images.remove(urlerrornum);
 //                selImageList.remove(urlerrornum);

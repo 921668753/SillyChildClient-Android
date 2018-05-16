@@ -161,25 +161,25 @@ public class CharterDetailsActivity extends BaseActivity implements CharterDetai
                 errorMsg(getString(R.string.serverReturnsDataNull1), 0);
                 return;
             }
-            List<String> imgs = charterDetailsBean.getResult().getImgs();
+            List<String> imgs = charterDetailsBean.getData().getImgs();
             img = imgs.get(0);
-            title = charterDetailsBean.getResult().getTitle();
-            isCollect = charterDetailsBean.getResult().getIsCollect();
+            title = charterDetailsBean.getData().getTitle();
+            isCollect = charterDetailsBean.getData().getIsCollect();
             if (isCollect == 0) {
                 img_collect.setImageResource(R.mipmap.btn_collect_normal);
             } else {
                 img_collect.setImageResource(R.mipmap.btn_collect_pressed);
             }
-            flyName = charterDetailsBean.getResult().getFlyName();
+            flyName = charterDetailsBean.getData().getFlyName();
 //            carTypeId = charterDetailsBean.getResult().getCarTypeId();
-            carTypeName = charterDetailsBean.getResult().getCar_level_name();
+            carTypeName = charterDetailsBean.getData().getCar_level_name();
             if (StringUtils.isEmpty(carTypeName)) {
                 carTypeName = "";
             }
-            carSeatTotal = charterDetailsBean.getResult().getCar_seat_num();
-            costStatement = charterDetailsBean.getResult().getCostStatement();
-            costCompensation = charterDetailsBean.getResult().getCostCompensation();
-            costCompensationLevel=charterDetailsBean.getResult().getCostCompensationLevel();
+            carSeatTotal = charterDetailsBean.getData().getCar_seat_num();
+            costStatement = charterDetailsBean.getData().getCostStatement();
+            costCompensation = charterDetailsBean.getData().getCostCompensation();
+            costCompensationLevel=charterDetailsBean.getData().getCostCompensationLevel();
         } else if (flag == 1) {
             ((CharterDetailsContract.Presenter) mPresenter).postCollectCharter(id + "", isCollect);
             return;
@@ -255,7 +255,7 @@ public class CharterDetailsActivity extends BaseActivity implements CharterDetai
 
     public void initView() {
         String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-        url = URLConstants.PACKCARPRODUCTDETAIL + id + "&token=" + accessToken;
+      //  url = URLConstants.PACKCARPRODUCTDETAIL + id + "&token=" + accessToken;
         webViewLayout.setTitleVisibility(false);
         webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
             @Override

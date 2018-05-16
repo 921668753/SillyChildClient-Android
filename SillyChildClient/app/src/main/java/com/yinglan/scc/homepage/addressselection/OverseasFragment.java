@@ -306,7 +306,7 @@ public class OverseasFragment extends BaseFragment implements AdapterView.OnItem
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(success, IndexCityBean.class);
-            indexCityList = indexCityBean.getResult();
+            indexCityList = indexCityBean.getData();
             if (!(indexCityList != null && indexCityList.size() > 0)) {
                 errorMsg(aty.getString(R.string.serverReturnsDataNull), 0);
                 return;
@@ -315,7 +315,7 @@ public class OverseasFragment extends BaseFragment implements AdapterView.OnItem
             setAddressClassification(0);
         } else if (flag == 1) {
             IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(success, IndexCityBean.class);
-            List<ResultBean> childCityList = indexCityBean.getResult();
+            List<ResultBean> childCityList = indexCityBean.getData();
             if (!(childCityList != null && childCityList.size() > 0)) {
 //                ll_hotDestination.setVisibility(View.GONE);
 //                gv_hotDestination.setVisibility(View.GONE);
@@ -330,7 +330,7 @@ public class OverseasFragment extends BaseFragment implements AdapterView.OnItem
             dismissLoadingDialog();
         } else if (flag == 2) {
             IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(success, IndexCityBean.class);
-            List<ResultBean> childCityList = indexCityBean.getResult();
+            List<ResultBean> childCityList = indexCityBean.getData();
             ((OverseasContract.Presenter) mPresenter).getChildHotCity(indexCityBean1.getId());
             if (!(childCityList != null && childCityList.size() > 0)) {
                 ll_allCountries.setVisibility(View.GONE);

@@ -90,14 +90,14 @@
             android:name="com.yinglan.scc.loginregister.SelectCountryActivity"
             android:screenOrientation="portrait"></activity>
 
-        <!--注册 忘记密码-->
+        <!--注册-->
         <activity
             android:name="com.yinglan.scc.loginregister.register.RegisterActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--登录 忘记密码-->
         <activity
-            android:name="com.yinglan.scc.loginregister.forgotpassword.ForgotPasswordActivity1"
+            android:name="com.yinglan.scc.loginregister.forgotpassword.RetrievePasswordActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--注册 注册协议-->
@@ -545,19 +545,19 @@
         <!--融云start-->
         <!--融云start-->
         <!--<activity-->
-            <!--android:name=".common.view.activity.MainActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateUnspecified|adjustPan">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--android:name=".common.view.activity.MainActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateUnspecified|adjustPan">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <!--<data-->
-                    <!--android:host="com.sillykid.app"-->
-                    <!--android:pathPrefix="/push_message"-->
-                    <!--android:scheme="rong" />-->
-            <!--</intent-filter>-->
+        <!--<data-->
+        <!--android:host="com.sillykid.app"-->
+        <!--android:pathPrefix="/push_message"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--会话界面-->
         <activity

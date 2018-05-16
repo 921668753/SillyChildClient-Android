@@ -184,8 +184,8 @@ public class ObligationCharterFragment extends BaseFragment implements AdapterVi
     public void getSuccess(String success, int flag) {
         if (flag==3){
             charterOrderAngleBean = (CharterOrderAngleBean) JsonUtil.getInstance().json2Obj(success, CharterOrderAngleBean.class);
-            if (charterOrderAngleBean!=null&&charterOrderAngleBean.getResult()!=null){
-                charterOrderFragment.initAngle(charterOrderAngleBean.getResult().getUN_PAY()+"",charterOrderAngleBean.getResult().getDOING()+"",charterOrderAngleBean.getResult().getUN_COMMENT()+"");
+            if (charterOrderAngleBean!=null&&charterOrderAngleBean.getData()!=null){
+                charterOrderFragment.initAngle(charterOrderAngleBean.getData().getUN_PAY()+"",charterOrderAngleBean.getData().getDOING()+"",charterOrderAngleBean.getData().getUN_COMMENT()+"");
             }
             ((CharterOrderPresenter)mPresenter).getChartOrder(StringNewConstants.UNPAY, mMorePageNumber);
         }else if (flag==4){
@@ -200,7 +200,7 @@ public class ObligationCharterFragment extends BaseFragment implements AdapterVi
                 dismissLoadingDialog();
                 return;
             }
-            if (charterOrderBean.getResult().getList() == null || charterOrderBean.getResult().getList().size() == 0) {
+            if (charterOrderBean.getData().getList() == null || charterOrderBean.getData().getList().size() == 0) {
                 ll_commonError.setVisibility(View.VISIBLE);
                 tv_hintText.setText(getString(R.string.youNo));
                 dismissLoadingDialog();
@@ -209,8 +209,8 @@ public class ObligationCharterFragment extends BaseFragment implements AdapterVi
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-            databean = charterOrderBean.getResult().getList();
-            totalPageNumber = charterOrderBean.getResult().getTotalPages();
+            databean = charterOrderBean.getData().getList();
+            totalPageNumber = charterOrderBean.getData().getTotalPages();
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();

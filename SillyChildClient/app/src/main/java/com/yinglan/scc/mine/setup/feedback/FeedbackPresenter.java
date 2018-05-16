@@ -33,17 +33,17 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
     public void upPictures(String paramname, File voule, int resultsource) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put(paramname,voule);
-        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
-            }
-        });
+//        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, resultsource);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, resultsource);
+//            }
+//        });
     }
 
     @Override
@@ -90,16 +90,16 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
     @Override
     public void getInfo() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 }

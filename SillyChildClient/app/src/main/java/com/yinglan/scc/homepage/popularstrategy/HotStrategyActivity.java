@@ -179,18 +179,18 @@ public class HotStrategyActivity extends BaseActivity implements HotStrategyCont
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         HotStrategyBean orderBean = (HotStrategyBean) JsonUtil.getInstance().json2Obj(success, HotStrategyBean.class);
-        totalPageNumber = orderBean.getResult().getTotalPages();
-        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
+        totalPageNumber = orderBean.getData().getTotalPages();
+        if (orderBean.getData().getList() == null || orderBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mAdapter.clear();
-            mAdapter.addNewData(orderBean.getResult().getList());
+            mAdapter.addNewData(orderBean.getData().getList());
             mRefreshLayout.endRefreshing();
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(orderBean.getResult().getList());
+            mAdapter.addMoreData(orderBean.getData().getList());
         }
         dismissLoadingDialog();
 

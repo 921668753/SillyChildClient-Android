@@ -108,25 +108,25 @@ public class ScheduleDetailsActivity extends BaseActivity implements ScheduleDet
     @Override
     public void getSuccess(String success, int flag) {
         ScheduleDetailsBean scheduleDetailsBean = (ScheduleDetailsBean) JsonUtil.getInstance().json2Obj(success, ScheduleDetailsBean.class);
-        tour_time = scheduleDetailsBean.getResult().getTour_time();
-        total_price = scheduleDetailsBean.getResult().getTotal_price();
-        customer_name = scheduleDetailsBean.getResult().getCustomer_name();
+        tour_time = scheduleDetailsBean.getData().getTour_time();
+        total_price = scheduleDetailsBean.getData().getTotal_price();
+        customer_name = scheduleDetailsBean.getData().getCustomer_name();
         if (StringUtils.isEmpty(customer_name)) {
             customer_name = "";
         }
-        customer_phone = scheduleDetailsBean.getResult().getCustomer_phone();
+        customer_phone = scheduleDetailsBean.getData().getCustomer_phone();
         if (StringUtils.isEmpty(customer_phone)) {
             customer_phone = "";
         }
-        use_car_adult = scheduleDetailsBean.getResult().getUse_car_adult();
-        use_car_children = scheduleDetailsBean.getResult().getUse_car_children();
-        req_car_level = scheduleDetailsBean.getResult().getReq_car_level();
+        use_car_adult = scheduleDetailsBean.getData().getUse_car_adult();
+        use_car_children = scheduleDetailsBean.getData().getUse_car_children();
+        req_car_level = scheduleDetailsBean.getData().getReq_car_level();
         if (StringUtils.isEmpty(req_car_level)) {
             req_car_level = "";
         }
-        req_car_seat_num = scheduleDetailsBean.getResult().getReq_car_seat_num();
-        cost_statement = scheduleDetailsBean.getResult().getCost_statement();
-        cost_compensation = scheduleDetailsBean.getResult().getCost_compensation();
+        req_car_seat_num = scheduleDetailsBean.getData().getReq_car_seat_num();
+        cost_statement = scheduleDetailsBean.getData().getCost_statement();
+        cost_compensation = scheduleDetailsBean.getData().getCost_compensation();
         String url = GETPRIVATEDETAIL1 + air_id;
         if (!StringUtils.isEmpty(url)) {
             webViewLayout.loadUrl(url);

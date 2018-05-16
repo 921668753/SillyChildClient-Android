@@ -294,9 +294,9 @@ public class CharterOrderDetailsActivity extends BaseActivity implements Charter
                 break;
             case 5:
                 UnsubscribeCostBean unsubscribeCostBean1 = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, CharterOrderDetailBean.class);
-                if (unsubscribeCostBean1 != null && unsubscribeCostBean1.getResult() != null && unsubscribeCostBean1.getResult().getExplain() != null) {
-                    costStatement = unsubscribeCostBean1.getResult().getExplain().getContent();
-                    costCompensation = unsubscribeCostBean1.getResult().getPolicy().getContent();
+                if (unsubscribeCostBean1 != null && unsubscribeCostBean1.getData() != null && unsubscribeCostBean1.getData().getExplain() != null) {
+                    costStatement = unsubscribeCostBean1.getData().getExplain().getContent();
+                    costCompensation = unsubscribeCostBean1.getData().getPolicy().getContent();
                 }
                 dismissLoadingDialog();
                 costsThatDialog = new CostsThatDialog(this, costStatement);
@@ -305,9 +305,9 @@ public class CharterOrderDetailsActivity extends BaseActivity implements Charter
                 break;
             case 6:
                 UnsubscribeCostBean unsubscribeCostBean2 = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, CharterOrderDetailBean.class);
-                if (unsubscribeCostBean2 != null && unsubscribeCostBean2.getResult() != null && unsubscribeCostBean2.getResult().getExplain() != null) {
-                    costStatement = unsubscribeCostBean2.getResult().getExplain().getContent();
-                    costCompensation = unsubscribeCostBean2.getResult().getPolicy().getContent();
+                if (unsubscribeCostBean2 != null && unsubscribeCostBean2.getData() != null && unsubscribeCostBean2.getData().getExplain() != null) {
+                    costStatement = unsubscribeCostBean2.getData().getExplain().getContent();
+                    costCompensation = unsubscribeCostBean2.getData().getPolicy().getContent();
                 }
                 dismissLoadingDialog();
                 costsThatDialog = new CostsThatDialog(this, costCompensation);
@@ -320,7 +320,7 @@ public class CharterOrderDetailsActivity extends BaseActivity implements Charter
                     errorMsg(getString(R.string.otherError), 0);
                     return;
                 }
-                rbean = charterOrderDetailBean.getResult();
+                rbean = charterOrderDetailBean.getData();
                 if (rbean == null) {
                     errorMsg(getString(R.string.serverReturnsDataNull), 0);
                     return;

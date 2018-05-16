@@ -121,8 +121,8 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     public void getSuccess(String success, int flag) {
         MyBankCardBean myBankCardBean = (MyBankCardBean) JsonUtil.getInstance().json2Obj(success, MyBankCardBean.class);
         myBankCardViewAdapter.clear();
-        if (myBankCardBean.getResult() != null && myBankCardBean.getResult().size() > 0) {
-            myBankCardViewAdapter.addNewData(myBankCardBean.getResult());
+        if (myBankCardBean.getData() != null && myBankCardBean.getData().size() > 0) {
+            myBankCardViewAdapter.addNewData(myBankCardBean.getData());
         }
         dismissLoadingDialog();
     }

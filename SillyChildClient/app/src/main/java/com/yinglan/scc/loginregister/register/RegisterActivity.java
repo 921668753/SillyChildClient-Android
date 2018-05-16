@@ -13,10 +13,18 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.LoginBean;
+import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.loginregister.LoginActivity;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
  * 手机号注册
@@ -24,7 +32,6 @@ import com.yinglan.scc.loginregister.LoginActivity;
  */
 
 public class RegisterActivity extends BaseActivity implements RegisterContract.View {
-
 
     /**
      * 返回
@@ -50,6 +57,9 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
      */
     @BindView(id = R.id.et_pwd)
     private EditText et_pwd;
+
+    @BindView(id = R.id.img_yanjing, click = true)
+    private ImageView img_yanjing;
 
     /**
      * 验证码
@@ -116,6 +126,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                     ((RegisterContract.Presenter) mPresenter).postRegister(et_accountNumber.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString());
                 }
                 break;
+            case R.id.img_yanjing:
+                if (et_pwd.getInputType() == 0x00000081) {
+                    img_yanjing.setImageResource(R.mipmap.yanjing1);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    img_yanjing.setImageResource(R.mipmap.yanjing);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                et_pwd.setSelection(et_pwd.getText().toString().trim().length());
+                et_pwd.requestFocus();
+                break;
             case R.id.tv_agreement:
                 // 注册协议
                 showActivity(aty, RegistrationAgreementActivity.class);
@@ -153,7 +174,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public void getSuccess(String s, int flag) {
-
         tv_registe.setEnabled(true);
         if (flag == 0) {
             dismissLoadingDialog();
@@ -161,30 +181,24 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             time.start();
         } else if (flag == 1) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
-            //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            ((RegisterContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
-//            dismissLoadingDialog();
-//            KJActivityStack.create().finishActivity(LoginActivity.class);
-//            aty.finish();
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getData().getExpireTime());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getData().getCountroy_code());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getData().getHx_user_name());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getData().getHx_password());
+            ((RegisterContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
         } else if (flag == 2) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
             dismissLoadingDialog();
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
         }
@@ -198,7 +212,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 ViewInject.toast(msg);
             }
         });
-        //   ViewInject.toast(msg);
+        if (flag == 1) {
+            UserUtil.clearUserInfo(this);
+            aty.finish();
+        }
         tv_registe.setEnabled(true);
     }
 

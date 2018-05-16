@@ -22,15 +22,14 @@ public class SetNickNamePresenter implements SetNickNameContract.Presenter {
     }
 
     @Override
-    public void setupInfo(String newnickname) {
-        if (TextUtils.isEmpty(newnickname)){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.nicknamehint),0);
+    public void saveInfo(String newnickname) {
+        if (TextUtils.isEmpty(newnickname)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.nicknamehint), 0);
             return;
         }
-
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("nickname",newnickname);
-        RequestClient.putInfo(httpParams, new ResponseListener<String>() {
+        httpParams.put("name", newnickname);
+        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

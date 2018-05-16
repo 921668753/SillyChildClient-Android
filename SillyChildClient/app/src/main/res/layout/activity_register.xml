@@ -33,16 +33,18 @@
 
         <LinearLayout
             style="@style/MatchWrap"
-            android:layout_marginTop="@dimen/dimen33"
+            android:layout_marginTop="@dimen/dimen23"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginTop="@dimen/dimen10"
                 android:layout_width="@dimen/dimen15"
                 android:layout_height="@dimen/dimen19"
                 android:scaleType="fitXY"
                 android:src="@mipmap/shouji" />
 
             <EditText
+                android:paddingTop="@dimen/dimen10"
                 android:id="@+id/et_accountNumber"
                 style="@style/AutoMatch"
                 android:layout_marginLeft="@dimen/dimen25"
@@ -61,10 +63,10 @@
             <ImageView
                 android:id="@+id/img_quxiao"
                 android:layout_width="@dimen/dimen35"
-                android:layout_height="@dimen/dimen19"
+                android:layout_height="@dimen/dimen29"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen20"
-                android:paddingTop="@dimen/dimen4"
+                android:paddingTop="@dimen/dimen14"
                 android:src="@mipmap/delete"
                 android:visibility="gone" />
         </LinearLayout>
@@ -75,11 +77,12 @@
 
         <LinearLayout
             style="@style/MatchWrap"
-            android:layout_marginTop="@dimen/dimen38"
+            android:layout_marginTop="@dimen/dimen28"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginTop="@dimen/dimen10"
                 android:layout_width="@dimen/dimen15"
                 android:layout_height="@dimen/dimen19"
                 android:scaleType="fitXY"
@@ -88,6 +91,7 @@
             <EditText
                 android:id="@+id/et_pwd"
                 style="@style/AutoMatch"
+                android:paddingTop="@dimen/dimen10"
                 android:layout_marginLeft="@dimen/dimen25"
                 android:background="@color/whiteColors"
                 android:digits="@string/alphanumeric"
@@ -102,10 +106,10 @@
             <ImageView
                 android:id="@+id/img_quxiao1"
                 android:layout_width="@dimen/dimen35"
-                android:layout_height="@dimen/dimen19"
+                android:layout_height="@dimen/dimen29"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen20"
-                android:paddingTop="@dimen/dimen4"
+                android:paddingTop="@dimen/dimen14"
                 android:src="@mipmap/delete"
                 android:visibility="gone" />
 
@@ -113,11 +117,11 @@
             <ImageView
                 android:id="@+id/img_yanjing"
                 android:layout_width="@dimen/dimen35"
-                android:layout_height="@dimen/dimen19"
+                android:layout_height="@dimen/dimen29"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen20"
-                android:paddingTop="@dimen/dimen2"
-                android:src="@mipmap/yanjing1" />
+                android:paddingTop="@dimen/dimen12"
+                android:src="@mipmap/yanjing" />
 
         </LinearLayout>
 

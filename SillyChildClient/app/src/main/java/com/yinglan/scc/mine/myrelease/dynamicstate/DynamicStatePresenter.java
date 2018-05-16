@@ -73,7 +73,7 @@ public class DynamicStatePresenter implements DynamicStateContract.Presenter {
     public void upPictures(String paramname, File voule, int resultsource) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put(paramname,voule);
-        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(),httpParams,0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, resultsource);
@@ -105,17 +105,17 @@ public class DynamicStatePresenter implements DynamicStateContract.Presenter {
     @Override
     public void getInfo() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 2);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
 

@@ -213,12 +213,12 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @Override
     public void getSuccess(String success, int flag) {
         AlipayBean alipaybean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
-        if (alipaybean == null || alipaybean.getResult() == null) {
+        if (alipaybean == null || alipaybean.getData() == null) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.payParseError));
         } else {
             if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.WeiXinPay)) {
-                AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = alipaybean.getResult().getWxPayParams();
+                AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = alipaybean.getData().getWxPayParams();
                 if (wxPayParamsBean == null) {
                     dismissLoadingDialog();
                     ViewInject.toast(getString(R.string.payParseError));
@@ -230,7 +230,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
             } else if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.ZhiFuBaoPay)) {
                 if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
                 dismissLoadingDialog();
-                payUtils.doPay(alipaybean.getResult().getAliPayParams());
+                payUtils.doPay(alipaybean.getData().getAliPayParams());
             }
         }
     }

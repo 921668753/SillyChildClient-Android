@@ -241,24 +241,24 @@ public class AllRoutesActivity extends BaseActivity implements AllRoutesContract
                 errorMsg(getString(R.string.serverReturnsDataNull1), 0);
                 return;
             }
-            totalPageNumber = allRoutesBean.getResult().getTotalPages();
-            if (allRoutesBean.getResult().getList() == null || allRoutesBean.getResult().getList().size() == 0) {
+            totalPageNumber = allRoutesBean.getData().getTotalPages();
+            if (allRoutesBean.getData().getList() == null || allRoutesBean.getData().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();
-                mAdapter.addNewData(allRoutesBean.getResult().getList());
+                mAdapter.addNewData(allRoutesBean.getData().getList());
             } else {
                 mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(allRoutesBean.getResult().getList());
+                mAdapter.addMoreData(allRoutesBean.getData().getList());
             }
             dismissLoadingDialog();
         } else if (flag == 1) {
             VehicleTypeBean vehicleTypeBean = (VehicleTypeBean) JsonUtil.json2Obj(success, VehicleTypeBean.class);
-            if (vehicleTypeBean.getResult().getSeat_list() != null && vehicleTypeBean.getResult().getSeat_list().size() > 0) {
-                List<Integer> list = vehicleTypeBean.getResult().getSeat_list();
+            if (vehicleTypeBean.getData().getSeat_list() != null && vehicleTypeBean.getData().getSeat_list().size() > 0) {
+                List<Integer> list = vehicleTypeBean.getData().getSeat_list();
                 for (int i = 0; i < list.size(); i++) {
                     int seatNum = list.get(i);
                     CarInfoBean.ResultBean resultBean = new CarInfoBean.ResultBean();
@@ -269,8 +269,8 @@ public class AllRoutesActivity extends BaseActivity implements AllRoutesContract
             } else {
                 options1Items = null;
             }
-            if (vehicleTypeBean.getResult().getLevel_list() != null && vehicleTypeBean.getResult().getLevel_list().size() > 0) {
-                options2Items = vehicleTypeBean.getResult().getLevel_list();
+            if (vehicleTypeBean.getData().getLevel_list() != null && vehicleTypeBean.getData().getLevel_list().size() > 0) {
+                options2Items = vehicleTypeBean.getData().getLevel_list();
             } else {
                 options2Items = null;
             }

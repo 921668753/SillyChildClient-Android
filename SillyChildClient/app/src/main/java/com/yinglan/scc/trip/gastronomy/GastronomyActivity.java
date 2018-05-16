@@ -208,18 +208,18 @@ public class GastronomyActivity extends BaseActivity implements GastronomyContra
             errorMsg(getString(R.string.serverReturnsDataNull1), 0);
             return;
         }
-        totalPageNumber = gastronomyBean.getResult().getTotalPages();
-        if (gastronomyBean.getResult().getList() == null || gastronomyBean.getResult().getList().size() == 0) {
+        totalPageNumber = gastronomyBean.getData().getTotalPages();
+        if (gastronomyBean.getData().getList() == null || gastronomyBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(gastronomyBean.getResult().getList());
+            mAdapter.addNewData(gastronomyBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(gastronomyBean.getResult().getList());
+            mAdapter.addMoreData(gastronomyBean.getData().getList());
         }
         dismissLoadingDialog();
     }

@@ -12,7 +12,7 @@ public interface SetNickNameContract {
         /**
          * 更改用户信息
          */
-        void setupInfo(String newnickname);
+        void saveInfo(String newnickname);
 
     }
 

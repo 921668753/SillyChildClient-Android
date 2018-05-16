@@ -377,9 +377,9 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                car_type_id = carListBean.getResult().getList().get(options1).getCar_type_id();
-//                con_car_seat_num = carListBean.getResult().getList().get(options1).getSeat_num() + "";
-//                ((TextView) v).setText(carListBean.getResult().getList().get(options1).getBrand_name());
+//                car_type_id = carListBean.getData().getList().get(options1).getCar_type_id();
+//                con_car_seat_num = carListBean.getData().getList().get(options1).getSeat_num() + "";
+//                ((TextView) v).setText(carListBean.getData().getList().get(options1).getBrand_name());
 //            }
 //        }).build();
     }
@@ -421,7 +421,7 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
 //            intent.putExtra("whereDoYouStart", et_whereDoYouStart.getText().toString().trim());
 //            intent.putExtra("whereAreGoing", et_whereAreGoing.getText().toString().trim());
 //            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
-//            intent.putExtra("id", airportDropOffBean.getResult().getId());
+//            intent.putExtra("id", airportDropOffBean.getData().getId());
 //            intent.putExtra("twenty_four", tv_bags3.getText().toString());
 //            intent.putExtra("twenty_six", tv_bags2.getText().toString());
 //            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
@@ -434,8 +434,8 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
         } else if (flag == 1) {
             tv_submit.setClickable(true);
             carListBean = (CarListBean) JsonUtil.json2Obj(success, CarListBean.class);
-            if (carListBean.getResult().getList() != null && carListBean.getResult().getList().size() > 0) {
-                List<CarListBean.ResultBean.ListBean> list = carListBean.getResult().getList();
+            if (carListBean.getData().getList() != null && carListBean.getData().getList().size() > 0) {
+                List<CarListBean.ResultBean.ListBean> list = carListBean.getData().getList();
                 for (int i = 0; i < list.size(); i++) {
                     int seatNum = list.get(i).getSeat_num();
                     String name = list.get(i).getBrand_name() + list.get(i).getCar_type_name();
@@ -452,14 +452,14 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
            // showActivity(aty, OverleafActivity.class);
         } else if (flag == 3) {
             UnsubscribeCostBean unsubscribeCostBean = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, UnsubscribeCostBean.class);
-            compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getResult().getPolicy().getContent());
+            compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getData().getPolicy().getContent());
             compensationChangeBackDialog.setCanceledOnTouchOutside(false);
-            costsThatDialog = new CostsThatDialog(this, unsubscribeCostBean.getResult().getExplain().getContent());
+            costsThatDialog = new CostsThatDialog(this, unsubscribeCostBean.getData().getExplain().getContent());
             costsThatDialog.setCanceledOnTouchOutside(false);
         } else if (flag == 4) {
             VehicleTypeBean vehicleTypeBean = (VehicleTypeBean) JsonUtil.json2Obj(success, VehicleTypeBean.class);
-            if (vehicleTypeBean.getResult().getSeat_list() != null && vehicleTypeBean.getResult().getSeat_list().size() > 0) {
-                List<Integer> list = vehicleTypeBean.getResult().getSeat_list();
+            if (vehicleTypeBean.getData().getSeat_list() != null && vehicleTypeBean.getData().getSeat_list().size() > 0) {
+                List<Integer> list = vehicleTypeBean.getData().getSeat_list();
                 for (int i = 0; i < list.size(); i++) {
                     int seatNum = list.get(i);
                     CarInfoBean.ResultBean resultBean = new CarInfoBean.ResultBean();
@@ -470,8 +470,8 @@ public class SingleTransportActivity extends BaseActivity implements SingleTrans
             } else {
                 options1Items = null;
             }
-            if (vehicleTypeBean.getResult().getLevel_list() != null && vehicleTypeBean.getResult().getLevel_list().size() > 0) {
-                options2Items = vehicleTypeBean.getResult().getLevel_list();
+            if (vehicleTypeBean.getData().getLevel_list() != null && vehicleTypeBean.getData().getLevel_list().size() > 0) {
+                options2Items = vehicleTypeBean.getData().getLevel_list();
             } else {
                 options2Items = null;
             }

@@ -2,6 +2,8 @@ package com.yinglan.scc.mine.personaldata;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
@@ -29,13 +32,15 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.UploadImageBean;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scc.mine.personaldata.setnickname.SetNickNameActivity;
 import com.yinglan.scc.mine.personaldata.setsex.SetSexActivity;
+import com.yinglan.scc.mine.personaldata.setsex.SetSexContract;
 import com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity;
 import com.yinglan.scc.mine.personaldata.setsillycode.SetSillyCodeActivity;
+import com.yinglan.scc.utils.DataUtil;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.PickerViewUtil;
 
@@ -43,6 +48,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import cn.bingoogolapple.titlebar.BGATitleBar;
+import cn.jpush.android.api.JPushInterface;
 
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
@@ -56,8 +64,8 @@ import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_GET;
 
 public class PersonalDataActivity extends BaseActivity implements PersonalDataContract.View {
 
-    private UserInfoBean.ResultBean resultBean;
-    private PersonalDataContract.Presenter mPresenter;
+    @BindView(id = R.id.titlebar)
+    private BGATitleBar titlebar;
 
     @BindView(id = R.id.ll_personaldatatx, click = true)
     private LinearLayout ll_personaldatatx;
@@ -97,11 +105,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private TimePickerView pvTime;
 
     private OptionsPickerView pvOptions;
-    private SimpleDateFormat dateformat;
-    private String fixbirthday;//修改的生日
-    private String altersex;//修改的性别
     public static final int REQUEST_CODE_SELECT = 100;
     private ImagePicker imagePicker;
+
     private String touxiangpath;//所更换的头像的路径
     private UploadImageBean uploadimagebean;
 
@@ -110,10 +116,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private String pickeraddress;//选择器返回的地址
 
-    private boolean issend;//发出了修改傻孩子号的标识
-    private String shzcode;//傻孩子号
 
     private int updatanum = 0;
+
     private TimePickerView pvCustomTime = null;
     private PickerViewUtil pickerViewUtil = null;
 
@@ -121,6 +126,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private int currentLocationCityItemPosition = 0;
     private int currentLocationProvinceItemPosition = 0;
 
+    private boolean isRefresh = false;
 
     @Override
     public void setRootView() {
@@ -133,12 +139,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @Override
     public void initData() {
         super.initData();
-        try {
-            UserInfoBean userInfoBean = (UserInfoBean) getIntent().getExtras().get("userinfo");
-            resultBean = userInfoBean.getResult();
-        } catch (Exception e) {
-
-        }
         mPresenter = new PersonalDataPresenter(this);
         initImagePicker();
         initCustomTimePicker();
@@ -169,50 +169,74 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     public void initWidget() {
         super.initWidget();
         initTitle();
-        if (resultBean == null) {
-            ViewInject.toast(getString(R.string.getDataError));
-//            finish();
-        } else {
-            tv_personalnickname.setText(resultBean.getNickname());
-            shzcode = resultBean.getShz_code();
-            //et_personalcode.setText(resultBean.getShz_code());
-            updatanum = StringUtils.toInt(resultBean.getShz_update(), 0);
-            switch (resultBean.getSex()) {
-                case 1:
-                    tv_personalsex.setText(getString(R.string.nan));
-                    break;
-                case 2:
-                    tv_personalsex.setText(getString(R.string.nv));
-                    break;
-                case 0:
-                    tv_personalsex.setText(getString(R.string.secret));
-                    break;
-            }
-            birthday = resultBean.getBirthday();
-            tv_personalbirthday.setText(formatData());
-            String address = "";
-            if (!TextUtils.isEmpty(resultBean.getCountry())) {
-                address += resultBean.getCountry() + "•";
-            }
-            if (!TextUtils.isEmpty(resultBean.getCity())) {
-                address += resultBean.getCity();
-            }
-            tv_personaldiqu.setText(address);
+        initView();
+    }
 
-            String headpic = resultBean.getHead_pic();
-            if (TextUtils.isEmpty(headpic)) {
-                iv_personaltx.setImageResource(R.mipmap.avatar);
-            } else {
-                GlideImageLoader.glideLoader(aty, headpic, iv_personaltx, 0, R.mipmap.avatar);
-            }
+    /**
+     * 渲染页面
+     */
+    private void initView() {
+        String face = PreferenceHelper.readString(aty, StringConstants.FILENAME, "face");
+        if (StringUtils.isEmpty(face)) {
+            iv_personaltx.setImageResource(R.mipmap.avatar);
+        } else {
+            GlideImageLoader.glideLoader(aty, face, iv_personaltx, 0, R.mipmap.avatar);
+        }
+        String nick_name = PreferenceHelper.readString(aty, StringConstants.FILENAME, "nick_name");
+        String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
+        if (StringUtils.isEmpty(nick_name)) {
+            tv_personalnickname.setText(mobile);
+        } else {
+            tv_personalnickname.setText(nick_name);
+        }
+        int sex = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sex", 0);
+        if (sex == 1) {
+            tv_personalsex.setText(getString(R.string.nan));
+        } else if (sex == 2) {
+            tv_personalsex.setText(getString(R.string.nv));
+        } else {
+            tv_personalsex.setText(getString(R.string.secret));
+        }
+        birthday = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "birthday", 0);
+        if (birthday > 0) {
+            String birthdayStr = DataUtil.formatData(birthday, "yyyy-MM-dd");
+            tv_personalbirthday.setText(birthdayStr);
+        } else {
+            tv_personalbirthday.setText(getString(R.string.pleaseSelect));
+        }
+        String province = PreferenceHelper.readString(aty, StringConstants.FILENAME, "province");
+        String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "city");
+        String region = PreferenceHelper.readString(aty, StringConstants.FILENAME, "region");
+        if (StringUtils.isEmpty(province) || StringUtils.isEmpty(city) || StringUtils.isEmpty(region)) {
+            tv_personaldiqu.setText(getString(R.string.pleaseSelect));
+        } else {
+            tv_personaldiqu.setText(province + city + region);
         }
     }
+
 
     /**
      * 设置标题
      */
     public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.personaData), true, R.id.titlebar);
+        titlebar.setTitleText(getString(R.string.personaData));
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                if (isRefresh) {
+                    Intent intent = getIntent();
+                    setResult(RESULT_OK, intent);
+                }
+                aty.finish();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+            }
+        };
+        titlebar.setDelegate(simpleDelegate);
     }
 
     @Override
@@ -237,11 +261,16 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 showActivityForResult(this, setNickNameIntent, RESULT_CODE_BASKET_ADD);
                 break;
             case R.id.ll_personaldataxb:
+                int sex = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sex", 0);
                 Intent setSexIntent = new Intent(this, SetSexActivity.class);
-                setSexIntent.putExtra("sex", true);
+                setSexIntent.putExtra("sex", sex);
                 startActivityForResult(setSexIntent, RESULT_CODE_BASKET_MINUS);
                 break;
             case R.id.ll_personaldatasr:
+                if (birthday > 0) {
+                    birthdaycalendar.setTimeInMillis(birthday);
+                    pvCustomTime.setDate(birthdaycalendar);
+                }
                 pvCustomTime.show(tv_personalbirthday);
                 break;
             case R.id.ll_personaldatadq:
@@ -250,7 +279,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
-                //    jumpintent.putExtra("signature",tv_personalqianming.getText().toString());
+                setSignatureIntent.putExtra("signature", "");
                 showActivityForResult(this, setSignatureIntent, RESULT_CODE_BASKET_MINUSALL);
                 break;
         }
@@ -263,19 +292,29 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         if (data != null) {
             switch (requestCode) {
                 case RESULT_CODE_GET:
-                    shzcode = data.getStringExtra("nickname");
+                    //     shzcode = data.getStringExtra("nickname");
                     updatanum++;
                     //    et_personalcode.setText(shzcode);
+                    isRefresh = true;
                     break;
                 case RESULT_CODE_BASKET_ADD:
                     tv_personalnickname.setText(data.getStringExtra("nickname"));
+                    isRefresh = true;
                     break;
                 case RESULT_CODE_BASKET_MINUS:
-                    tv_personalnickname.setText(data.getStringExtra("nickname"));
+                    int sex = data.getIntExtra("sex", 0);
+                    if (sex == 1) {
+                        tv_personalsex.setText(getString(R.string.nan));
+                    } else if (sex == 2) {
+                        tv_personalsex.setText(getString(R.string.nv));
+                    } else {
+                        tv_personalsex.setText(getString(R.string.secret));
+                    }
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", sex);
                     break;
                 case RESULT_CODE_BASKET_MINUSALL:
 
-
+                    isRefresh = true;
                     break;
                 case REQUEST_CODE_SELECT:
                     if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) {
@@ -286,7 +325,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                         }
                         touxiangpath = images.get(0).path;
                         showLoadingDialog(getString(R.string.saveLoad));
-                        mPresenter.upPictures(images.get(0).path, 0);
+                        ((PersonalDataContract.Presenter) mPresenter).upPictures(touxiangpath);
                     } else {
                         ViewInject.toast(getString(R.string.noData));
                     }
@@ -361,8 +400,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 birthday = date.getTime() / 1000;
-                birthdaycalendar.setTime(date);
-                ((TextView) v).setText(format.format(date));
+                //birthdaycalendar.setTime(date);
+                showLoadingDialog(getString(R.string.saveLoad));
+                ((PersonalDataContract.Presenter) mPresenter).setBirthday((int) birthday);
+                //  ((TextView) v).setText(format.format(date));
             }
         })
                 .setDate(birthdaycalendar)
@@ -396,25 +437,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 .build();
     }
 
-    /**
-     * unix时间戳需要处理之后才可以被转换为日期
-     *
-     * @return
-     */
-    private String formatData() {
-        if (birthday == 0) {
-            return "";
-        }
-        birthday = birthday * 1000;
-        if (dateformat == null) dateformat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return dateformat.format(birthday);
-        } catch (Exception e) {
-            birthday = 0;
-            return "";
-        }
-    }
-
 
     private void initOptionPicker() {//条件选择器初始化
         pickerViewUtil = new PickerViewUtil(this, 0) {
@@ -439,34 +461,29 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         dismissLoadingDialog();
         switch (flag) {
             case 0:
-                GlideCatchUtil.getInstance().cleanImageDisk();
-                uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-                if (uploadimagebean != null && uploadimagebean.getResult() != null && uploadimagebean.getResult().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())) {
-                    mPresenter.setupInfo("head_pic", uploadimagebean.getResult().getFile().getUrl(), 3);
-                    showLoadingDialog(getString(R.string.saveLoad));
-                }
+
                 break;
             case 1:
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-                tv_personalbirthday.setText(fixbirthday);
+                GlideCatchUtil.getInstance().cleanImageDisk();
+                uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
+                if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
+                    //   mPresenter.setupInfo("head_pic", uploadimagebean.getData().getFile().getUrl(), 3);
+
+                    showLoadingDialog(getString(R.string.saveLoad));
+                }
+                isRefresh = true;
                 break;
             case 2:
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-                tv_personalsex.setText(altersex);
+                String birthdayStr = DataUtil.formatData(birthday, "yyyy-MM-dd");
+                tv_personalbirthday.setText(birthdayStr);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", (int) birthday);
                 break;
             case 3:
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
                 GlideImageLoader.glideLoader(this, touxiangpath, iv_personaltx, 0);
                 break;
             case 4:
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
                 tv_personaldiqu.setText(pickeraddress);
                 break;
-//            case 5:
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-//                shzcode=et_personalcode.getText().toString();
-//                ViewInject.toast(getString(R.string.updateSuccess));
-//                break;
         }
     }
 
@@ -475,9 +492,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         GlideCatchUtil.getInstance().cleanCatchDisk();
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
             showActivity(this, LoginActivity.class);
             finish();
             return;
@@ -499,4 +513,19 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         GlideCatchUtil.getInstance().cleanCatchDisk();
     }
 
+    /**
+     * 退出应用
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && isRefresh) {
+            Intent intent = getIntent();
+            setResult(RESULT_OK, intent);
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 }

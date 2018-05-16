@@ -31,12 +31,10 @@ public class UserUtil {
      */
     public static void clearUserInfo(Context context) {
         PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
-        PreferenceHelper.write(context, StringConstants.FILENAME, "accessToken", "");
+        PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", "");
         PreferenceHelper.write(context, StringConstants.FILENAME, "expireTime", "0");
         PreferenceHelper.write(context, StringConstants.FILENAME, "timeBefore", "0");
         PreferenceHelper.write(context, StringConstants.FILENAME, "accountNumber", "");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "isRefreshInfo", false);
-        PreferenceHelper.write(context, StringConstants.FILENAME, "isReLogin", true);
     }
 
 

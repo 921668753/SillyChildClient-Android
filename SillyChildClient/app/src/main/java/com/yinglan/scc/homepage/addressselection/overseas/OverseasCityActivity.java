@@ -249,13 +249,13 @@ public class OverseasCityActivity extends BaseActivity implements OverseasCityCo
         if (flag == 0) {
             InlandBean inlandBean = (InlandBean) JsonUtil.json2Obj(success, InlandBean.class);
             //   inlandBean.getResult()
-            if (!(inlandBean.getResult() != null && inlandBean.getResult().size() > 0)) {
+            if (!(inlandBean.getData() != null && inlandBean.getData().size() > 0)) {
                 errorMsg(aty.getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             //模拟线上加载数据
             mBodyDatas.clear();
-            mBodyDatas.addAll(inlandBean.getResult());
+            mBodyDatas.addAll(inlandBean.getData());
             ((OverseasCityContract.Presenter) mPresenter).getChildHotCity(getIntent().getIntExtra("selectCountryId", 0));
         } else if (flag == 1) {
             InlandHotCityBean inlandHotCityBean = (InlandHotCityBean) JsonUtil.json2Obj(success, InlandHotCityBean.class);

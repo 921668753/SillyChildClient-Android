@@ -179,8 +179,8 @@ public class HomestaySubscribeActivity extends BaseActivity implements HomestayS
         } else if (flag == 1) {
             //     ((HomestaySubscribeContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
             carInfoBean = (CarInfoBean) JsonUtil.json2Obj(success, CarInfoBean.class);
-            if (carInfoBean.getResult() != null && carInfoBean.getResult().size() > 0) {
-                pvOptions.setPicker(carInfoBean.getResult());
+            if (carInfoBean.getData() != null && carInfoBean.getData().size() > 0) {
+                pvOptions.setPicker(carInfoBean.getData());
             }
         }
 
@@ -237,8 +237,8 @@ public class HomestaySubscribeActivity extends BaseActivity implements HomestayS
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                ((TextView) v).setText(carInfoBean.getResult().get(options1).getSite_num() + "人");
-////                travelNumber = carInfoBean.getResult().get(options1).getSite_num();
+//                ((TextView) v).setText(carInfoBean.getData().get(options1).getSite_num() + "人");
+////                travelNumber = carInfoBean.getData().get(options1).getSite_num();
 ////                showLoadingDialog(getString(R.string.dataLoad));
 ////                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
 //            }

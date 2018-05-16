@@ -68,17 +68,17 @@ public class ChangePassWordPresenter implements ChangePassWordContract.Presenter
             String validationId = CipherUtils.md5(validationI);
             httpParams.put("validationId", validationId);
             httpParams.put("opt", opt);
-            RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
-                @Override
-                public void onSuccess(String response) {
-                    mView.getSuccess(response, 0);
-                }
-
-                @Override
-                public void onFailure(String msg) {
-                    mView.errorMsg(msg, 0);
-                }
-            });
+//            RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
+//                @Override
+//                public void onSuccess(String response) {
+//                    mView.getSuccess(response, 0);
+//                }
+//
+//                @Override
+//                public void onFailure(String msg) {
+//                    mView.errorMsg(msg, 0);
+//                }
+//            });
         }
     }
 
@@ -107,17 +107,17 @@ public class ChangePassWordPresenter implements ChangePassWordContract.Presenter
         httpParams.put("code", code);
         httpParams.put("password", CipherUtils.md5("TPSHOP" + pwd));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
     }
 
 //    @Override

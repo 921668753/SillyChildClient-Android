@@ -213,25 +213,25 @@ public class AllCompanyGuideActivity extends BaseActivity implements AllCompanyG
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             AllCompanyGuideBean allRoutesBean = (AllCompanyGuideBean) JsonUtil.getInstance().json2Obj(success, AllCompanyGuideBean.class);
-            totalPageNumber = allRoutesBean.getResult().getTotalPages();
-            if (allRoutesBean.getResult().getList() == null || allRoutesBean.getResult().getList().size() == 0) {
+            totalPageNumber = allRoutesBean.getData().getTotalPages();
+            if (allRoutesBean.getData().getList() == null || allRoutesBean.getData().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();
-                mAdapter.addNewData(allRoutesBean.getResult().getList());
+                mAdapter.addNewData(allRoutesBean.getData().getList());
             } else {
                 mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(allRoutesBean.getResult().getList());
+                mAdapter.addMoreData(allRoutesBean.getData().getList());
             }
             dismissLoadingDialog();
         } else if (flag == 1) {
             ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
             carInfoBean = (CarInfoBean) JsonUtil.json2Obj(success, CarInfoBean.class);
-            if (carInfoBean.getResult() != null && carInfoBean.getResult().size() > 0) {
-                pvOptions.setPicker(carInfoBean.getResult());
+            if (carInfoBean.getData() != null && carInfoBean.getData().size() > 0) {
+                pvOptions.setPicker(carInfoBean.getData());
             }
         }
     }
@@ -324,8 +324,8 @@ public class AllCompanyGuideActivity extends BaseActivity implements AllCompanyG
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                ((TextView) v).setText(carInfoBean.getResult().get(options1).getSite_num() + "人");
-//                travelNumber = carInfoBean.getResult().get(options1).getSite_num();
+//                ((TextView) v).setText(carInfoBean.getData().get(options1).getSite_num() + "人");
+//                travelNumber = carInfoBean.getData().get(options1).getSite_num();
 //                showLoadingDialog(getString(R.string.dataLoad));
 //                ((AllCompanyGuideContract.Presenter) mPresenter).getAllCompanyGuide(mMorePageNumber, tv_date.getText().toString(), locationCity, travelNumber);
 //            }

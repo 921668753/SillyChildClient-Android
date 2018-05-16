@@ -6,12 +6,18 @@ import android.util.Log;
 
 import com.common.cklibrary.R;
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.NetworkUtils;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.kymjs.rxvolley.client.RequestConfig;
+
+import java.util.Map;
 
 //import com.kymjs.rxvolley.client.ProgressListener;
 
@@ -24,16 +30,18 @@ public class HttpRequest {
     private final static int TOLINGIN = -10001;
     private final static int SUCCESS = 1;
 
-    private static RxVolley.Builder builder = null;
+    private static RxCookieVolley.Builder builder = null;
     private static RxVolley.Builder builder2;
+    static String cookies = null;
 
-    public static void requestHttp(String url, int httpMethod, int contentType, HttpParams params, boolean isCache, final ResponseListener responseListener) {
-        if (!NetworkUtils.isNetWorkAvailable(KJActivityStack.create().topActivity())) {
+    public static void requestHttp(String url, final Context context, final int httpMethod, int contentType, HttpParams params, boolean isCache, final ResponseListener responseListener) {
+        if (!NetworkUtils.isNetWorkAvailable(context)) {
             responseListener.onFailure(KJActivityStack.create().topActivity().getString(R.string.checkNetwork));
             return;
         }
+
         if (builder == null) {
-            builder = new RxVolley.Builder();
+            builder = new RxCookieVolley.Builder();
         }
         //http请求的回调，内置了很多方法，详细请查看源码
 //包括在异步响应的onSuccessInAsync():注不能做UI操作
@@ -41,10 +49,14 @@ public class HttpRequest {
 //网络请求失败时的回调onFailure():例如无网络，服务器异常等
         HttpCallback callback = new HttpCallback() {
             @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                super.onSuccess(headers, t);
+                if (headers != null && headers.size() > 0 && !StringUtils.isEmpty(headers.get("Set-Cookie"))) {
+                    PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", headers.get("Set-Cookie"));
+                    //  Log.d("Cookies", JsonUtil.obj2JsonString(headers));
+                }
                 builder = null;
-                doSuccess(t, responseListener);
+                doSuccess(new String(t), responseListener);
             }
 
             @Override
@@ -67,7 +79,7 @@ public class HttpRequest {
                 .params(params) //上文创建的HttpParams请求参数集
                 //是否缓存，默认是 get 请求 5 缓存分钟, post 请求不缓存
                 .shouldCache(isCache)
-                .setTag(KJActivityStack.create().getClass().getName())
+                .setTag(context.getClass().getName())
                 //    .progressListener(listener) //上传进度
                 .callback(callback) //响应回调
                 .encoding("UTF-8") //编码格式，默认为utf-8
@@ -81,8 +93,8 @@ public class HttpRequest {
      * @param params
      * @param responseListener
      */
-    public static void requestGetHttp(String url, HttpParams params, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, false, responseListener);
+    public static void requestGetHttp(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, false, responseListener);
     }
 
     /**
@@ -92,12 +104,12 @@ public class HttpRequest {
      * @param params
      * @param responseListener
      */
-    public static void requestGetHttpWithContext(Context context,String url, HttpParams params, ResponseListener responseListener) {
-        requestHttpWithContext(context,url, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, false, responseListener);
+    public static void requestGetHttpWithContext(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttpWithContext(context, url, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, false, responseListener);
     }
 
-    public static void requestGetHttp(String url, HttpParams params, boolean isCache, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, isCache, responseListener);
+    public static void requestGetHttp(Context context, String url, HttpParams params, boolean isCache, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.GET, RxVolley.ContentType.FORM, params, isCache, responseListener);
     }
 
     /**
@@ -107,12 +119,12 @@ public class HttpRequest {
      * @param params
      * @param responseListener
      */
-    public static void requestPostHttp(String url, HttpParams params, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.POST, RxVolley.ContentType.JSON, params, false, responseListener);
+    public static void requestPostHttp(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.POST, RxVolley.ContentType.JSON, params, false, responseListener);
     }
 
-    public static void requestPostFORMHttp(String url, HttpParams params, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.POST, RxVolley.ContentType.FORM, params, false, responseListener);
+    public static void requestPostFORMHttp(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.POST, RxVolley.ContentType.FORM, params, false, responseListener);
     }
 
     /**
@@ -122,8 +134,8 @@ public class HttpRequest {
      * @param params
      * @param responseListener
      */
-    public static void requestPutHttp(String url, HttpParams params, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.PUT, RxVolley.ContentType.FORM, params, false, responseListener);
+    public static void requestPutHttp(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.PUT, RxVolley.ContentType.FORM, params, false, responseListener);
     }
 
     /**
@@ -133,8 +145,8 @@ public class HttpRequest {
      * @param params
      * @param responseListener
      */
-    public static void requestDeleteHttp(String url, HttpParams params, ResponseListener responseListener) {
-        requestHttp(url, RxVolley.Method.DELETE, RxVolley.ContentType.FORM, params, false, responseListener);
+    public static void requestDeleteHttp(Context context, String url, HttpParams params, ResponseListener responseListener) {
+        requestHttp(url, context, RxVolley.Method.DELETE, RxVolley.ContentType.FORM, params, false, responseListener);
     }
 
 
@@ -155,19 +167,18 @@ public class HttpRequest {
             listener.onFailure(KJActivityStack.create().bottomActivity().getString(R.string.jsonError));
             return false;
         }
-        if (baseResult.getStatus() != SUCCESS) {
-            if (baseResult.getStatus() == -100 || baseResult.getStatus() == -101) {
+        if (baseResult.getResult() != SUCCESS) {
+            if (baseResult.getResult() == -100 || baseResult.getResult() == -101) {
                 listener.onFailure(TOLINGIN + "");
                 return false;
             }
-            if (baseResult.getStatus() == 4000) {
+            if (baseResult.getResult() == 4000) {
                 listener.onFailure("4000");
                 return false;
             }
-            listener.onFailure(baseResult.getMsg());
+            listener.onFailure(baseResult.getMessage());
             return false;
         }
-
 //        if (baseResult.getResult() == null || JsonUtil.obj2JsonString(baseResult.getResult()) == null || JsonUtil.obj2JsonString(baseResult.getResult()).length() <= 2) {
 //            listener.onFailure(KJActivityStack.create().topActivity().getString(R.string.serverReturnsDataNull));
 //            return false;
@@ -244,6 +255,7 @@ public class HttpRequest {
 
     /**
      * 不使用KJActivityStack的网络请求
+     *
      * @param url
      * @param httpMethod
      * @param contentType

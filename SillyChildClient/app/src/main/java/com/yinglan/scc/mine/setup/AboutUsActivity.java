@@ -34,7 +34,7 @@ public class AboutUsActivity extends BaseActivity {
         super.initWidget();
         initTitle();
         webViewLayout.setTitleVisibility(false);
-        webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
+     //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
 
     }
 

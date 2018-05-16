@@ -198,23 +198,23 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyShoppingCartBean myShoppingCartBean = (MyShoppingCartBean) JsonUtil.getInstance().json2Obj(success, MyShoppingCartBean.class);
-            mMorePageNumber = myShoppingCartBean.getResult().getPage();
-            totalPageNumber = myShoppingCartBean.getResult().getPageTotal();
+            mMorePageNumber = myShoppingCartBean.getData().getPage();
+            totalPageNumber = myShoppingCartBean.getData().getPageTotal();
             mAdapter.closeOpenedSwipeItemLayoutWithAnim();
-            if (myShoppingCartBean.getResult().getList() == null || myShoppingCartBean.getResult().getList().size() == 0) {
+            if (myShoppingCartBean.getData().getList() == null || myShoppingCartBean.getData().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 editStatus();
                 return;
             }
-            visibilityImg(isEdit, myShoppingCartBean.getResult().getList());
+            visibilityImg(isEdit, myShoppingCartBean.getData().getList());
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();
-                mAdapter.addNewData(myShoppingCartBean.getResult().getList());
+                mAdapter.addNewData(myShoppingCartBean.getData().getList());
                 mRefreshLayout.endRefreshing();
             } else {
                 mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(myShoppingCartBean.getResult().getList());
+                mAdapter.addMoreData(myShoppingCartBean.getData().getList());
                 mRefreshLayout.endLoadingMore();
             }
             dismissLoadingDialog();

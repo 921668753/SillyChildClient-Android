@@ -147,23 +147,23 @@ public class CharterCollectionFragment extends BaseFragment implements BGARefres
             errorMsg(getString(R.string.serverReturnsDataNull1), 0);
             return;
         }
-        totalPageNumber = charterListBean.getResult().getTotalPages();
-        mMorePageNumber = StringUtils.toInt(charterListBean.getResult().getP());
-        if (charterListBean.getResult().getList() == null || charterListBean.getResult().getList().size() == 0) {
+        totalPageNumber = charterListBean.getData().getTotalPages();
+        mMorePageNumber = StringUtils.toInt(charterListBean.getData().getP());
+        if (charterListBean.getData().getList() == null || charterListBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(charterListBean.getResult().getList());
+            mAdapter.addNewData(charterListBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(charterListBean.getResult().getList());
+            mAdapter.addMoreData(charterListBean.getData().getList());
         }
         mRefreshLayout.endRefreshing();
         mAdapter.clear();
-        mAdapter.addNewData(charterListBean.getResult().getList());
+        mAdapter.addNewData(charterListBean.getData().getList());
         dismissLoadingDialog();
     }
 

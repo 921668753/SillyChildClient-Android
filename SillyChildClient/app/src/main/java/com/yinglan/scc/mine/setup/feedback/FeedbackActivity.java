@@ -315,7 +315,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
             finish();
         } else if (flag == FLAGTYPE) {
             FeedBackTypeBean uploadimagebean = (FeedBackTypeBean) JsonUtil.getInstance().json2Obj(success, FeedBackTypeBean.class);
-            if (uploadimagebean != null && uploadimagebean.getResult() != null && uploadimagebean.getResult().getList() != null && uploadimagebean.getResult().getList().size() > 0) {
+            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getList() != null && uploadimagebean.getData().getList().size() > 0) {
 
 
                 dismissLoadingDialog();
@@ -326,8 +326,8 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
         } else {
             GlideCatchUtil.getInstance().cleanImageDisk();
             uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean != null && uploadimagebean.getResult() != null && uploadimagebean.getResult().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())) {
-                urllist.add(uploadimagebean.getResult().getFile().getUrl());
+            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
+                urllist.add(uploadimagebean.getData().getFile().getUrl());
                 selImageList.addAll(images);
                 adapter.setImages(selImageList);
                 dismissLoadingDialog();

@@ -22,7 +22,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen204"
-                    android:background="@mipmap/minebgxxx">
+                    android:background="@mipmap/mine_background">
 
                     <TextView
                         android:id="@+id/tv_editData"
@@ -41,8 +41,8 @@
                         android:layout_height="@dimen/dimen75"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dimen37"
-                        android:src="@mipmap/avatar" />
-
+                        android:src="@mipmap/avatar"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_nickname"
@@ -52,7 +52,8 @@
                         android:layout_marginTop="@dimen/dimen17"
                         android:text="@string/loginOrRegister"
                         android:textColor="@color/whiteColors"
-                        android:textSize="@dimen/textsize17" />
+                        android:textSize="@dimen/textsize17"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_serialNumber"
@@ -62,7 +63,38 @@
                         android:layout_marginTop="@dimen/dimen11"
                         android:text="SHZ0427"
                         android:textColor="@color/whiteColors"
-                        android:textSize="@dimen/textsize12" />
+                        android:textSize="@dimen/textsize12"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_notLogin"
+                        style="@style/WrapWrap"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="@string/notLogin"
+                            android:textColor="@color/whiteColors"
+                            android:textSize="@dimen/textsize14"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:layout_width="@dimen/dimen130"
+                            android:layout_height="@dimen/dimen40"
+                            android:layout_marginTop="@dimen/dimen10"
+                            android:background="@drawable/shape_login1"
+                            android:gravity="center"
+                            android:text="@string/loginImmediately"
+                            android:textColor="@color/whiteColors"
+                            android:textSize="@dimen/textsize16" />
+
+                    </LinearLayout>
+
+
                 </RelativeLayout>
 
 

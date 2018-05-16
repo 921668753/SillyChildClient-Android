@@ -182,19 +182,19 @@ public class AllDynamicsActivity extends BaseActivity implements AllDynamicsCont
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         AllDynamicsBean allDynamicsBean = (AllDynamicsBean) JsonUtil.getInstance().json2Obj(success, AllDynamicsBean.class);
-        mMorePageNumber = allDynamicsBean.getResult().getP();
-        totalPageNumber = allDynamicsBean.getResult().getTotalPages();
-        if (allDynamicsBean.getResult().getList() == null || allDynamicsBean.getResult().getList().size() == 0) {
+        mMorePageNumber = allDynamicsBean.getData().getP();
+        totalPageNumber = allDynamicsBean.getData().getTotalPages();
+        if (allDynamicsBean.getData().getList() == null || allDynamicsBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(allDynamicsBean.getResult().getList());
+            mAdapter.addNewData(allDynamicsBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(allDynamicsBean.getResult().getList());
+            mAdapter.addMoreData(allDynamicsBean.getData().getList());
         }
         dismissLoadingDialog();
     }

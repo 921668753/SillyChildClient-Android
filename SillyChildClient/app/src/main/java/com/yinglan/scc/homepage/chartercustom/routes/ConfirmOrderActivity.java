@@ -189,9 +189,9 @@ public class ConfirmOrderActivity extends BaseActivity implements ConfirmOrderCo
         dismissLoadingDialog();
         ConfirmOrderBean confirmOrderBean = (ConfirmOrderBean) JsonUtil.json2Obj(success, ConfirmOrderBean.class);
         Intent intent = new Intent(aty, CheckstandActivity.class);
-        intent.putExtra("orderid", confirmOrderBean.getResult().getAir_id());
-        intent.putExtra("paymoney", confirmOrderBean.getResult().getReal_price());
-        intent.putExtra("paymoneyfmt", confirmOrderBean.getResult().getReal_price_fmt());
+        intent.putExtra("orderid", confirmOrderBean.getData().getAir_id());
+        intent.putExtra("paymoney", confirmOrderBean.getData().getReal_price());
+        intent.putExtra("paymoneyfmt", confirmOrderBean.getData().getReal_price_fmt());
         showActivity(aty, intent);
         KJActivityStack.create().finishActivity(FillInBasicInformationActivity.class);
         finish();

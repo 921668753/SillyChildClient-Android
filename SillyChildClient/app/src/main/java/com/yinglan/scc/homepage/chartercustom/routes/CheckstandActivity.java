@@ -17,11 +17,10 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
-import com.nanchen.compresshelper.StringUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.AlipayBean;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mywallet.coupons.CouponsActivity;
 import com.yinglan.scc.mine.mywallet.recharge.RechargeActivity;
@@ -190,50 +189,50 @@ public class CheckstandActivity extends BaseActivity implements CheckstandContra
     @Override
     public void getSuccess(String success, int flag) {
         if (flag==1){
-            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (StringUtils.toDouble(userInfoBean.getResult().getUser_money())!=StringUtils.toDouble(tv_yue.getText().toString())){
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            }
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getResult().getUser_money());
-            if (TextUtils.isEmpty(userInfoBean.getResult().getUser_money())){
-                tv_yue.setText(getString(R.string.currentBalance)+"￥0.00");
-                yued=0.00;
-            }else{
-                tv_yue.setText(getString(R.string.currentBalance)+userInfoBean.getResult().getUser_money());
-                yued= StringUtils.toDouble(userInfoBean.getResult().getUser_money());
-            }
-            if (paytype==2){
-                if (yued<moneyd){
-                    ViewInject.toast(aty.getResources().getString(R.string.lackOfBalance));
-                }else{
-                    mPresenter.orderPay(orderid,paytype+"",couponid+"");
-                }
-            }else{
-                mPresenter.orderPay(orderid,paytype+"",couponid+"");
-            }
+//            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+//            if (StringUtils.toDouble(userInfoBean.getData().getUser_money())!=StringUtils.toDouble(tv_yue.getText().toString())){
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
+//            }
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getData().getUser_money());
+//            if (TextUtils.isEmpty(userInfoBean.getData().getUser_money())){
+//                tv_yue.setText(getString(R.string.currentBalance)+"￥0.00");
+//                yued=0.00;
+//            }else{
+//                tv_yue.setText(getString(R.string.currentBalance)+userInfoBean.getData().getUser_money());
+//                yued= StringUtils.toDouble(userInfoBean.getData().getUser_money());
+//            }
+//            if (paytype==2){
+//                if (yued<moneyd){
+//                    ViewInject.toast(aty.getResources().getString(R.string.lackOfBalance));
+//                }else{
+//                    mPresenter.orderPay(orderid,paytype+"",couponid+"");
+//                }
+//            }else{
+//                mPresenter.orderPay(orderid,paytype+"",couponid+"");
+//            }
         }else if (flag==2){
             userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean!=null&&userInfoBean.getResult()!=null&&!TextUtils.isEmpty(userInfoBean.getResult().getUser_money_fmt())){
-                tv_yue.setText(getString(R.string.currentBalance)+userInfoBean.getResult().getUser_money_fmt());
-                yued=StringUtils.toDouble(userInfoBean.getResult().getUser_money());
-            }else{
-                tv_yue.setText(getString(R.string.currentBalance)+"￥0.00");
-                yued=0.00;
-            }
+//            if (userInfoBean!=null&&userInfoBean.getData()!=null&&!TextUtils.isEmpty(userInfoBean.getData().getUser_money_fmt())){
+//                tv_yue.setText(getString(R.string.currentBalance)+userInfoBean.getData().getUser_money_fmt());
+//                yued=StringUtils.toDouble(userInfoBean.getData().getUser_money());
+//            }else{
+//                tv_yue.setText(getString(R.string.currentBalance)+"￥0.00");
+//                yued=0.00;
+//            }
             dismissLoadingDialog();
         }else{
             AlipayBean payFinshBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
-            if (payFinshBean==null||payFinshBean.getResult()==null){
+            if (payFinshBean==null||payFinshBean.getData()==null){
                 dismissLoadingDialog();
                 ViewInject.toast(getString(R.string.payParseError));
             }else{
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
                 dismissLoadingDialog();
-                paymoney_fmt=payFinshBean.getResult().getRealPrice();
+                paymoney_fmt=payFinshBean.getData().getRealPrice();
                 switch (paytype){
                     case NumericConstants.orderWX:
                         Log.d("调试","订单微信支付结果："+success);
-                        AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = payFinshBean.getResult().getWxPayParams();
+                        AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = payFinshBean.getData().getWxPayParams();
                         if (wxPayParamsBean==null){
                             dismissLoadingDialog();
                             ViewInject.toast(getString(R.string.payParseError));
@@ -246,7 +245,7 @@ public class CheckstandActivity extends BaseActivity implements CheckstandContra
                     case NumericConstants.orderAplipay:
                         Log.d("调试","订单支付宝支付结果："+success);
                         if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
-                        payUtils.doPay(payFinshBean.getResult().getAliPayParams());
+                        payUtils.doPay(payFinshBean.getData().getAliPayParams());
                         break;
                     case NumericConstants.orderBalance:
                         Log.d("调试","订单余额支付结果："+success);

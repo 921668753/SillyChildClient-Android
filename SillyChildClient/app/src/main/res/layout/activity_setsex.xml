@@ -38,7 +38,6 @@
 
     </RelativeLayout>
 
-
     <TextView style="@style/DividerWidth" />
 
     <RelativeLayout

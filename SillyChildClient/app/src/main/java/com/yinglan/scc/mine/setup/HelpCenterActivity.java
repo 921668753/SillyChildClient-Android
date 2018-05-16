@@ -34,7 +34,7 @@ public class HelpCenterActivity extends BaseActivity {
         super.initWidget();
         initTitle();
         webViewLayout.setTitleVisibility(false);
-        webViewLayout.loadUrl(URLConstants.HELPCENTERURL);
+     //   webViewLayout.loadUrl(URLConstants.HELPCENTERURL);
 
     }
 

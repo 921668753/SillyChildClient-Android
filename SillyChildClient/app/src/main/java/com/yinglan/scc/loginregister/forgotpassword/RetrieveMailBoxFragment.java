@@ -17,7 +17,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.LoginBean;
+import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.loginregister.register.RegistrationAgreementActivity;
 import com.yinglan.scc.main.MainActivity;
@@ -27,7 +27,7 @@ import com.yinglan.scc.main.MainActivity;
  * Created by Admin on 2017/8/10.
  */
 
-public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPasswordContract.View {
+public class RetrieveMailBoxFragment extends BaseFragment implements RetrievePasswordContract.View {
 
     private ForgotPasswordActivity1 aty;
 
@@ -101,7 +101,7 @@ public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPassw
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new ForgotPasswordPresenter(this);
+        mPresenter = new RetrievePasswordPresenter(this);
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
     }
 
@@ -122,13 +122,13 @@ public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPassw
         switch (v.getId()) {
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
-                ((ForgotPasswordContract.Presenter) mPresenter).postMailCaptcha(et_phone.getText().toString(), opt);
+                ((RetrievePasswordContract.Presenter) mPresenter).postMailCaptcha(et_phone.getText().toString(), opt);
                 break;
             case R.id.tv_registe:
                 tv_registe.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
                 if (opt.equals("resetpwd")) {
-                    ((ForgotPasswordContract.Presenter) mPresenter).getForgetPasswordByMail(et_phone.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
+                    ((RetrievePasswordContract.Presenter) mPresenter).getForgetPasswordByMail(et_phone.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString(), et_pwd1.getText().toString());
                 }
                 break;
             case R.id.tv_agreement:
@@ -175,10 +175,10 @@ public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPassw
             time.start();
         } else if (flag == 1) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getData().getUser_id());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getData().getToken());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getData().getExpireTime() + "");
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", bean.getData().getRefreshToken());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
@@ -199,7 +199,7 @@ public class RetrieveMailBoxFragment extends BaseFragment implements ForgotPassw
 
 
     @Override
-    public void setPresenter(ForgotPasswordContract.Presenter presenter) {
+    public void setPresenter(RetrievePasswordContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

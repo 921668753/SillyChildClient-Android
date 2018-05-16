@@ -381,7 +381,7 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
 ////            intent.putExtra("workNumber", et_workNumber.getText().toString().trim());
 ////            intent.putExtra("twenty_four", tv_bags3.getText().toString());
 ////            intent.putExtra("twenty_six", tv_bags2.getText().toString());
-//            intent.putExtra("id", airportDropOffBean.getResult().getId());
+//            intent.putExtra("id", airportDropOffBean.getData().getId());
 ////            intent.putExtra("twenty_eight", tv_bags1.getText().toString());
 ////            intent.putExtra("thirty", tv_bags.getText().toString());
 ////            intent.putExtra("name", et_name.getText().toString());
@@ -393,18 +393,18 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
             tv_submit.setClickable(true);
             DriverPackConfigBean driverPackConfigBean = (DriverPackConfigBean) JsonUtil.json2Obj(success, DriverPackConfigBean.class);
 
-            trip_chooseList = driverPackConfigBean.getResult().getTrip_choose();
+            trip_chooseList = driverPackConfigBean.getData().getTrip_choose();
             if (trip_chooseList != null && trip_chooseList.size() > 0) {
 //                for (int i = 0; i < trip_chooseList.size(); i++) {
 //                    trip_chooseList.get(i).setDescription(trip_chooseList.get(i).getName() + "(" + trip_chooseList.get(i).getDescription() + ")");
 //                }
                 pvOptions.setPicker(trip_chooseList);
             }
-            restaurant_chooseList = driverPackConfigBean.getResult().getRestaurant_choose();
+            restaurant_chooseList = driverPackConfigBean.getData().getRestaurant_choose();
             if (restaurant_chooseList != null && restaurant_chooseList.size() > 0) {
                 pvOptions1.setPicker(restaurant_chooseList);
             }
-            sleep_chooseList = driverPackConfigBean.getResult().getSleep_choose();
+            sleep_chooseList = driverPackConfigBean.getData().getSleep_choose();
             if (sleep_chooseList != null && sleep_chooseList.size() > 0) {
                 pvOptions2.setPicker(sleep_chooseList);
             }
@@ -414,9 +414,9 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
            // showActivity(aty, OverleafActivity.class);
         } else if (flag == 3) {
             UnsubscribeCostBean unsubscribeCostBean = (UnsubscribeCostBean) JsonUtil.getInstance().json2Obj(success, UnsubscribeCostBean.class);
-            compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getResult().getPolicy().getContent());
+            compensationChangeBackDialog = new CompensationChangeBackDialog(this, unsubscribeCostBean.getData().getPolicy().getContent());
             compensationChangeBackDialog.setCanceledOnTouchOutside(false);
-            costsThatDialog = new CostsThatDialog(this, unsubscribeCostBean.getResult().getExplain().getContent());
+            costsThatDialog = new CostsThatDialog(this, unsubscribeCostBean.getData().getExplain().getContent());
             costsThatDialog.setCanceledOnTouchOutside(false);
         }
         dismissLoadingDialog();
@@ -471,7 +471,7 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                //  car_type_id = carInfoBean.getData().get(options1).getId();
 //                ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
 //            }
 //        }).build();
@@ -486,7 +486,7 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                //  car_type_id = carInfoBean.getData().get(options1).getId();
 //                ((TextView) v).setText(restaurant_chooseList.get(options1).getDescription());
 //            }
 //        }).build();
@@ -501,7 +501,7 @@ public class PersonalTailorActivity extends BaseActivity implements PersonalTail
 //            @Override
 //            public void onOptionsSelect(int options1, int option2, int options3, View v) {
 //                //返回的分别是三个级别的选中位置
-//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                //  car_type_id = carInfoBean.getData().get(options1).getId();
 //                ((TextView) v).setText(sleep_chooseList.get(options1).getDescription());
 //            }
 //        }).build();

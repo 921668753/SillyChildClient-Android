@@ -227,29 +227,29 @@ public class CharterCustomActivity extends BaseActivity implements AdapterView.O
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
-            processLogic(charterCustomBean.getResult().getBanner());
-            if (charterCustomBean.getResult().getIndex() == null || charterCustomBean.getResult().getIndex().size() == 0 || charterCustomBean.getResult().getIndex().isEmpty()) {
+            processLogic(charterCustomBean.getData().getBanner());
+            if (charterCustomBean.getData().getIndex() == null || charterCustomBean.getData().getIndex().size() == 0 || charterCustomBean.getData().getIndex().isEmpty()) {
             } else {
                 charterCustomClassificationViewAdaper.clear();
-                charterCustomClassificationViewAdaper.addNewData(charterCustomBean.getResult().getIndex());
+                charterCustomClassificationViewAdaper.addNewData(charterCustomBean.getData().getIndex());
             }
-            if (charterCustomBean.getResult().getLine() == null || charterCustomBean.getResult().getLine().size() == 0 || charterCustomBean.getResult().getLine().isEmpty()) {
+            if (charterCustomBean.getData().getLine() == null || charterCustomBean.getData().getLine().size() == 0 || charterCustomBean.getData().getLine().isEmpty()) {
                 ll_selectLine.setVisibility(View.GONE);
                 lv_selectLine.setVisibility(View.GONE);
             } else {
                 ll_selectLine.setVisibility(View.VISIBLE);
                 lv_selectLine.setVisibility(View.VISIBLE);
                 charterCustomViewAdapter.clear();
-                charterCustomViewAdapter.addNewData(charterCustomBean.getResult().getLine());
+                charterCustomViewAdapter.addNewData(charterCustomBean.getData().getLine());
             }
-            if (charterCustomBean.getResult().getDriver() == null || charterCustomBean.getResult().getDriver().size() == 0 || charterCustomBean.getResult().getDriver().isEmpty()) {
+            if (charterCustomBean.getData().getDriver() == null || charterCustomBean.getData().getDriver().size() == 0 || charterCustomBean.getData().getDriver().isEmpty()) {
                 ll_localGuide.setVisibility(View.GONE);
                 lv_localGuide.setVisibility(View.GONE);
             } else {
                 ll_localGuide.setVisibility(View.VISIBLE);
                 lv_localGuide.setVisibility(View.VISIBLE);
                 companyGuideViewAdapter.clear();
-                companyGuideViewAdapter.addNewData(charterCustomBean.getResult().getDriver());
+                companyGuideViewAdapter.addNewData(charterCustomBean.getData().getDriver());
             }
         } else if (flag == 1) {
             showActivity(aty, AllRoutesActivity.class);
@@ -295,22 +295,22 @@ public class CharterCustomActivity extends BaseActivity implements AdapterView.O
             showActivity(aty, SingleTransportActivity.class);
         } else if (flag == 7) {
             SearchDriverBean searchDriverBean = (SearchDriverBean) JsonUtil.getInstance().json2Obj(success, SearchDriverBean.class);
-            if (searchDriverBean.getResult() == null || searchDriverBean.getResult().size() <= 0) {
+            if (searchDriverBean.getData() == null || searchDriverBean.getData().size() <= 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             et_designatedDriverHint.setText("");
             Intent intent = new Intent(aty, CompanyGuideDetailsActivity.class);
-            intent.putExtra("drv_id", searchDriverBean.getResult().get(0).getSeller_id());
+            intent.putExtra("drv_id", searchDriverBean.getData().get(0).getSeller_id());
             showActivity(aty, intent);
         } else if (flag == 8) {
             FindDriverBean findDriverBean = (FindDriverBean) JsonUtil.getInstance().json2Obj(success, FindDriverBean.class);
-            if (findDriverBean.getResult() == null) {
+            if (findDriverBean.getData() == null) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             Intent intent = new Intent(aty, CompanyGuideDetailsActivity.class);
-            intent.putExtra("drv_id", findDriverBean.getResult().getSeller_id());
+            intent.putExtra("drv_id", findDriverBean.getData().getSeller_id());
             showActivity(aty, intent);
         }
         dismissLoadingDialog();

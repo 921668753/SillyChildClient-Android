@@ -42,26 +42,26 @@ public class BindingPresenter implements BindingContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         // Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("mobile", phone);
-        httpParams.put("countroy_code", countroy_code);
-        String codeI = String.valueOf(System.currentTimeMillis());
-        String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
-        httpParams.put("codeId", codeId);
-        String validationI = phone.substring(1, phone.length() - 1) + codeId.substring(3, codeId.length() - 1);
-        String validationId = CipherUtils.md5(validationI);
-        httpParams.put("validationId", validationId);
-        httpParams.put("opt", opt);
+//        httpParams.put("countroy_code", countroy_code);
+//        String codeI = String.valueOf(System.currentTimeMillis());
+//        String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
+//        httpParams.put("codeId", codeId);
+//        String validationI = phone.substring(1, phone.length() - 1) + codeId.substring(3, codeId.length() - 1);
+//        String validationId = CipherUtils.md5(validationI);
+//        httpParams.put("validationId", validationId);
+//        httpParams.put("opt", opt);
         // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
     @Override
@@ -188,7 +188,7 @@ public class BindingPresenter implements BindingContract.Presenter {
         httpParams.put("sex", sex);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postThirdLogin(httpParams, new ResponseListener<String>() {
+        RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 3);

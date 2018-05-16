@@ -117,15 +117,15 @@ public class VisaActivity extends BaseActivity implements VisaContract.View, Ada
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         VisaBean visaBean = (VisaBean) JsonUtil.getInstance().json2Obj(success, VisaBean.class);
-        if (visaBean.getResult() == null || visaBean.getResult().size() == 0) {
+        if (visaBean.getData() == null || visaBean.getData().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         mAdapter.clear();
         List list = new ArrayList();
-        for (int i = 0; i < visaBean.getResult().size(); i++) {
-            if (visaBean.getResult().get(i).getList() != null && visaBean.getResult().get(i).getList().size() > 0) {
-                list.add(visaBean.getResult().get(i));
+        for (int i = 0; i < visaBean.getData().size(); i++) {
+            if (visaBean.getData().get(i).getList() != null && visaBean.getData().get(i).getList().size() > 0) {
+                list.add(visaBean.getData().get(i));
             }
         }
         mAdapter.addNewData(list);

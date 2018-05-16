@@ -3,6 +3,7 @@ package com.yinglan.scc.loginregister.register;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scc.entity.loginregister.LoginBean;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -29,9 +30,9 @@ interface RegisterContract {
         void postRegister(String phone, String code, String pwd);
 
         /**
-         * 登录环信
+         * 登录融云
          */
-        void loginHuanXin(String phone, String pwd);
+        void loginRongYun(String rongYunToken, LoginBean bean);
     }
 
     interface View extends BaseView<Presenter, String> {

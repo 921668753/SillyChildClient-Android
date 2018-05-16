@@ -181,7 +181,7 @@ public class CompletedCharterFragment extends BaseFragment implements AdapterVie
             dismissLoadingDialog();
             return;
         }
-        if (charterOrderBean.getResult().getList() == null || charterOrderBean.getResult().getList().size() == 0) {
+        if (charterOrderBean.getData().getList() == null || charterOrderBean.getData().getList().size() == 0) {
             ll_commonError.setVisibility(View.VISIBLE);
             tv_hintText.setText(getString(R.string.youNo));
             dismissLoadingDialog();
@@ -190,8 +190,8 @@ public class CompletedCharterFragment extends BaseFragment implements AdapterVie
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        databean = charterOrderBean.getResult().getList();
-        totalPageNumber = charterOrderBean.getResult().getTotalPages();
+        databean = charterOrderBean.getData().getList();
+        totalPageNumber = charterOrderBean.getData().getTotalPages();
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();

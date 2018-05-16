@@ -1,5 +1,7 @@
 package com.yinglan.scc.main;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.KJActivity;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
@@ -26,9 +28,9 @@ public class MinePresenter implements MineContract.Presenter {
     }
 
     @Override
-    public void getInfo() {
-        HttpParams httpParams = new HttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+    public void getInfo(Context context) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getInfo(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -40,5 +42,24 @@ public class MinePresenter implements MineContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+
+
+    }
+
 
 }

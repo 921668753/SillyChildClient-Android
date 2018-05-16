@@ -105,12 +105,12 @@ public class ExpiredFragment extends BaseFragment implements CouponsContract.Vie
             errorMsg(getString(R.string.otherError), 0);
             return;
         }
-        if (couponsBean.getResult()== null || couponsBean.getResult().size() == 0) {
+        if (couponsBean.getData()== null || couponsBean.getData().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         couponsAdapter.clear();
-        couponsAdapter.addNewData(couponsBean.getResult());
+        couponsAdapter.addNewData(couponsBean.getData());
         dismissLoadingDialog();
 
     }

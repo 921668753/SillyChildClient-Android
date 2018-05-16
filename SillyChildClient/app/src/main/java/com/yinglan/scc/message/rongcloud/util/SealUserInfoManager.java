@@ -231,7 +231,7 @@ public class SealUserInfoManager implements OnDataListener {
                 }
 
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+                RequestClient.getInfo(mContext,httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
                         UserInfo userInfo = (UserInfo) JsonUtil.getInstance().json2Obj(response, UserInfo.class);

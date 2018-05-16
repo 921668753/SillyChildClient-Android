@@ -16,7 +16,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.mine.mywallet.accountdetails.AccountDetailsActivity;
@@ -136,23 +136,23 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
      * 用户信息本地化
      */
     private void saveUserInfo() {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_id", userInfoBean.getResult().getUser_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "email", userInfoBean.getResult().getEmail());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getResult().getBirthday() + "");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getResult().getUser_money());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money_fmt", userInfoBean.getResult().getUser_money_fmt());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", userInfoBean.getResult().getCountroy_code());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getResult().getMobile());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", userInfoBean.getResult().getHead_pic());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", userInfoBean.getResult().getNickname());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "level", userInfoBean.getResult().getLevel());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "shz_code", userInfoBean.getResult().getShz_code());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "personalized_signature", userInfoBean.getResult().getPersonalized_signature());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "fans_num", userInfoBean.getResult().getFans_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "attention_num", userInfoBean.getResult().getAttention_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "good_num", userInfoBean.getResult().getGood_num());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "collection_num", userInfoBean.getResult().getCollection_num());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_id", userInfoBean.getData().getUser_id());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "email", userInfoBean.getData().getEmail());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getData().getSex());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getData().getBirthday() + "");
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money", userInfoBean.getData().getUser_money());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "user_money_fmt", userInfoBean.getData().getUser_money_fmt());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", userInfoBean.getData().getCountroy_code());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getData().getMobile());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", userInfoBean.getData().getHead_pic());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", userInfoBean.getData().getNickname());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "level", userInfoBean.getData().getLevel());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "shz_code", userInfoBean.getData().getShz_code());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "personalized_signature", userInfoBean.getData().getPersonalized_signature());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "fans_num", userInfoBean.getData().getFans_num());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "attention_num", userInfoBean.getData().getAttention_num());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "good_num", userInfoBean.getData().getGood_num());
+//        PreferenceHelper.write(aty, StringConstants.FILENAME, "collection_num", userInfoBean.getData().getCollection_num());
     }
 
     @Override
@@ -190,14 +190,14 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void getSuccess(String success, int flag) {
         userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-        mymoney = userInfoBean.getResult().getUser_money();
-        mymoneyfmt = userInfoBean.getResult().getUser_money_fmt();
-        tv_yue.setText(mymoneyfmt);
-        if (TextUtils.isEmpty(userInfoBean.getResult().getMobile())) {
-            accountname = userInfoBean.getResult().getUser_id() + "";
-        } else {
-            accountname = userInfoBean.getResult().getMobile();
-        }
+//        mymoney = userInfoBean.getData().getUser_money();
+//        mymoneyfmt = userInfoBean.getData().getUser_money_fmt();
+//        tv_yue.setText(mymoneyfmt);
+//        if (TextUtils.isEmpty(userInfoBean.getData().getMobile())) {
+//            accountname = userInfoBean.getData().getUser_id() + "";
+//        } else {
+//            accountname = userInfoBean.getData().getMobile();
+//        }
         saveUserInfo();
         dismissLoadingDialog();
 

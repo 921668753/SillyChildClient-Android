@@ -14,11 +14,11 @@ import com.yinglan.scc.utils.AccountValidatorUtil;
  * Created by ruitu on 2017/8/24.
  */
 
-public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter {
+public class RetrievePasswordPresenter implements RetrievePasswordContract.Presenter {
 
-    private ForgotPasswordContract.View mView;
+    private RetrievePasswordContract.View mView;
 
-    public ForgotPasswordPresenter(ForgotPasswordContract.View view) {
+    public RetrievePasswordPresenter(RetrievePasswordContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
@@ -29,20 +29,13 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() < 5) {
+        if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("mobile", phone);
-        String codeI = String.valueOf(System.currentTimeMillis());
-        String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
-        httpParams.put("codeId", codeId);
-        String validationI = phone.substring(1, phone.length() - 1) + codeId.substring(3, codeId.length() - 1);
-        String validationId = CipherUtils.md5(validationI);
-        httpParams.put("validationId", validationId);
-        httpParams.put("opt", opt);
-        RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
+        RequestClient.postSendFindCode(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -119,15 +112,13 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        //  Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("mobile", phone);
-        httpParams.put("code", code);
-        httpParams.put("password", CipherUtils.md5("TPSHOP" + pwd));
-        //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
+        httpParams.put("mobilecode", code);
+        httpParams.put("password", pwd);
+        RequestClient.postResetpwd(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 1);
             }
 
             @Override
@@ -178,17 +169,17 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
         httpParams.put("code", code);
         httpParams.put("password", CipherUtils.md5("TPSHOP" + pwd));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.getForgetPasswordByMail(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getForgetPasswordByMail(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
 

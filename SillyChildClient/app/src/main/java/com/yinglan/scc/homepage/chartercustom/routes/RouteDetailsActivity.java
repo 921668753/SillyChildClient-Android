@@ -143,7 +143,7 @@ public class RouteDetailsActivity extends BaseActivity implements RouteDetailsCo
 
     public void initView() {
         String title = getIntent().getStringExtra("title");
-        url = URLConstants.ROUTEDETAILS + line_id;
+     //   url = URLConstants.ROUTEDETAILS + line_id;
         webViewLayout.setTitleText(title);
         webViewLayout.setBackImgResource(R.mipmap.back);
         webViewLayout.setTitleVisibility(false);
@@ -269,20 +269,19 @@ public class RouteDetailsActivity extends BaseActivity implements RouteDetailsCo
             ViewInject.toast(getString(R.string.uncollectible));
         } else if (flag == 2) {
             RouteDetailsBean detailsBean = (RouteDetailsBean) JsonUtil.getInstance().json2Obj(success, RouteDetailsBean.class);
-            if (detailsBean.getResult().getIsCollect() == 0) {
+            if (detailsBean.getData().getIsCollect() == 0) {
                 img_collect.setImageResource(R.mipmap.btn_collect_normal);
                 action = "collect";
             } else {
                 action = "cancel";
                 img_collect.setImageResource(R.mipmap.btn_collect_pressed);
             }
-            line_title = detailsBean.getResult().getTitle();
-            line_price = detailsBean.getResult().getLinePrice();
-            coverImg = detailsBean.getResult().getCoverImg();
-            costStatement = detailsBean.getResult().getCostStatement();
-            costCompensation = detailsBean.getResult().getCostCompensation();
-            costCompensationLevel=detailsBean.getResult().getCostCompensationLevel();
-            playDay = detailsBean.getResult().getPlayDay();
+            line_price = detailsBean.getData().getLinePrice();
+            coverImg = detailsBean.getData().getCoverImg();
+            costStatement = detailsBean.getData().getCostStatement();
+            costCompensation = detailsBean.getData().getCostCompensation();
+            costCompensationLevel=detailsBean.getData().getCostCompensationLevel();
+            playDay = detailsBean.getData().getPlayDay();
         } else if (flag == 3) {
             Intent intent = new Intent(aty, FillInBasicInformationActivity.class);
             intent.putExtra("line_id", line_id);

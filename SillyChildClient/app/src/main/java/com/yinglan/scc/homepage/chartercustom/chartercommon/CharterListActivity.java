@@ -213,29 +213,29 @@ public class CharterListActivity extends BaseActivity implements CharterListCont
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             CharterListBean charterListBean = (CharterListBean) JsonUtil.getInstance().json2Obj(success, CharterListBean.class);
-            totalPageNumber = charterListBean.getResult().getTotalPages();
-            if (charterListBean.getResult().getList() == null || charterListBean.getResult().getList().size() == 0) {
+            totalPageNumber = charterListBean.getData().getTotalPages();
+            if (charterListBean.getData().getList() == null || charterListBean.getData().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
-            for (int i = 0; i < charterListBean.getResult().getList().size(); i++) {
-                charterListBean.getResult().getList().get(i).setType(type);
+            for (int i = 0; i < charterListBean.getData().getList().size(); i++) {
+                charterListBean.getData().getList().get(i).setType(type);
             }
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();
-                mAdapter.addNewData(charterListBean.getResult().getList());
+                mAdapter.addNewData(charterListBean.getData().getList());
             } else {
                 mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(charterListBean.getResult().getList());
+                mAdapter.addMoreData(charterListBean.getData().getList());
             }
             dismissLoadingDialog();
         } else if (flag == 1) {
             dismissLoadingDialog();
         } else if (flag == 2) {
             VehicleTypeBean vehicleTypeBean = (VehicleTypeBean) JsonUtil.json2Obj(success, VehicleTypeBean.class);
-            if (vehicleTypeBean.getResult().getSeat_list() != null && vehicleTypeBean.getResult().getSeat_list().size() > 0) {
-                List<Integer> list = vehicleTypeBean.getResult().getSeat_list();
+            if (vehicleTypeBean.getData().getSeat_list() != null && vehicleTypeBean.getData().getSeat_list().size() > 0) {
+                List<Integer> list = vehicleTypeBean.getData().getSeat_list();
                 for (int i = 0; i < list.size(); i++) {
                     int seatNum = list.get(i);
                     CarInfoBean.ResultBean resultBean = new CarInfoBean.ResultBean();
@@ -246,8 +246,8 @@ public class CharterListActivity extends BaseActivity implements CharterListCont
             } else {
                 options1Items = null;
             }
-            if (vehicleTypeBean.getResult().getLevel_list() != null && vehicleTypeBean.getResult().getLevel_list().size() > 0) {
-                options2Items = vehicleTypeBean.getResult().getLevel_list();
+            if (vehicleTypeBean.getData().getLevel_list() != null && vehicleTypeBean.getData().getLevel_list().size() > 0) {
+                options2Items = vehicleTypeBean.getData().getLevel_list();
             } else {
                 options2Items = null;
             }

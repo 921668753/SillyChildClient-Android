@@ -1,7 +1,7 @@
 package com.yinglan.scc.mine.personaldata.setnickname;
 
+import android.content.Intent;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,13 +10,10 @@ import android.widget.ImageView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.main.MainActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -27,8 +24,6 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 
 public class SetNickNameActivity extends BaseActivity implements SetNickNameContract.View {
-
-    private SetNickNameContract.Presenter mPresenter;
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
@@ -51,8 +46,10 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
         super.initData();
         mPresenter = new SetNickNamePresenter(this);
         String nickname = getIntent().getStringExtra("nickname");
-        if (!TextUtils.isEmpty(nickname)) {
+        if (!StringUtils.isEmpty(nickname)) {
             et_nickname.setText(nickname);
+            et_nickname.setSelection(et_nickname.getText().length());
+            img_quxiao.setVisibility(View.VISIBLE);
         }
     }
 
@@ -84,7 +81,7 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
                 SoftKeyboardUtils.packUpKeyboard(aty);
-                mPresenter.setupInfo(et_nickname.getText().toString());
+                ((SetNickNameContract.Presenter) mPresenter).saveInfo(et_nickname.getText().toString());
             }
         };
         titlebar.setDelegate(simpleDelegate);
@@ -108,7 +105,8 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        setResult(0, getIntent().putExtra("nickname", et_nickname.getText().toString()));
+        Intent intent = getIntent().putExtra("nickname", et_nickname.getText().toString());
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -116,11 +114,7 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);

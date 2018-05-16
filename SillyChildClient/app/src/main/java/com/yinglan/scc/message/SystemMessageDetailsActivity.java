@@ -66,9 +66,9 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
         }
         dismissLoadingDialog();
         SystemMessageDetailsBean systemMessageDetailsBean = (SystemMessageDetailsBean) JsonUtil.json2Obj(success, SystemMessageDetailsBean.class);
-        tv_title.setText(systemMessageDetailsBean.getResult().getTitle());
-        tv_time.setText(systemMessageDetailsBean.getResult().getCreate_at());
-        String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + systemMessageDetailsBean.getResult().getContent() + "</body></html>";
+        tv_title.setText(systemMessageDetailsBean.getData().getTitle());
+        tv_time.setText(systemMessageDetailsBean.getData().getCreate_at());
+        String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + systemMessageDetailsBean.getData().getContent() + "</body></html>";
         web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
     }
 

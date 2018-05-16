@@ -176,64 +176,64 @@ public class LocalTalentDetailsActivity extends BaseActivity implements LocalTal
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             LocalTalentDetailsBean localTalentDetailsBean = (LocalTalentDetailsBean) JsonUtil.getInstance().json2Obj(success, LocalTalentDetailsBean.class);
-            //  GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getResult().getCover_img(), img_video);
-            if (!StringUtils.isEmpty(localTalentDetailsBean.getResult().getVideo_url())) {
+            //  GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getData().getCover_img(), img_video);
+            if (!StringUtils.isEmpty(localTalentDetailsBean.getData().getVideo_url())) {
                 img_video.setVisibility(View.GONE);
-                videoplayer.setUp(localTalentDetailsBean.getResult().getVideo_url(), JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
-                GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getResult().getCover_img(), videoplayer.thumbImageView, R.mipmap.placeholderfigure);
+                videoplayer.setUp(localTalentDetailsBean.getData().getVideo_url(), JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
+                GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getData().getCover_img(), videoplayer.thumbImageView, R.mipmap.placeholderfigure);
             } else {
                 img_video.setVisibility(View.VISIBLE);
-                GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getResult().getCover_img(), img_video, R.mipmap.placeholderfigure);
+                GlideImageLoader.glideOrdinaryLoader(aty, localTalentDetailsBean.getData().getCover_img(), img_video, R.mipmap.placeholderfigure);
                 videoplayer.setVisibility(View.GONE);
             }
-            tv_name.setText(localTalentDetailsBean.getResult().getName());
-            tv_address.setText(localTalentDetailsBean.getResult().getCity());
-            if (localTalentDetailsBean.getResult().getType_info() != null && localTalentDetailsBean.getResult().getType_info().contains(getString(R.string.shopkeepers)) || localTalentDetailsBean.getResult().getLable() == 4) {
+            tv_name.setText(localTalentDetailsBean.getData().getName());
+            tv_address.setText(localTalentDetailsBean.getData().getCity());
+            if (localTalentDetailsBean.getData().getType_info() != null && localTalentDetailsBean.getData().getType_info().contains(getString(R.string.shopkeepers)) || localTalentDetailsBean.getData().getLable() == 4) {
                 isShopkeepers = true;
-                store_id = localTalentDetailsBean.getResult().getStore_id();
+                store_id = localTalentDetailsBean.getData().getStore_id();
                 tv_shopkeepers.setVisibility(View.VISIBLE);
             } else {
                 isShopkeepers = false;
                 tv_shopkeepers.setVisibility(View.GONE);
             }
-            if (localTalentDetailsBean.getResult().getType_info() != null && localTalentDetailsBean.getResult().getType_info().contains(getString(R.string.landlord)) || localTalentDetailsBean.getResult().getLable() == 3) {
+            if (localTalentDetailsBean.getData().getType_info() != null && localTalentDetailsBean.getData().getType_info().contains(getString(R.string.landlord)) || localTalentDetailsBean.getData().getLable() == 3) {
                 isLandlord = true;
-                user_id = localTalentDetailsBean.getResult().getUser_id();
+                user_id = localTalentDetailsBean.getData().getUser_id();
                 tv_landlord.setVisibility(View.VISIBLE);
             } else {
                 isLandlord = false;
                 tv_landlord.setVisibility(View.GONE);
             }
-            if (localTalentDetailsBean.getResult().getType_info() != null && localTalentDetailsBean.getResult().getType_info().contains(getString(R.string.companyGuide)) || localTalentDetailsBean.getResult().getLable() == 2) {
+            if (localTalentDetailsBean.getData().getType_info() != null && localTalentDetailsBean.getData().getType_info().contains(getString(R.string.companyGuide)) || localTalentDetailsBean.getData().getLable() == 2) {
                 isCompanyGuide = true;
-                drv_id = localTalentDetailsBean.getResult().getSeller_id() + "";
+                drv_id = localTalentDetailsBean.getData().getSeller_id() + "";
                 tv_companyGuide.setVisibility(View.VISIBLE);
             } else {
                 isCompanyGuide = false;
                 tv_companyGuide.setVisibility(View.GONE);
             }
 
-            if (localTalentDetailsBean.getResult().getType_info() != null && localTalentDetailsBean.getResult().getType_info().contains(getString(R.string.user)) || localTalentDetailsBean.getResult().getLable() == 1) {
+            if (localTalentDetailsBean.getData().getType_info() != null && localTalentDetailsBean.getData().getType_info().contains(getString(R.string.user)) || localTalentDetailsBean.getData().getLable() == 1) {
                 tv_user.setVisibility(View.VISIBLE);
             } else {
                 tv_user.setVisibility(View.GONE);
             }
 
-            if (localTalentDetailsBean.getResult().getType_info() != null && localTalentDetailsBean.getResult().getType_info().contains(getString(R.string.platform)) || localTalentDetailsBean.getResult().getIs_admin() == 1) {
+            if (localTalentDetailsBean.getData().getType_info() != null && localTalentDetailsBean.getData().getType_info().contains(getString(R.string.platform)) || localTalentDetailsBean.getData().getIs_admin() == 1) {
                 tv_platform.setVisibility(View.VISIBLE);
             } else {
                 tv_platform.setVisibility(View.GONE);
             }
 
-//        lable = localTalentDetailsBean.getResult().getLable();
-            is_good = localTalentDetailsBean.getResult().getIs_good();
+//        lable = localTalentDetailsBean.getData().getLable();
+            is_good = localTalentDetailsBean.getData().getIs_good();
             if (is_good == 1) {
                 img_zan.setImageResource(R.mipmap.btn_favor_pressed);
             } else {
                 img_zan.setImageResource(R.mipmap.btn_favor_normal);
             }
-            tv_sort.setText(localTalentDetailsBean.getResult().getGood_num() + "");
-            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + localTalentDetailsBean.getResult().getContent() + "</body></html>";
+            tv_sort.setText(localTalentDetailsBean.getData().getGood_num() + "");
+            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + localTalentDetailsBean.getData().getContent() + "</body></html>";
             web_summary.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
         } else if (flag == 1) {
             is_good = 1;

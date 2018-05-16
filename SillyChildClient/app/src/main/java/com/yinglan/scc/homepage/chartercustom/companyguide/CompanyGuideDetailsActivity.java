@@ -92,7 +92,7 @@ public class CompanyGuideDetailsActivity extends BaseActivity implements Company
     }
 
     private void initView() {
-        url = URLConstants.COMPANYGUIDEDETAILS1;
+     //   url = URLConstants.COMPANYGUIDEDETAILS1;
         webViewLayout.setTitleVisibility(false);
 
         //  webViewLayout.setBackImgResource(R.mipmap.back);
@@ -215,9 +215,9 @@ public class CompanyGuideDetailsActivity extends BaseActivity implements Company
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         CompanyGuideDetailsBean companyGuideDetailsBean = (CompanyGuideDetailsBean) JsonUtil.getInstance().json2Obj(success, CompanyGuideDetailsBean.class);
-        share_driver_description = companyGuideDetailsBean.getResult().getPreson_info().getContent();
-        coverImg = companyGuideDetailsBean.getResult().getPreson_info().getCover_img();
-        title = companyGuideDetailsBean.getResult().getPreson_info().getSeller_name();
+        share_driver_description = companyGuideDetailsBean.getData().getPreson_info().getContent();
+        coverImg = companyGuideDetailsBean.getData().getPreson_info().getCover_img();
+        title = companyGuideDetailsBean.getData().getPreson_info().getSeller_name();
     }
 
     @Override

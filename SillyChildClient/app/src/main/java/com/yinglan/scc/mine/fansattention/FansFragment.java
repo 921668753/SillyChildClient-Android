@@ -177,21 +177,21 @@ public class FansFragment extends BaseFragment implements BGAOnItemChildClickLis
                     ViewInject.toast(getString(R.string.otherError));
                     return;
                 }
-                if (fansAndAttentionBean.getResult()==null||fansAndAttentionBean.getResult().getList()==null||fansAndAttentionBean.getResult().getList().size()==0){
+                if (fansAndAttentionBean.getData()==null||fansAndAttentionBean.getData().getList()==null||fansAndAttentionBean.getData().getList().size()==0){
                     if (isloadmore){
                         ViewInject.toast(getString(R.string.noMoreData));
                     }else{
-                        ViewInject.toast(fansAndAttentionBean.getMsg());
+                        ViewInject.toast(fansAndAttentionBean.getMessage());
                     }
                     return;
                 }
-                pagenum=fansAndAttentionBean.getResult().getP();
-                totalpages=fansAndAttentionBean.getResult().getTotalPages();
+                pagenum=fansAndAttentionBean.getData().getP();
+                totalpages=fansAndAttentionBean.getData().getTotalPages();
                 if (isloadmore){
-                    fansInfoAdapter.addMoreData(fansAndAttentionBean.getResult().getList());
+                    fansInfoAdapter.addMoreData(fansAndAttentionBean.getData().getList());
                 }else{
                     fansInfoAdapter.clear();
-                    fansInfoAdapter.addNewData(fansAndAttentionBean.getResult().getList());
+                    fansInfoAdapter.addNewData(fansAndAttentionBean.getData().getList());
                 }
                 break;
             case 1://关注

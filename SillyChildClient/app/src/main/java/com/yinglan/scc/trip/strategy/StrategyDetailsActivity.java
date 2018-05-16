@@ -121,7 +121,7 @@ public class StrategyDetailsActivity extends BaseActivity implements StrategyDet
         //   } else {
         //     initTitle(title);
         webViewLayout.setTitleText(title);
-        url = URLConstants.GUIDEDETAIL + guide_id;
+   //     url = URLConstants.GUIDEDETAIL + guide_id;
         webViewLayout.loadUrl(url);
     }
 
@@ -158,25 +158,25 @@ public class StrategyDetailsActivity extends BaseActivity implements StrategyDet
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             StrategyDetailsBean strategyDetailsBean = (StrategyDetailsBean) JsonUtil.getInstance().json2Obj(success, StrategyDetailsBean.class);
-            if (strategyDetailsBean.getResult().getInfo() != null && !StringUtils.isEmpty(strategyDetailsBean.getResult().getInfo().getRead_num())) {
-                tv_read.setText(strategyDetailsBean.getResult().getInfo().getRead_num() + getString(R.string.views));
+            if (strategyDetailsBean.getData().getInfo() != null && !StringUtils.isEmpty(strategyDetailsBean.getData().getInfo().getRead_num())) {
+                tv_read.setText(strategyDetailsBean.getData().getInfo().getRead_num() + getString(R.string.views));
             } else {
                 tv_read.setText("");
             }
-            isCollect = strategyDetailsBean.getResult().getInfo().getIsCollect();
+            isCollect = strategyDetailsBean.getData().getInfo().getIsCollect();
             if (isCollect == 1) {
                 img_collect.setImageResource(R.mipmap.btn_collect_pressed);
             } else {
                 img_collect.setImageResource(R.mipmap.btn_collect_normal1);
             }
-            isPraise = strategyDetailsBean.getResult().getInfo().getIsPraise();
+            isPraise = strategyDetailsBean.getData().getInfo().getIsPraise();
             if (isPraise == 1) {
                 img_zan.setImageResource(R.mipmap.btn_favor_pressed);
             } else {
                 img_zan.setImageResource(R.mipmap.btn_favor_normal1);
             }
-            title = strategyDetailsBean.getResult().getInfo().getTitle();
-            img = strategyDetailsBean.getResult().getInfo().getCover_img();
+            title = strategyDetailsBean.getData().getInfo().getTitle();
+            img = strategyDetailsBean.getData().getInfo().getCover_img();
         } else if (flag == 1) {
             isCollect = 1;
             img_collect.setImageResource(R.mipmap.btn_collect_pressed);

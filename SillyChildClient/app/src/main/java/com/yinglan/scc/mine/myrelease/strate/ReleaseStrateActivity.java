@@ -317,9 +317,9 @@ public class ReleaseStrateActivity extends BaseActivity implements StrateContrac
         }else{
             GlideCatchUtil.getInstance().cleanImageDisk();
             uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean!=null&&uploadimagebean.getResult()!=null&&uploadimagebean.getResult().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())) {
-                itemlist.get(currentdoview).setItemurl(uploadimagebean.getResult().getFile().getUrl());
-                GlideImageLoader.glideLoaderRaudio(this,uploadimagebean.getResult().getFile().getUrl(),itemlist.get(currentdoview).getItemiv(),3,R.mipmap.placeholderfigure);
+            if (uploadimagebean!=null&&uploadimagebean.getData()!=null&&uploadimagebean.getData().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
+                itemlist.get(currentdoview).setItemurl(uploadimagebean.getData().getFile().getUrl());
+                GlideImageLoader.glideLoaderRaudio(this,uploadimagebean.getData().getFile().getUrl(),itemlist.get(currentdoview).getItemiv(),3,R.mipmap.placeholderfigure);
                 dismissLoadingDialog();
             }else{
                 ViewInject.toast("图片上传失败！");
@@ -327,8 +327,8 @@ public class ReleaseStrateActivity extends BaseActivity implements StrateContrac
             }
 
 //            uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-//            if (uploadimagebean!=null&&uploadimagebean.getResult()!=null&&uploadimagebean.getResult().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getResult().getFile().getUrl())){
-//                urls+="|"+uploadimagebean.getResult().getFile().getUrl();
+//            if (uploadimagebean!=null&&uploadimagebean.getData()!=null&&uploadimagebean.getData().getFile()!=null&&!TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())){
+//                urls+="|"+uploadimagebean.getData().getFile().getUrl();
 //                urlsuccessnum++;
 //                itemlist.get(layoutnumber).getSelImageList().remove(urlerrornum);
 //                itemlist.get(layoutnumber).getIpadapter().setImages(itemlist.get(layoutnumber).getSelImageList());

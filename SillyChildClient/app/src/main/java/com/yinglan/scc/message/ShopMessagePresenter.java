@@ -41,16 +41,16 @@ public class ShopMessagePresenter implements ShopMessageContract.Presenter {
 
     @Override
     public void isLogin() {
-        RequestClient.isLogin(new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.isLogin(new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
     }
 }

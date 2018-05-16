@@ -185,16 +185,16 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
     }
 
     private void fillData(SeeEvaluationBean seeEvaluationBean){
-        if (seeEvaluationBean!=null&&seeEvaluationBean.getResult()!=null){
+        if (seeEvaluationBean!=null&&seeEvaluationBean.getData()!=null){
             sv_evaluation.setVisibility(View.VISIBLE);
             //用户评价
-            if (seeEvaluationBean.getResult().getUserComm()!=null){
-                OwnerBean ownerBean=seeEvaluationBean.getResult().getUserComm().getOwner();
+            if (seeEvaluationBean.getData().getUserComm()!=null){
+                OwnerBean ownerBean=seeEvaluationBean.getData().getUserComm().getOwner();
                 GlideImageLoader.glideLoader(this,ownerBean.getHead_pic(),iv_headicon,0);
                 if (!TextUtils.isEmpty(ownerBean.getNickname())){
                     tv_name.setText(ownerBean.getNickname());
                 }
-                switch (seeEvaluationBean.getResult().getUserComm().getDrv_rank()){
+                switch (seeEvaluationBean.getData().getUserComm().getDrv_rank()){
                     case 5:
                         GlideImageLoader.heartIconLoader(this,R.mipmap.heart_full,iv_heartnumguide);
                         break;
@@ -214,7 +214,7 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                         rl_toguidescoring.setVisibility(View.GONE);
                         break;
                 }
-                switch (seeEvaluationBean.getResult().getUserComm().getScore()){
+                switch (seeEvaluationBean.getData().getUserComm().getScore()){
                     case 5:
                         GlideImageLoader.heartIconLoader(this,R.mipmap.heart_full,iv_heartnumgoods);
                         break;
@@ -234,9 +234,9 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                         rl_togoodscoring.setVisibility(View.GONE);
                         break;
                 }
-                tv_time.setText(seeEvaluationBean.getResult().getUserComm().getCommentTimeFmt());
-                tv_content.setText(seeEvaluationBean.getResult().getUserComm().getContent());
-                imgslist=seeEvaluationBean.getResult().getUserComm().getImgs();
+                tv_time.setText(seeEvaluationBean.getData().getUserComm().getCommentTimeFmt());
+                tv_content.setText(seeEvaluationBean.getData().getUserComm().getContent());
+                imgslist=seeEvaluationBean.getData().getUserComm().getImgs();
                 if (imgslist!=null&&imgslist.size()>0){
                     if (imgslist.size()==1&&TextUtils.isEmpty(imgslist.get(0))){
                         noscrollgridview.setVisibility(View.GONE);
@@ -250,14 +250,14 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                     noscrollgridview.setVisibility(View.GONE);
                 }
                 //平台回复
-                if (seeEvaluationBean.getResult().getSysComm()!=null){
-                    tv_time_silly.setText(seeEvaluationBean.getResult().getSysComm().getCommentTimeFmt());
-                    if (TextUtils.isEmpty(seeEvaluationBean.getResult().getSysComm().getContent())){
+                if (seeEvaluationBean.getData().getSysComm()!=null){
+                    tv_time_silly.setText(seeEvaluationBean.getData().getSysComm().getCommentTimeFmt());
+                    if (TextUtils.isEmpty(seeEvaluationBean.getData().getSysComm().getContent())){
                         tv_sillychildreply.setVisibility(View.GONE);
                     }else{
-                        tv_sillychildreply.setText(seeEvaluationBean.getResult().getSysComm().getContent());
+                        tv_sillychildreply.setText(seeEvaluationBean.getData().getSysComm().getContent());
                     }
-                    imgslistsyscomm=seeEvaluationBean.getResult().getSysComm().getImgs();
+                    imgslistsyscomm=seeEvaluationBean.getData().getSysComm().getImgs();
                     if (imgslistsyscomm!=null&&imgslistsyscomm.size()>0){
                         if (imgslistsyscomm.size()==1&&TextUtils.isEmpty(imgslistsyscomm.get(0))){
                             noscrollgridview_silly.setVisibility(View.GONE);
@@ -267,7 +267,7 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                             noscrollgridview_silly.setAdapter(adaptersyscomm);
                             noscrollgridview_silly.setOnItemClickListener(this);
                         }
-                    }else if (TextUtils.isEmpty(seeEvaluationBean.getResult().getSysComm().getContent())){
+                    }else if (TextUtils.isEmpty(seeEvaluationBean.getData().getSysComm().getContent())){
                         ll_sillychildreply.setVisibility(View.GONE);
                     }
                 }else{
@@ -278,19 +278,19 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
             }
 
             //司导评价
-            if (seeEvaluationBean.getResult().getDrvComm()!=null){
-                if (TextUtils.isEmpty(seeEvaluationBean.getResult().getDrvComm().getContent())){
+            if (seeEvaluationBean.getData().getDrvComm()!=null){
+                if (TextUtils.isEmpty(seeEvaluationBean.getData().getDrvComm().getContent())){
                     tv_guideevaluation.setVisibility(View.GONE);
                 }else{
-                    tv_guideevaluation.setText(seeEvaluationBean.getResult().getDrvComm().getContent());
+                    tv_guideevaluation.setText(seeEvaluationBean.getData().getDrvComm().getContent());
                 }
-                GlideImageLoader.glideLoader(this,seeEvaluationBean.getResult().getDrvComm().getHead_pic(),iv_guideheadicon,0);
-                if (TextUtils.isEmpty(seeEvaluationBean.getResult().getDrvComm().getNickname())){
+                GlideImageLoader.glideLoader(this,seeEvaluationBean.getData().getDrvComm().getHead_pic(),iv_guideheadicon,0);
+                if (TextUtils.isEmpty(seeEvaluationBean.getData().getDrvComm().getNickname())){
                     tv_guidename.setText(null);
                 }else{
-                    tv_guidename.setText(seeEvaluationBean.getResult().getDrvComm().getNickname());
+                    tv_guidename.setText(seeEvaluationBean.getData().getDrvComm().getNickname());
                 }
-                switch (seeEvaluationBean.getResult().getDrvComm().getScore()){
+                switch (seeEvaluationBean.getData().getDrvComm().getScore()){
                     case 5:
                         GlideImageLoader.heartIconLoader(this,R.mipmap.heart_full,iv_heartnumg);
                         break;
@@ -310,8 +310,8 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                         rl_guidscoring.setVisibility(View.GONE);
                         break;
                 }
-                tv_guidetime.setText(seeEvaluationBean.getResult().getDrvComm().getCommentTimeFmt());
-                imgslistguide=seeEvaluationBean.getResult().getDrvComm().getImgs();
+                tv_guidetime.setText(seeEvaluationBean.getData().getDrvComm().getCommentTimeFmt());
+                imgslistguide=seeEvaluationBean.getData().getDrvComm().getImgs();
                 if (imgslistguide!=null&&imgslistguide.size()>0){
                     if (imgslistguide.size()==1&&TextUtils.isEmpty(imgslistguide.get(0))){
                         noscrollgridview_guide.setVisibility(View.GONE);
@@ -321,7 +321,7 @@ public class SeeEvaluationActivity extends BaseActivity implements PostEvaluatio
                         noscrollgridview_guide.setAdapter(adapterguide);
                         noscrollgridview_guide.setOnItemClickListener(this);
                     }
-                }else if (TextUtils.isEmpty(seeEvaluationBean.getResult().getDrvComm().getContent())){
+                }else if (TextUtils.isEmpty(seeEvaluationBean.getData().getDrvComm().getContent())){
                     ll_guideevaluation.setVisibility(View.GONE);
                 }
             }else{

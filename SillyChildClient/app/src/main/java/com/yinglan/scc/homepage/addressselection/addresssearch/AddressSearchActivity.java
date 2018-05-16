@@ -182,7 +182,7 @@ public class AddressSearchActivity extends BaseActivity implements TextWatcher, 
         ll_commonError.setVisibility(View.GONE);
         if (flag == 0) {
             IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(success, IndexCityBean.class);
-            List<IndexCityBean.ResultBean> indexCityList = indexCityBean.getResult();
+            List<IndexCityBean.ResultBean> indexCityList = indexCityBean.getData();
             if (!(indexCityList != null && indexCityList.size() > 0)) {
                 errorMsg(aty.getString(R.string.serverReturnsDataNull), 0);
                 return;
@@ -245,10 +245,10 @@ public class AddressSearchActivity extends BaseActivity implements TextWatcher, 
         }
         historyCityList.add(resultBean);
         BaseResult<List<IndexCityBean.ResultBean>> baseResult = new BaseResult<>();
-        baseResult.setMsg("");
-        baseResult.setStatus(1);
+        baseResult.setMessage("");
+        baseResult.setResult(1);
         Collections.reverse(historyCityList);
-        baseResult.setResult(historyCityList);
+        baseResult.setData(historyCityList);
         PreferenceHelper.write(aty, StringConstants.FILENAME, "searchHistory", JsonUtil.getInstance().obj2JsonString(baseResult));
     }
 
@@ -271,7 +271,7 @@ public class AddressSearchActivity extends BaseActivity implements TextWatcher, 
         tv_divider.setVisibility(View.VISIBLE);
         tv_divider1.setVisibility(View.VISIBLE);
         IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(overseasHistory, IndexCityBean.class);
-        historyCityList = indexCityBean.getResult();
+        historyCityList = indexCityBean.getData();
         addressSearchViewAdapter.clear();
         addressSearchViewAdapter.addNewData(historyCityList);
     }

@@ -12,22 +12,22 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 /**
  * Created by Administrator on 2017/11/8.
  */
 
-public class FeedbackCacheActivity extends BaseActivity implements FeedbackContract.View{
+public class FeedbackCacheActivity extends BaseActivity implements FeedbackContract.View {
 
-    @BindView(id = R.id.ll_zan , click = true)
+    @BindView(id = R.id.ll_zan, click = true)
     private LinearLayout ll_zan;
-    @BindView(id = R.id.ll_qiuzhu , click = true)
+    @BindView(id = R.id.ll_qiuzhu, click = true)
     private LinearLayout ll_qiuzhu;
-    @BindView(id = R.id.ll_guzhang , click = true)
+    @BindView(id = R.id.ll_guzhang, click = true)
     private LinearLayout ll_guzhang;
-    @BindView(id = R.id.ll_jianyi , click = true)
+    @BindView(id = R.id.ll_jianyi, click = true)
     private LinearLayout ll_jianyi;
 
     @Override
@@ -45,7 +45,7 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
     @Override
     public void initData() {
         super.initData();
-        mPresenter=new FeedbackPresenter(this);
+        mPresenter = new FeedbackPresenter(this);
     }
 
     @Override
@@ -57,24 +57,24 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_zan:
                 ViewInject.toast("尚未开发，敬请期待！");
                 break;
             case R.id.ll_qiuzhu:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((FeedbackPresenter)mPresenter).getInfo();
+                ((FeedbackPresenter) mPresenter).getInfo();
                 break;
             case R.id.ll_guzhang:
-                showActivity(this,FeedbackActivity.class);
+                showActivity(this, FeedbackActivity.class);
                 break;
             case R.id.ll_jianyi:
-                showActivity(this,FeedbackActivity.class);
+                showActivity(this, FeedbackActivity.class);
                 break;
         }
     }
 
-    private void toChart(String hxusername,String nickname,String defaultnickname,String avatar){
+    private void toChart(String hxusername, String nickname, String defaultnickname, String avatar) {
         if (TextUtils.isEmpty(hxusername)) {
             ViewInject.toast(getString(R.string.infoMissing));
             return;
@@ -99,15 +99,15 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
 
     @Override
     public void setPresenter(FeedbackContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
         UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-        if (userInfoBean!=null&&userInfoBean.getResult()!=null){
-            toChart(userInfoBean.getResult().getHx_user_name(),userInfoBean.getResult().getNickname(),userInfoBean.getResult().getMobile(),userInfoBean.getResult().getHead_pic());
-        }else{
+        if (userInfoBean != null && userInfoBean.getData() != null) {
+            // toChart(userInfoBean.getData().getHx_user_name(),userInfoBean.getData().getNickname(),userInfoBean.getData().getMobile(),userInfoBean.getData().getHead_pic());
+        } else {
             ViewInject.toast(getString(R.string.infoMissing));
         }
 
@@ -116,11 +116,11 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (isLogin(msg)){
+        if (isLogin(msg)) {
             ViewInject.toast(getString(R.string.reloginPrompting));
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            showActivity(aty,LoginActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);

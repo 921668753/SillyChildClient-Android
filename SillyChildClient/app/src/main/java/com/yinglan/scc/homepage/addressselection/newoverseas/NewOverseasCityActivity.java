@@ -188,7 +188,7 @@ public class NewOverseasCityActivity extends BaseActivity implements NewOverseas
         flag1 = flag;
         if (flag == 0) {
             AllCountryBean allCountryBean = (AllCountryBean) JsonUtil.getInstance().json2Obj(success, AllCountryBean.class);
-            countryList = allCountryBean.getResult();
+            countryList = allCountryBean.getData();
             if (!(countryList != null && countryList.size() > 0)) {
                 errorMsg(aty.getString(R.string.emporarilyNoData), 0);
                 return;
@@ -200,7 +200,7 @@ public class NewOverseasCityActivity extends BaseActivity implements NewOverseas
             setAddressClassification(0);
         } else if (flag == 1) {
             AllChildCityBean allChildCityBean = (AllChildCityBean) JsonUtil.getInstance().json2Obj(success, AllChildCityBean.class);
-            List<AllChildCityBean.ResultBean> cityList = allChildCityBean.getResult();
+            List<AllChildCityBean.ResultBean> cityList = allChildCityBean.getData();
             if (!(cityList != null && cityList.size() > 0)) {
                 errorMsg(aty.getString(R.string.emporarilyNoData), 1);
                 return;

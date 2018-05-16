@@ -139,7 +139,7 @@ public class AddressPOISearchActivity extends BaseActivity implements TextWatche
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             IndexCityBean indexCityBean = (IndexCityBean) JsonUtil.json2Obj(success, IndexCityBean.class);
-            List<IndexCityBean.ResultBean> indexCityList = indexCityBean.getResult();
+            List<IndexCityBean.ResultBean> indexCityList = indexCityBean.getData();
             if (!(indexCityList != null && indexCityList.size() > 0)) {
                 errorMsg(aty.getString(R.string.serverReturnsDataNull), 0);
                 return;

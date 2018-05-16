@@ -90,7 +90,7 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             MoreClassificationBean moreClassificationBean = (MoreClassificationBean) JsonUtil.getInstance().json2Obj(success, MoreClassificationBean.class);
-            moreClassificationList = moreClassificationBean.getResult().getList();
+            moreClassificationList = moreClassificationBean.getData().getList();
             if (moreClassificationList != null && moreClassificationList.size() > 0) {
                 selectClassification(0);
             }

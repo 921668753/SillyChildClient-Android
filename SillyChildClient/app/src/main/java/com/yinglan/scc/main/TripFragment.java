@@ -195,43 +195,43 @@ public class TripFragment extends BaseFragment implements TripContract.View, BGA
     @Override
     public void getSuccess(String success, int flag) {
         TripBean tripBean = (TripBean) JsonUtil.getInstance().json2Obj(success, TripBean.class);
-        processLogic(tripBean.getResult().getBanner());
-        if (tripBean.getResult().getIndex() == null || tripBean.getResult().getIndex().size() == 0 || tripBean.getResult().getIndex().isEmpty()) {
+        processLogic(tripBean.getData().getBanner());
+        if (tripBean.getData().getIndex() == null || tripBean.getData().getIndex().size() == 0 || tripBean.getData().getIndex().isEmpty()) {
         } else {
             tripClassificationViewAdapter.clear();
-            tripClassificationViewAdapter.addNewData(tripBean.getResult().getIndex());
+            tripClassificationViewAdapter.addNewData(tripBean.getData().getIndex());
         }
 
-//        if (tripBean.getResult().getIndex() == null || tripBean.getResult().getIndex().size() == 0 || tripBean.getResult().getIndex().isEmpty()) {
+//        if (tripBean.getData().getIndex() == null || tripBean.getData().getIndex().size() == 0 || tripBean.getData().getIndex().isEmpty()) {
 //        ll_greatHouses.setVisibility(View.GONE);
 //        lv_greatHouses.setVisibility(View.GONE);
 //        } else {
 //        ll_greatHouses.setVisibility(View.VISIBLE);
 //        lv_greatHouses.setVisibility(View.VISIBLE);
 //            tripClassificationViewAdapter.clear();
-//            tripClassificationViewAdapter.addNewData(tripBean.getResult().getIndex());
+//            tripClassificationViewAdapter.addNewData(tripBean.getData().getIndex());
 //        }
 
 
-        if (tripBean.getResult().getReliable_drv() == null || tripBean.getResult().getReliable_drv().size() == 0 || tripBean.getResult().getReliable_drv().isEmpty()) {
+        if (tripBean.getData().getReliable_drv() == null || tripBean.getData().getReliable_drv().size() == 0 || tripBean.getData().getReliable_drv().isEmpty()) {
             ll_reliableCompanyGuide.setVisibility(View.GONE);
             lv_reliableCompanyGuide.setVisibility(View.GONE);
         } else {
             ll_reliableCompanyGuide.setVisibility(View.VISIBLE);
             lv_reliableCompanyGuide.setVisibility(View.VISIBLE);
             tripCompanyGuideViewAdapter.clear();
-            tripBean.getResult().getReliable_drv().get(tripBean.getResult().getReliable_drv().size() - 1).setStatusL("last");
-            tripCompanyGuideViewAdapter.addNewData(tripBean.getResult().getReliable_drv());
+            tripBean.getData().getReliable_drv().get(tripBean.getData().getReliable_drv().size() - 1).setStatusL("last");
+            tripCompanyGuideViewAdapter.addNewData(tripBean.getData().getReliable_drv());
         }
-        if (tripBean.getResult().getGuideList() == null || tripBean.getResult().getGuideList().size() == 0 || tripBean.getResult().getGuideList().isEmpty()) {
+        if (tripBean.getData().getGuideList() == null || tripBean.getData().getGuideList().size() == 0 || tripBean.getData().getGuideList().isEmpty()) {
             ll_popularStrategy.setVisibility(View.GONE);
             lv_popularStrategy.setVisibility(View.GONE);
         } else {
             ll_popularStrategy.setVisibility(View.VISIBLE);
             lv_popularStrategy.setVisibility(View.VISIBLE);
             tripHotStrategyViewAdapter.clear();
-            tripBean.getResult().getGuideList().get(tripBean.getResult().getGuideList().size() - 1).setStatusL("last");
-            tripHotStrategyViewAdapter.addNewData(tripBean.getResult().getGuideList());
+            tripBean.getData().getGuideList().get(tripBean.getData().getGuideList().size() - 1).setStatusL("last");
+            tripHotStrategyViewAdapter.addNewData(tripBean.getData().getGuideList());
         }
         dismissLoadingDialog();
     }

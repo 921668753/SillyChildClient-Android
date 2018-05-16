@@ -201,9 +201,9 @@ public class DynamicsCommentariesActivity extends BaseActivity implements Dynami
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             DynamicsCommentariesBean dynamicsCommentariesBean = (DynamicsCommentariesBean) JsonUtil.getInstance().json2Obj(success, DynamicsCommentariesBean.class);
-            mMorePageNumber = dynamicsCommentariesBean.getResult().getP();
-            totalPageNumber = dynamicsCommentariesBean.getResult().getTotalPages();
-            if (dynamicsCommentariesBean.getResult().getList() == null || dynamicsCommentariesBean.getResult().getList().size() == 0) {
+            mMorePageNumber = dynamicsCommentariesBean.getData().getP();
+            totalPageNumber = dynamicsCommentariesBean.getData().getTotalPages();
+            if (dynamicsCommentariesBean.getData().getList() == null || dynamicsCommentariesBean.getData().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
@@ -214,10 +214,10 @@ public class DynamicsCommentariesActivity extends BaseActivity implements Dynami
                 lv_dynamicsCommentaries.setAdapter(mAdapter);
                 mAdapter.setOnItemChildClickListener(this);
                 mAdapter.clear();
-                mAdapter.addNewData(dynamicsCommentariesBean.getResult().getList());
+                mAdapter.addNewData(dynamicsCommentariesBean.getData().getList());
             } else {
                 mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(dynamicsCommentariesBean.getResult().getList());
+                mAdapter.addMoreData(dynamicsCommentariesBean.getData().getList());
             }
             //   Utility.setListViewHeightBasedOnChildren(lv_dynamicsCommentaries);
         } else if (flag == 1) {

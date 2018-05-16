@@ -3,7 +3,6 @@ package com.yinglan.scc.mine.sharingceremony;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
@@ -12,11 +11,10 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.dialog.VIPPermissionsDialog;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MineContract;
 import com.yinglan.scc.main.MinePresenter;
@@ -64,7 +62,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
         if (TextUtils.isEmpty(apply_code)) {
             mPresenter = new MinePresenter(this);
             showLoadingDialog(getString(R.string.dataLoad));
-            ((MinePresenter) mPresenter).getInfo();
+        //    ((MinePresenter) mPresenter).getInfo();
         } else {
             // tv_shardecode.setText(apply_code);
         }
@@ -169,7 +167,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
         UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
         if (userInfoBean != null) {
             //   tv_shardecode.setText(apply_code);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "apply_code", userInfoBean.getResult().getApply_code());
+          //  PreferenceHelper.write(aty, StringConstants.FILENAME, "apply_code", userInfoBean.getData().getApply_code());
         } else {
             ViewInject.toast(getString(R.string.noHaveApplyCode));
         }
@@ -195,7 +193,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
         if (TextUtils.isEmpty(apply_code)) {
             if (mPresenter == null) mPresenter = new MinePresenter(this);
             showLoadingDialog(getString(R.string.dataLoad));
-            ((MinePresenter) mPresenter).getInfo();
+           // ((MinePresenter) mPresenter).getInfo();
         }
     }
 

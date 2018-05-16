@@ -23,7 +23,7 @@ import com.yinglan.scc.custominterfaces.FragmentJumpBetween;
 import com.yinglan.scc.dialog.PublicPromptDialog;
 import com.yinglan.scc.entity.DynamicStateBean;
 import com.yinglan.scc.entity.DynamicStateBean.ResultBean.ListBean;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.trip.strategy.StrategyDetailsActivity;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -148,7 +148,7 @@ public class FansCollectionStrateFragment extends BaseFragment implements FansAt
                 break;
             case 3:
                 userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-                if (userInfoBean!=null&&userInfoBean.getResult()!=null){
+                if (userInfoBean!=null&&userInfoBean.getData()!=null){
                     aty.initAmount(userInfoBean);
                 }
                 ((FansAttentionPresenter)mPresenter).getOtherInfo(aty.getFansuserid(),"4",pagenum);
@@ -162,7 +162,7 @@ public class FansCollectionStrateFragment extends BaseFragment implements FansAt
                     ViewInject.toast(getString(R.string.otherError));
                     return;
                 }
-                if (dsBean.getResult()==null||dsBean.getResult().getList()==null||dsBean.getResult().getList().size()==0){
+                if (dsBean.getData()==null||dsBean.getData().getList()==null||dsBean.getData().getList().size()==0){
                     if (isloadmore){
                         ViewInject.toast(getString(R.string.noMoreData));
                     }else{
@@ -170,9 +170,9 @@ public class FansCollectionStrateFragment extends BaseFragment implements FansAt
                     }
                     return;
                 }
-                pagenum=dsBean.getResult().getP();
-                totalPages=dsBean.getResult().getTotalPages();
-                List<ListBean> datalist = dsBean.getResult().getList();
+                pagenum=dsBean.getData().getP();
+                totalPages=dsBean.getData().getTotalPages();
+                List<ListBean> datalist = dsBean.getData().getList();
                 refreshListBean(datalist);
                 break;
         }

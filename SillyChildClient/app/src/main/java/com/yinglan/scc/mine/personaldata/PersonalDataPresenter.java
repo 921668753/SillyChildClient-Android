@@ -26,11 +26,11 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
-    public void getInfo() {
+    public void changeShzCode(String shz_code) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+        httpParams.put("shz_code", shz_code);
+        RequestClient.changeShzCode(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -44,42 +44,7 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     }
 
     @Override
-    public void setupInfo(String paramname, String voule, int resultsource) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put(paramname, voule);
-        RequestClient.putInfo(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
-            }
-        });
-    }
-
-    @Override
-    public void setupInfo(String country, String countryvoule, String city, String cityvoule, int resultsource) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put(country, countryvoule);
-        httpParams.put(city, cityvoule);
-        RequestClient.putInfoForAddress(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
-            }
-        });
-    }
-
-    @Override
-    public void upPictures(String path, int resultsource) {
+    public void upPictures(String path) {
         if (StringUtils.isEmpty(path)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
             return;
@@ -101,33 +66,57 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("file", oldFile);
-        RequestClient.upLoadImg(httpParams, 0, new ResponseListener<String>() {
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
+                mView.errorMsg(msg, 1);
             }
         });
     }
 
     @Override
-    public void changeShzCode(String shz_code) {
+    public void setBirthday(int birthday) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("shz_code", shz_code);
-        RequestClient.changeShzCode(httpParams, new ResponseListener<String>() {
+        httpParams.put("birthday", birthday);
+        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 5);
+                mView.getSuccess(response, 2);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 5);
+                mView.errorMsg(msg, 2);
             }
         });
     }
+
+    @Override
+    public void setRegion(String province, String province_id, String city, String city_id, String region, String region_id) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("province", province);
+        httpParams.put("province_id", province_id);
+        httpParams.put("city", city);
+        httpParams.put("city_id", city_id);
+        httpParams.put("region", region);
+        httpParams.put("region_id", region_id);
+        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 3);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 3);
+            }
+        });
+    }
+
+
 }

@@ -72,9 +72,9 @@ public class VipEmergencyCallActivity extends BaseActivity implements VipEmergen
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-        if (vipPhoneBean!=null&&vipPhoneBean.getResult()!=null&&!TextUtils.isEmpty(vipPhoneBean.getResult().getTelephone())){
+        if (vipPhoneBean!=null&&vipPhoneBean.getData()!=null&&!TextUtils.isEmpty(vipPhoneBean.getData().getTelephone())){
             jumpintent = new Intent(Intent.ACTION_DIAL);
-            data = Uri.parse("tel:" + vipPhoneBean.getResult().getTelephone());
+            data = Uri.parse("tel:" + vipPhoneBean.getData().getTelephone());
             jumpintent.setData(data);
             showActivity(aty, jumpintent);
         }else{
@@ -96,12 +96,12 @@ public class VipEmergencyCallActivity extends BaseActivity implements VipEmergen
     public void getSuccess(String success, int flag) {
         Log.d("调试","结果："+success);
         vipPhoneBean = (VipPhoneBean) JsonUtil.getInstance().json2Obj(success, VipPhoneBean.class);
-        if (vipPhoneBean!=null&&vipPhoneBean.getResult()!=null){
-            if (TextUtils.isEmpty(vipPhoneBean.getResult().getContent())){
+        if (vipPhoneBean!=null&&vipPhoneBean.getData()!=null){
+            if (TextUtils.isEmpty(vipPhoneBean.getData().getContent())){
                 ll_content.setVisibility(View.GONE);
             }else{
                 ll_content.setVisibility(View.VISIBLE);
-                tv_content.setText(vipPhoneBean.getResult().getContent());
+                tv_content.setText(vipPhoneBean.getData().getContent());
             }
             dismissLoadingDialog();
         }else{

@@ -313,16 +313,16 @@ public class DynamicsDetailsActivity extends BaseActivity implements DynamicsDet
      * 加载页面数据
      */
     public void loadPageData(DynamicsDetailsBean dynamicsDetailsBean) {
-        processLogic(dynamicsDetailsBean.getResult().getImg());
-        GlideImageLoader.glideLoader(this, dynamicsDetailsBean.getResult().getOwner().getAvatar(), img_head, 0);
-        tv_name.setText(dynamicsDetailsBean.getResult().getOwner().getNickname());
-        tv_title.setText(dynamicsDetailsBean.getResult().getTitle());
-        tv_content.setText(dynamicsDetailsBean.getResult().getContent());
-        tv_date.setText(dynamicsDetailsBean.getResult().getTimeFmt());
-        tv_collect.setText(dynamicsDetailsBean.getResult().getCollectNum() + "");
-        tv_zan.setText(dynamicsDetailsBean.getResult().getPraiseNum() + "");
-        publish_id = dynamicsDetailsBean.getResult().getOwner().getId() + "";
-        isAttention = dynamicsDetailsBean.getResult().getOwner().getIsAttention();
+        processLogic(dynamicsDetailsBean.getData().getImg());
+        GlideImageLoader.glideLoader(this, dynamicsDetailsBean.getData().getOwner().getAvatar(), img_head, 0);
+        tv_name.setText(dynamicsDetailsBean.getData().getOwner().getNickname());
+        tv_title.setText(dynamicsDetailsBean.getData().getTitle());
+        tv_content.setText(dynamicsDetailsBean.getData().getContent());
+        tv_date.setText(dynamicsDetailsBean.getData().getTimeFmt());
+        tv_collect.setText(dynamicsDetailsBean.getData().getCollectNum() + "");
+        tv_zan.setText(dynamicsDetailsBean.getData().getPraiseNum() + "");
+        publish_id = dynamicsDetailsBean.getData().getOwner().getId() + "";
+        isAttention = dynamicsDetailsBean.getData().getOwner().getIsAttention();
         if (isAttention == 1) {
             tv_attention.setBackgroundResource(R.drawable.shape_code1);
             tv_attention.setTextColor(getResources().getColor(R.color.hintColors));
@@ -332,31 +332,31 @@ public class DynamicsDetailsActivity extends BaseActivity implements DynamicsDet
             tv_attention.setTextColor(getResources().getColor(R.color.greenColors));
             tv_attention.setText(getString(R.string.attention));
         }
-        isPraise = dynamicsDetailsBean.getResult().getIsPraise();
+        isPraise = dynamicsDetailsBean.getData().getIsPraise();
         if (isPraise == 1) {
             img_zan.setImageResource(R.mipmap.btn_favor_pressed);
         } else {
             img_zan.setImageResource(R.mipmap.btn_favor_normal1);
         }
-        isCollectDynamic = dynamicsDetailsBean.getResult().getIsCollect();
+        isCollectDynamic = dynamicsDetailsBean.getData().getIsCollect();
         if (isCollectDynamic == 1) {
             img_collect.setImageResource(R.mipmap.btn_collect_pressed);
         } else {
             img_collect.setImageResource(R.mipmap.btn_collect_normal1);
         }
-        if (dynamicsDetailsBean.getResult().getComments() == null || dynamicsDetailsBean.getResult().getComments().size() == 0) {
+        if (dynamicsDetailsBean.getData().getComments() == null || dynamicsDetailsBean.getData().getComments().size() == 0) {
             tv_commentaries.setText("0");
         } else {
-            tv_commentaries.setText(String.valueOf(dynamicsDetailsBean.getResult().getComments().size()));
+            tv_commentaries.setText(String.valueOf(dynamicsDetailsBean.getData().getComments().size()));
         }
         dynamicsDetailsCommentarieViewAdapter = null;
         dynamicsDetailsCommentarieViewAdapter = new DynamicsDetailsCommentarieViewAdapter(this, first, two);
         lv_dynamicsComments.setAdapter(dynamicsDetailsCommentarieViewAdapter);
         dynamicsDetailsCommentarieViewAdapter.setOnItemChildClickListener(this);
         List<CommentsBean> list = new ArrayList();
-        for (int i = 0; i < dynamicsDetailsBean.getResult().getComments().size(); i++) {
+        for (int i = 0; i < dynamicsDetailsBean.getData().getComments().size(); i++) {
             if (i < 2) {
-                list.add(dynamicsDetailsBean.getResult().getComments().get(i));
+                list.add(dynamicsDetailsBean.getData().getComments().get(i));
             }
         }
         dynamicsDetailsCommentarieViewAdapter.addNewData(list);

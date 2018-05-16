@@ -1,6 +1,5 @@
 package com.yinglan.scc.mine.fansattention;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
@@ -14,16 +13,9 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
-import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.dialog.PublicPromptDialog;
-import com.yinglan.scc.entity.UserInfoBean;
-import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.myrelease.collectiondynamic.CollectionDynamicFragment;
-import com.yinglan.scc.mine.myrelease.collectionstrate.CollectionStrateFragment;
-import com.yinglan.scc.mine.myrelease.dynamicstate.DynamicStateFragment;
-import com.yinglan.scc.mine.myrelease.strate.StrateFragment;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 /**
@@ -342,93 +334,93 @@ public class FansInfoActivity extends BaseActivity {
     }
 
     public void initAmount(UserInfoBean userInfoBean){
-        GlideImageLoader.glideLoader(aty,userInfoBean.getResult().getHead_pic(),iv_minetouxiang,0);
-        tv_mineusername.setText(userInfoBean.getResult().getNickname());
-
-            country=userInfoBean.getResult().getCountry();
-            city=userInfoBean.getResult().getCity();
-            address="";
-            if (!TextUtils.isEmpty(country)){
-                address+=country+"•";
-            }
-            if (!TextUtils.isEmpty(city)){
-                address+=city;
-            }
-            tv_address.setText(address);
-
-            tv_attention.setVisibility(View.VISIBLE);
-            isattention=userInfoBean.getResult().getIsAttention();
-            if (isattention==0){
-                tv_attention.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_guanzhu_add),null,null,null);
-                tv_attention.setText(getString(R.string.follow));
-            }else{
-                tv_attention.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_guanzhu_over),null,null,null);
-                tv_attention.setText(getString(R.string.followed));
-            }
-
-            iv_minetype.setVisibility(View.VISIBLE);
-            int level=userInfoBean.getResult().getLevel();
-            switch (level) {
-                case 1:
-                    iv_minetype.setImageResource(R.mipmap.minepthyxxx);
-                    break;
-                case 2:
-                    iv_minetype.setImageResource(R.mipmap.mineviphyxxx);
-                    break;
-                case 3:
-                    iv_minetype.setImageResource(R.mipmap.minezjthyxxx);
-                    break;
-                case 4:
-                    iv_minetype.setImageResource(R.mipmap.minegjhyxxx);
-                    break;
-                case 5:
-                    iv_minetype.setImageResource(R.mipmap.minecjvipxxx);
-                    break;
-                case 6:
-                    iv_minetype.setImageResource(R.mipmap.minezzvipxxx);
-                    break;
-                default:
-                    iv_minetype.setVisibility(View.INVISIBLE);
-                    break;
-            }
-            int sex=userInfoBean.getResult().getSex();
-            switch (sex) {
-                case 1:
-                    iv_minesexicon.setVisibility(View.VISIBLE);
-                    iv_minesexicon.setImageResource(R.mipmap.minenanxxx);
-                    break;
-                case 2:
-                    iv_minesexicon.setVisibility(View.VISIBLE);
-                    iv_minesexicon.setImageResource(R.mipmap.minenvxxx);
-                    break;
-                case 0:
-                    iv_minesexicon.setVisibility(View.GONE);
-                    break;
-            }
-
-        if (TextUtils.isEmpty(userInfoBean.getResult().getFans_num())){
-            tv_minefsnum.setText("0");
-        }else{
-            tv_minefsnum.setText(userInfoBean.getResult().getFans_num());
-        }
-
-        if (TextUtils.isEmpty(userInfoBean.getResult().getAttention_num())){
-            tv_minegznum.setText("0");
-        }else{
-            tv_minegznum.setText(userInfoBean.getResult().getAttention_num());
-        }
-
-        if (TextUtils.isEmpty(userInfoBean.getResult().getGood_num())){
-            tv_minebznum.setText("0");
-        }else{
-            tv_minebznum.setText(userInfoBean.getResult().getGood_num());
-        }
-
-        if (TextUtils.isEmpty(userInfoBean.getResult().getCollection_num())){
-            tv_minebscnum.setText("0");
-        }else{
-            tv_minebscnum.setText(userInfoBean.getResult().getCollection_num());
-        }
+//        GlideImageLoader.glideLoader(aty,userInfoBean.getData().getHead_pic(),iv_minetouxiang,0);
+//        tv_mineusername.setText(userInfoBean.getData().getNickname());
+//
+//            country=userInfoBean.getData().getCountry();
+//            city=userInfoBean.getData().getCity();
+//            address="";
+//            if (!TextUtils.isEmpty(country)){
+//                address+=country+"•";
+//            }
+//            if (!TextUtils.isEmpty(city)){
+//                address+=city;
+//            }
+//            tv_address.setText(address);
+//
+//            tv_attention.setVisibility(View.VISIBLE);
+//            isattention=userInfoBean.getData().getIsAttention();
+//            if (isattention==0){
+//                tv_attention.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_guanzhu_add),null,null,null);
+//                tv_attention.setText(getString(R.string.follow));
+//            }else{
+//                tv_attention.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_guanzhu_over),null,null,null);
+//                tv_attention.setText(getString(R.string.followed));
+//            }
+//
+//            iv_minetype.setVisibility(View.VISIBLE);
+//            int level=userInfoBean.getData().getLevel();
+//            switch (level) {
+//                case 1:
+//                    iv_minetype.setImageResource(R.mipmap.minepthyxxx);
+//                    break;
+//                case 2:
+//                    iv_minetype.setImageResource(R.mipmap.mineviphyxxx);
+//                    break;
+//                case 3:
+//                    iv_minetype.setImageResource(R.mipmap.minezjthyxxx);
+//                    break;
+//                case 4:
+//                    iv_minetype.setImageResource(R.mipmap.minegjhyxxx);
+//                    break;
+//                case 5:
+//                    iv_minetype.setImageResource(R.mipmap.minecjvipxxx);
+//                    break;
+//                case 6:
+//                    iv_minetype.setImageResource(R.mipmap.minezzvipxxx);
+//                    break;
+//                default:
+//                    iv_minetype.setVisibility(View.INVISIBLE);
+//                    break;
+//            }
+//            int sex=userInfoBean.getData().getSex();
+//            switch (sex) {
+//                case 1:
+//                    iv_minesexicon.setVisibility(View.VISIBLE);
+//                    iv_minesexicon.setImageResource(R.mipmap.minenanxxx);
+//                    break;
+//                case 2:
+//                    iv_minesexicon.setVisibility(View.VISIBLE);
+//                    iv_minesexicon.setImageResource(R.mipmap.minenvxxx);
+//                    break;
+//                case 0:
+//                    iv_minesexicon.setVisibility(View.GONE);
+//                    break;
+//            }
+//
+//        if (TextUtils.isEmpty(userInfoBean.getData().getFans_num())){
+//            tv_minefsnum.setText("0");
+//        }else{
+//            tv_minefsnum.setText(userInfoBean.getData().getFans_num());
+//        }
+//
+//        if (TextUtils.isEmpty(userInfoBean.getData().getAttention_num())){
+//            tv_minegznum.setText("0");
+//        }else{
+//            tv_minegznum.setText(userInfoBean.getData().getAttention_num());
+//        }
+//
+//        if (TextUtils.isEmpty(userInfoBean.getData().getGood_num())){
+//            tv_minebznum.setText("0");
+//        }else{
+//            tv_minebznum.setText(userInfoBean.getData().getGood_num());
+//        }
+//
+//        if (TextUtils.isEmpty(userInfoBean.getData().getCollection_num())){
+//            tv_minebscnum.setText("0");
+//        }else{
+//            tv_minebscnum.setText(userInfoBean.getData().getCollection_num());
+//        }
     }
 
     public String getFansuserid() {

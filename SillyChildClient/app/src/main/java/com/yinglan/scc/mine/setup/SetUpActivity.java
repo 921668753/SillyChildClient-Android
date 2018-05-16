@@ -241,10 +241,10 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             BaseResult baseResult = (BaseResult) JsonUtil.getInstance().json2Obj(success, BaseResult.class);
-            if ((String) baseResult.getResult() == null) {
+            if ((String) baseResult.getData() == null) {
                 return;
             }
-            File path = new File((String) baseResult.getResult());
+            File path = new File((String) baseResult.getData());
             FileNewUtil.installApkFile(this, path.getAbsolutePath());
         } else if (flag == 1) {
             skipActivity(aty, LoginActivity.class);

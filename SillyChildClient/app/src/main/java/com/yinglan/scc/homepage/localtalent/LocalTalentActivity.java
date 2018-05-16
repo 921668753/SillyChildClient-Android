@@ -203,18 +203,18 @@ public class LocalTalentActivity extends BaseActivity implements LocalTalentCont
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         LocalTalentBean LocalTalentBean = (LocalTalentBean) JsonUtil.getInstance().json2Obj(success, LocalTalentBean.class);
-        totalPageNumber = LocalTalentBean.getResult().getTotalPages();
-        if (LocalTalentBean.getResult().getList() == null || LocalTalentBean.getResult().getList().size() == 0) {
+        totalPageNumber = LocalTalentBean.getData().getTotalPages();
+        if (LocalTalentBean.getData().getList() == null || LocalTalentBean.getData().getList().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(LocalTalentBean.getResult().getList());
+            mAdapter.addNewData(LocalTalentBean.getData().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(LocalTalentBean.getResult().getList());
+            mAdapter.addMoreData(LocalTalentBean.getData().getList());
         }
         dismissLoadingDialog();
     }

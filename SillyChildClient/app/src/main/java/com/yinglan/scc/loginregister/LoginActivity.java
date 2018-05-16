@@ -13,22 +13,20 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareConfig;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.LoginBean;
+import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.loginregister.bindingaccount.BindingAccountActivity;
 import com.yinglan.scc.loginregister.forgotpassword.RetrievePasswordActivity;
 import com.yinglan.scc.loginregister.register.RegisterActivity;
-import com.yinglan.scc.mine.fansattention.FansAttentionActivity;
-import com.yinglan.scc.mine.fansattention.FansInfoActivity;
-import com.yinglan.scc.mine.myorder.MyOrderActivity;
-import com.yinglan.scc.mine.myrelease.MyReleaseActivity;
-import com.yinglan.scc.mine.sharingceremony.SharingCeremonyActivity;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -191,69 +189,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-//            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "country", bean.getResult().getCountry());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "city", bean.getResult().getCity());
-            ((LoginContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
+            ((LoginContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
         } else if (flag == 1) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
-            KJActivityStack.create().finishActivity(MyReleaseActivity.class);
-            KJActivityStack.create().finishActivity(SharingCeremonyActivity.class);
-            KJActivityStack.create().finishActivity(FansInfoActivity.class);
-            KJActivityStack.create().finishActivity(FansAttentionActivity.class);
-            KJActivityStack.create().finishActivity(MyOrderActivity.class);
+            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
             dismissLoadingDialog();
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             finish();
-        } else if (flag == 2) {
-            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            Log.d("tag111", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            if (StringUtils.isEmpty(bean.getResult().getMobile()) && StringUtils.isEmpty(bean.getResult().getEmail()) || bean.getResult().getMobile().length() <= 0 && bean.getResult().getEmail().length() <= 0) {
-                dismissLoadingDialog();
-                Intent intent = new Intent(aty, BindingAccountActivity.class);
-                intent.putExtra("openid", openid);
-                intent.putExtra("from", from);
-                intent.putExtra("nickname", nickname);
-                intent.putExtra("head_pic", head_pic);
-                intent.putExtra("sex", sex);
-                showActivity(aty, intent);
-                return;
-            }
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "email", bean.getResult().getEmail());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "country", bean.getResult().getCountry());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "city", bean.getResult().getCity());
-            ((LoginContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
-//            finish();
-//            dismissLoadingDialog();
         }
     }
 
@@ -335,7 +283,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
      * 第三方授权
      */
     private void thirdLogin(SHARE_MEDIA platform) {
-        //   UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, platform, umAuthListener);
+        UMShareConfig config = new UMShareConfig();
+        config.isNeedAuthOnGetUserInfo(true);
+        UMShareAPI.get(LoginActivity.this).setShareConfig(config);
         UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, platform, umAuthListener);
     }
 
@@ -400,7 +350,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 return;
             }
             ViewInject.toast(getString(R.string.authoriseErr));
-            //   Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -412,7 +361,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         public void onCancel(SHARE_MEDIA platform, int action) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.authoriseErr1));
-            //  Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -432,16 +380,5 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
-    }
-
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-        KJActivityStack.create().finishActivity(MyReleaseActivity.class);
-        KJActivityStack.create().finishActivity(SharingCeremonyActivity.class);
-        KJActivityStack.create().finishActivity(FansInfoActivity.class);
-        KJActivityStack.create().finishActivity(FansAttentionActivity.class);
-        KJActivityStack.create().finishActivity(MyOrderActivity.class);
-        finish();
     }
 }

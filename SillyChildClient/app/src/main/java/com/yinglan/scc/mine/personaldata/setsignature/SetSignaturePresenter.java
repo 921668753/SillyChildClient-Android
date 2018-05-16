@@ -22,15 +22,15 @@ public class SetSignaturePresenter implements SetSignatureContract.Presenter {
     }
 
     @Override
-    public void setupInfo(String personalized_signature) {
-        if (TextUtils.isEmpty(personalized_signature)){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillSignature),0);
+    public void setSignature(String personalized_signature) {
+        if (TextUtils.isEmpty(personalized_signature)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillSignature), 0);
             return;
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("personalized_signature",personalized_signature);
-        RequestClient.putInfo(httpParams, new ResponseListener<String>() {
+        httpParams.put("personalized_signature", personalized_signature);
+        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

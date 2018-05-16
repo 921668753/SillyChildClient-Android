@@ -2,8 +2,6 @@ package com.yinglan.scc.mine.myrelease.collectionstrate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
@@ -23,15 +20,13 @@ import com.yinglan.scc.custominterfaces.FragmentJumpBetween;
 import com.yinglan.scc.dialog.PublicPromptDialog;
 import com.yinglan.scc.entity.DynamicStateBean;
 import com.yinglan.scc.entity.DynamicStateBean.ResultBean.ListBean;
-import com.yinglan.scc.entity.UserInfoBean;
+import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.mine.myrelease.MyReleaseActivity;
 import com.yinglan.scc.trip.strategy.StrategyDetailsActivity;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 
 /**
@@ -110,29 +105,29 @@ public class CollectionStrateFragment extends BaseFragment implements Collection
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.uncollectible));
         }else if (flag==2){
-            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean!=null&&userInfoBean.getResult()!=null){
-                aty.initAmount(userInfoBean.getResult().getFans_num(),userInfoBean.getResult().getAttention_num(),userInfoBean.getResult().getGood_num(),userInfoBean.getResult().getCollection_num());
-            }
-            ((CollectionStratePresenter)mPresenter).getCollectionStrateList(pagenum,NumericConstants.LOADCOUNT);
-        }else{
-            pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-            dsBean=(DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
-            if (dsBean==null){
-                refreshListBean(null);
-                ViewInject.toast(getString(R.string.otherError));
-                return;
-            }
-            if (dsBean.getResult()==null||dsBean.getResult().getList()==null||dsBean.getResult().getList().size()==0){
-                if (isloadmore){
-                    ViewInject.toast(getString(R.string.noMoreData));
-                }else{
-                    refreshListBean(null);
-                }
-                return;
-            }
-            List<ListBean> datalist = dsBean.getResult().getList();
-            refreshListBean(datalist);
+//            userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+//            if (userInfoBean!=null&&userInfoBean.getData()!=null){
+//                aty.initAmount(userInfoBean.getData().getFans_num(),userInfoBean.getData().getAttention_num(),userInfoBean.getData().getGood_num(),userInfoBean.getData().getCollection_num());
+//            }
+//            ((CollectionStratePresenter)mPresenter).getCollectionStrateList(pagenum,NumericConstants.LOADCOUNT);
+//        }else{
+//            pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+//            dsBean=(DynamicStateBean) JsonUtil.json2Obj(success, DynamicStateBean.class);
+//            if (dsBean==null){
+//                refreshListBean(null);
+//                ViewInject.toast(getString(R.string.otherError));
+//                return;
+//            }
+//            if (dsBean.getData()==null||dsBean.getData().getList()==null||dsBean.getData().getList().size()==0){
+//                if (isloadmore){
+//                    ViewInject.toast(getString(R.string.noMoreData));
+//                }else{
+//                    refreshListBean(null);
+//                }
+//                return;
+//            }
+//            List<ListBean> datalist = dsBean.getData().getList();
+//            refreshListBean(datalist);
         }
     }
 
