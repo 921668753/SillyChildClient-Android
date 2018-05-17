@@ -9,15 +9,11 @@ import com.common.cklibrary.common.BaseView;
 
 public interface AllGoodsContract {
     interface Presenter extends BasePresenter {
-        /**
-         * 账号登录
-         */
-        void postToLogin(String phone, String pwd);
 
         /**
-         * 获取用户信息
+         * 获取店铺的全部商品列表
          */
-        void getInfo();
+        void getStoreGoodsList(int storeid, int page, String price, String order, String cat_id);
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import cn.bingoogolapple.swipeitemlayout.BGASwipeItemLayout;
 /**
  * 我的购物车适配器
  */
-public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<GoodslistBean> {
 
     /**
      * 当前处于打开状态的item
@@ -57,16 +57,16 @@ public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<ListBean> {
     }
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, GoodslistBean listBean) {
         BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_myShoppingCart);
         if (listBean.getIsEdit() == 0) {
             viewHolderHelper.setVisibility(R.id.img_checkbox, View.GONE);
             swipeItemLayout.setSwipeAble(true);
         } else {
             if (listBean.getIsSelected() == 0) {
-                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.mineaddress_unselectxxx);
+                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_unselected);
             } else {
-                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.mineaddress_selectxxx);
+                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_selected);
             }
             viewHolderHelper.setVisibility(R.id.img_checkbox, View.VISIBLE);
             swipeItemLayout.setSwipeAble(false);
@@ -75,27 +75,27 @@ public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          *商品图片
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getDr_name(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage_default(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
 
         /**
          *商品名字
          */
-        viewHolderHelper.setText(R.id.tv_goodName, listBean.getOrder_code());
+        viewHolderHelper.setText(R.id.tv_goodName, listBean.getName());
 
         /**
          *商品简介
          */
-        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getPushTime());
+        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getStore_name());
 
         /**
          *商品价格
          */
-        viewHolderHelper.setText(R.id.tv_money, listBean.getPushTime());
+        viewHolderHelper.setText(R.id.tv_money, listBean.getPrice());
 
         /**
          *商品数量
          */
-        viewHolderHelper.setText(R.id.tv_goodNumber, listBean.getPushTime());
+        viewHolderHelper.setText(R.id.tv_goodNumber, listBean.getNum());
 
     }
 

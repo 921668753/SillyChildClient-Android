@@ -51,7 +51,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen15"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_beauty_makeup_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -73,7 +73,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen15"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_nursing_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -95,7 +95,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen15"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_mother_and_child_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -117,7 +117,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen15"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_shoe_bag_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -139,7 +139,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen15"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_clothing_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -170,7 +170,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_digital_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -192,7 +192,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_household_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -214,7 +214,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_health_care_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -236,7 +236,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_food_icon" />
 
                         <TextView
                             style="@style/WrapWrap"
@@ -258,7 +258,7 @@
                             style="@style/Image40"
                             android:layout_marginTop="@dimen/dimen8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/default_image" />
+                            android:src="@mipmap/home_more_icon" />
 
                         <TextView
                             style="@style/WrapWrap"

@@ -9,15 +9,17 @@ import com.common.cklibrary.common.BaseView;
 
 public interface ShopHomePageContract {
     interface Presenter extends BasePresenter {
-        /**
-         * 账号登录
-         */
-        void postToLogin(String phone, String pwd);
 
         /**
-         * 获取用户信息
+         * 获取店铺首页轮播图
          */
         void getInfo();
+
+        /**
+         * 获取店铺首页要展示的商品列表
+         */
+        void getStoreIndexGoods(int storeid);
+
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -364,7 +364,7 @@
 
         <!--我的 收货地址  新增地址-->
         <activity
-            android:name="com.yinglan.scc.mine.deliveryaddress.NewAddressActivity"
+            android:name="com.yinglan.scc.mine.deliveryaddress.AddNewAddressActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--我的   我的收藏-->

@@ -34,27 +34,27 @@ public class HomePagePresenter implements HomePageContract.Presenter {
     @Override
     public void getHomePage(String city) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getHome(httpParams, city, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.getSuccess(response, 0);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.errorMsg(msg, 0);
-                    }
-                });
-            }
-        });
+//        RequestClient.getHome(httpParams, city, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mView.getSuccess(response, 0);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mView.errorMsg(msg, 0);
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override

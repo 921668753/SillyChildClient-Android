@@ -1,4 +1,4 @@
-package com.yinglan.scc.adapter.main;
+package com.yinglan.scc.adapter.main.homepage;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

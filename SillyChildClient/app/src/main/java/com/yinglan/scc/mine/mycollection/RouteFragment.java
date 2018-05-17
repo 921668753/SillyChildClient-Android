@@ -111,7 +111,7 @@ public class RouteFragment extends BaseFragment implements BGARefreshLayout.BGAR
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyCollectionPresenter) mPresenter).getRouteCollection(0,mMorePageNumber);
+       // ((MyCollectionPresenter) mPresenter).getRouteCollection(0,mMorePageNumber);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class RouteFragment extends BaseFragment implements BGARefreshLayout.BGAR
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyCollectionPresenter) mPresenter).getRouteCollection(0,mMorePageNumber);
+   //     ((MyCollectionPresenter) mPresenter).getRouteCollection(0,mMorePageNumber);
         return true;
     }
 

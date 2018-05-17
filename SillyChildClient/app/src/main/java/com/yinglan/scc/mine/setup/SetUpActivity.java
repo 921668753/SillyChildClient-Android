@@ -132,7 +132,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 showActivity(this, AboutUsActivity.class);
                 break;
             case R.id.tv_logOut:
-                ((SetUpContract.Presenter) mPresenter).logOutHuanXin(aty);
+                ((SetUpContract.Presenter) mPresenter).logOutAPP(aty);
                 break;
             case R.id.ll_feedback:
 //                showActivity(this, FeedbackCacheActivity.class);

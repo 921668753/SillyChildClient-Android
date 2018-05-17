@@ -112,7 +112,7 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
     public void umShare(SHARE_MEDIA platform) {
         UMImage thumb;
         thumb = new UMImage(this, R.mipmap.android_template);
-        UMWeb web = new UMWeb(URLConstants.SHARINGCEREMONY + apply_code);
+        UMWeb web = new UMWeb(URLConstants.ADDADDRESS + apply_code);
         web.setTitle(getString(R.string.sharingCeremony));//标题
         web.setThumb(thumb);  //缩略图
         web.setDescription(getString(R.string.welcomSilly));//描述

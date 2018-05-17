@@ -26,6 +26,8 @@
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
+    <include layout="@layout/common_error" />
+
     <LinearLayout
         style="@style/Match50"
         android:layout_alignParentBottom="true"

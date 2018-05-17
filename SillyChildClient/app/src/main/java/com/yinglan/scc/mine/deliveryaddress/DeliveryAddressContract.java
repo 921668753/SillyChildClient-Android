@@ -9,27 +9,22 @@ import java.io.File;
  * Created by ruitu on 2016/9/24.
  */
 
-public interface MineAddressContract {
+public interface DeliveryAddressContract {
     interface Presenter extends BasePresenter {
         /**
          * 收货地址列表
          */
-        void allAddress();
+        void getAddressList();
+
+        /**
+         * 设置默认收货地址
+         */
+        void setDefaultAddress(int addr_id);
 
         /**
          * 收货地址删除
          */
-        void deleteAddress(String paramname, String voule, int resultsource);
-
-        /**
-         * 收货地址添加
-         */
-        void addAddress(String paramname, File voule, int resultsource);
-
-        /**
-         *设置默认收货地址
-         */
-        void defaultAddress(String paramname, File voule, int resultsource);
+        void postDeleteAddress(int addr_id);
 
     }
 

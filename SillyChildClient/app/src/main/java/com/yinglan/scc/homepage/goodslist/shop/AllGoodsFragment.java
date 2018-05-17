@@ -7,16 +7,19 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.shop.AllGoodsViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.entity.homepage.goodslist.shop.AllGoodsBean;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -47,8 +50,16 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
      */
     @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
-    @BindView(id = R.id.tv_hintText, click = true)
+
+    @BindView(id = R.id.img_err)
+    private ImageView img_err;
+
+    @BindView(id = R.id.tv_hintText)
     private TextView tv_hintText;
+
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
+
 
     /**
      * 当前页码
@@ -68,6 +79,12 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     private RecyclerView.LayoutManager layoutManager;
     private SpacesItemDecoration spacesItemDecoration;
 
+    private int storeid = 0;
+
+    private String price = "";
+    private String order = "";
+    private String cat_id = "";
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (ShopActivity) getActivity();
@@ -81,6 +98,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mAdapter = new AllGoodsViewAdapter(recyclerView);
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        storeid = aty.getIntent().getIntExtra("storeid", 0);
     }
 
     @Override
@@ -88,6 +106,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         initRecyclerView();
+        mRefreshLayout.beginRefreshing();
     }
 
     /**
@@ -104,10 +123,27 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mAdapter.setOnRVItemClickListener(this);
     }
 
+    /**
+     * 控件监听事件
+     */
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    mRefreshLayout.beginRefreshing();
+                    return;
+                }
+                aty.showActivity(aty, LoginActivity.class);
+                break;
+        }
+    }
+
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", mAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
@@ -116,22 +152,19 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, mMorePageNumber, price, order, cat_id);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endLoadingMore();
         if (!isShowLoadingMore) {
-            return false;
-        }
-        mMorePageNumber++;
-        if (mMorePageNumber > totalPageNumber) {
             ViewInject.toast(getString(R.string.noMoreData));
             return false;
         }
+        mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, mMorePageNumber, price, order, cat_id);
         return true;
     }
 
@@ -143,42 +176,68 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     @Override
     public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
+        mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
-//        }
+        AllGoodsBean allGoodsBean = (AllGoodsBean) JsonUtil.getInstance().json2Obj(success, AllGoodsBean.class);
+        if (allGoodsBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                allGoodsBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            errorMsg(getString(R.string.noCollectedGoods), 1);
+            return;
+        } else if (allGoodsBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                allGoodsBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            isShowLoadingMore = false;
+            return;
+        }
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            mAdapter.clear();
+            mAdapter.addNewData(allGoodsBean.getData());
+        } else {
+            mAdapter.addMoreData(allGoodsBean.getData());
+        }
         dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (isLogin(msg)) {
-            aty.showActivity(aty, LoginActivity.class);
-            return;
-        }
+        dismissLoadingDialog();
+        //  if (flag == 0) {
         isShowLoadingMore = false;
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setText(msg + getString(R.string.clickRefresh));
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
         } else {
             mRefreshLayout.endLoadingMore();
         }
-        dismissLoadingDialog();
+        mRefreshLayout.setPullDownRefreshEnable(false);
+        mRefreshLayout.setVisibility(View.GONE);
+        ll_commonError.setVisibility(View.VISIBLE);
+        tv_hintText.setVisibility(View.VISIBLE);
+        tv_button.setVisibility(View.VISIBLE);
+        if (isLogin(msg)) {
+            img_err.setImageResource(R.mipmap.no_login);
+            tv_hintText.setVisibility(View.GONE);
+            tv_button.setText(getString(R.string.login));
+            // ViewInject.toast(getString(R.string.reloginPrompting));
+            aty.showActivity(aty, LoginActivity.class);
+            return;
+        } else if (msg.contains(getString(R.string.checkNetwork))) {
+            img_err.setImageResource(R.mipmap.no_network);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        } else if (msg.contains(getString(R.string.noAddress))) {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setVisibility(View.GONE);
+        } else {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        }
+//        } else {
+//            ViewInject.toast(msg);
+//        }
     }
 
     @Override

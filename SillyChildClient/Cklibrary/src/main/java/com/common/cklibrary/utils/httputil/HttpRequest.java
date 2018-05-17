@@ -32,7 +32,6 @@ public class HttpRequest {
 
     private static RxCookieVolley.Builder builder = null;
     private static RxVolley.Builder builder2;
-    static String cookies = null;
 
     public static void requestHttp(String url, final Context context, final int httpMethod, int contentType, HttpParams params, boolean isCache, final ResponseListener responseListener) {
         if (!NetworkUtils.isNetWorkAvailable(context)) {

@@ -60,6 +60,8 @@
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:hint="@string/contactWayHint"
+            android:digits="@string/number0"
+            android:inputType="phone"
             android:textColor="@color/textColor"
             android:textColorHint="@color/hintColors"
             android:textCursorDrawable="@drawable/shape_cursor"
@@ -90,7 +92,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_selectaddress"
+                android:id="@+id/tv_selectAddress"
                 style="@style/AutoMatch"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
@@ -125,7 +127,7 @@
             android:textSize="@dimen/textsize14" />
 
         <EditText
-            android:id="@+id/et_address"
+            android:id="@+id/et_detailedAddress"
             style="@style/MatchWrap"
             android:layout_marginLeft="@dimen/dimen35"
             android:layout_toRightOf="@id/tv_detailedAddress"
@@ -146,7 +148,6 @@
     <include layout="@layout/common_dividerwidth1" />
 
     <LinearLayout
-        android:id="@+id/ll_defaultaddress"
         style="@style/MatchWrap"
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
@@ -165,18 +166,18 @@
         <TextView style="@style/AutoWrap" />
 
         <ImageView
-            android:id="@+id/iv_defaultaddress"
+            android:id="@+id/iv_defaultAddress"
             android:layout_width="@dimen/dimen60"
             android:layout_height="@dimen/dimen35"
             android:paddingBottom="@dimen/dimen9"
             android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen15"
             android:paddingTop="@dimen/dimen9"
-            android:src="@mipmap/address_set_as_default_selected" />
+            android:src="@mipmap/address_set_as_default_unselected" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_save"
+        android:id="@+id/tv_addAddress"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen40"
         android:layout_marginLeft="@dimen/dimen73"

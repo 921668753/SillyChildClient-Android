@@ -10,15 +10,21 @@ import com.yinglan.scc.mine.myorder.MyOrderActivity;
 
 public interface MyCollectionContract {
     interface Presenter extends BasePresenter {
-        /**
-         * 获取收藏的包车产品
-         */
-        void getCharterCollection(int p, int pageSize);
-        /**
-         * 获取收藏的路线列表
-         */
-        void getRouteCollection(int model_type, int p);
 
+        /**
+         * 获取收藏商品列表
+         */
+        void getFavoriteGoodList(int page);
+
+        /**
+         * 取消收藏
+         */
+        void postUnFavoriteGood(int goodsid);
+
+        /**
+         * 加入购物车
+         */
+        void postAddCartGood(int goodsid);
     }
 
     interface View extends BaseView<Presenter, String> {

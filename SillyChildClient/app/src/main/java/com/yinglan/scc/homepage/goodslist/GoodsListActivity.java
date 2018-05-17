@@ -6,16 +6,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.GoodsListViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.entity.homepage.goodslist.GoodsListBean;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SpacesItemDecoration;
@@ -27,6 +31,12 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * 商品列表
  */
 public class GoodsListActivity extends BaseActivity implements GoodsListContract.View, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+
+    @BindView(id = R.id.iv_back, click = true)
+    private ImageView iv_back;
+
+    @BindView(id = R.id.et_search)
+    private EditText et_search;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -49,19 +59,29 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     /**
      * 错误提示页
      */
+    /**
+     * 错误提示页
+     */
     @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
-    @BindView(id = R.id.tv_hintText, click = true)
+
+    @BindView(id = R.id.img_err)
+    private ImageView img_err;
+
+    @BindView(id = R.id.tv_hintText)
     private TextView tv_hintText;
+
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
 
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 总页码
-     */
-    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
+    private int cat = 0;
+    private int brand = 0;
+    private int seckill = 0;
 
     /**
      * 是否加载更多
@@ -85,6 +105,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         goodsListAdapter = new GoodsListViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        cat = getIntent().getIntExtra("cat", 0);
     }
 
     @Override
@@ -92,6 +113,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         super.initWidget();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         initRecyclerView();
+        mRefreshLayout.beginRefreshing();
     }
 
     /**
@@ -113,6 +135,9 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.ll_comprehensiveRanking:
 
                 break;
@@ -121,6 +146,13 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
                 break;
             case R.id.ll_pricePriority:
 
+                break;
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    mRefreshLayout.beginRefreshing();
+                    return;
+                }
+                showActivity(this, LoginActivity.class);
                 break;
         }
     }
@@ -134,48 +166,72 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @Override
     public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
+        mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
-//        }
+        GoodsListBean goodsListBean = (GoodsListBean) JsonUtil.getInstance().json2Obj(success, GoodsListBean.class);
+        if (goodsListBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER || goodsListBean.getData().size() <= 0 &&
+                mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            errorMsg(getString(R.string.noCollectedGoods), 1);
+            return;
+        } else if (goodsListBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                goodsListBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            isShowLoadingMore = false;
+            return;
+        }
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            goodsListAdapter.clear();
+            goodsListAdapter.addNewData(goodsListBean.getData());
+        } else {
+            goodsListAdapter.addMoreData(goodsListBean.getData());
+        }
         dismissLoadingDialog();
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", goodsListAdapter.getItem(position).getGoods_id());
         showActivity(aty, intent);
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (isLogin(msg)) {
-            showActivity(aty, LoginActivity.class);
-            return;
-        }
+        dismissLoadingDialog();
         isShowLoadingMore = false;
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setText(msg + getString(R.string.clickRefresh));
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
         } else {
             mRefreshLayout.endLoadingMore();
         }
+        mRefreshLayout.setPullDownRefreshEnable(false);
+        mRefreshLayout.setVisibility(View.GONE);
+        ll_commonError.setVisibility(View.VISIBLE);
+        tv_hintText.setVisibility(View.VISIBLE);
+        tv_button.setVisibility(View.VISIBLE);
+        if (isLogin(msg)) {
+            img_err.setImageResource(R.mipmap.no_login);
+            tv_hintText.setVisibility(View.GONE);
+            tv_button.setText(getString(R.string.login));
+            ViewInject.toast(getString(R.string.reloginPrompting));
+            showActivity(this, LoginActivity.class);
+            return;
+        } else if (msg.contains(getString(R.string.checkNetwork))) {
+            img_err.setImageResource(R.mipmap.no_network);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        } else if (msg.contains(getString(R.string.noAddress))) {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setVisibility(View.GONE);
+        } else {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        }
+     //   ViewInject.toast(msg);
         dismissLoadingDialog();
     }
 
@@ -185,22 +241,19 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, brand, seckill, et_search.getText().toString().trim());
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endLoadingMore();
         if (!isShowLoadingMore) {
-            return false;
-        }
-        mMorePageNumber++;
-        if (mMorePageNumber > totalPageNumber) {
             ViewInject.toast(getString(R.string.noMoreData));
             return false;
         }
+        mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, brand, seckill, et_search.getText().toString().trim());
         return true;
     }
 
@@ -208,6 +261,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     protected void onDestroy() {
         super.onDestroy();
         goodsListAdapter.clear();
+        goodsListAdapter = null;
     }
 
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.homepage.goodslist.shop.ShopHomePageBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.homepage.goodslist.shop.ShopHomePageBean.DataBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
@@ -17,49 +17,25 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Administrator on 2017/9/6.
  */
 
-public class ShopHomePageViewAdapter extends BGARecyclerViewAdapter<ListBean> {
+public class ShopHomePageViewAdapter extends BGARecyclerViewAdapter<DataBean> {
 
     public ShopHomePageViewAdapter(RecyclerView recyclerView) {
         super(recyclerView, R.layout.item_mallhomepage);
     }
 
-//    public GoodsListAdapter(Context context) {
-//        super(context, R.layout.item_mallhomepage);
-//    }
-
-//    private List<ListBean> list;
-//    private Context mcontext;
-//    private GoodsListItemOnClickListener listener;
-
-//    public GoodsListAdapter(Context mcontext, List<ListBean> list, GoodsListItemOnClickListener listener) {
-//        this.list = list;
-//        this.mcontext = mcontext;
-//        this.listener = listener;
-//    }
-//
-//    @Override
-//    public GoodsListView onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mallhomepage, viewGroup, false);
-//        GoodsListView goodsListView = new GoodsListView(view, listener);
-//        return goodsListView;
-//    }
-
-
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, ListBean model) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getImg(), (ImageView) helper.getView(R.id.img_good), R.mipmap.placeholderfigure);
-        helper.setText(R.id.tv_goodName, model.getTitle());
-        helper.setText(R.id.tv_goodSynopsis, model.getTitle());
-        helper.setText(R.id.tv_goodMoney, model.getTitle());
-        helper.setText(R.id.tv_brand, model.getTitle());
-        if (TextUtils.isEmpty(model.getSubTitle())) {
-            helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
+    protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.getSmall(), (ImageView) helper.getView(R.id.img_good), R.mipmap.placeholderfigure);
+        helper.setText(R.id.tv_goodName, model.getName());
+        helper.setText(R.id.tv_goodSynopsis, model.getName());
+        helper.setText(R.id.tv_goodMoney, model.getPrice());
+        helper.setText(R.id.tv_brand, model.getName());
+        if (TextUtils.isEmpty(model.getName())) {
+            helper.setVisibility(R.id.ll_bottomLabel, View.VISIBLE);
             helper.setVisibility(R.id.img_proprietary, View.GONE);
             helper.setVisibility(R.id.img_timedSpecials, View.VISIBLE);
         } else {
             helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
-            helper.setVisibility(R.id.img_proprietary, View.GONE);
-            helper.setVisibility(R.id.img_timedSpecials, View.VISIBLE);
         }
     }
 

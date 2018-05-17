@@ -18,12 +18,12 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.myshoppingcart.MyShoppingCartViewAdapter;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
@@ -66,25 +66,19 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
     private MyShoppingCartViewAdapter mAdapter = null;
 
     /**
-     * 当前页码
-     */
-    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 总页码
-     */
-    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 是否加载更多
-     */
-    private boolean isShowLoadingMore = false;
-
-    /**
      * 错误提示页
      */
     @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
-    @BindView(id = R.id.tv_hintText, click = true)
+
+    @BindView(id = R.id.img_err)
+    private ImageView img_err;
+
+    @BindView(id = R.id.tv_hintText)
     private TextView tv_hintText;
+
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
 
     @Override
     public void setRootView() {
@@ -120,8 +114,6 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
         titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tv_delete.setVisibility(View.GONE);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-
-
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
@@ -171,7 +163,7 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
     /**
      * 是否显示
      */
-    private void visibilityImg(int isEdit, List<ListBean> list) {
+    private void visibilityImg(int isEdit, List<GoodslistBean> list) {
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setIsSelected(isSelected);
             list.get(i).setIsEdit(isEdit);
@@ -182,8 +174,15 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-
-
+        switch (v.getId()) {
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    mRefreshLayout.beginRefreshing();
+                    return;
+                }
+                showActivity(this, LoginActivity.class);
+                break;
+        }
     }
 
     @Override
@@ -193,30 +192,28 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
 
     @Override
     public void getSuccess(String success, int flag) {
+        mRefreshLayout.setPullDownRefreshEnable(true);
         if (flag == 0) {
-            isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyShoppingCartBean myShoppingCartBean = (MyShoppingCartBean) JsonUtil.getInstance().json2Obj(success, MyShoppingCartBean.class);
-            mMorePageNumber = myShoppingCartBean.getData().getPage();
-            totalPageNumber = myShoppingCartBean.getData().getPageTotal();
             mAdapter.closeOpenedSwipeItemLayoutWithAnim();
-            if (myShoppingCartBean.getData().getList() == null || myShoppingCartBean.getData().getList().size() == 0) {
-                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+            if (myShoppingCartBean.getData().getStorelist() == null || myShoppingCartBean.getData().getStorelist().size() <= 0) {
+                errorMsg(getString(R.string.notAnythingAdd), 0);
                 editStatus();
                 return;
             }
-            visibilityImg(isEdit, myShoppingCartBean.getData().getList());
-            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-                mRefreshLayout.endRefreshing();
-                mAdapter.clear();
-                mAdapter.addNewData(myShoppingCartBean.getData().getList());
-                mRefreshLayout.endRefreshing();
-            } else {
-                mRefreshLayout.endLoadingMore();
-                mAdapter.addMoreData(myShoppingCartBean.getData().getList());
-                mRefreshLayout.endLoadingMore();
+            List<GoodslistBean> list = new ArrayList<GoodslistBean>();
+            for (int i = 0; i < myShoppingCartBean.getData().getStorelist().size(); i++) {
+                if (myShoppingCartBean.getData().getStorelist().get(i) != null && myShoppingCartBean.getData().getStorelist().get(i).getGoodslist() != null
+                        && myShoppingCartBean.getData().getStorelist().get(i).getGoodslist().size() > 0) {
+                    list.addAll(myShoppingCartBean.getData().getStorelist().get(i).getGoodslist());
+                }
             }
+            visibilityImg(isEdit, list);
+            mAdapter.clear();
+            mAdapter.addNewData(list);
+            mRefreshLayout.endRefreshing();
             dismissLoadingDialog();
         } else if (flag == 1) {
             for (int i = 0; i < mAdapter.getData().size(); i++) {
@@ -224,6 +221,7 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
                     mAdapter.removeItem(i);
                 }
             }
+            dismissLoadingDialog();
         } else if (flag == 2) {
             isSelected = 0;
             mRefreshLayout.beginRefreshing();
@@ -232,27 +230,33 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            showActivity(aty, LoginActivity.class);
-            return;
-        }
-        if (flag == 0) {
-            isShowLoadingMore = false;
-            mRefreshLayout.setVisibility(View.GONE);
-            ll_commonError.setVisibility(View.VISIBLE);
-            tv_hintText.setText(msg + getString(R.string.clickRefresh));
-            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-                mRefreshLayout.endRefreshing();
-            } else {
-                mRefreshLayout.endLoadingMore();
-            }
-            if (msg.equals(getString(R.string.noInformation))) {
-                editStatus();
-            }
-        } else {
-            ViewInject.toast(msg);
-        }
         dismissLoadingDialog();
+        mRefreshLayout.setPullDownRefreshEnable(false);
+        mRefreshLayout.setVisibility(View.GONE);
+        ll_commonError.setVisibility(View.VISIBLE);
+        tv_hintText.setVisibility(View.VISIBLE);
+        tv_button.setVisibility(View.VISIBLE);
+        if (isLogin(msg)) {
+            img_err.setImageResource(R.mipmap.no_login);
+            tv_hintText.setVisibility(View.GONE);
+            tv_button.setText(getString(R.string.login));
+            //   ViewInject.toast(getString(R.string.reloginPrompting));
+            showActivity(this, LoginActivity.class);
+            return;
+        } else if (msg.contains(getString(R.string.checkNetwork))) {
+            img_err.setImageResource(R.mipmap.no_network);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        } else if (msg.contains(getString(R.string.noAddress))) {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setVisibility(View.GONE);
+        } else {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        }
+        ViewInject.toast(msg);
     }
 
     @Override
@@ -260,17 +264,16 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
         if (isEdit == 1) {
             ImageView img_checkbox = (ImageView) view.findViewById(R.id.img_checkbox);
             if (mAdapter.getItem(position).getIsSelected() == 0) {
-                img_checkbox.setImageResource(R.mipmap.mineaddress_selectxxx);
+                img_checkbox.setImageResource(R.mipmap.shopping_cart_selected);
                 mAdapter.getItem(position).setIsSelected(1);
                 return;
             }
-            img_checkbox.setImageResource(R.mipmap.mineaddress_unselectxxx);
+            img_checkbox.setImageResource(R.mipmap.shopping_cart_unselected);
             mAdapter.getItem(position).setIsSelected(0);
             return;
         }
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
         intent.putExtra("messageId", mAdapter.getItem(position).getId());
-        intent.putExtra("name", "RxBusOrderMessageDetailsEvent");
         showActivity(aty, intent);
     }
 
@@ -279,11 +282,11 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
         if (childView.getId() == R.id.img_checkbox) {
             ImageView img_checkbox = (ImageView) childView.findViewById(R.id.img_checkbox);
             if (mAdapter.getItem(position).getIsSelected() == 0) {
-                img_checkbox.setImageResource(R.mipmap.mineaddress_selectxxx);
+                img_checkbox.setImageResource(R.mipmap.shopping_cart_selected);
                 mAdapter.getItem(position).setIsSelected(1);
                 return;
             }
-            img_checkbox.setImageResource(R.mipmap.mineaddress_unselectxxx);
+            img_checkbox.setImageResource(R.mipmap.shopping_cart_unselected);
             mAdapter.getItem(position).setIsSelected(0);
         } else if (childView.getId() == R.id.tv_delete) {
             //   showLoadingDialog(getString(R.string.dataLoad));
@@ -291,35 +294,23 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             ((MyShoppingCartContract.Presenter) mPresenter).postDeleteGood(mAdapter.getData());
         } else if (childView.getId() == R.id.tv_subtract) {
             //   showLoadingDialog(getString(R.string.dataLoad));
-            ((MyShoppingCartContract.Presenter) mPresenter).postReduceGood(mAdapter.getItem(position).getId());
+            // ((MyShoppingCartContract.Presenter) mPresenter).postCartUpdate(mAdapter.getItem(position).getId());
         } else if (childView.getId() == R.id.tv_add) {
             //   showLoadingDialog(getString(R.string.dataLoad));
-            ((MyShoppingCartContract.Presenter) mPresenter).postAddGood(mAdapter.getItem(position).getId());
+            //  ((MyShoppingCartContract.Presenter) mPresenter).postAddGood(mAdapter.getItem(position).getId());
         }
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyShoppingCartContract.Presenter) mPresenter).getMyShoppingCartList("", mMorePageNumber);
+        ((MyShoppingCartContract.Presenter) mPresenter).getMyShoppingCartList();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        mRefreshLayout.endLoadingMore();
-        if (!isShowLoadingMore) {
-            return false;
-        }
-        mMorePageNumber++;
-        if (mMorePageNumber > totalPageNumber) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            return false;
-        }
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((MyShoppingCartContract.Presenter) mPresenter).getMyShoppingCartList("", mMorePageNumber);
-        return true;
+        return false;
     }
 
 

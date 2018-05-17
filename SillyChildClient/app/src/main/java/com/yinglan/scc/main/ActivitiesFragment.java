@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.myview.HorizontalListView;
 import com.kymjs.common.StringUtils;
@@ -20,11 +21,14 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.main.activities.BargainViewAdapter;
 import com.yinglan.scc.adapter.main.activities.ProductlViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.main.ActivitiesBean.ResultBean.AdBean;
+import com.yinglan.scc.entity.main.ActivitiesBean;
+import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.SpacesItemDecoration;
+
+import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -33,7 +37,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 /**
  * 活动
  */
-public class ActivitiesFragment extends BaseFragment implements ActivitiesContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, BGAOnRVItemClickListener {
+public class ActivitiesFragment extends BaseFragment implements ActivitiesContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, BGAOnRVItemClickListener {
 
     private MainActivity aty;
 
@@ -57,20 +61,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
      */
     @BindView(id = R.id.rv)
     private RecyclerView recyclerview;
-
-    /**
-     * 当前页码
-     */
-    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 总页码
-     */
-    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
-
-    /**
-     * 是否加载更多
-     */
-    private boolean isShowLoadingMore = false;
 
     private SpacesItemDecoration spacesItemDecoration;
 
@@ -104,6 +94,8 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         hlv_bargain.setAdapter(bargainViewAdapter);
         hlv_bargain.setOnItemClickListener(this);
         initRecyclerView();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((ActivitiesContract.Presenter) mPresenter).getAdvCat();
     }
 
     /**
@@ -157,25 +149,36 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        //  ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
-//        }
-        dismissLoadingDialog();
+        if (flag == 0) {
+            AdvCatBean advCatBean = (AdvCatBean) JsonUtil.json2Obj(success, AdvCatBean.class);
+            processLogic(advCatBean.getData());
+            ((ActivitiesContract.Presenter) mPresenter).getActivities();
+        } else if (flag == 1) {
+            ActivitiesBean activitiesBean = (ActivitiesBean) JsonUtil.json2Obj(success, ActivitiesBean.class);
+
+
+
+            dismissLoadingDialog();
+        }
+
+    }
+
+    /**
+     * 广告轮播图
+     */
+    @SuppressWarnings("unchecked")
+    private void processLogic(List<AdvCatBean.DataBean> list) {
+        if (list != null && list.size() > 0) {
+            if (list.size() == 1) {
+                mForegroundBanner.setAutoPlayAble(false);
+                mForegroundBanner.setAllowUserScrollable(false);
+            } else {
+                mForegroundBanner.setAutoPlayAble(true);
+                mForegroundBanner.setAllowUserScrollable(true);
+            }
+            mForegroundBanner.setBackground(null);
+            mForegroundBanner.setData(list, null);
+        }
     }
 
     @Override
@@ -211,24 +214,23 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     }
 
     @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, AdBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView, R.mipmap.placeholderfigure2);
+    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdBean model, int position) {
-        if (StringUtils.isEmpty(model.getAd_link())) {
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+        if (StringUtils.isEmpty(model.getUrl())) {
             return;
         }
         Intent bannerDetails = new Intent(aty, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getAd_link());
-        bannerDetails.putExtra("title", model.getAd_name());
+        bannerDetails.putExtra("url", model.getUrl());
+        bannerDetails.putExtra("title", model.getAname());
         aty.showActivity(aty, bannerDetails);
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
         // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
@@ -236,18 +238,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        mRefreshLayout.endLoadingMore();
-        if (!isShowLoadingMore) {
-            return false;
-        }
-        mMorePageNumber++;
-        if (mMorePageNumber > totalPageNumber) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            return false;
-        }
-        showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
-        return true;
+        return false;
     }
 
     @Override

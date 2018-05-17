@@ -3,7 +3,7 @@ package com.yinglan.scc.mine.myshoppingcart;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 
 import java.util.List;
 
@@ -17,22 +17,17 @@ public interface MyShoppingCartContract {
         /**
          * 获取购物车列表
          */
-        void getMyShoppingCartList(String type, int page);
+        void getMyShoppingCartList();
 
         /**
          * 删除商品
          */
-        void postDeleteGood(List<ListBean> masageList);
+        void postDeleteGood(List<GoodslistBean> masageList);
 
         /**
-         * 减少商品
+         * 更新商品数量
          */
-        void postReduceGood(int id);
-
-        /**
-         * 增加商品
-         */
-        void postAddGood(int id);
+        void postCartUpdate(int cartid, int num, int productid);
     }
 
     interface View extends BaseView<Presenter, String> {

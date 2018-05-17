@@ -11,11 +11,18 @@ import com.common.cklibrary.common.BaseView;
  */
 
 public interface MallHomePageContract {
+
     interface Presenter extends BasePresenter {
+
+        /**
+         * 获取分类广告
+         */
+        void getAdvCat();
+
         /**
          * 获取首页信息
          */
-        void getHomePage(String city);
+        void getHomePage();
 
         /**
          * 设置定位信息

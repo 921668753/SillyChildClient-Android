@@ -30,11 +30,7 @@ public class UserUtil {
      *                清除用户登陆信息 ,个人资料
      */
     public static void clearUserInfo(Context context) {
-        PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
         PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", "");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "expireTime", "0");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "timeBefore", "0");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "accountNumber", "");
     }
 
 
@@ -107,7 +103,7 @@ public class UserUtil {
      * @param context 上下文
      *                退出融云
      */
-    public static void quitRc(Context context, String rcToken, String iId) {
+    public static void quitRc(Context context) {
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", "");
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", "");
     }

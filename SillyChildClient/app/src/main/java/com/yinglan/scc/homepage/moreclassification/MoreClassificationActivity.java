@@ -40,8 +40,12 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
     private NoScrollGridView gv_classification;
 
     private MoreClassificationViewAdapter moreClassificationViewAdapter = null;
+
     private ClassificationViewAdapter classificationViewAdapter = null;
-    private List<MoreClassificationBean.ResultBean.ListBean> moreClassificationList;
+
+    private List<MoreClassificationBean.DataBean> moreClassificationList;
+
+    private MoreClassificationBean.DataBean moreClassificationBean = null;
 
     @Override
     public void setRootView() {
@@ -67,7 +71,7 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
         gv_classification.setAdapter(classificationViewAdapter);
         gv_classification.setOnItemClickListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MoreClassificationContract.Presenter) mPresenter).getMoreClassification();
+        ((MoreClassificationContract.Presenter) mPresenter).getClassification(0, 0);
     }
 
     @Override
@@ -76,7 +80,7 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
             selectClassification(i);
         } else if (adapterView.getId() == R.id.gv_classification) {
             Intent goodsListIntent = new Intent(aty, GoodsListActivity.class);
-            goodsListIntent.putExtra("classification", "");
+            goodsListIntent.putExtra("cat", classificationViewAdapter.getItem(i).getCat_id());
             showActivity(aty, goodsListIntent);
         }
     }
@@ -90,15 +94,14 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             MoreClassificationBean moreClassificationBean = (MoreClassificationBean) JsonUtil.getInstance().json2Obj(success, MoreClassificationBean.class);
-            moreClassificationList = moreClassificationBean.getData().getList();
+            moreClassificationList = moreClassificationBean.getData();
             if (moreClassificationList != null && moreClassificationList.size() > 0) {
                 selectClassification(0);
             }
         } else if (flag == 1) {
             ClassificationBean classificationBean = (ClassificationBean) JsonUtil.getInstance().json2Obj(success, ClassificationBean.class);
-
             classificationViewAdapter.clear();
-            //classificationViewAdapter.addNewData();
+            classificationViewAdapter.addNewData(classificationBean.getData());
             dismissLoadingDialog();
         }
     }
@@ -110,16 +113,16 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
      */
     private void selectClassification(int position) {
         for (int i = 0; i < moreClassificationList.size(); i++) {
-            if (position == moreClassificationList.get(i).getId() || position == i && position == 0) {
-//                moreClassificationBean = moreClassificationList.get(i);
-//                moreClassificationBean.setStatus(1);
-                ((MoreClassificationContract.Presenter) mPresenter).getMoreClassification();
+            if (position == i || position == i && position == 0) {
+                moreClassificationBean = moreClassificationList.get(i);
+                moreClassificationBean.setIsSelected(1);
+                ((MoreClassificationContract.Presenter) mPresenter).getClassification(moreClassificationBean.getCat_id(), 1);
             } else {
-              //  moreClassificationList.get(i).setStatus(0);
+                moreClassificationList.get(i).setIsSelected(0);
             }
         }
         moreClassificationViewAdapter.clear();
-      //  moreClassificationViewAdapter.addNewData(lengthBeanlist);
+        moreClassificationViewAdapter.addNewData(moreClassificationList);
     }
 
     @Override

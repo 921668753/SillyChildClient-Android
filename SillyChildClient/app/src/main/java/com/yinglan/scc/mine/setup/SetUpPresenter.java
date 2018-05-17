@@ -5,11 +5,17 @@ import android.app.Activity;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scc.R;
+import com.yinglan.scc.message.rongcloud.util.SealUserInfoManager;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
 import com.yinglan.scc.retrofit.RequestClient;
+
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -28,7 +34,6 @@ public class SetUpPresenter implements SetUpContract.Presenter {
 
     @Override
     public void getUpdateApp() {
-
 
     }
 
@@ -58,47 +63,41 @@ public class SetUpPresenter implements SetUpContract.Presenter {
         });
     }
 
-    @Override
-    public void logOutHuanXin(Activity activity) {
-//        if (ChatClient.getInstance().isLoggedInBefore()) {
-//            //已经登录，可以直接进入会话界面
-//            ChatClient.getInstance().logout(true, new Callback() {
-//                @Override
-//                public void onSuccess() {
-//                    /**
-//                     * 退出app退出登录
-//                     */
-//                    logOutAppService(activity);
-//                }
-//
-//                @Override
-//                public void onError(int i, String s) {
-//                    logOutHuanXin(activity);
-//                }
-//
-//                @Override
-//                public void onProgress(int i, String s) {
-//
-//                }
-//            });
-//            return;
-//        }
-//        logOutAppService(activity);
-    }
 
     /**
      * 退出app登录
      */
+    @Override
+    public void logOutAPP(Activity activity) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.postLogout(activity, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                logOutApp(activity);
+            }
 
-    private void logOutAppService(Activity activity) {
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "userId", 0);
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "accessToken", "");
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "expireTime", "0");
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "timeBefore", "0");
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "accountNumber", "");
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "isRefreshInfo", false);
-        PreferenceHelper.write(activity, StringConstants.FILENAME, "isReLogin", true);
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+
+    private void logOutApp(Activity activity) {
+        UserUtil.quitRc(activity);
+        /*//这些数据清除操作之前一直是在login界面,因为app的数据库改为按照userID存储,退出登录时先直接删除
+        //这种方式是很不友好的方式,未来需要修改同app server的数据同步方式
+        //SealUserInfoManager.getInstance().deleteAllUserInfo();*/
+        //清除本app所有用户信息
+        UserUtil.clearUserInfo(activity);
+        //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
+        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "read_message_count", true);
+        //清除融云信息，退出登陆
+        SealUserInfoManager.getInstance().closeDB();
+        RongIM.getInstance().logout();
         mView.getSuccess("", 1);
     }
+
 
 }

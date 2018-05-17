@@ -46,9 +46,40 @@ public class URLConstants {
     public static String LASTAPK = APIURL + "lastApk";
 
     /**
+     * 获取分类广告
+     */
+    public static String ADVCAT = APIURL + "adv/adv-cat.do";
+
+    /**
      * 首页
      */
-    public static String HOME = APIURL + "m=Api&c=Index&a=home";
+    public static String HOMEGOODS = APIURL + "goods/home-goods";
+
+    /**
+     * 首页----获取商品分类
+     */
+    public static String GOODSCATLIST = APIURL + "goodscat/list.do";
+
+    /**
+     * 首页---更多分类----商品列表
+     */
+    public static String GOODSLIST = APIURL + "goods/list.do";
+
+    /**
+     * 首页---更多分类----商品列表----店铺首页
+     */
+    public static String STOREINDEXGOODS = APIURL + "store/index-goods.do";
+
+    /**
+     * 首页---更多分类----商品列表----店铺商品
+     */
+    public static String STOREGOODSLIST = APIURL + "store/goods-list.do";
+
+
+    /**
+     * 活动
+     */
+    public static String ACTIVITYGOOD = APIURL + "goods/activity-goods";
 
     /**
      * 得到地区的热门城市
@@ -392,6 +423,11 @@ public class URLConstants {
     public static String ISLOGIN = APIURL + "member/islogin.do";
 
     /**
+     * 退出登录
+     */
+    public static String LOGOUT = APIURL + "member/logout.do";
+
+    /**
      * 第三方登录
      */
     public static String USERTHIRDLOGIN = APIURL + "m=Api&c=User&a=thirdLogin";
@@ -486,207 +522,69 @@ public class URLConstants {
     public static String SAVEINFO = APIURL + "member/save.do";
 
     /**
-     * 更改傻孩子账号
+     * 获取收货地址列表
      */
-    public static String CHANGESHZCODE = APIURL + "m=Api&c=User&a=changeShzCode";
+    public static String ADDRESSLIST = APIURL + "address/list.do";
 
     /**
-     * 获取个人认证信息
+     * 设置默认收货地址
      */
-    public static String GETPERSONAUTHINFO = APIURL + "user/getPersonAuthInfo";
+    public static String DEFAULTADDRESS = APIURL + "address/set-default.do";
 
     /**
-     * 获取企业公司认证信息
+     * 删除收货地址
      */
-    public static String GETCOMPANYAUTHINFO = APIURL + "user/getCompanyAuthInfo";
+    public static String DELETEADDRESS = APIURL + "address/delete.do";
 
     /**
-     * 显示订单列表
+     * 获取详细收货地址
      */
-    public static String SHOWORDERLIST = APIURL + "m=Api&c=PackOrder&a=getPackOrder";
+    public static String ADDRESS = APIURL + "address/get.do";
 
     /**
-     * 确认结束订单
+     * 根据父id获取地址列表
      */
-    public static String CONFIRMFINISH = APIURL + "m=Api&c=PackOrder&a=confirmFinish";
+    public static String REGIONLIST = APIURL + "address/region-list.do";
 
     /**
-     * 提交订单评论
+     * 编辑收货地址
      */
-    //   public static String UPEVALUATION = APIURL3 + "api/comment/orderComment";
+    public static String EDITADDRESS = APIURL + "address/edit.do";
 
     /**
-     * 提交订单评论，只用于订单类型为线路的订单
+     * 添加认收货地址
      */
-    //  public static String UPEVALUATIONLINE = APIURL3 + "api/comment/lineDrvComment";
+    public static String ADDADDRESS = APIURL + "address/add.do";
 
     /**
-     * 删除未支付的订单
+     * 获取收藏商品列表
      */
-    public static String DELETENOPAYORDER = APIURL + "m=Api&c=PackOrder&a=delPackOrder";
+    public static String FAVORITEGOODLIST = APIURL + "favorite/list.do";
 
     /**
-     * 优惠券列表
+     * 取消收藏
      */
-    //   public static String COUPONLIST = APIURLFORPAY;
+    public static String UNFAVORITEGOOD = APIURL + "favorite/unfavorite.do";
 
     /**
-     * 显示司机报价列表
+     * 添加到购物车
      */
-    public static String SHOWDRIVERQUOTELIST = APIURL + "quote/showDriverQuoteList";
+    public static String AGGCARTGOOD = APIURL + "cart/add.do";
 
     /**
-     * 提交司机报价
+     * 获取购物车商品列表
      */
-    public static String SENDDRIVERPRICE = APIURL + "quote/confirmQuotePrice";
+    public static String CARTLIST = APIURL + "cart/list.do";
 
     /**
-     * 显示订单详情
+     * 删除购物车中的某项
      */
-    public static String SHOWORDERINFO = APIURL + "order/showOrderInfo";
+    public static String CARTDELETE = APIURL + "cart/delete.do";
 
     /**
-     * 显示订单详情
+     * 更新购物车某项商品数量
      */
-    public static String SHOWCHARTERORDERINFO = APIURL + "m=Api&c=PackOrder&a=getPackOrderDetail";
+    public static String CARTUPDATE = APIURL + "cart/update.do";
 
-    /**
-     * 查看凭证
-     */
-    public static String SHOWCERPIC = APIURL + "order/showCerPic";
 
-    /**
-     * 订单支付
-     */
-    public static String SCOREPAY = APIURL + "m=Api&c=PackOrder&a=payPackOrder";
-
-    /**
-     * 微信支付
-     */
-    public static String WXPAY = APIURL + "pay/wxpay";
-
-    /**
-     * 支付宝支付
-     */
-    public static String ALIPAY = APIURL + "pay/alipay";
-
-    /**
-     * 上传支付凭证
-     */
-    public static String UPLOADCERPIC = APIURL + "order/uploadCerPic";
-
-    /**
-     * 发送评论内容
-     */
-    public static String SENDCOMMENTINFO = APIURL + "comment/sendCommentInfo";
-
-    /**
-     * 获取评论内容
-     */
-    public static String COMMENTINFO = APIURL + "comment/commentInfo";
-
-    /**
-     * 显示我的推荐列表
-     */
-    public static String SHOWMYRECOMMLIST = APIURL + "recommend/showMyRecommList";
-
-    /**
-     * 我的钱包
-     */
-    public static String PAY = APIURL + "pay";
-
-    /**
-     * 充值
-     */
-    //   public static String RECHARGEBYALIPAY = APIURLFORPAY + "/api/user/recharge";
-
-    /**
-     * 提现
-     */
-    public static String WITHDRAW = APIURL + "m=Api&c=User&a=withdrawals";
-
-    /**
-     * 充值 微信支付
-     */
-    public static String RECHARGEBYWEXIN = APIURL + "pay/rechargeByWexin";
-
-    /**
-     * 充值记录
-     */
-    public static String RECHARGERECORD = APIURL + "pay/rechargeRecord";
-
-    /**
-     * 查看账户明细
-     */
-    //  public static String SHOWPAYRECORD = APIURLFORPAY;
-
-    /**
-     * 发布我的动态
-     */
-    public static String PULISHDYNAMIC = APIURL + "m=Api&c=User&a=dynamic";
-
-    /**
-     * 我的  我的发布  收藏动态  删除收藏的动态
-     */
-    public static String DELETECOLLECTIONDYNAMIC = APIURL + "m=Api&c=User&a=collectDynamic";
-
-    /**
-     * 发布我的攻略
-     */
-    public static String PULISHSTRATE = APIURL + "m=Api&c=User&a=strategy";
-
-    /**
-     * 我的  我的发布  收藏动态  删除收藏的动态
-     */
-    public static String DELETECOLLECTIONSTRATE = APIURL + "m=Api&c=User&a=collectStrategy";
-
-    /**
-     * 我的  我的收藏  路线收藏
-     */
-    public static String ROUTECOLLECTION = APIURL + "m=Api&c=User&a=getGoodsCollect";
-
-    /**
-     * 帮助中心html5
-     */
-    //  public static String HELPCENTERURL = APIURL3 + "web/help";
-
-    /**
-     * 关于我们html5
-     */
-    //  public static String ABOUTUSURL = APIURL3 + "web/about";
-
-    /**
-     * 我的 设置 意见反馈 获取反馈类型
-     */
-    public static String FEEDBACKTYPE = SERVERURL + "/api/config/feedBackType";
-
-    /**
-     * 我的 设置 意见反馈 提交
-     */
-    public static String FEEDBACKSUBMIT = SERVERURL + "/api/config/feedBack";
-
-    /**
-     * 我的 VIP紧急电话
-     */
-    public static String VIPPHONE = SERVERURL + "/api/config/vipTelephone";
-
-    /**
-     * 我的 分享有礼
-     */
-    public static String SHARINGCEREMONY = SERVERURL + "/web/user/register?apply_code=";
-
-    /**
-     * 缴纳保证金  支付宝
-     */
-    public static String ALIPAYCASH = APIURL + "pay/alipayCash";
-
-    /**
-     * 缴纳保证金  微信
-     */
-    public static String PAYBOND1 = APIURL + "pay/wxpayCash";
-
-    /**
-     * 修改密码
-     */
-    public static String UPDATEPWD = APIURL + "User/updatePwd";
 }

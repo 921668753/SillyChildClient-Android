@@ -10,7 +10,7 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean;
 import com.yinglan.scc.mine.myshoppingcart.dialog.DeleteGoodDialog;
 import com.yinglan.scc.retrofit.RequestClient;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,52 +33,47 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
     /**
      * 获取标记的id
      */
-    private String getMsgIdList(List<ListBean> masageList) {
-        String msgIdStr = "";
-        for (int i = 0; i < masageList.size(); i++) {
-            if (masageList.get(i).getIsSelected() == 1) {
-                msgIdStr = msgIdStr + "," + masageList.get(i).getId();
+    private String getCartIdList(List<GoodslistBean> cartsList) {
+        String cartsIdStr = "";
+        for (int i = 0; i < cartsList.size(); i++) {
+            if (cartsList.get(i).getIsSelected() == 1) {
+                cartsIdStr = cartsIdStr + "," + cartsList.get(i).getId();
             }
         }
-        if (StringUtils.isEmpty(msgIdStr)) {
+        if (StringUtils.isEmpty(cartsIdStr)) {
             return "";
         }
-        msgIdStr = msgIdStr.substring(1);
-        return msgIdStr;
+        cartsIdStr = cartsIdStr.substring(1);
+        return cartsIdStr;
     }
 
     /**
      * 获取购物车列表
-     *
-     * @param page 页码
      */
     @Override
-    public void getMyShoppingCartList(String type, int page) {
+    public void getMyShoppingCartList() {
         mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("push_type", type);
-        httpParams.put("page", page);
-        httpParams.put("pageSize", 20);
-//        RequestClient.getMessage(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        RequestClient.getCartList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 
     /**
-     * @param masageList 删除商品
+     * @param cartidsList 删除商品
      */
     @Override
-    public void postDeleteGood(List<ListBean> masageList) {
-        String msgStr = getMsgIdList(masageList);
-        if (StringUtils.isEmpty(msgStr)) {
+    public void postDeleteGood(List<GoodslistBean> cartidsList) {
+        String cartidsStr = getCartIdList(cartidsList);
+        if (StringUtils.isEmpty(cartidsStr)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.delete2), 1);
             return;
         }
@@ -89,58 +84,43 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
                 deleteGoodDialog.cancel();
                 mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                Map map = new HashMap();
-                map.put("msg_id", msgStr);
-                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-//                RequestClient.postDeleteMessage(httpParams, new ResponseListener<String>() {
-//                    @Override
-//                    public void onSuccess(String response) {
-//                        mView.getSuccess(response, 1);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//                        mView.errorMsg(msg, 1);
-//                    }
-//                });
+                httpParams.put("cartids", cartidsStr);
+                RequestClient.postCartDelete(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 1);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 1);
+                    }
+                });
             }
         });
         deleteGoodDialog.show();
     }
 
     /**
-     * 减少商品
+     * 更新商品数量
      */
     @Override
-    public void postReduceGood(int id) {
-//                RequestClient.postDeleteMessage(httpParams, new ResponseListener<String>() {
-//                    @Override
-//                    public void onSuccess(String response) {
-//                        mView.getSuccess(response, 2);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//                        mView.errorMsg(msg, 1);
-//                    }
-//                });
+    public void postCartUpdate(int cartid, int num, int productid) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("cartid", cartid);
+        httpParams.put("num", num);
+        httpParams.put("productid", productid);
+        RequestClient.postCartUpdate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 2);
+            }
+        });
     }
 
-    /**
-     * 增加商品
-     */
-    @Override
-    public void postAddGood(int id) {
-//                RequestClient.postDeleteMessage(httpParams, new ResponseListener<String>() {
-//                    @Override
-//                    public void onSuccess(String response) {
-//                        mView.getSuccess(response, 3);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String msg) {
-//                        mView.errorMsg(msg, 1);
-//                    }
-//                });
-    }
 }

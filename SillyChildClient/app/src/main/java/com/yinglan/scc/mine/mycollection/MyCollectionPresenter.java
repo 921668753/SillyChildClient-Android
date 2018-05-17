@@ -3,6 +3,7 @@ package com.yinglan.scc.mine.mycollection;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -13,9 +14,8 @@ import com.yinglan.scc.retrofit.RequestClient;
  */
 
 public class MyCollectionPresenter implements MyCollectionContract.Presenter {
+
     private MyCollectionContract.View mView;
-    private Uri data;
-    private Intent jumpintent;
 
     public MyCollectionPresenter(MyCollectionContract.View view) {
         mView = view;
@@ -23,14 +23,11 @@ public class MyCollectionPresenter implements MyCollectionContract.Presenter {
     }
 
     @Override
-    public void getCharterCollection(int p,int pageSize) {
+    public void getFavoriteGoodList(int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("m","Api");
-        httpParams.put("c","User");
-        httpParams.put("a","collectPackPro");
-        httpParams.put("p", p);
-        httpParams.put("pageSize", pageSize);
-        RequestClient.getCharterCollectionList(httpParams, new ResponseListener<String>() {
+        httpParams.put("page", page);
+        httpParams.put("pageSize", 10);
+        RequestClient.getFavoriteGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -44,20 +41,39 @@ public class MyCollectionPresenter implements MyCollectionContract.Presenter {
     }
 
     @Override
-    public void getRouteCollection(int model_type,int p) {
+    public void postUnFavoriteGood(int goodsid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("model_type", model_type);
-        httpParams.put("p", p);
-        RequestClient.getRouteCollectionList(httpParams, new ResponseListener<String>() {
+        httpParams.put("goodsid", goodsid);
+        RequestClient.postUnFavoriteGood(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 1);
             }
         });
     }
+
+    @Override
+    public void postAddCartGood(int goodsid) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("productid", goodsid);
+        httpParams.put("num", 1);
+        RequestClient.postAddCartGood(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 2);
+            }
+        });
+    }
+
+
 }

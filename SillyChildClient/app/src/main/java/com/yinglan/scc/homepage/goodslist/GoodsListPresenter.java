@@ -28,57 +28,25 @@ public class GoodsListPresenter implements GoodsListContract.Presenter {
     }
 
     @Override
-    public void postToLogin(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
-            return;
-        }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(pwd)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
-            return;
-        }
-        if (pwd.length() < 6 || pwd.length() > 20) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText1), 0);
-            return;
-        }
-
+    public void getGoodsList(int page, int cat, int brand, int seckill, String keyword) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("account", phone);
-        map.put("password", CipherUtils.md5("RUITU" + pwd + "KEJI"));
-        map.put("wxOpenid", "");
-        map.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-//        RequestClient.postLogin(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
-    }
+        httpParams.put("page", page);
+        httpParams.put("cat", cat);
+        httpParams.put("brand", brand);
+        httpParams.put("seckill", seckill);
+        if (!StringUtils.isEmpty(keyword)) {
+            httpParams.put("keyword", keyword);
+        }
+        RequestClient.getGoodsList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
 
-    @Override
-    public void getInfo() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 1);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 }

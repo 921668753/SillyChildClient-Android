@@ -589,9 +589,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
         editor.putString(SealConst.SEALTALK_LOGIN_ID, "");
         editor.putInt("getAllUserInfoState", 0);
         editor.commit();
-
-        UserUtil.quitRc(mContext, "", "");
-
+        UserUtil.quitRc(mContext);
         /*//这些数据清除操作之前一直是在login界面,因为app的数据库改为按照userID存储,退出登录时先直接删除
         //这种方式是很不友好的方式,未来需要修改同app server的数据同步方式
         //SealUserInfoManager.getInstance().deleteAllUserInfo();*/

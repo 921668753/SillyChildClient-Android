@@ -12,12 +12,14 @@ import android.widget.ImageView;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.shop.ShopHomePageViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.homepage.goodslist.shop.ShopHomePageBean.ResultBean.AdBean;
+import com.yinglan.scc.entity.homepage.goodslist.shop.ShopHomePageBean;
+import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
@@ -32,7 +34,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Admin on 2017/8/21.
  */
 
-public class ShopHomePageFragment extends BaseFragment implements ShopHomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+public class ShopHomePageFragment extends BaseFragment implements ShopHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private ShopActivity aty;
 
@@ -48,29 +50,16 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     /**
      * 商品列表
      */
-
     @BindView(id = R.id.rv)
     private RecyclerView recyclerview;
-
-    /**
-     * 当前页码
-     */
-    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 总页码
-     */
-    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
-
-    /**
-     * 是否加载更多
-     */
-    private boolean isShowLoadingMore = false;
 
     private SpacesItemDecoration spacesItemDecoration;
 
     private StaggeredGridLayoutManager layoutManager;
 
     private ShopHomePageViewAdapter shopHomepageAdapter;
+
+    private int storeid = 0;
 
 
     @Override
@@ -86,6 +75,7 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         shopHomepageAdapter = new ShopHomePageViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        storeid = aty.getIntent().getIntExtra("storeid", 0);
     }
 
     @Override
@@ -149,90 +139,78 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        //  ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
-//        }
+        if (flag == 0) {
+
+            ((ShopHomePageContract.Presenter) mPresenter).getStoreIndexGoods(storeid);
+        } else if (flag == 1) {
+            ShopHomePageBean shopHomePageBean = (ShopHomePageBean) JsonUtil.getInstance().json2Obj(success, ShopHomePageBean.class);
+            if (shopHomePageBean.getData() == null || shopHomePageBean.getData().size() == 0) {
+                errorMsg(getString(R.string.noCollectedGoods), 1);
+                return;
+            }
+            shopHomepageAdapter.clear();
+            shopHomepageAdapter.addNewData(shopHomePageBean.getData());
+        }
         dismissLoadingDialog();
     }
 
+
+    /**
+     * 广告轮播图
+     */
+//    @SuppressWarnings("unchecked")
+//    private void processLogic(List<AdvCatBean.DataBean> list) {
+//        if (list != null && list.size() > 0) {
+//            if (list.size() == 1) {
+//                mForegroundBanner.setAutoPlayAble(false);
+//                mForegroundBanner.setAllowUserScrollable(false);
+//            } else {
+//                mForegroundBanner.setAutoPlayAble(true);
+//                mForegroundBanner.setAllowUserScrollable(true);
+//            }
+//            mForegroundBanner.setBackground(null);
+//            mForegroundBanner.setData(list, null);
+//        }
+//    }
     @Override
     public void errorMsg(String msg, int flag) {
-//        if (isLogin(msg)) {
-//            showActivity(aty, LoginActivity.class);
-//            return;
-//        }
-//        isShowLoadingMore = false;
-//        mRefreshLayout.setVisibility(View.GONE);
-//        ll_commonError.setVisibility(View.VISIBLE);
-//        tv_hintText.setText(msg + getString(R.string.clickRefresh));
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//        }
-//        dismissLoadingDialog();
+        ViewInject.toast(msg);
+        dismissLoadingDialog();
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", shopHomepageAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
     @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, AdBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView, R.mipmap.placeholderfigure2);
+    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdBean model, int position) {
-        if (StringUtils.isEmpty(model.getAd_link())) {
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+        if (StringUtils.isEmpty(model.getUrl())) {
             return;
         }
         Intent bannerDetails = new Intent(aty, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getAd_link());
-        bannerDetails.putExtra("title", model.getAd_name());
+        bannerDetails.putExtra("url", model.getUrl());
+        bannerDetails.putExtra("title", model.getAname());
         aty.showActivity(aty, bannerDetails);
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((ShopHomePageContract.Presenter) mPresenter).getStoreIndexGoods(storeid);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        mRefreshLayout.endLoadingMore();
-        if (!isShowLoadingMore) {
-            return false;
-        }
-        mMorePageNumber++;
-        if (mMorePageNumber > totalPageNumber) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            return false;
-        }
-        showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
-        return true;
+        return false;
     }
 
     @Override

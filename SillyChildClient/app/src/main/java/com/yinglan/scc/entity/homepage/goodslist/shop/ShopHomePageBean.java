@@ -4,308 +4,151 @@ import com.common.cklibrary.entity.BaseResult;
 
 import java.util.List;
 
-public class ShopHomePageBean extends BaseResult<ShopHomePageBean.ResultBean> {
+public class ShopHomePageBean extends BaseResult<List<ShopHomePageBean.DataBean>> {
 
-    public class ResultBean {
+    public class DataBean {
         /**
-         * p : 1
-         * totalPages : 1
-         * list : [{"id":5,"img":"http://img.shahaizi.cn/b9aff263e05db8960da7c81a8d329829.png","title":"1","subTitle":null,"readNum":0,"owner":{"id":2,"nickname":"15151877660","avatar":"http://img.shahaizi.cn/0e182ff1393a720d97a0f30f3376c034.jpg","email":"","sex":0,"mobile":"15151877660","level":1,"shzCode":"201710101505218002","signature":null,"attentionNum":0,"praiseNum":0,"collectionNum":0},"timeStamp":1508210412,"timeFmt":"2017.10.17","praiseNum":0},{"id":4,"img":"http://img.shahaizi.cn/bcff814f872d90787e5e81c32b2e2c51.png","title":"测试","subTitle":null,"readNum":0,"owner":{"id":3,"nickname":"吼吼吼","avatar":"http://img.shahaizi.cn/ff2a5008ce629950956ecb8ce544a07a.jpg","email":"","sex":0,"mobile":"18013126109","level":1,"shzCode":"20171010","signature":"哈哈哈","attentionNum":0,"praiseNum":0,"collectionNum":0},"timeStamp":1507774146,"timeFmt":"2017.10.12","praiseNum":0},{"id":3,"img":"http://img.shahaizi.cn/2dfe038f6bddc4e63ccde95a70e1ad4b.png","title":"调试","subTitle":null,"readNum":0,"owner":{"id":7,"nickname":"13733190537","avatar":"http://img.shahaizi.cn/user_avatar.png","email":"","sex":0,"mobile":"13733190537","level":1,"shzCode":"201710120854231069","signature":null,"attentionNum":0,"praiseNum":0,"collectionNum":0},"timeStamp":1507771298,"timeFmt":"2017.10.12","praiseNum":0},{"id":2,"img":"http://img.shahaizi.cn/0db7c56fea8c29e3211689fad07e464e.png","title":"调试","subTitle":null,"readNum":0,"owner":{"id":7,"nickname":"13733190537","avatar":"http://img.shahaizi.cn/user_avatar.png","email":"","sex":0,"mobile":"13733190537","level":1,"shzCode":"201710120854231069","signature":null,"attentionNum":0,"praiseNum":0,"collectionNum":0},"timeStamp":1507769905,"timeFmt":"2017.10.12","praiseNum":0},{"id":1,"img":"http://img.shahaizi.cn/0db7c56fea8c29e3211689fad07e464e.png","title":"踢被子事","subTitle":null,"readNum":0,"owner":{"id":7,"nickname":"13733190537","avatar":"http://img.shahaizi.cn/user_avatar.png","email":"","sex":0,"mobile":"13733190537","level":1,"shzCode":"201710120854231069","signature":null,"attentionNum":0,"praiseNum":0,"collectionNum":0},"timeStamp":1507769785,"timeFmt":"2017.10.12","praiseNum":0}]
+         * goods_id : 289
+         * name : 宝矿力水特24瓶 整箱
+         * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_thumbnail.jpg
+         * price : 93
+         * mktprice : 93
+         * view_count : 3
+         * buy_count : 1
+         * store : 99
+         * sn : 950824
+         * big : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_big.jpg
+         * small : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_small.jpg
+         * original : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541.jpg
+         * commentCount : null
+         * commentPercent : null
          */
-        private int p;
-        private List<AdBean> ad;
-        private int totalPages;
 
-        public List<AdBean> getAd() {
-            return ad;
+        private int goods_id;
+        private String name;
+        private String thumbnail;
+        private String price;
+        private int mktprice;
+        private int view_count;
+        private int buy_count;
+        private int store;
+        private String sn;
+        private String big;
+        private String small;
+        private String original;
+        private String commentCount;
+        private String commentPercent;
+
+        public int getGoods_id() {
+            return goods_id;
         }
 
-        public void setAd(List<AdBean> ad) {
-            this.ad = ad;
+        public void setGoods_id(int goods_id) {
+            this.goods_id = goods_id;
         }
 
-        private List<ListBean> list;
-
-        public int getP() {
-            return p;
+        public String getName() {
+            return name;
         }
 
-        public void setP(int p) {
-            this.p = p;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public int getTotalPages() {
-            return totalPages;
+        public String getThumbnail() {
+            return thumbnail;
         }
 
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
+        public void setThumbnail(String thumbnail) {
+            this.thumbnail = thumbnail;
         }
 
-        public List<ListBean> getList() {
-            return list;
+        public String getPrice() {
+            return price;
         }
 
-        public void setList(List<ListBean> list) {
-            this.list = list;
+        public void setPrice(String price) {
+            this.price = price;
         }
 
-        public class ListBean {
-            /**
-             * id : 5
-             * img : http://img.shahaizi.cn/b9aff263e05db8960da7c81a8d329829.png
-             * title : 1
-             * subTitle : null
-             * readNum : 0
-             * owner : {"id":2,"nickname":"15151877660","avatar":"http://img.shahaizi.cn/0e182ff1393a720d97a0f30f3376c034.jpg","email":"","sex":0,"mobile":"15151877660","level":1,"shzCode":"201710101505218002","signature":null,"attentionNum":0,"praiseNum":0,"collectionNum":0}
-             * timeStamp : 1508210412
-             * timeFmt : 2017.10.17
-             * praiseNum : 0
-             */
-
-            private int id;
-            private String img;
-            private String title;
-            private String subTitle;
-            private int readNum;
-            private ListBean.OwnerBean owner;
-            private int timeStamp;
-            private String timeFmt;
-            private String praiseNum;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getSubTitle() {
-                return subTitle;
-            }
-
-            public void setSubTitle(String subTitle) {
-                this.subTitle = subTitle;
-            }
-
-            public int getReadNum() {
-                return readNum;
-            }
-
-            public void setReadNum(int readNum) {
-                this.readNum = readNum;
-            }
-
-            public OwnerBean getOwner() {
-                return owner;
-            }
-
-            public void setOwner(ListBean.OwnerBean owner) {
-                this.owner = owner;
-            }
-
-            public int getTimeStamp() {
-                return timeStamp;
-            }
-
-            public void setTimeStamp(int timeStamp) {
-                this.timeStamp = timeStamp;
-            }
-
-            public String getTimeFmt() {
-                return timeFmt;
-            }
-
-            public void setTimeFmt(String timeFmt) {
-                this.timeFmt = timeFmt;
-            }
-
-            public String getPraiseNum() {
-                return praiseNum;
-            }
-
-            public void setPraiseNum(String praiseNum) {
-                this.praiseNum = praiseNum;
-            }
-
-            public class OwnerBean {
-                /**
-                 * id : 2
-                 * nickname : 15151877660
-                 * avatar : http://img.shahaizi.cn/0e182ff1393a720d97a0f30f3376c034.jpg
-                 * email :
-                 * sex : 0
-                 * mobile : 15151877660
-                 * level : 1
-                 * shzCode : 201710101505218002
-                 * signature : null
-                 * attentionNum : 0
-                 * praiseNum : 0
-                 * collectionNum : 0
-                 */
-
-                private int id;
-                private String nickname;
-                private String avatar;
-                private String email;
-                private int sex;
-                private String mobile;
-                private int level;
-                private String shzCode;
-                private String signature;
-                private int attentionNum;
-                private int praiseNum;
-                private int collectionNum;
-
-                public int getId() {
-                    return id;
-                }
-
-                public void setId(int id) {
-                    this.id = id;
-                }
-
-                public String getNickname() {
-                    return nickname;
-                }
-
-                public void setNickname(String nickname) {
-                    this.nickname = nickname;
-                }
-
-                public String getAvatar() {
-                    return avatar;
-                }
-
-                public void setAvatar(String avatar) {
-                    this.avatar = avatar;
-                }
-
-                public String getEmail() {
-                    return email;
-                }
-
-                public void setEmail(String email) {
-                    this.email = email;
-                }
-
-                public int getSex() {
-                    return sex;
-                }
-
-                public void setSex(int sex) {
-                    this.sex = sex;
-                }
-
-                public String getMobile() {
-                    return mobile;
-                }
-
-                public void setMobile(String mobile) {
-                    this.mobile = mobile;
-                }
-
-                public int getLevel() {
-                    return level;
-                }
-
-                public void setLevel(int level) {
-                    this.level = level;
-                }
-
-                public String getShzCode() {
-                    return shzCode;
-                }
-
-                public void setShzCode(String shzCode) {
-                    this.shzCode = shzCode;
-                }
-
-                public String getSignature() {
-                    return signature;
-                }
-
-                public void setSignature(String signature) {
-                    this.signature = signature;
-                }
-
-                public int getAttentionNum() {
-                    return attentionNum;
-                }
-
-                public void setAttentionNum(int attentionNum) {
-                    this.attentionNum = attentionNum;
-                }
-
-                public int getPraiseNum() {
-                    return praiseNum;
-                }
-
-                public void setPraiseNum(int praiseNum) {
-                    this.praiseNum = praiseNum;
-                }
-
-                public int getCollectionNum() {
-                    return collectionNum;
-                }
-
-                public void setCollectionNum(int collectionNum) {
-                    this.collectionNum = collectionNum;
-                }
-            }
+        public int getMktprice() {
+            return mktprice;
         }
 
-        public class AdBean {
-            /**
-             * ad_link :
-             * ad_name : 首页轮播1
-             * ad_code : http://img.shahaizi.cn/9227e201709251846138984.png
-             */
+        public void setMktprice(int mktprice) {
+            this.mktprice = mktprice;
+        }
 
-            private String ad_link;
-            private String ad_name;
-            private String ad_code;
+        public int getView_count() {
+            return view_count;
+        }
 
-            public String getAd_link() {
-                return ad_link;
-            }
+        public void setView_count(int view_count) {
+            this.view_count = view_count;
+        }
 
-            public void setAd_link(String ad_link) {
-                this.ad_link = ad_link;
-            }
+        public int getBuy_count() {
+            return buy_count;
+        }
 
-            public String getAd_name() {
-                return ad_name;
-            }
+        public void setBuy_count(int buy_count) {
+            this.buy_count = buy_count;
+        }
 
-            public void setAd_name(String ad_name) {
-                this.ad_name = ad_name;
-            }
+        public int getStore() {
+            return store;
+        }
 
-            public String getAd_code() {
-                return ad_code;
-            }
+        public void setStore(int store) {
+            this.store = store;
+        }
 
-            public void setAd_code(String ad_code) {
-                this.ad_code = ad_code;
-            }
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
+
+        public String getBig() {
+            return big;
+        }
+
+        public void setBig(String big) {
+            this.big = big;
+        }
+
+        public String getSmall() {
+            return small;
+        }
+
+        public void setSmall(String small) {
+            this.small = small;
+        }
+
+        public String getOriginal() {
+            return original;
+        }
+
+        public void setOriginal(String original) {
+            this.original = original;
+        }
+
+        public String getCommentCount() {
+            return commentCount;
+        }
+
+        public void setCommentCount(String commentCount) {
+            this.commentCount = commentCount;
+        }
+
+        public String getCommentPercent() {
+            return commentPercent;
+        }
+
+        public void setCommentPercent(String commentPercent) {
+            this.commentPercent = commentPercent;
         }
     }
 }

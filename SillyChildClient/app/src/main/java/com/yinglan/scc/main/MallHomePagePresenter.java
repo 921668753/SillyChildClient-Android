@@ -32,27 +32,36 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
     }
 
     @Override
-    public void getHomePage(String city) {
+    public void getAdvCat() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getHome(httpParams, city, new ResponseListener<String>() {
+        httpParams.put("acid", "1");
+        RequestClient.getAdvCat(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.getSuccess(response, 0);
-                    }
-                });
+
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.errorMsg(msg, 0);
-                    }
-                });
+                mView.getSuccess(msg, 0);
+            }
+        });
+    }
+
+    @Override
+    public void getHomePage() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getHome(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.getSuccess(msg, 1);
             }
         });
     }

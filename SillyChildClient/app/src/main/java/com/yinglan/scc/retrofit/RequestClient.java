@@ -240,7 +240,7 @@ public class RequestClient {
     /**
      * 更改密码【手机】
      */
-    public static void postResetpwd(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postResetpwd(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestPostFORMHttp(context, URLConstants.USERRESTPWD, httpParams, listener);
     }
 
@@ -248,22 +248,55 @@ public class RequestClient {
 //        HttpRequest.requestPostFORMHttp(URLConstants.FORTGRTBYMAIL, httpParams, listener);
 //    }
 
+    /**
+     * 获取分类广告
+     */
+    public static void getAdvCat(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.ADVCAT, httpParams, true, listener);
+    }
 
     /**
      * 首页
      */
-    public static void getHome(HttpParams httpParams, String city, final ResponseListener<String> listener) {
-        if (StringUtils.isEmpty(city)) {
-            //   HttpRequest.requestGetHttp(URLConstants.HOME, httpParams, listener);
-            return;
-        }
-//        try {
-//          //  HttpRequest.requestGetHttp(URLConstants.HOME + "&city=" + URLEncoder.encode(city, "utf-8"), httpParams, listener);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+    public static void getHome(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.HOMEGOODS, httpParams, true, listener);
     }
 
+    /**
+     * 首页---更多分类
+     */
+    public static void getClassification(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSCATLIST, httpParams, true, listener);
+    }
+
+    /**
+     * 首页---更多分类----商品列表
+     */
+    public static void getGoodsList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSLIST, httpParams, true, listener);
+    }
+
+    /**
+     * 首页---更多分类----商品列表----店铺首页
+     */
+    public static void getStoreIndexGoods(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.STOREINDEXGOODS, httpParams, true, listener);
+    }
+
+    /**
+     * 首页---更多分类----商品列表----店铺商品
+     */
+    public static void getStoreGoodsList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.STOREGOODSLIST, httpParams, true, listener);
+    }
+
+
+    /**
+     * 活动
+     */
+    public static void getActivities(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.ACTIVITYGOOD, httpParams, true, listener);
+    }
 
     /**
      * 得到地区的热门城市
@@ -1114,44 +1147,141 @@ public class RequestClient {
 
 
     /**
-     * 更新用户信息时不修改省市区
+     * 获取收货地址列表
      */
-    public static void putInfo(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getInfo");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                httpParams.put("is_update_address", "0");
-//                //      HttpRequest.requestPostFORMHttp(URLConstants.UPDATEINFO, httpParams, listener);
-//            }
-//        }, listener);
+    public static void getAddressList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getAddressList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ADDRESSLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 设置默认收货地址
+     */
+    public static void postDefaultAddress(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postDefaultAddress");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.DEFAULTADDRESS, httpParams, listener);
+            }
+        }, listener);
 
     }
 
     /**
-     * 更新用户信息时修改省市区
+     * 删除收货地址
      */
-    public static void putInfoForAddress(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getInfo");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                httpParams.put("is_update_address", "1");
-//                //   HttpRequest.requestPostFORMHttp(URLConstants.UPDATEINFO, httpParams, listener);
-//            }
-//        }, listener);
+    public static void postDeleteAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postDeleteAddress");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.DELETEADDRESS, httpParams, listener);
+            }
+        }, listener);
+
+    }
+
+    /**
+     * 获取详细收货地址
+     */
+    public static void getAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postDeleteAddress");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ADDRESS, httpParams, listener);
+            }
+        }, listener);
+
+    }
+
+
+    /**
+     * 根据父id获取地址列表
+     */
+    public static void getRegionList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getRegionList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.REGIONLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 编辑收货地址
+     */
+    public static void postEditAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postDeleteAddress");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.EDITADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 添加认收货地址
+     */
+    public static void postAddAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postDeleteAddress");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ADDADDRESS, httpParams, listener);
+            }
+        }, listener);
 
     }
 
@@ -1177,42 +1307,120 @@ public class RequestClient {
 
 
     /**
-     * 获取个人认证
+     * 获取收藏商品列表
      */
-    public static void getPersonalCertificate(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getPersonalCertificate");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //  HttpRequest.requestGetHttp(URLConstants.GETPERSONAUTHINFO, httpParams, listener);
-//            }
-//        }, listener);
+    public static void getFavoriteGoodList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getFavoriteGoodList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.FAVORITEGOODLIST, httpParams, listener);
+            }
+        }, listener);
     }
 
 
     /**
-     * 获取企业公司认证信息
+     * 我的收藏   取消收藏
      */
-    public static void getCompanyAuthInfo(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getPersonalCertificate");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //   HttpRequest.requestGetHttp(URLConstants.GETCOMPANYAUTHINFO, httpParams, listener);
-//            }
-//        }, listener);
+    public static void postUnFavoriteGood(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postUnFavoriteGood");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.UNFAVORITEGOOD, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 我的收藏   添加到购物车
+     */
+    public static void postAddCartGood(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postAddCartGood");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.AGGCARTGOOD, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取购物车商品列表
+     */
+    public static void getCartList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getCartList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.CARTLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 删除购物车中的某项
+     */
+    public static void postCartDelete(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getCartDelete");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.CARTDELETE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 更新购物车某项商品数量
+     */
+    public static void postCartUpdate(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getCartUpdate");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.CARTUPDATE, httpParams, listener);
+            }
+        }, listener);
     }
 
 
@@ -1818,45 +2026,6 @@ public class RequestClient {
 //        }, listener);
     }
 
-    /**
-     * 我的收藏   包车收藏
-     */
-    public static void getCharterCollectionList(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getOnlineService");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //     HttpRequest.requestGetHttp(URLConstants.APIURLFORPAY, httpParams, listener);
-//            }
-//        }, listener);
-
-    }
-
-    /**
-     * 我的收藏   路线收藏
-     */
-    public static void getRouteCollectionList(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getOnlineService");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //      HttpRequest.requestPostFORMHttp(URLConstants.ROUTECOLLECTION, httpParams, listener);
-//            }
-//        }, listener);
-
-    }
 
     /**
      * 我的 设置 意见反馈
@@ -1990,6 +2159,24 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("Cookie", cookies);
                 HttpRequest.requestGetHttp(context, URLConstants.ISLOGIN, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 退出登录
+     */
+    public static void postLogout(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.LOGOUT, httpParams, listener);
             }
         }, listener);
     }

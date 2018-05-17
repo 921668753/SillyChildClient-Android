@@ -11,14 +11,10 @@ public interface MoreClassificationContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取更多分类信息
+         * 获取商品分类
          */
-        void getMoreClassification();
+        void getClassification(int cat_id, int flag);
 
-        /**
-         * 获取分类信息
-         */
-        void getClassification();
     }
 
     interface View extends BaseView<Presenter, String> {

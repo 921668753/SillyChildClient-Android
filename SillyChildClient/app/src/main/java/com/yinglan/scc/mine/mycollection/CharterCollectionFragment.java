@@ -112,7 +112,7 @@ public class CharterCollectionFragment extends BaseFragment implements BGARefres
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyCollectionPresenter) mPresenter).getCharterCollection(mMorePageNumber,NumericConstants.LOADCOUNT);
+       // ((MyCollectionPresenter) mPresenter).getCharterCollection(mMorePageNumber,NumericConstants.LOADCOUNT);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class CharterCollectionFragment extends BaseFragment implements BGARefres
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyCollectionPresenter) mPresenter).getCharterCollection(mMorePageNumber,NumericConstants.LOADCOUNT);
+      //  ((MyCollectionPresenter) mPresenter).getCharterCollection(mMorePageNumber,NumericConstants.LOADCOUNT);
         return true;
     }
 

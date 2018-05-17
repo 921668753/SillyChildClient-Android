@@ -14,6 +14,8 @@
     <string name="download">下载中&#8230;</string>
     <string name="shareJumpLoad">分享跳转中&#8230;</string>
     <string name="saveLoad">保存中&#8230;</string>
+    <string name="deleteLoad">删除中&#8230;</string>
+    <string name="addLoad">加入中&#8230;</string>
     <!--Dialog-->
 
     <!--公共的-->
@@ -571,14 +573,14 @@
     <!--商城-->
     <string name="checkProduct">输入您正在找的商品</string>
     <string name="search">搜索</string>
-    <string name="cosmetics">护肤彩妆</string>
-    <string name="personalCare">个人护理</string>
+    <string name="cosmetics">美妆</string>
+    <string name="personalCare">护理</string>
     <string name="maternalAndInfant">母婴</string>
-    <string name="bagAccessories">包包配饰</string>
-    <string name="clothingAndShoes">服装鞋帽</string>
-    <string name="homeApplianceDigital">家电数码</string>
+    <string name="bagAccessories">鞋包</string>
+    <string name="clothingAndShoes">服装</string>
+    <string name="homeApplianceDigital">数码</string>
     <string name="household">家居</string>
-    <string name="beautyCare">美颜保健</string>
+    <string name="beautyCare">保健</string>
     <string name="food">美食</string>
     <string name="more">更多</string>
 
@@ -697,23 +699,35 @@
     <string name="prompting">提示</string>
     <string name="cancelAttention">是否取消关注</string>
     <string name="self">自己</string>
+    <string name="makeSureAddShoppingCart">确定加入购物车</string>
+    <string name="determineDeleteCollection">确定删除该商品收藏</string>
+    <string name="addCartSuccess">加入购物车成功</string>
+    <string name="notAnythingAdd">亲，您还没有加入任何商品哟~</string>
 
     <!--个人中心  收货地址-->
     <string name="defaultAddress">设为默认</string>
     <string name="defaultAddress1">设为默认地址</string>
+    <string name="defaultAddress2">默认地址</string>
     <string name="addAddress">添加新地址</string>
     <string name="edit">编辑</string>
     <string name="noInformation">暂无信息</string>
     <string name="delete">删除</string>
+    <string name="editAddress">编辑收货地址</string>
     <string name="newAddress">新增地址</string>
     <string name="consignee">收货人</string>
     <string name="consignee1">请输入收货人姓名</string>
     <string name="region">所在地区</string>
     <string name="regionHint">省市-城市-地区</string>
     <string name="contactWayHint">请输入收货人手机号码</string>
+    <string name="contactWayHint1">请输入正确的收货人手机号码</string>
+    <string name="region1">请选择收货人所在地区</string>
     <string name="detailedAddress">详细地址</string>
     <string name="regiondetail">请输入详细地址信息、如道路门牌号、小区、楼栋号、单元室等</string>
     <string name="saveanduse">保存并使用</string>
+    <string name="noAddress">亲，您还没有收货地址哟~</string>
+    <string name="wrongAddress">获取的地址信息有误</string>
+    <string name="deleteAddress">确定删除该条收货地址</string>
+
 
     <!-- 个人中心 我的收藏-->
     <string name="good">商品</string>
@@ -726,6 +740,8 @@
     <string name="moneySign">￥</string>
     <string name="moneySign1">-￥</string>
     <string name="oneNight">/晚</string>
+    <string name="noCollectedGoods">亲，您还没有收藏商品哟~</string>
+
 
     <!-- 个人中心 我的钱包-->
     <string name="instructions">使用说明</string>
@@ -753,6 +769,8 @@
     <string name="myBankCard">我的银行卡</string>
     <string name="revalidation">重新验证</string>
     <string name="toResend">s后重发</string>
+    <string name="retry">重试</string>
+
 
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>

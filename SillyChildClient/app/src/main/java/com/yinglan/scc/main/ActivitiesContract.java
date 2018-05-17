@@ -12,9 +12,14 @@ public interface ActivitiesContract {
     interface Presenter extends BasePresenter {
 
         /**
+         * 获取分类广告
+         */
+        void getAdvCat();
+
+        /**
          * 获取活动信息
          */
-        void getActivities(String city);
+        void getActivities();
 
     }
 

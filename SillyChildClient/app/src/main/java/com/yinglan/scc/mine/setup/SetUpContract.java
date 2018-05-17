@@ -25,7 +25,7 @@ public interface SetUpContract {
         /**
          * 退出环信登录
          */
-        void logOutHuanXin(Activity activity);
+        void logOutAPP(Activity activity);
     }
 
     interface View extends BaseView<Presenter, String> {

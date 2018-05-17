@@ -29,10 +29,9 @@ import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.main.MallHomePageViewAdapter;
+import com.yinglan.scc.adapter.main.homepage.MallHomePageViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.HomePageBean;
-import com.yinglan.scc.entity.HomePageBean.ResultBean.AdBean;
+import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.entity.main.MallHomePageBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
@@ -55,7 +54,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Admin on 2017/8/10.
  */
 @SuppressLint("NewApi")
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, HomePageContract.View, BGABanner.Delegate<ImageView, AdBean>, BGABanner.Adapter<ImageView, AdBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private MainActivity aty;
 
@@ -179,7 +178,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initData() {
         super.initData();
-        mPresenter = new HomePagePresenter(this);
+        mPresenter = new MallHomePagePresenter(this);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
@@ -187,44 +186,6 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         mallHomePageViewAdapter = new MallHomePageViewAdapter(recyclerview);
         sv_home.setOnScrollChangeListener(this);
-    }
-
-    /**
-     * 填充数据
-     */
-    private List addList() {
-        listbean.clear();
-        MallHomePageBean.ResultBean.ListBean initbean = new MallHomePageBean.ResultBean.ListBean();
-        initbean.setTitle(getString(R.string.newStrategy));
-        initbean.setPrice("45212");
-        initbean.setId(0);
-        initbean.setPriceFmt("452111");
-        listbean.add(initbean);
-        MallHomePageBean.ResultBean.ListBean initbean1 = new MallHomePageBean.ResultBean.ListBean();
-        initbean1.setTitle(getString(R.string.newStrategy));
-        initbean1.setPrice("http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png");
-        initbean1.setId(0);
-        initbean1.setPriceFmt("452111");
-        listbean.add(initbean1);
-        MallHomePageBean.ResultBean.ListBean initbean2 = new MallHomePageBean.ResultBean.ListBean();
-        initbean2.setTitle(getString(R.string.newStrategy));
-        initbean2.setPrice("http://news.cnhubei.com/ctjb/ctjbsgk/ctjb40/200808/W020080822221006461534.jpg");
-        initbean2.setId(0);
-        initbean2.setPriceFmt("452111");
-        listbean.add(initbean2);
-        MallHomePageBean.ResultBean.ListBean initbean3 = new MallHomePageBean.ResultBean.ListBean();
-        initbean3.setTitle(getString(R.string.newStrategy));
-        initbean3.setPrice("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505470629546&di=194a9a92bfcb7754c5e4d19ff1515355&imgtype=0&src=http%3A%2F%2Fpics.jiancai.com%2Fimgextra%2Fimg01%2F656928666%2Fi1%2FT2_IffXdxaXXXXXXXX_%2521%2521656928666.jpg");
-        initbean3.setId(0);
-        initbean3.setPriceFmt("452111");
-        listbean.add(initbean3);
-        MallHomePageBean.ResultBean.ListBean initbean4 = new MallHomePageBean.ResultBean.ListBean();
-        initbean4.setTitle(getString(R.string.newStrategy));
-        initbean4.setPrice("http://img.taopic.com/uploads/allimg/140714/234975-140G4155Z571.jpg");
-        initbean4.setId(0);
-        initbean4.setPriceFmt("452111");
-        listbean.add(initbean4);
-        return listbean;
     }
 
 
@@ -241,23 +202,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(mallHomePageViewAdapter);
         mallHomePageViewAdapter.setOnRVItemClickListener(this);
-        mallHomePageViewAdapter.addMoreData(addList());
+        //  mallHomePageViewAdapter.addMoreData(addList());
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         //注册监听函数
-        ((HomePagePresenter) mPresenter).initLocation(aty, mLocationClient);
+        ((MallHomePageContract.Presenter) mPresenter).initLocation(aty, mLocationClient);
         showLoadingDialog(aty.getString(R.string.dataLoad));
-        ((HomePagePresenter) mPresenter).getHomePage("");
-        //   EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BuildConfig.HUANXIN_IM);
-        //    try {
-        //    if (conversation.getUnreadMsgCount() > 0) {
-        //   tv_tag.setVisibility(View.GONE);
-        //     } else {
-        //    tv_tag.setVisibility(View.GONE);
-        //     }
-        //   } catch (Exception e) {
-        // tv_tag.setVisibility(View.GONE);
-        //    }
+        ((MallHomePageContract.Presenter) mPresenter).getAdvCat();
     }
 
     /**
@@ -269,47 +220,47 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         switch (v.getId()) {
             case R.id.ll_cosmetics:
                 Intent cosmeticsIntent = new Intent(aty, GoodsListActivity.class);
-                cosmeticsIntent.putExtra("classification", "");
+                cosmeticsIntent.putExtra("cat", "");
                 aty.showActivity(aty, cosmeticsIntent);
                 break;
             case R.id.ll_personalCare:
                 Intent personalCareIntent = new Intent(aty, GoodsListActivity.class);
-                personalCareIntent.putExtra("classification", "");
+                personalCareIntent.putExtra("cat", "");
                 aty.showActivity(aty, personalCareIntent);
                 break;
             case R.id.ll_maternalAndInfant:
                 Intent maternalAndInfantIntent = new Intent(aty, GoodsListActivity.class);
-                maternalAndInfantIntent.putExtra("classification", "");
+                maternalAndInfantIntent.putExtra("cat", "");
                 aty.showActivity(aty, maternalAndInfantIntent);
                 break;
             case R.id.ll_bagAccessories:
                 Intent bagAccessories = new Intent(aty, GoodsListActivity.class);
-                bagAccessories.putExtra("classification", "");
+                bagAccessories.putExtra("cat", "");
                 aty.showActivity(aty, bagAccessories);
                 break;
             case R.id.ll_clothingAndShoes:
                 Intent clothingAndShoesIntent = new Intent(aty, GoodsListActivity.class);
-                clothingAndShoesIntent.putExtra("classification", "");
+                clothingAndShoesIntent.putExtra("cat", "");
                 aty.showActivity(aty, clothingAndShoesIntent);
                 break;
             case R.id.ll_homeApplianceDigital:
                 Intent homeApplianceDigitalIntent = new Intent(aty, GoodsListActivity.class);
-                homeApplianceDigitalIntent.putExtra("classification", "");
+                homeApplianceDigitalIntent.putExtra("cat", "");
                 aty.showActivity(aty, homeApplianceDigitalIntent);
                 break;
             case R.id.ll_household:
                 Intent householdIntent = new Intent(aty, GoodsListActivity.class);
-                householdIntent.putExtra("classification", "");
+                householdIntent.putExtra("cat", "");
                 aty.showActivity(aty, householdIntent);
                 break;
             case R.id.ll_beautyCare:
                 Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
-                beautyCareIntent.putExtra("classification", "");
+                beautyCareIntent.putExtra("cat", "");
                 aty.showActivity(aty, beautyCareIntent);
                 break;
             case R.id.ll_food:
                 Intent foodIntent = new Intent(aty, GoodsListActivity.class);
-                foodIntent.putExtra("classification", "");
+                foodIntent.putExtra("cat", "");
                 aty.showActivity(aty, foodIntent);
                 break;
             case R.id.ll_more:
@@ -321,41 +272,24 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     }
 
     @Override
-    public void setPresenter(HomePageContract.Presenter presenter) {
+    public void setPresenter(MallHomePageContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingChangeHomePageFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
-            HomePageBean homePageBean = (HomePageBean) JsonUtil.getInstance().json2Obj(success, HomePageBean.class);
-            processLogic(homePageBean.getData().getAd());
-            if (homePageBean.getData().getAction() == null) {
-                dismissLoadingDialog();
-                return;
-            }
-//            if (homePageBean.getData().getAction().getLocal() == null || homePageBean.getData().getAction().getLocal().size() == 0 || homePageBean.getData().getAction().getLocal().isEmpty()) {
-//            } else {
-//                hotRegionViewAdapter.clear();
-//                homePageBean.getData().getAction().getLocal().get(homePageBean.getData().getAction().getLocal().size() - 1).setStatusL("last");
-//                hotRegionViewAdapter.addNewData(homePageBean.getData().getAction().getLocal());
-//            }
-//            if (homePageBean.getData().getAction().getHot() == null || homePageBean.getData().getAction().getHot().size() == 0 || homePageBean.getData().getAction().getHot().isEmpty()) {
-//                clv_boutiqueLine.setVisibility(View.GONE);
-//            } else {
-//                clv_boutiqueLine.setVisibility(View.VISIBLE);
-//                boutiqueLineViewAdapter.clear();
-//                boutiqueLineViewAdapter.addNewData(homePageBean.getData().getAction().getHot());
-//            }
+            AdvCatBean advCatBean = (AdvCatBean) JsonUtil.json2Obj(success, AdvCatBean.class);
+            processLogic(advCatBean.getData());
+            ((MallHomePageContract.Presenter) mPresenter).getHomePage();
         } else if (flag == 1) {
-            dismissLoadingDialog();
-//            tv_tag.setVisibility(View.GONE);
-//            aty.showActivity(aty, OverleafActivity.class);
-        }
-        dismissLoadingDialog();
+            MallHomePageBean mallHomePageBean = (MallHomePageBean) JsonUtil.json2Obj(success, MallHomePageBean.class);
 
+
+
+
+            dismissLoadingDialog();
+        }
     }
 
     @Override
@@ -393,7 +327,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
      * 广告轮播图
      */
     @SuppressWarnings("unchecked")
-    private void processLogic(List<AdBean> list) {
+    private void processLogic(List<AdvCatBean.DataBean> list) {
         if (list != null && list.size() > 0) {
             if (list.size() == 1) {
                 mForegroundBanner.setAutoPlayAble(false);
@@ -427,19 +361,19 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
 
     @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, AdBean model, int position) {
+    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
         //   GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView);
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView, R.mipmap.placeholderfigure2);
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdBean model, int position) {
-        if (StringUtils.isEmpty(model.getAd_link())) {
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+        if (StringUtils.isEmpty(model.getUrl())) {
             return;
         }
         Intent bannerDetails = new Intent(aty, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getAd_link());
-        bannerDetails.putExtra("title", model.getAd_name());
+        bannerDetails.putExtra("url", model.getUrl());
+        bannerDetails.putExtra("title", model.getAname());
         aty.showActivity(aty, bannerDetails);
     }
 
@@ -586,6 +520,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mallHomePageViewAdapter.clear();
+        mallHomePageViewAdapter = null;
         mLocationClient.unRegisterLocationListener(myListener); //注销掉监听
         mLocationClient.stop(); //停止定位服务
     }
