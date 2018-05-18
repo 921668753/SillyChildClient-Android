@@ -2,7 +2,6 @@ package com.yinglan.scc.mine.personaldata;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,17 +9,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
@@ -32,25 +32,23 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.UploadImageBean;
-import com.yinglan.scc.entity.main.UserInfoBean;
+import com.yinglan.scc.entity.mine.deliveryaddress.RegionListBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scc.mine.personaldata.setnickname.SetNickNameActivity;
 import com.yinglan.scc.mine.personaldata.setsex.SetSexActivity;
-import com.yinglan.scc.mine.personaldata.setsex.SetSexContract;
 import com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity;
 import com.yinglan.scc.mine.personaldata.setsillycode.SetSillyCodeActivity;
 import com.yinglan.scc.utils.DataUtil;
 import com.yinglan.scc.utils.GlideImageLoader;
-import com.yinglan.scc.utils.PickerViewUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
-import cn.jpush.android.api.JPushInterface;
 
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
@@ -104,7 +102,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private TimePickerView pvTime;
 
-    private OptionsPickerView pvOptions;
     public static final int REQUEST_CODE_SELECT = 100;
     private ImagePicker imagePicker;
 
@@ -120,11 +117,21 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private int updatanum = 0;
 
     private TimePickerView pvCustomTime = null;
-    private PickerViewUtil pickerViewUtil = null;
 
-    private int currentLocationAreaItemPosition = 0;
-    private int currentLocationCityItemPosition = 0;
-    private int currentLocationProvinceItemPosition = 0;
+    private int province_id = 0;
+    private int city_id = 0;
+    private int region_id = 0;
+    private int town_id = 0;
+    private String province = "";
+    private String city = "";
+    private String region = "";
+    private OptionsPickerView pvNoLinkOptions = null;
+    private List<RegionListBean.DataBean> provinceList = null;
+    private List<RegionListBean.DataBean> cityList = null;
+    private List<RegionListBean.DataBean> areaList = null;
+    private int areaOptions3 = 0;
+    private int cityOptions2 = 0;
+    private int provinceOptions1 = 0;
 
     private boolean isRefresh = false;
 
@@ -140,9 +147,13 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     public void initData() {
         super.initData();
         mPresenter = new PersonalDataPresenter(this);
+        provinceList = new ArrayList<RegionListBean.DataBean>();
+        cityList = new ArrayList<RegionListBean.DataBean>();
+        areaList = new ArrayList<RegionListBean.DataBean>();
         initImagePicker();
         initCustomTimePicker();
-        initOptionPicker();
+        initNoLinkOptionsPicker();
+        ((PersonalDataContract.Presenter) mPresenter).getRegionList(0, 4);
     }
 
     /**
@@ -274,8 +285,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 pvCustomTime.show(tv_personalbirthday);
                 break;
             case R.id.ll_personaldatadq:
-                pickerViewUtil.onoptionsSelectListener();
-                pickerViewUtil.onoptionsSelect(currentLocationProvinceItemPosition, currentLocationCityItemPosition, currentLocationAreaItemPosition);
+
+                pvNoLinkOptions.show(tv_personaldiqu);
+
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
@@ -438,16 +450,62 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     }
 
 
-    private void initOptionPicker() {//条件选择器初始化
-        pickerViewUtil = new PickerViewUtil(this, 0) {
+    /**
+     * 初始化地区选择
+     */
+    private void initNoLinkOptionsPicker() {// 不联动的多级选项
+        pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+
             @Override
-            public void getAddress(String address, int province, int city, int area) {
-                tv_personaldiqu.setText(address);
-                currentLocationProvinceItemPosition = province;
-                currentLocationCityItemPosition = city;
-                currentLocationAreaItemPosition = area;
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                province_id = provinceList.get(options1).getRegion_id();
+                city_id = cityList.get(options2).getRegion_id();
+                region_id = areaList.get(options3).getRegion_id();
+                ((PersonalDataContract.Presenter) mPresenter).setRegion(provinceList.get(options1).getLocal_name(), province_id, cityList.get(options2).getLocal_name(), city_id, areaList.get(options3).getLocal_name(), region_id);
             }
-        };
+        })
+                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+
+                    @Override
+                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                        if (provinceOptions1 == options1 && cityOptions2 == options2) {
+                            areaOptions3 = options3;
+                            return;
+                        }
+                        if (provinceOptions1 == options1 && cityOptions2 != options2) {
+                            cityOptions2 = options2;
+                            areaOptions3 = 0;
+                            getRegionList(cityList, cityList.get(options2).getLocal_name(), 6);
+                            return;
+                        }
+                        provinceOptions1 = options1;
+                        cityOptions2 = 0;
+                        areaOptions3 = 0;
+                        getRegionList(provinceList, provinceList.get(options1).getLocal_name(), 5);
+                    }
+                })
+                .build();
+    }
+
+
+    /**
+     * 获取地区二级列表
+     */
+    private void getRegionList(List<RegionListBean.DataBean> list, String positionName, int flag) {
+        for (int i = 0; i < list.size(); i++) {
+            if (positionName.contains(list.get(i).getLocal_name()) && flag == 5 || StringUtils.isEmpty(positionName) && i == 0 && flag == 5) {
+                provinceOptions1 = i;
+                ((PersonalDataContract.Presenter) mPresenter).getRegionList(list.get(i).getRegion_id(), flag);
+                return;
+            } else if (positionName.contains(list.get(i).getLocal_name()) && flag == 6 || StringUtils.isEmpty(positionName) && i == 0 && flag == 6) {
+                cityOptions2 = i;
+                ((PersonalDataContract.Presenter) mPresenter).getRegionList(list.get(i).getRegion_id(), flag);
+                return;
+            } else if (positionName.contains(list.get(i).getLocal_name()) && flag == 7 || StringUtils.isEmpty(positionName) && i == 0 && flag == 7) {
+                areaOptions3 = i;
+                return;
+            }
+        }
     }
 
 
@@ -479,10 +537,38 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", (int) birthday);
                 break;
             case 3:
-                GlideImageLoader.glideLoader(this, touxiangpath, iv_personaltx, 0);
+                tv_personaldiqu.setText(provinceList.get(provinceOptions1).getLocal_name() + cityList.get(cityOptions2).getLocal_name() + areaList.get(areaOptions3).getLocal_name());
+                //   GlideImageLoader.glideLoader(this, touxiangpath, iv_personaltx, 0);
                 break;
             case 4:
-                tv_personaldiqu.setText(pickeraddress);
+                RegionListBean regionListBean = (RegionListBean) JsonUtil.json2Obj(success, RegionListBean.class);
+                if (regionListBean.getData() != null && regionListBean.getData().size() > 0) {
+                    provinceList.addAll(regionListBean.getData());
+                    getRegionList(provinceList, province, 5);
+                }
+                break;
+            case 5:
+                RegionListBean regionListBean1 = (RegionListBean) JsonUtil.json2Obj(success, RegionListBean.class);
+                if (regionListBean1.getData() != null && regionListBean1.getData().size() > 0) {
+                    cityList.clear();
+                    cityList.addAll(regionListBean1.getData());
+                    getRegionList(cityList, city, 6);
+                }
+                break;
+            case 6:
+                RegionListBean regionListBean2 = (RegionListBean) JsonUtil.json2Obj(success, RegionListBean.class);
+                if (regionListBean2.getData() != null && regionListBean2.getData().size() > 0) {
+                    areaList.clear();
+                    areaList.addAll(regionListBean2.getData());
+                    getRegionList(areaList, region, 7);
+                } else {
+                    areaList.clear();
+                    RegionListBean.DataBean dataBean = new RegionListBean.DataBean();
+                    dataBean.setLocal_name("");
+                    areaList.add(dataBean);
+                }
+                pvNoLinkOptions.setNPicker(provinceList, cityList, areaList);
+                pvNoLinkOptions.setSelectOptions(provinceOptions1, cityOptions2, areaOptions3);
                 break;
         }
     }
@@ -507,7 +593,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         if (pictureSourceDialog != null) {
             pictureSourceDialog.cancel();
         }
-        pickerViewUtil.onDestroy();
+        if (pvNoLinkOptions != null && pvNoLinkOptions.isShowing()) {
+            pvNoLinkOptions.dismiss();
+        }
+        pvNoLinkOptions = null;
         pictureSourceDialog = null;
         GlideCatchUtil.getInstance().cleanImageDisk();
         GlideCatchUtil.getInstance().cleanCatchDisk();

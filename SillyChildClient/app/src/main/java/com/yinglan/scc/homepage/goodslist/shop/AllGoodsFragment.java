@@ -39,6 +39,15 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
+    @BindView(id = R.id.tv_comprehensive, click = true)
+    private TextView tv_comprehensive;
+
+    @BindView(id = R.id.tv_sales, click = true)
+    private TextView tv_sales;
+
+    @BindView(id = R.id.tv_price, click = true)
+    private TextView tv_price;
+
     /**
      * 商品列表
      */
@@ -65,10 +74,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-    /**
-     * 总页码
-     */
-    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
 
     /**
      * 是否加载更多
@@ -80,10 +86,8 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     private SpacesItemDecoration spacesItemDecoration;
 
     private int storeid = 0;
-
-    private String price = "";
-    private String order = "";
-    private String cat_id = "";
+    private String sort = "def_desc";
+    private int cat_id = 0;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -99,6 +103,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         storeid = aty.getIntent().getIntExtra("storeid", 0);
+        cat_id = aty.getIntent().getIntExtra("cat_id", 0);
     }
 
     @Override
@@ -130,6 +135,30 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.tv_comprehensive:
+                if (sort.equals("def_desc")) {
+                    sort = "def_asc";
+                } else {
+                    sort = "def_desc";
+                }
+                mRefreshLayout.beginRefreshing();
+                break;
+            case R.id.tv_sales:
+                if (sort.equals("buynum_desc")) {
+                    sort = "buynum_asc";
+                } else {
+                    sort = "buynum_desc";
+                }
+                mRefreshLayout.beginRefreshing();
+                break;
+            case R.id.tv_price:
+                if (sort.equals("price_desc")) {
+                    sort = "price_asc";
+                } else {
+                    sort = "price_desc";
+                }
+                mRefreshLayout.beginRefreshing();
+                break;
             case R.id.tv_button:
                 if (tv_button.getText().toString().contains(getString(R.string.retry))) {
                     mRefreshLayout.beginRefreshing();
@@ -152,7 +181,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, mMorePageNumber, price, order, cat_id);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, cat_id, mMorePageNumber, sort);
     }
 
     @Override
@@ -164,7 +193,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, mMorePageNumber, price, order, cat_id);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, cat_id, mMorePageNumber, sort);
         return true;
     }
 
@@ -182,12 +211,14 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         AllGoodsBean allGoodsBean = (AllGoodsBean) JsonUtil.getInstance().json2Obj(success, AllGoodsBean.class);
         if (allGoodsBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
                 allGoodsBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noCollectedGoods), 1);
+            errorMsg(getString(R.string.noale), 1);
             return;
         } else if (allGoodsBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
                 allGoodsBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             ViewInject.toast(getString(R.string.noMoreData));
             isShowLoadingMore = false;
+            dismissLoadingDialog();
+            mRefreshLayout.endLoadingMore();
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -195,6 +226,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
             mAdapter.clear();
             mAdapter.addNewData(allGoodsBean.getData());
         } else {
+            mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(allGoodsBean.getData());
         }
         dismissLoadingDialog();

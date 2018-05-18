@@ -38,26 +38,6 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
         });
     }
 
-    @Override
-    public void getRegionList(int parentid) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        if (parentid != 0) {
-            httpParams.put("parentid", parentid);
-        }
-        RequestClient.getRegionList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
-
-
-    }
 
     @Override
     public void postEditAddress(int addr_id, String name, String mobile, int province_id, int city_id, int region_id, int town_id, String addr, int def_addr) {
@@ -77,7 +57,7 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.contactWayHint1), 0);
             return;
         }
-        if (province_id == 0 || city_id == 0 || region_id == 0 || town_id == 0) {
+        if (province_id == 0 || city_id == 0 || region_id == 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.region1), 0);
             return;
         }
@@ -98,12 +78,12 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
         RequestClient.postEditAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
+                mView.errorMsg(msg, 1);
             }
         });
     }
@@ -123,7 +103,7 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.contactWayHint1), 0);
             return;
         }
-        if (province_id == 0 || city_id == 0 || region_id == 0 || town_id == 0) {
+        if (province_id == 0 || city_id == 0 || region_id == 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.region1), 0);
             return;
         }
@@ -143,12 +123,29 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
         RequestClient.postAddAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 3);
+                mView.getSuccess(response, 2);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 3);
+                mView.errorMsg(msg, 2);
+            }
+        });
+    }
+
+    @Override
+    public void getRegionList(int parentid, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("parentid", parentid);
+        RequestClient.getRegionList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
             }
         });
     }

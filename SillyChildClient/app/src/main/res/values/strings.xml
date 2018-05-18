@@ -593,6 +593,8 @@
     <string name="seeMore">查看更多</string>
     <string name="buyNow">立即购买</string>
     <string name="customerService">客服</string>
+    <string name="noale">亲，您来的太早了，还没有商品出售哟~</string>
+
 
     <!--商城  店铺首页  全部商品 商品详情-->
     <string name="GoodsDetails">商品详情</string>
@@ -945,6 +947,7 @@
     <string name="setSex">设置性别</string>
     <string name="birthday">生日</string>
     <string name="atRegion">地区</string>
+    <string name="atRegion1">请选择您所在地区</string>
     <string name="bindEmail">绑定邮箱</string>
     <string name="personalizedSignature">个性签名</string>
     <string name="personalizedSignatureHint">一句话描述你的个性签名(最多30个字)</string>

@@ -5,6 +5,8 @@
     android:background="@color/background"
     android:orientation="vertical">
 
+    <include layout="@layout/common_title" />
+
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
         style="@style/MatchAuto"

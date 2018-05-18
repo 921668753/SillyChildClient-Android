@@ -22,6 +22,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.entity.loginregister.LoginBean;
+import com.yinglan.scc.message.rongcloud.util.UserUtil;
 
 
 import java.io.File;
@@ -1209,7 +1210,7 @@ public class RequestClient {
      * 获取详细收货地址
      */
     public static void getAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        Log.d("tag", "postDeleteAddress");
+        Log.d("tag", "getAddress");
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {
@@ -1231,18 +1232,7 @@ public class RequestClient {
      */
     public static void getRegionList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getRegionList");
-        doServer(context, new TokenCallback() {
-            @Override
-            public void execute() {
-                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
-                if (StringUtils.isEmpty(cookies)) {
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
-                    return;
-                }
-                httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestGetHttp(context, URLConstants.REGIONLIST, httpParams, listener);
-            }
-        }, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.REGIONLIST, httpParams, listener);
     }
 
     /**
@@ -2148,19 +2138,14 @@ public class RequestClient {
     /**
      * 获取会员登录状态
      */
-    public static void getIsLogin(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
-        doServer(context, new TokenCallback() {
-            @Override
-            public void execute() {
-                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
-                if (StringUtils.isEmpty(cookies)) {
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
-                    return;
-                }
-                httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestGetHttp(context, URLConstants.ISLOGIN, httpParams, listener);
-            }
-        }, listener);
+    public static void getIsLogin(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+        if (StringUtils.isEmpty(cookies)) {
+            listener.onFailure(NumericConstants.TOLINGIN + "");
+            return;
+        }
+        httpParams.putHeaders("Cookie", cookies);
+        HttpRequest.requestGetHttp(context, URLConstants.ISLOGIN, httpParams, listener);
     }
 
     /**
@@ -2231,7 +2216,7 @@ public class RequestClient {
 
                 @Override
                 public void onFailure(String msg) {
-                    PreferenceHelper.write(context, StringConstants.FILENAME, "cookies", "");
+                    UserUtil.clearUserInfo(context);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                 }
             });

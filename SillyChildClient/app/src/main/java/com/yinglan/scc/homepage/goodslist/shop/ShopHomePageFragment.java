@@ -17,7 +17,6 @@ import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.shop.ShopHomePageViewAdapter;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.homepage.goodslist.shop.ShopHomePageBean;
 import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;

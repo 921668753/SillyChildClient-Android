@@ -214,6 +214,8 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
                     myCollectionBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
                 ViewInject.toast(getString(R.string.noMoreData));
                 isShowLoadingMore = false;
+                dismissLoadingDialog();
+                mRefreshLayout.endLoadingMore();
                 return;
             }
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -221,6 +223,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
                 mAdapter.clear();
                 mAdapter.addNewData(myCollectionBean.getData());
             } else {
+                mRefreshLayout.endLoadingMore();
                 mAdapter.addMoreData(myCollectionBean.getData());
             }
         } else if (flag == 1) {

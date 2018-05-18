@@ -30,7 +30,7 @@ public class HttpRequest {
     private final static int TOLINGIN = -10001;
     private final static int SUCCESS = 1;
 
-    private static RxCookieVolley.Builder builder = null;
+    //  private static RxCookieVolley.Builder builder = null;
     private static RxVolley.Builder builder2;
 
     public static void requestHttp(String url, final Context context, final int httpMethod, int contentType, HttpParams params, boolean isCache, final ResponseListener responseListener) {
@@ -38,10 +38,8 @@ public class HttpRequest {
             responseListener.onFailure(KJActivityStack.create().topActivity().getString(R.string.checkNetwork));
             return;
         }
+        RxCookieVolley.Builder builder = new RxCookieVolley.Builder();
 
-        if (builder == null) {
-            builder = new RxCookieVolley.Builder();
-        }
         //http请求的回调，内置了很多方法，详细请查看源码
 //包括在异步响应的onSuccessInAsync():注不能做UI操作
 //网络请求成功时的回调onSuccess()
@@ -50,18 +48,16 @@ public class HttpRequest {
             @Override
             public void onSuccess(Map<String, String> headers, byte[] t) {
                 super.onSuccess(headers, t);
-                if (headers != null && headers.size() > 0 && !StringUtils.isEmpty(headers.get("Set-Cookie"))) {
+                if (headers != null && headers.size() > 0 && !StringUtils.isEmpty(headers.get("Set-Cookie")) && headers.get("Set-Cookie").length() > 70) {
                     PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", headers.get("Set-Cookie"));
-                    //  Log.d("Cookies", JsonUtil.obj2JsonString(headers));
+                    Log.d("Cookies", JsonUtil.obj2JsonString(headers));
                 }
-                builder = null;
                 doSuccess(new String(t), responseListener);
             }
 
             @Override
             public void onFailure(int errorNo, String strMsg) {
                 super.onFailure(errorNo, strMsg);
-                builder = null;
                 doFailure(errorNo, strMsg, responseListener);
             }
         };
@@ -72,7 +68,7 @@ public class HttpRequest {
 //                .timeout(1000 * 60 * 1000)
                 .timeout(1000 * 60 * 1)
                 //设置缓存时间: 默认是 get 请求 5 分钟, post 请求不缓存
-//                .cacheTime(1)
+                .cacheTime(1000 * 60 * 1)
                 //内容参数传递形式，如果不加，默认为 FORM 表单提交，可选项 JSON 内容
                 .contentType(contentType)
                 .params(params) //上文创建的HttpParams请求参数集

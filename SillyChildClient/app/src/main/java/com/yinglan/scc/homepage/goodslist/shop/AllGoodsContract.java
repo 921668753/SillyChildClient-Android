@@ -13,7 +13,7 @@ public interface AllGoodsContract {
         /**
          * 获取店铺的全部商品列表
          */
-        void getStoreGoodsList(int storeid, int page, String price, String order, String cat_id);
+        void getStoreGoodsList(int storeid, int cat_id, int page, String sort);
     }
 
     interface View extends BaseView<Presenter, String> {

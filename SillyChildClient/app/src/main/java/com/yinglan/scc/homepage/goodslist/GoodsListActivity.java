@@ -16,6 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.myview.BGANormalRefreshViewHolder;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.GoodsListViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
@@ -80,8 +81,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
 
     private int cat = 0;
-    private int brand = 0;
-    private int seckill = 0;
+    private String sort = "def_desc";
 
     /**
      * 是否加载更多
@@ -111,7 +111,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @Override
     public void initWidget() {
         super.initWidget();
-        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         initRecyclerView();
         mRefreshLayout.beginRefreshing();
     }
@@ -120,10 +120,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
      * 设置RecyclerView控件部分属性
      */
     private void initRecyclerView() {
-        layoutManager.setAutoMeasureEnabled(true);
         recyclerview.setLayoutManager(layoutManager);
-        recyclerview.setHasFixedSize(true);
-        recyclerview.setNestedScrollingEnabled(false);
         //设置item之间的间隔
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(goodsListAdapter);
@@ -139,13 +136,28 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
                 finish();
                 break;
             case R.id.ll_comprehensiveRanking:
-
+                if (sort.equals("def_desc")) {
+                    sort = "def_asc";
+                } else {
+                    sort = "def_desc";
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.ll_salesPreferred:
-
+                if (sort.equals("buynum_desc")) {
+                    sort = "buynum_asc";
+                } else {
+                    sort = "buynum_desc";
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.ll_pricePriority:
-
+                if (sort.equals("price_desc")) {
+                    sort = "price_asc";
+                } else {
+                    sort = "price_desc";
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_button:
                 if (tv_button.getText().toString().contains(getString(R.string.retry))) {
@@ -166,18 +178,19 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @Override
     public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
-        mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         GoodsListBean goodsListBean = (GoodsListBean) JsonUtil.getInstance().json2Obj(success, GoodsListBean.class);
         if (goodsListBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER || goodsListBean.getData().size() <= 0 &&
                 mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noCollectedGoods), 1);
+            errorMsg(getString(R.string.noale), 1);
             return;
         } else if (goodsListBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
                 goodsListBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             ViewInject.toast(getString(R.string.noMoreData));
             isShowLoadingMore = false;
+            dismissLoadingDialog();
+            mRefreshLayout.endLoadingMore();
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -185,6 +198,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
             goodsListAdapter.clear();
             goodsListAdapter.addNewData(goodsListBean.getData());
         } else {
+            mRefreshLayout.endLoadingMore();
             goodsListAdapter.addMoreData(goodsListBean.getData());
         }
         dismissLoadingDialog();
@@ -215,7 +229,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
             img_err.setImageResource(R.mipmap.no_login);
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
-            ViewInject.toast(getString(R.string.reloginPrompting));
+            //  ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
@@ -231,7 +245,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
-     //   ViewInject.toast(msg);
+        //   ViewInject.toast(msg);
         dismissLoadingDialog();
     }
 
@@ -241,7 +255,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, brand, seckill, et_search.getText().toString().trim());
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim());
     }
 
     @Override
@@ -253,7 +267,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, brand, seckill, et_search.getText().toString().trim());
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim());
         return true;
     }
 

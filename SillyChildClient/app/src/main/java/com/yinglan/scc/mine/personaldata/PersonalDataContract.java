@@ -20,7 +20,7 @@ public interface PersonalDataContract {
         /**
          * 更改用户地址
          */
-        void setRegion(String province, String province_id, String city, String city_id, String region, String region_id);
+        void setRegion(String province, int province_id, String city, int city_id, String region, int region_id);
 
         /**
          * 上传图片
@@ -32,6 +32,10 @@ public interface PersonalDataContract {
          */
         void changeShzCode(String shz_code);
 
+        /**
+         * 根据父id获取地址列表
+         */
+        void getRegionList(int parentid, int flag);
     }
 
     interface View extends BaseView<Presenter, String> {

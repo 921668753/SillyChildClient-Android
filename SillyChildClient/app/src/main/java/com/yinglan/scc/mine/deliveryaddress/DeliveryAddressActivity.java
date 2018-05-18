@@ -33,7 +33,6 @@ import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE;
 
 public class DeliveryAddressActivity extends BaseActivity implements DeliveryAddressContract.View, BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, BGAOnItemChildClickListener {
 
-    private DeliveryAddressContract.Presenter mPresenter;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -86,6 +85,7 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
         lv_address.setAdapter(mAdapter);
         lv_address.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -93,7 +93,8 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_newaddress:
-                showActivity(this, AddNewAddressActivity.class);
+                Intent intent = new Intent(aty, AddNewAddressActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.tv_button:
                 if (tv_button.getText().toString().contains(getString(R.string.retry))) {
@@ -125,18 +126,19 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
             mRefreshLayout.setVisibility(View.VISIBLE);
             ll_commonError.setVisibility(View.GONE);
             DeliveryAddressBean deliveryAddressBean = (DeliveryAddressBean) JsonUtil.json2Obj(success, DeliveryAddressBean.class);
-            if (deliveryAddressBean == null || deliveryAddressBean.getData() == null || deliveryAddressBean.getData().getAddressList().size() <= 0) {
+            if (deliveryAddressBean == null || deliveryAddressBean.getData() == null || deliveryAddressBean.getData().size() <= 0) {
                 errorMsg(getString(R.string.noAddress), 1);
                 return;
             }
             mRefreshLayout.setPullDownRefreshEnable(true);
             mAdapter.clear();
-            mAdapter.addNewData(deliveryAddressBean.getData().getAddressList());
+            mAdapter.addNewData(deliveryAddressBean.getData());
             dismissLoadingDialog();
         } else if (flag == 1) {
-            mAdapter.removeItem(positionItem);
-        } else if (flag == 2) {
             mRefreshLayout.beginRefreshing();
+        } else if (flag == 2) {
+            mAdapter.removeItem(positionItem);
+            dismissLoadingDialog();
         }
     }
 
@@ -179,7 +181,7 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((DeliveryAddressContract.Presenter) mAdapter).getAddressList();
+        ((DeliveryAddressContract.Presenter) mPresenter).getAddressList();
     }
 
     @Override
@@ -190,10 +192,21 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         //编辑地址
-        Intent intent = new Intent(aty, AddNewAddressActivity.class);
-        intent.putExtra("addr_id", mAdapter.getItem(position).getAddr_id());
-        intent.putExtra("title", getString(R.string.editAddress));
-        startActivityForResult(intent, REQUEST_CODE);
+//        Intent intent = new Intent(aty, AddNewAddressActivity.class);
+//        intent.putExtra("addr_id", mAdapter.getItem(position).getAddr_id());
+//        intent.putExtra("name", mAdapter.getItem(position).getName());
+//        intent.putExtra("mobile", mAdapter.getItem(position).getMobile());
+//        intent.putExtra("province", mAdapter.getItem(position).getProvince());
+//        intent.putExtra("province_id", mAdapter.getItem(position).getProvince_id());
+//        intent.putExtra("city", mAdapter.getItem(position).getCity());
+//        intent.putExtra("city_id", mAdapter.getItem(position).getCity_id());
+//        intent.putExtra("region", mAdapter.getItem(position).getRegion());
+//        intent.putExtra("region_id", mAdapter.getItem(position).getRegion_id());
+//        //  intent.putExtra("town_id", mAdapter.getItem(position).getTown_id());
+//        intent.putExtra("addr", mAdapter.getItem(position).getAddr());
+//        intent.putExtra("def_addr", mAdapter.getItem(position).getDef_addr());
+//        intent.putExtra("title", getString(R.string.editAddress));
+//        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
@@ -208,8 +221,20 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
                 //编辑地址
                 Intent intent = new Intent(aty, AddNewAddressActivity.class);
                 intent.putExtra("addr_id", mAdapter.getItem(position).getAddr_id());
+                intent.putExtra("name", mAdapter.getItem(position).getName());
+                intent.putExtra("mobile", mAdapter.getItem(position).getMobile());
+                intent.putExtra("province", mAdapter.getItem(position).getProvince());
+                intent.putExtra("province_id", mAdapter.getItem(position).getProvince_id());
+                intent.putExtra("city", mAdapter.getItem(position).getCity());
+                intent.putExtra("city_id", mAdapter.getItem(position).getCity_id());
+                intent.putExtra("region", mAdapter.getItem(position).getRegion());
+                intent.putExtra("region_id", mAdapter.getItem(position).getRegion_id());
+                //  intent.putExtra("town_id", mAdapter.getItem(position).getTown_id());
+                intent.putExtra("addr", mAdapter.getItem(position).getAddr());
+                intent.putExtra("def_addr", mAdapter.getItem(position).getDef_addr());
                 intent.putExtra("title", getString(R.string.editAddress));
                 startActivityForResult(intent, REQUEST_CODE);
+                break;
             case R.id.ll_deliveryaddressdelete:
                 if (deleteAddressDialog == null) {
                     initDeleteAddressDialog();

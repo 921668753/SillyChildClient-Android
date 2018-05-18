@@ -3,7 +3,7 @@ package com.yinglan.scc.adapter.mine.deliveryaddress;
 import android.content.Context;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.deliveryaddress.DeliveryAddressBean.DataBean.AddressListBean;
+import com.yinglan.scc.entity.mine.deliveryaddress.DeliveryAddressBean.DataBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -13,8 +13,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class DeliveryAddressViewAdapter extends BGAAdapterViewAdapter<AddressListBean> {
-
+public class DeliveryAddressViewAdapter extends BGAAdapterViewAdapter<DataBean> {
 
     public DeliveryAddressViewAdapter(Context context) {
         super(context, R.layout.item_deliveryaddress);
@@ -28,7 +27,7 @@ public class DeliveryAddressViewAdapter extends BGAAdapterViewAdapter<AddressLis
     }
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, AddressListBean listBean) {
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
         viewHolderHelper.setText(R.id.tv_deliveryaddressname, listBean.getName());
         viewHolderHelper.setText(R.id.tv_deliveryaddressphone, listBean.getMobile());
         viewHolderHelper.setText(R.id.tv_deliveryaddress, listBean.getProvince() + listBean.getCity() + listBean.getRegion() + listBean.getTown() + listBean.getAddr());

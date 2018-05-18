@@ -28,7 +28,7 @@ public class GoodsListViewAdapter extends BGARecyclerViewAdapter<DataBean> {
         GlideImageLoader.glideOrdinaryLoader(mContext, model.getSmall(), (ImageView) helper.getView(R.id.img_good), R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
         helper.setText(R.id.tv_goodSynopsis, model.getName());
-        helper.setText(R.id.tv_goodMoney, model.getPrice());
+        helper.setText(R.id.tv_goodMoney, mContext.getString(R.string.renminbi) + model.getPrice());
         helper.setText(R.id.tv_brand, model.getName());
         if (TextUtils.isEmpty(model.getName())) {
             helper.setVisibility(R.id.ll_bottomLabel, View.VISIBLE);

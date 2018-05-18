@@ -402,7 +402,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "selectCity", getString(R.string.allAeservationNumber));
         showLoadingDialog(getString(R.string.dataLoad));
         //   if (tv_address.getText().toString().equals(getString(R.string.allAeservationNumber))) {
-        ((HomePageContract.Presenter) mPresenter).getHomePage("");
+        ((MallHomePageContract.Presenter) mPresenter).getHomePage();
 //        } else {
 //            ((HomePageContract.Presenter) mPresenter).getHomePage(tv_address.getText().toString());
 //        }

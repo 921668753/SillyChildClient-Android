@@ -39,6 +39,7 @@ public class DeliveryAddressPresenter implements DeliveryAddressContract.Present
     @Override
     public void setDefaultAddress(int addr_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("addr_id", addr_id);
         RequestClient.postDefaultAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -55,6 +56,7 @@ public class DeliveryAddressPresenter implements DeliveryAddressContract.Present
     @Override
     public void postDeleteAddress(int addr_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("addr_id", addr_id);
         RequestClient.postDeleteAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

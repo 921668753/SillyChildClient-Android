@@ -206,6 +206,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
 
     @Override
     public void getSuccess(String success, int flag) {
+        mRefreshLayout.setPullDownRefreshEnable(true);
         if (flag == 0) {
             Log.e("用户信息", "结果：" + success);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
@@ -267,6 +268,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
 
     @Override
     public void errorMsg(String msg, int flag) {
+        mRefreshLayout.setPullDownRefreshEnable(false);
         dismissLoadingDialog();
         if (isLogin(msg)) {
             initDefaultInfo();

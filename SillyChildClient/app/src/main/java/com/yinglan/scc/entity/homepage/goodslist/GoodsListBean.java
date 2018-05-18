@@ -10,18 +10,18 @@ public class GoodsListBean extends BaseResult<List<GoodsListBean.DataBean>> {
 
     public class DataBean {
         /**
-         * goods_id : 289
-         * name : 宝矿力水特24瓶 整箱
-         * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_thumbnail.jpg
-         * price : 93
-         * mktprice : 93
-         * view_count : 3
+         * goods_id : 162
+         * name : 真他妈的好吃
+         * thumbnail : http://ovwiqces1.bkt.clouddn.com/attachment//store/18/goods/2018/5/11/17//10097266_thumbnail.jpg
+         * price : 20000
+         * mktprice : 100000
+         * view_count : 4
          * buy_count : 1
-         * store : 99
-         * sn : 950824
-         * big : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_big.jpg
-         * small : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_small.jpg
-         * original : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541.jpg
+         * store : 3
+         * sn : 2838
+         * big : fs:/attachment//store/18/goods/2018/5/11/17//10097266_big.jpg
+         * small : fs:/attachment//store/18/goods/2018/5/11/17//10097266_small.jpg
+         * original : fs:/attachment//store/18/goods/2018/5/11/17//10097266.jpg
          * commentCount : null
          * commentPercent : null
          */
@@ -30,7 +30,7 @@ public class GoodsListBean extends BaseResult<List<GoodsListBean.DataBean>> {
         private String name;
         private String thumbnail;
         private String price;
-        private int mktprice;
+        private String mktprice;
         private int view_count;
         private int buy_count;
         private int store;
@@ -73,11 +73,11 @@ public class GoodsListBean extends BaseResult<List<GoodsListBean.DataBean>> {
             this.price = price;
         }
 
-        public int getMktprice() {
+        public String getMktprice() {
             return mktprice;
         }
 
-        public void setMktprice(int mktprice) {
+        public void setMktprice(String mktprice) {
             this.mktprice = mktprice;
         }
 
@@ -137,7 +137,7 @@ public class GoodsListBean extends BaseResult<List<GoodsListBean.DataBean>> {
             this.original = original;
         }
 
-        public String getCommentCount() {
+        public Object getCommentCount() {
             return commentCount;
         }
 

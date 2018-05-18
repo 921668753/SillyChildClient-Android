@@ -123,9 +123,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
-            style="@style/MatchWrap"
+            style="@style/MatchAuto"
             android:layout_marginTop="@dimen/dimen10"
-            android:background="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
             tools:listitem="@layout/item_mallhomepage" />
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
