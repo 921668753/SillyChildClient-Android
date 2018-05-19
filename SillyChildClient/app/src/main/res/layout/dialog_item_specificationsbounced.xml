@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WrapWrap"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:padding="@dimen/dimen15"
+        android:text="@string/color"
+        android:textColor="@color/hintColors"
+        android:textSize="@dimen/textsize13" />
+
+    <com.common.cklibrary.utils.myview.NoScrollGridView
+        android:id="@+id/gv_specifications"
+        style="@style/MatchWrap"
+        android:background="@android:color/white"
+        android:horizontalSpacing="15dp"
+        android:numColumns="4"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:scrollbars="none"
+        android:verticalSpacing="@dimen/dimen15"
+        tools:listitem="@layout/item_specifications" />
+</LinearLayout>

@@ -57,12 +57,4 @@ public class PayCompleteActivity extends BaseActivity {
         }
     }
 
-
-
-
-
-
-
-
-
 }

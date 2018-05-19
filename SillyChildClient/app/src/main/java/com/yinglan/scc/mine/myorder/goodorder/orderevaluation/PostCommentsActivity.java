@@ -54,30 +54,40 @@ public class PostCommentsActivity extends BaseActivity implements ImagePickerAda
 
     @BindView(id = R.id.ll_guideScoring)
     private LinearLayout ll_guideScoring;
+
     @BindView(id = R.id.ll_chooseanonymous_guide, click = true)
     private LinearLayout ll_chooseanonymous_guide;
+
     @BindView(id = R.id.iv_chooseanonymous_guide)
     private ImageView iv_chooseanonymous_guide;
+
     @BindView(id = R.id.rb_rating_guide)
     private RatingBar rb_rating_guide;
+
     @BindView(id = R.id.et_content_guide)
     private EditText et_content_guide;
+
     @BindView(id = R.id.recyclerview_guide)
     private RecyclerView recyclerview_guide;
 
     @BindView(id = R.id.ll_scoring)
     private LinearLayout ll_scoring;
+
     @BindView(id = R.id.rb_rating)
     private RatingBar rb_rating;
+
     @BindView(id = R.id.recyclerView)
     private RecyclerView recyclerView;
+
     @BindView(id = R.id.ll_chooseanonymous, click = true)
     private LinearLayout ll_chooseanonymous;
+
     @BindView(id = R.id.iv_chooseanonymous)
     private ImageView iv_chooseanonymous;
 
     @BindView(id = R.id.tv_cancel, click = true)
     private TextView tv_cancel;
+
     @BindView(id = R.id.et_content)
     private TextView et_content;
 

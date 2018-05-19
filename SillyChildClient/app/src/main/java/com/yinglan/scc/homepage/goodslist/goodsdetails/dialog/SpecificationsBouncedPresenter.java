@@ -1,6 +1,7 @@
-package com.yinglan.scc.homepage.goodslist.goodsdetails;
+package com.yinglan.scc.homepage.goodslist.goodsdetails.dialog;
 
-import com.common.cklibrary.common.KJActivityStack;
+import android.content.Context;
+
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -10,19 +11,19 @@ import com.yinglan.scc.retrofit.RequestClient;
  * Created by ruitu on 2016/9/24.
  */
 
-public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
-    private GoodsDetailsContract.View mView;
+public class SpecificationsBouncedPresenter implements SpecificationsBouncedContract.Presenter {
+    private SpecificationsBouncedContract.View mView;
 
-    public GoodsDetailsPresenter(GoodsDetailsContract.View view) {
+    public SpecificationsBouncedPresenter(SpecificationsBouncedContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
 
     @Override
-    public void getGoodDetail(int goodsid) {
+    public void getGoodsSpec(Context context, int id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("goodsid", goodsid);
-        RequestClient.getGoodDetail(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("id", id);
+        RequestClient.getGoodsSpec(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

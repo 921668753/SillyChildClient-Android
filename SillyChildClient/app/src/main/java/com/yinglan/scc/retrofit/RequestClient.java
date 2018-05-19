@@ -291,6 +291,19 @@ public class RequestClient {
         HttpRequest.requestGetHttp(context, URLConstants.STOREGOODSLIST, httpParams, true, listener);
     }
 
+    /**
+     * 首页---更多分类----商品列表----商品详情
+     */
+    public static void getGoodDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODDETAIL, httpParams, true, listener);
+    }
+
+    /**
+     * 首页---更多分类----商品列表----商品详情----商品规格
+     */
+    public static void getGoodsSpec(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSSPEC, httpParams, true, listener);
+    }
 
     /**
      * 活动

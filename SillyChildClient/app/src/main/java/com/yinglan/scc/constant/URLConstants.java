@@ -75,6 +75,15 @@ public class URLConstants {
      */
     public static String STOREGOODSLIST = APIURL + "store/goods-list.do";
 
+    /**
+     * 首页---更多分类----商品列表----商品详情
+     */
+    public static String GOODDETAIL = APIURL + "goods/detail.do";
+
+    /**
+     * 首页---更多分类----商品列表----商品详情----商品规格
+     */
+    public static String GOODSSPEC = APIURL + "goods/spec.do";
 
     /**
      * 活动

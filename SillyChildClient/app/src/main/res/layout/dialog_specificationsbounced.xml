@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/black20">
 
     <LinearLayout
-        style="@style/MatchWrap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen370"
         android:layout_alignParentBottom="true"
         android:background="@color/whiteColors"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/WrapWrap"
-            android:paddingBottom="@dimen/dimen15"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingTop="@dimen/dimen15"
-            android:text="@string/color"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize16" />
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:paddingBottom="@dimen/dimen15"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15"
+                android:text="@string/color"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize16" />
+
+            <TextView style="@style/AutoWrap" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen42"
+                android:layout_height="@dimen/dimen42"
+                android:padding="@dimen/dimen15" />
+
+        </LinearLayout>
+
 
         <View style="@style/DividerWidth" />
 
@@ -61,36 +75,24 @@
                     android:textSize="@dimen/textsize13" />
             </LinearLayout>
 
-
         </LinearLayout>
 
         <TextView style="@style/DividerWidth" />
 
-        <TextView
-            style="@style/MatchWrap"
-            android:background="@color/whiteColors"
-            android:padding="@dimen/dimen15"
-            android:text="@string/color"
-            android:textColor="@color/hintColors"
-            android:textSize="@dimen/textsize13" />
-
-        <com.common.cklibrary.utils.myview.NoScrollGridView
-            android:id="@+id/gv_specifications"
-            style="@style/MatchWrap"
-            android:background="@android:color/white"
-            android:horizontalSpacing="15dp"
-            android:numColumns="4"
-            android:overScrollMode="never"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15"
+        <ListView
+            android:id="@+id/lv_specifications"
+            style="@style/MatchAuto"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen1"
+            android:listSelector="@android:color/transparent"
             android:scrollbars="none"
-            android:verticalSpacing="@dimen/dimen15"
-            tools:listitem="@layout/item_specifications" />
+            tools:listitem="@layout/dialog_item_specificationsbounced" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen40"
             android:background="@color/greenColors"
+            android:gravity="center"
             android:text="@string/determine"
             android:textColor="@color/whiteColors"
             android:textSize="@dimen/textsize15" />
