@@ -31,12 +31,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:27.1.1'
+    api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 
     //    compile 'com.android.support:support-fragment:26.0.1'
 
     //    compile 'com.android.support:support-annotations:26.0.1'
-    compile 'com.android.support:recyclerview-v7:27.1.1'
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile 'com.kymjs.rxvolley:rxvolley:latest.release'
 
     //网络请求框架
