@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.3'
 
     defaultConfig {
         minSdkVersion 19
@@ -48,8 +48,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibilityVersion
-        targetCompatibility rootProject.ext.targetCompatibilityVersion
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
     lintOptions {
@@ -172,27 +172,24 @@ dependencies {
      *  融云开发 Android 版即时通讯（IM）应用程序
      * https://github.com/sealtalk/sealtalk-android
      */
-//    compile 'cn.rongcloud.android:IMLib:2.8.32'
-//    compile 'cn.rongcloud.android:IMKit:2.8.32'
-//    compile 'cn.rongcloud.android:CallLib:2.8.32'
-//    compile 'cn.rongcloud.android:CallKit:2.8.32'
+    //    compile 'cn.rongcloud.android:IMLib:2.8.32'
+    //    compile 'cn.rongcloud.android:IMKit:2.8.32'
+    //    compile 'cn.rongcloud.android:CallLib:2.8.32'
+    //    compile 'cn.rongcloud.android:CallKit:2.8.32'
     // compile 'cn.rongcloud.android:RedPacket:2.8.6'
-
     //融云-----start-----
     compile project(':IMKit')
-//    compile project(':IMLib')
-//    compile project(':CallKit')
-//    compile project(':CallLib')
+    //    compile project(':IMLib')
+    //    compile project(':CallKit')
+    //    compile project(':CallLib')
     compile project(':RedPacket')
     //融云-----end-----
-
     /**
      * 友盟
      */
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:analytics:latest.integration'
     // compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
     implementation files('libs/open_sdk_r5788_lite.jar')
     implementation files('libs/SocialSDK_QQ_Full.jar')
     implementation files('libs/SocialSDK_WeiXin_Full.jar')
