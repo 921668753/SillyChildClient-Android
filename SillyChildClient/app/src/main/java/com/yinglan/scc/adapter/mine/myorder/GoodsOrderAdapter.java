@@ -1,13 +1,12 @@
 package com.yinglan.scc.adapter.mine.myorder;
 
 import android.content.Context;
+import android.util.SparseArray;
 
 import com.common.cklibrary.utils.myview.ChildListView;
+import com.kymjs.common.Log;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.GoodOrderBean.ResultBean.ListBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -19,10 +18,14 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
 
-    private List<GoodOrderAdapter> list = new ArrayList<GoodOrderAdapter>();
+
+    //用于退出 Activity,避免 Countdown，造成资源浪费。
+    private SparseArray<GoodOrderAdapter> countDownCounters;
+
 
     public GoodsOrderAdapter(Context context) {
         super(context, R.layout.item_goodsorder);
+        this.countDownCounters = new SparseArray<>();
     }
 
 
@@ -37,7 +40,9 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
         clv_shopgoods.setAdapter(adapter);
         adapter.clear();
         //    adapter.addNewData(charterOrderBean.getResult().getList());
-        list.add(adapter);
+        //将此 countDownTimer 放入list.
+        countDownCounters.put(clv_shopgoods.hashCode(), adapter);
+
 
 //        /**
 //         * 图片
@@ -68,11 +73,16 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     @Override
     public void clear() {
-        if (list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                list.get(i).clear();
+        if (countDownCounters == null) {
+            return;
+        }
+        Log.e("TAG", "size :  " + countDownCounters.size());
+        for (int i = 0, length = countDownCounters.size(); i < length; i++) {
+            GoodOrderAdapter cdt = countDownCounters.get(countDownCounters.keyAt(i));
+            if (cdt != null) {
+                cdt.clear();
+                cdt = null;
             }
-            list.clear();
         }
         super.clear();
     }

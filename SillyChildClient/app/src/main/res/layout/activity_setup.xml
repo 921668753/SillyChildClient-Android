@@ -135,12 +135,20 @@
 
     </LinearLayout>
 
+
+
+
+
+
+
+
+
     <TextView
         android:id="@+id/tv_logOut"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:layout_marginTop="@dimen/dimen20"
-        android:background="@color/whiteColors"
+      android:background="@drawable/shape_login"
         android:gravity="center"
         android:text="@string/logOut"
         android:textColor="@color/redColors"
