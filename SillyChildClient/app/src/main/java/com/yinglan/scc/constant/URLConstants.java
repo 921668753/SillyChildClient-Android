@@ -29,7 +29,6 @@ public class URLConstants {
      */
     public static String APPCONFIG = APIURL + "appConfig";
 
-
     /**
      * 获取分类广告
      */
