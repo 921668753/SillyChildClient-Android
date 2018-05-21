@@ -280,6 +280,10 @@ public class RequestClient {
     /**
      * 首页---更多分类----商品列表----店铺首页
      */
+    public static void getStoreImage(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.STOREIMAGE, httpParams, listener);
+    }
+
     public static void getStoreIndexGoods(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestGetHttp(context, URLConstants.STOREINDEXGOODS, httpParams, true, listener);
     }

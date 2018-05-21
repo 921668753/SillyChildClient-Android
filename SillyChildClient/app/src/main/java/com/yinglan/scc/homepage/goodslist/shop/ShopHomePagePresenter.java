@@ -27,20 +27,22 @@ public class ShopHomePagePresenter implements ShopHomePageContract.Presenter {
         mView.setPresenter(this);
     }
 
+
     @Override
-    public void getInfo() {
+    public void getStoreImage(int storeid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 1);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        httpParams.put("storeid", storeid);
+        RequestClient.getStoreImage(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 
     @Override

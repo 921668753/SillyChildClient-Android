@@ -95,14 +95,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     /**
      * 微信
      */
-    @BindView(id = R.id.ll_loginweixin, click = true)
-    private LinearLayout ll_loginweixin;
+    @BindView(id = R.id.img_loginweixin, click = true)
+    private ImageView ll_loginweixin;
 
     /**
      * QQ
      */
-    @BindView(id = R.id.ll_loginqq, click = true)
-    private LinearLayout ll_loginqq;
+    @BindView(id = R.id.img_loginqq, click = true)
+    private ImageView ll_loginqq;
+
     private String openid;
     private String from;
     private String nickname;
@@ -174,10 +175,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.ll_register:
                 showActivity(aty, RegisterActivity.class);
                 break;
-            case R.id.ll_loginweixin:
+            case R.id.img_loginweixin:
                 thirdLogin(SHARE_MEDIA.WEIXIN);
                 break;
-            case R.id.ll_loginqq:
+            case R.id.img_loginqq:
                 thirdLogin(SHARE_MEDIA.QQ);
                 break;
             default:
@@ -315,13 +316,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 temp = temp + key + " : " + map.get(key) + "\n";
             }
             Log.d("tag111", temp);
-            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
-                sex = 1;
-            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
-                sex = 2;
-            } else {
-                sex = 0;
-            }
+//            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
+//                sex = 1;
+//            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
+//                sex = 2;
+//            } else {
+//                sex = 0;
+//            }
             //openid = map.get("uid");
             openid = map.get("openid");
             Log.d("tag111", openid);
@@ -331,9 +332,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             } else {
                 from = "qq";
             }
-            nickname = map.get("name");
-            head_pic = map.get("iconurl");
-            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
+//            nickname = map.get("name");
+//            head_pic = map.get("iconurl");
+            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from);
         }
 
         /**

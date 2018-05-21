@@ -52,6 +52,7 @@ public class URLConstants {
     /**
      * 首页---更多分类----商品列表----店铺首页
      */
+    public static String STOREIMAGE = APIURL + "store/image.do";
     public static String STOREINDEXGOODS = APIURL + "store/index-goods.do";
 
     /**

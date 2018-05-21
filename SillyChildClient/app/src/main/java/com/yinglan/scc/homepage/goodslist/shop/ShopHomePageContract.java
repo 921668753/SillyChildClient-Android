@@ -11,9 +11,9 @@ public interface ShopHomePageContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取店铺首页轮播图
+         * 获取店铺的轮播图图片
          */
-        void getInfo();
+        void getStoreImage(int storeid);
 
         /**
          * 获取店铺首页要展示的商品列表

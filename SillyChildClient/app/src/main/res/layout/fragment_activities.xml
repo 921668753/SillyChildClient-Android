@@ -92,6 +92,7 @@
                         android:textSize="@dimen/textsize15" />
 
                     <TextView
+                        android:id="@+id/tv_seeMore"
                         style="@style/AutoWrap"
                         android:background="@color/whiteColors"
                         android:gravity="right"
@@ -139,6 +140,7 @@
                         android:textSize="@dimen/textsize15" />
 
                     <TextView
+                        android:id="@+id/tv_productlSeeMore"
                         style="@style/AutoWrap"
                         android:background="@color/whiteColors"
                         android:gravity="right"

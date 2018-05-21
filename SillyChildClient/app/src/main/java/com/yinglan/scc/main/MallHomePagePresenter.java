@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -52,6 +53,8 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
     @Override
     public void getHomePage() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        String[] marks1 = new String[]{"homePage"};
+        httpParams.put("marks", JsonUtil.getInstance().obj2JsonString(marks1));
         RequestClient.getHome(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

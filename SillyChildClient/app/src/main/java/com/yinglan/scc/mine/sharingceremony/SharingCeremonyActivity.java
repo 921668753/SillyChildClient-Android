@@ -38,15 +38,17 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
 //    @BindView(id = R.id.tv_rules)
 //    private TextView tv_rules;
 
-    @BindView(id = R.id.ll_loginweixin, click = true)
-    private LinearLayout ll_loginweixin;
+//    @BindView(id = R.id.ll_loginweixin, click = true)
+//    private LinearLayout ll_loginweixin;
     //    @BindView(id = R.id.ll_loginpengyouquan, click = true)
 //    private LinearLayout ll_loginpengyouquan;
 //    @BindView(id = R.id.ll_loginweibo, click = true)
 //    private LinearLayout ll_loginweibo;
-    @BindView(id = R.id.ll_loginqq, click = true)
-    private LinearLayout ll_loginqq;
+//    @BindView(id = R.id.ll_loginqq, click = true)
+//    private LinearLayout ll_loginqq;
+
     private String apply_code;
+
     private VIPPermissionsDialog vipPermissionsDialog;
 
 
@@ -89,19 +91,12 @@ public class SharingCeremonyActivity extends BaseActivity implements MineContrac
             initDialog();
         } else {
             switch (v.getId()) {
-                case R.id.ll_loginweixin:
-                    umShare(SHARE_MEDIA.WEIXIN);
-                    break;
-//                case R.id.ll_loginpengyouquan:
-//                    umShare(SHARE_MEDIA.WEIXIN_CIRCLE);
+//                case R.id.ll_loginweixin:
+//                    umShare(SHARE_MEDIA.WEIXIN);
 //                    break;
-//                case R.id.ll_loginweibo:
-//                    ViewInject.toast("尚待开发，敬请期待！");
-////                    umShare(SHARE_MEDIA.SINA);
+//                case R.id.ll_loginqq:
+//                    umShare(SHARE_MEDIA.QQ);
 //                    break;
-                case R.id.ll_loginqq:
-                    umShare(SHARE_MEDIA.QQ);
-                    break;
             }
         }
     }

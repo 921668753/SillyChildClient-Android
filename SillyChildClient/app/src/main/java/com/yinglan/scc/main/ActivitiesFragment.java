@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
@@ -24,6 +25,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.main.ActivitiesBean;
 import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
+import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.SpacesItemDecoration;
@@ -53,12 +55,18 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     /**
      * 特价商品
      */
+    @BindView(id = R.id.tv_seeMore, click = true)
+    private TextView tv_seeMore;
+
     @BindView(id = R.id.hlv_bargain)
     private HorizontalListView hlv_bargain;
 
     /**
      * 当季热销
      */
+    @BindView(id = R.id.tv_productlSeeMore, click = true)
+    private TextView tv_productlSeeMore;
+
     @BindView(id = R.id.rv)
     private RecyclerView recyclerview;
 
@@ -96,6 +104,23 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         initRecyclerView();
         showLoadingDialog(getString(R.string.dataLoad));
         ((ActivitiesContract.Presenter) mPresenter).getAdvCat();
+    }
+
+    @Override
+    protected void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_seeMore:
+                Intent goodsListIntent = new Intent(aty, GoodsListActivity.class);
+                goodsListIntent.putExtra("mark", "special");
+                aty.showActivity(aty, goodsListIntent);
+                break;
+            case R.id.tv_productlSeeMore:
+                Intent goodsListIntent1 = new Intent(aty, GoodsListActivity.class);
+                goodsListIntent1.putExtra("mark", "monthHot");
+                aty.showActivity(aty, goodsListIntent1);
+                break;
+        }
     }
 
     /**
@@ -155,7 +180,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
             ((ActivitiesContract.Presenter) mPresenter).getActivities();
         } else if (flag == 1) {
             ActivitiesBean activitiesBean = (ActivitiesBean) JsonUtil.json2Obj(success, ActivitiesBean.class);
-
 
 
             dismissLoadingDialog();

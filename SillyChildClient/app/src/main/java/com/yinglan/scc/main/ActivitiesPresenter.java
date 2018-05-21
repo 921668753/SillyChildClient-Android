@@ -1,14 +1,10 @@
 package com.yinglan.scc.main;
 
-import android.content.Context;
-
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.yinglan.scc.R;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.retrofit.RequestClient;
 
 /**
@@ -45,6 +41,8 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter {
     @Override
     public void getActivities() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        String[] marks1 = new String[]{"special", "monthHot"};
+        httpParams.put("marks", JsonUtil.getInstance().obj2JsonString(marks1));
         RequestClient.getActivities(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

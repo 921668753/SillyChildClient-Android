@@ -16,7 +16,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.common.cklibrary.utils.myview.BGANormalRefreshViewHolder;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.homepage.goodslist.GoodsListViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
@@ -91,6 +90,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     private SpacesItemDecoration spacesItemDecoration = null;
 
     private StaggeredGridLayoutManager layoutManager;
+    private String mark = "";
 
     @Override
     public void setRootView() {
@@ -106,6 +106,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         goodsListAdapter = new GoodsListViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         cat = getIntent().getIntExtra("cat", 0);
+        mark = getIntent().getStringExtra("mark");
     }
 
     @Override
@@ -255,7 +256,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim());
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim(), mark);
     }
 
     @Override
@@ -267,7 +268,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim());
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim(), mark);
         return true;
     }
 

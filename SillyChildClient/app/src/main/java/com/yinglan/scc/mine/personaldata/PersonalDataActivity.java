@@ -103,7 +103,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private TimePickerView pvTime;
 
     public static final int REQUEST_CODE_SELECT = 100;
-    private ImagePicker imagePicker;
 
     private String touxiangpath;//所更换的头像的路径
     private UploadImageBean uploadimagebean;
@@ -160,7 +159,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      * 初始化图片选择器
      */
     private void initImagePicker() {
-        imagePicker = ImagePicker.getInstance();
+        ImagePicker imagePicker = ImagePicker.getInstance();
         GlideImageLoader glideImageLoader = new GlideImageLoader();
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setCrop(true);        //允许裁剪（单选才有效）

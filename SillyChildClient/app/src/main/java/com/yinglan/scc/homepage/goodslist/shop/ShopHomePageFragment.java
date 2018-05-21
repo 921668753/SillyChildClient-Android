@@ -75,6 +75,7 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         shopHomepageAdapter = new ShopHomePageViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         storeid = aty.getIntent().getIntExtra("storeid", 0);
+        ((ShopHomePageContract.Presenter) mPresenter).getStoreImage(storeid);
     }
 
     @Override
@@ -139,6 +140,9 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+
+
+
 
             ((ShopHomePageContract.Presenter) mPresenter).getStoreIndexGoods(storeid);
         } else if (flag == 1) {
