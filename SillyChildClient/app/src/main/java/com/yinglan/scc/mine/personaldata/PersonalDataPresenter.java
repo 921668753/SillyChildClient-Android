@@ -80,9 +80,9 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     }
 
     @Override
-    public void setBirthday(int birthday) {
+    public void setBirthday(long birthday) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("birthday", birthday);
+        httpParams.put("birthday", String.valueOf(birthday));
         RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -15,7 +15,7 @@ public interface PersonalDataContract {
         /**
          * 更改用户生日
          */
-        void setBirthday(int birthday);
+        void setBirthday(long birthday);
 
         /**
          * 更改用户地址

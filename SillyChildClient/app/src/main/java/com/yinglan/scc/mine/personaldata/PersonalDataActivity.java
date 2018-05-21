@@ -414,7 +414,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 birthday = date.getTime() / 1000;
                 //birthdaycalendar.setTime(date);
                 showLoadingDialog(getString(R.string.saveLoad));
-                ((PersonalDataContract.Presenter) mPresenter).setBirthday((int) birthday);
+                ((PersonalDataContract.Presenter) mPresenter).setBirthday(birthday);
                 //  ((TextView) v).setText(format.format(date));
             }
         })
