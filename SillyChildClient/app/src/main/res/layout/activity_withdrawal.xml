@@ -12,8 +12,7 @@
     <LinearLayout
         style="@style/MatchWrap"
         android:background="@color/whiteColors"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/dimen10">
+        android:orientation="horizontal">
 
 
         <TextView
@@ -25,38 +24,42 @@
             android:textSize="@dimen/textsize14" />
 
 
-        <TextView
-            android:id="@+id/tv_withdrawalBank"
-            style="@style/WrapWrap"
-            android:paddingLeft="@dimen/dimen51"
-            android:paddingTop="@dimen/dimen15"
-            android:text="中国银行（尾号3215）"
-            android:textColor="@color/fF0000Colors"
-            android:textSize="@dimen/textsize14" />
+        <LinearLayout
+            android:id="@+id/ll_bank"
+            style="@style/AutoWrap"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/dimen68"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen51">
 
-        <TextView style="@style/AutoWrap" />
+            <TextView
+                android:id="@+id/tv_withdrawalBank"
+                style="@style/WrapWrap"
+                android:singleLine="true"
+                android:text="中国银行（尾号3215）"
+                android:textColor="@color/fF0000Colors"
+                android:textSize="@dimen/textsize14" />
 
+            <TextView
+                android:id="@+id/tv_poundage"
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:background="@color/whiteColors"
+                android:paddingRight="@dimen/dimen15"
+                android:text="提现到中国银行，手续费率0.1%"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize12" />
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/tv_modification"
             android:layout_width="@dimen/dimen15"
             android:layout_height="@dimen/dimen15"
+            android:layout_gravity="center"
             android:layout_marginRight="@dimen/dimen15"
-            android:layout_marginTop="@dimen/dimen15"
-            android:src="@mipmap/withdrawals_plus_sign" />
+            android:src="@mipmap/back_black_right" />
 
     </LinearLayout>
-
-
-    <TextView
-        style="@style/MatchWrap"
-        android:background="@color/whiteColors"
-        android:paddingBottom="@dimen/dimen15"
-        android:paddingLeft="@dimen/dimen120"
-        android:paddingRight="@dimen/dimen15"
-        android:text="提现到中国银行，手续费率0.1%"
-        android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize12" />
 
 
     <TextView style="@style/DividerWidth" />
