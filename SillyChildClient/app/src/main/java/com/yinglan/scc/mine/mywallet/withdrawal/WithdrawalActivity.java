@@ -3,6 +3,7 @@ package com.yinglan.scc.mine.mywallet.withdrawal;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -15,12 +16,10 @@ import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-
-import com.yinglan.scc.constant.NumericConstants;
-
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.mine.mywallet.withdrawal.dialog.PayPasswordBouncedDialogActivity;
-import com.yinglan.scc.mine.setup.AboutUsActivity;
+import com.yinglan.scc.mine.mywallet.mybankcard.AddBankCardActivity;
+import com.yinglan.scc.mine.mywallet.mybankcard.MyBankCardActivity;
+import com.yinglan.scc.mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -44,7 +43,6 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     @BindView(id = R.id.tv_money)
     private TextView tv_money;
 
-
     /**
      * 中国银行（尾号3215）
      */
@@ -52,17 +50,16 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     private TextView tv_withdrawalBank;
 
     /**
+     * 费用
+     */
+    @BindView(id = R.id.tv_poundage)
+    private TextView tv_poundage;
+
+    /**
      * 选择银行卡
      */
-    @BindView(id = R.id.tv_modification, click = true)
-    private TextView tv_modification;
-
-//    /**
-//     * 协议
-//     */
-//    @BindView(id = R.id.tv_driverWithdrawAgreement, click = true)
-//    private TextView tv_driverWithdrawAgreement;
-
+    @BindView(id = R.id.ll_bank, click = true)
+    private LinearLayout ll_bank;
 
     /**
      * 确定
@@ -92,24 +89,11 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     @Override
     public void initWidget() {
         super.initWidget();
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                aty.finish();
-            }
-
-            @Override
-            public void onClickRightCtv() {
-                super.onClickRightCtv();
-            }
-        };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal),true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), true, R.id.titlebar);
         String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
         tv_money.setText(withdrawalAmount);
         if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
             tv_withdrawalBank.setText(getString(R.string.noCard));
-            tv_modification.setText(getString(R.string.addCard));
             return;
         }
         tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
@@ -120,27 +104,17 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-//            case R.id.tv_allWithdrawal:
-//                et_withdrawalAmount1.setText(tv_money.getText().toString());
-//                et_withdrawalAmount1.setSelection(et_withdrawalAmount1.getText().toString().trim().length());
-//                et_withdrawalAmount1.requestFocus();
-//                break;
-            case R.id.tv_modification:
-                ((WithdrawalContract.Presenter) mPresenter).isLogin(1);
+            case R.id.ll_bank:
+                ((WithdrawalContract.Presenter) mPresenter).getIsLogin(1);
                 break;
-//            case R.id.tv_driverWithdrawAgreement:
-//                Intent intentDriver = new Intent(aty, AboutUsActivity.class);
-//                intentDriver.putExtra("type", "driver_withdrawa_description");
-//                showActivity(aty, intentDriver);
-//                break;
             case R.id.tv_confirmSubmit:
-                int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
-                if (is_pay_password == 0) {
-                //    ViewInject.toast(getString(R.string.notPaymentPassword));
-                  //  Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
-                  //  startActivity(intent);
-                    return;
-                }
+//                int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
+//                if (is_pay_password == 0) {
+//                    //    ViewInject.toast(getString(R.string.notPaymentPassword));
+//                    //  Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
+//                    //  startActivity(intent);
+//                    return;
+//                }
                 ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(et_withdrawalAmount1.getText().toString().trim(), bankCardId);
                 break;
         }
@@ -156,26 +130,27 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         if (flag == 0) {
-            Intent intent = new Intent(aty, PayPasswordBouncedDialogActivity.class);
-            intent.putExtra("withdrawalAmount", et_withdrawalAmount1.getText().toString().trim());
-            intent.putExtra("bankId", bankCardId);
+            Intent intent = new Intent(aty, WithdrawalCompleteActivity.class);
+            intent.putExtra("estimatedTimeArrival", "");
+            intent.putExtra("cashCard", bankCardName + "  " + getString(R.string.tail) + bankCardNun + "");
+            intent.putExtra("withdrawalAmount", getString(R.string.renminbi) + et_withdrawalAmount1.getText().toString().trim());
             startActivityForResult(intent, REQUEST_CODE_SELECT);
         } else if (flag == 1) {
             if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
-//                Intent intent = new Intent(aty, AddBankCardActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+                Intent intent = new Intent(aty, AddBankCardActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 return;
             }
-//            Intent intent = new Intent(aty, MyBankCardActivity.class);
-//            intent.putExtra("type", 1);
-//            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+            Intent intent = new Intent(aty, MyBankCardActivity.class);
+            intent.putExtra("type", 1);
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+        if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             return;
         }
@@ -187,10 +162,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
-         //   ViewInject.toast(getString(R.string.confirmSubmit2));
+            //   ViewInject.toast(getString(R.string.confirmSubmit2));
             RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
             finish();
-        }else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");
             bankCardId = data.getIntExtra("bankCardId", 0);

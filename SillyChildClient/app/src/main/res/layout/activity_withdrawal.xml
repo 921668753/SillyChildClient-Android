@@ -145,43 +145,8 @@
             android:textColor="@color/fF0000Colors"
             android:textSize="@dimen/textsize13" />
 
-        <!--<TextView style="@style/AutoWrap" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/tv_allWithdrawal"-->
-        <!--style="@style/WrapMatch"-->
-        <!--android:gravity="right|center_vertical"-->
-        <!--android:paddingRight="@dimen/dimen15"-->
-        <!--android:text="@string/allWithdrawal"-->
-        <!--android:textColor="@color/whiteColors"-->
-        <!--android:textSize="@dimen/textsize14" />-->
 
     </LinearLayout>
-
-
-    <!--<LinearLayout-->
-    <!--style="@style/MatchWrap"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--style="@style/WrapWrap"-->
-    <!--android:paddingBottom="@dimen/dimen15"-->
-    <!--android:paddingLeft="@dimen/dimen15"-->
-    <!--android:paddingTop="@dimen/dimen15"-->
-    <!--android:text="@string/consent"-->
-    <!--android:textColor="@color/hintColors"-->
-    <!--android:textSize="@dimen/textsize14" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_driverWithdrawAgreement"-->
-    <!--style="@style/WrapMatch"-->
-    <!--android:gravity="right|center_vertical"-->
-    <!--android:paddingRight="@dimen/dimen15"-->
-    <!--android:text="@string/driverWithdrawAgreement"-->
-    <!--android:textColor="@color/red"-->
-    <!--android:textSize="@dimen/textsize14" />-->
-
-    <!--</LinearLayout>-->
 
 
     <TextView

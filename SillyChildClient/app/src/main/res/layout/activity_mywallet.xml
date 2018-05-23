@@ -170,4 +170,59 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_systemmessage"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen15"
+            android:text="@string/withdrawalRuleDescription"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/MatchWrap"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen15"
+            android:text="@string/withdrawalRuleDescription1"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize12" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </LinearLayout>

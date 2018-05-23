@@ -382,6 +382,10 @@
     <string name="modePayment">支付方式：</string>
     <string name="checkOrder">查看订单</string>
     <string name="returnHomePage">返回首页</string>
+    <string name="consignee2">收货人：</string>
+    <string name="deliveryAddress1">收货地址：</string>
+    <string name="amount1">金额：</string>
+    <string name="payAgain">重新支付</string>
 
 
     <!--首页   全部司导-->
@@ -772,7 +776,8 @@
     <string name="revalidation">重新验证</string>
     <string name="toResend">s后重发</string>
     <string name="retry">重试</string>
-
+    <string name="withdrawalRuleDescription">提现规则说明</string>
+    <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
 
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>
@@ -827,8 +832,13 @@
     <string name="accountingDate">到账需要2个工作日</string>
 
     <!--提现成功-->
-    <string name="withdrawalSuccess1">提现成功</string>
-    <string name="withdrawalFailure">提现失败</string>
+    <!--提现成功-->
+    <string name="withdrawalRequestSucceeded">提现申请成功</string>
+    <string name="withdrawalRequestSubmissionSuccess">提现申请提交成功</string>
+    <string name="withdrawalRequestSubmissionSuccess1">我们将在3个工作日内处理您的提现申请</string>
+    <string name="estimatedTimeArrival">预计到账时间：</string>
+    <string name="cashCard">储蓄卡：</string>
+    <string name="withdrawalAmount4">提现金额：</string>
 
     <!--我的银行卡-->
     <string name="addBankCard">添加银行卡</string>

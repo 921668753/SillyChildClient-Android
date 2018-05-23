@@ -19,7 +19,7 @@ public interface WithdrawalContract {
         /**
          * 是否登录
          */
-        void isLogin(int flag);
+        void getIsLogin(int flag);
     }
 
     interface View extends BaseView<Presenter, String> {

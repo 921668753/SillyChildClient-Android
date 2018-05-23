@@ -1,12 +1,14 @@
 package com.yinglan.scc.mine.mywallet.withdrawal;
 
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
 import com.yinglan.scc.application.MyApplication;
 import com.yinglan.scc.retrofit.RequestClient;
-
 
 /**
  * Created by Administrator on 2017/2/17.
@@ -67,17 +69,18 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
     }
 
     @Override
-    public void isLogin(int flag) {
-//        RequestClient.isLogin(new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, flag);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, flag);
-//            }
-//        });
+    public void getIsLogin(int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
     }
 }
