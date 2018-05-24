@@ -27,7 +27,8 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/dimen35"
-                android:paddingRight="@dimen/dimen35">
+                android:paddingRight="@dimen/dimen35"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/MatchWrap"
@@ -107,7 +108,8 @@
                 android:paddingBottom="@dimen/dimen14"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen10"
-                android:paddingTop="@dimen/dimen14">
+                android:paddingTop="@dimen/dimen14"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -133,7 +135,8 @@
                 android:background="@color/whiteColors"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/dimen12"
@@ -177,7 +180,8 @@
                 android:paddingTop="@dimen/dimen14"
                 android:text="@string/commodityInformation"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize14"
+                android:visibility="gone" />
 
             <View style="@style/DividerWidth" />
 
@@ -188,6 +192,7 @@
                 android:dividerHeight="@dimen/dimen1"
                 android:overScrollMode="never"
                 android:scrollbars="none"
+                android:visibility="gone"
                 tools:listitem="@layout/item_shopgoodsup" />
 
             <TextView
@@ -375,7 +380,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -400,7 +406,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -423,7 +430,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -446,7 +454,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -462,6 +471,134 @@
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
             </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match50"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:text="@string/afterType"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+
+                <LinearLayout
+                    style="@style/MatchMatch"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@drawable/shape_express"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen15"
+                        android:text="不喜欢/下错色号"
+                        android:textColor="@color/tabColors"
+                        android:textSize="@dimen/textsize13" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen7"
+                        android:layout_height="@dimen/dimen7"
+                        android:layout_marginRight="@dimen/dimen15"
+                        android:src="@mipmap/shop_down_arrow" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match50"
+                android:layout_marginTop="@dimen/dimen5"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:text="@string/refundAmount"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+
+                <LinearLayout
+                    style="@style/MatchMatch"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@drawable/shape_express"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen15"
+                        android:text="¥1314.00"
+                        android:textColor="@color/tabColors"
+                        android:textSize="@dimen/textsize13" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen7"
+                        android:layout_height="@dimen/dimen7"
+                        android:layout_marginRight="@dimen/dimen15"
+                        android:src="@mipmap/shop_down_arrow" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match50"
+                android:layout_marginTop="@dimen/dimen5"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:text="@string/afterWhy"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+
+                <LinearLayout
+                    style="@style/MatchMatch"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@drawable/shape_express"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen15"
+                        android:text="1"
+                        android:textColor="@color/tabColors"
+                        android:textSize="@dimen/textsize13" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen7"
+                        android:layout_height="@dimen/dimen7"
+                        android:layout_marginRight="@dimen/dimen15"
+                        android:src="@mipmap/shop_down_arrow" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>

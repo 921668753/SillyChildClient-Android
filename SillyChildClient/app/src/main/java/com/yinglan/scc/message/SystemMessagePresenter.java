@@ -1,5 +1,7 @@
 package com.yinglan.scc.message;
 
+import android.content.Context;
+
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -19,13 +21,13 @@ public class SystemMessagePresenter implements SystemMessageContract.Presenter {
 
 
     @Override
-    public void getSystem(int page) {
+    public void getSystem(Context context, int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getSystemMessage(httpParams, page, new ResponseListener<String>() {
+        RequestClient.getSystemMessage(context, httpParams, new ResponseListener<String>() {
 
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+                mView.getSuccess(response, 0);
             }
 
             @Override

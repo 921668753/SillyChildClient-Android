@@ -10,7 +10,7 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.yinglan.scc.R;
-import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
 
 /**
  * 找回密码

@@ -28,7 +28,7 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.dialog.VIPPermissionsDialog;
 import com.yinglan.scc.entity.main.UserInfoBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
 import com.yinglan.scc.mine.deliveryaddress.DeliveryAddressActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity;
 import com.yinglan.scc.mine.mycollection.MyCollectionActivity1;

@@ -11,8 +11,8 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scc.R;
-import com.yinglan.scc.message.rongcloud.util.SealUserInfoManager;
-import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealUserInfoManager;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
 import com.yinglan.scc.retrofit.RequestClient;
 
 import io.rong.imkit.RongIM;

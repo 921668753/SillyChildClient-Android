@@ -22,7 +22,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.entity.loginregister.LoginBean;
-import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
 
 
 import java.io.File;
@@ -1045,31 +1045,59 @@ public class RequestClient {
     }
 
 
-//    /**
-//     * 删除消息
-//     */
-//    public static void postDeleteMessage(HttpParams httpParams, final ResponseListener<String> listener) {
-//        String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//        httpParams.put("token", accessToken);
-//        HttpRequest.requestPostFORMHttp(URLConstants.MESSAGE, httpParams, listener);
-//    }
-
-//    /**
-//     * 获取未读消息数量
-//     */
-//    public static void getUnRead(HttpParams httpParams, final ResponseListener<String> listener) {
-//        String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//        httpParams.put("token", accessToken);
-//        HttpRequest.requestGetHttp(URLConstants.GETUNREAD, httpParams, listener);
-//    }
+    /**
+     * 获取系统消息首页
+     */
+    public static void getSystemMessage(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWLISTBUYTITLE, httpParams, listener);
+            }
+        }, listener);
+    }
 
     /**
-     * 获取系统消息详情
+     * 获取消息列表
      */
-    public static void getSystemMessageDetails(HttpParams httpParams, int id, final ResponseListener<String> listener) {
-//        String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-////        httpParams.put("token", accessToken);
-//        HttpRequest.requestGetHttp(URLConstants.SYSTEMMESSAGEDETAIL + "&id=" + id, httpParams, listener);
+    public static void getSystemMessageList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWTITLE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 选中某条消息并设为已读
+     */
+    public static void getSystemMessageDetails(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWSELECT, httpParams, listener);
+            }
+        }, listener);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.yinglan.scc.mine.myorder.goodorder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,10 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.CharterOrderAdapter;
-import com.yinglan.scc.adapter.mine.myorder.GoodsOrderAdapter;
+import com.yinglan.scc.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.CharterOrderBean;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -40,7 +35,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
 
     private MyOrderActivity aty;
 
-    private GoodsOrderAdapter mAdapter;
+    private GoodsOrderViewAdapter mAdapter;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -87,7 +82,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
     protected void initData() {
         super.initData();
         mPresenter = new CharterOrderPresenter(this);
-        mAdapter = new GoodsOrderAdapter(aty);
+        mAdapter = new GoodsOrderViewAdapter(aty);
     }
 
     @Override

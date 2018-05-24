@@ -17,9 +17,9 @@ import com.yinglan.scc.BuildConfig;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-import com.yinglan.scc.message.rongcloud.util.SealAppContext;
-import com.yinglan.scc.message.rongcloud.util.SealUserInfoManager;
-import com.yinglan.scc.message.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealAppContext;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealUserInfoManager;
+import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;

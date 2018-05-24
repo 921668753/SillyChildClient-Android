@@ -12,7 +12,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.mine.myorder.orderdetails.OrderDetailGoodAdapter;
+import com.yinglan.scc.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAdapter;
 import com.yinglan.scc.entity.OrderDetailBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
@@ -56,7 +56,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
 
     private OrderDetailBean orderDetailBean;
-    private OrderDetailGoodAdapter madapter;
+    private OrderDetailGoodViewAdapter madapter;
 
 
     @Override
@@ -68,7 +68,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void initData() {
         super.initData();
         mPresenter = new OrderDetailsPresenter(this);
-        madapter = new OrderDetailGoodAdapter(this);
+        madapter = new OrderDetailGoodViewAdapter(this);
         lv_shopgoods.setAdapter(madapter);
 
     }

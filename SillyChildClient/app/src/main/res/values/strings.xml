@@ -559,7 +559,7 @@
     <string name="interactiveMessage">互动消息</string>
     <string name="systemMessage">系统消息</string>
 
-    <!--消息    司导-->
+    <!--消息    系统消息-->
     <string name="message_type_eval_request">[满意度邀请]</string>
     <string name="message_type_order_info">[订单消息]</string>
     <string name="message_type_visitor_track">[轨迹消息]</string>
@@ -572,6 +572,10 @@
     <string name="message_type_location">[位置]</string>
     <string name="message_type_file">[文件]</string>
     <string name="noSession">您暂时没有会话</string>
+    <string name="noSystemMessage">亲，您还没有系统消息哟~</string>
+    <string name="orderM">订单</string>
+    <string name="delivery">物流</string>
+
 
 
     <!--商城-->
@@ -1141,6 +1145,23 @@
     <string name="lateCancelled">请在50分钟内付款，逾期订单将被取消</string>
     <string name="payment1">付款</string>
     <string name="checkLogistics">查看物流</string>
+
+
+    <string name="afterType">售后类型</string>
+    <string name="refundAmount">退款金额</string>
+    <string name="afterWhy">售后原因</string>
+
+    <!-- 个人中心 我的订单  订单详情   发表评价-->
+    <string name="storeRatings">店铺评分</string>
+    <string name="descriptionConsistent">描述相符</string>
+    <string name="logisticsService">物流服务</string>
+    <string name="serviceAttitude">服务态度</string>
+    <string name="goodsSatisfactory">亲，您对这个商品还满意么？\n您的评价会帮助我们选择更好的产品哦~</string>
+
+
+
+
+
 
 
     <!-- 个人中心  我的发布  动态-->
