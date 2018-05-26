@@ -5,19 +5,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
-import android.text.TextUtils;
 
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
-import com.google.gson.Gson;
 import com.kymjs.common.PreferenceHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import cn.jpush.android.api.JPushInterface;
-import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2018/3/29 0029.
@@ -56,7 +49,7 @@ public class UserUtil {
      * @return
      */
     public static String getRcId(Context context) {
-        String rongYunId = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunId", "");
+        String rongYunId = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunId", null);
         if (rongYunId != null) {
             return rongYunId;
         } else {
@@ -104,7 +97,7 @@ public class UserUtil {
      *                退出融云
      */
     public static void quitRc(Context context) {
-        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", "");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", "");
+        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", null);
+        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", null);
     }
 }

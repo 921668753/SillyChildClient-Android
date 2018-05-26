@@ -31,12 +31,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-
-    //    compile 'com.android.support:support-fragment:26.0.1'
-
-    //    compile 'com.android.support:support-annotations:26.0.1'
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+//    api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+//
+//    //    compile 'com.android.support:support-fragment:26.0.1'
+//
+//    //    compile 'com.android.support:support-annotations:26.0.1'
+//    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile 'com.kymjs.rxvolley:rxvolley:latest.release'
 
     //网络请求框架
@@ -56,13 +56,14 @@ dependencies {
     compile 'com.github.f0ris.sweetalert:library:1.5.3'
 
     //图片选择器  https://github.com/jeasonlzy/ImagePicker
-    compile 'com.lzy.widget:imagepicker:0.6.1'
+   // compile 'com.lzy.widget:imagepicker:0.6.1'
+    api project(path: ':imagepicker')
 
     //图片压缩  https://github.com/nanchen2251/CompressHelper
     compile 'com.github.nanchen2251:CompressHelper:1.0.5'
 
     //图片加载框架 https://github.com/bumptech/glide
-    compile 'com.android.support:support-v4:27.1.1'
+  //  compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
 
     //    compile 'com.android.support:support-fragment:26.+'
 

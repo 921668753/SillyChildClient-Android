@@ -424,9 +424,9 @@
             android:screenOrientation="portrait"></activity>
 
         <!--我的   我的购物车  编辑购物车-->
-        <activity
-            android:name="com.yinglan.scc.mine.myshoppingcart.editmyshoppingcart.EditMyShoppingCartActivity"
-            android:screenOrientation="portrait"></activity>
+        <!--<activity-->
+            <!--android:name="com.yinglan.scc.mine.myshoppingcart.editmyshoppingcart.EditMyShoppingCartActivity"-->
+            <!--android:screenOrientation="portrait"></activity>-->
 
         <!--我的   我的钱包-->
         <activity

@@ -180,6 +180,7 @@
             android:paddingRight="@dimen/dimen33">
 
             <TextView
+                android:id="@+id/tv_checkOrder"
                 style="@style/AutoMatch"
                 android:background="@drawable/shape_goodbtn"
                 android:gravity="center"
@@ -188,6 +189,7 @@
                 android:textSize="@dimen/textsize16" />
 
             <TextView
+                android:id="@+id/tv_returnHomePage"
                 style="@style/AutoMatch"
                 android:layout_marginLeft="@dimen/dimen20"
                 android:background="@drawable/shape_goodbtn"
