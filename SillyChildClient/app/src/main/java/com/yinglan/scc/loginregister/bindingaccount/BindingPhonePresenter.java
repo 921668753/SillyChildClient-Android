@@ -1,4 +1,4 @@
-package com.yinglan.scc.loginregister.register;
+package com.yinglan.scc.loginregister.bindingaccount;
 
 import android.net.Uri;
 import android.util.Log;
@@ -10,25 +10,32 @@ import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.retrofit.RequestClient;
-import com.yinglan.scc.utils.AccountValidatorUtil;
+
+import org.json.JSONObject;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
+
 /**
  * Created by ruitu on 2017/8/24.
  */
 
-public class RegisterPresenter implements RegisterContract.Presenter {
+public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
 
-    private RegisterContract.View mView;
+    private BindingPhoneContract.View mView;
 
-    public RegisterPresenter(RegisterContract.View view) {
+    public BindingPhonePresenter(BindingPhoneContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
@@ -44,7 +51,16 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        // Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("phone", phone);
+//        String codeI = String.valueOf(System.currentTimeMillis());
+//        String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
+//        httpParams.put("codeId", codeId);
+//        String validationI = phone.substring(1, phone.length() - 1) + codeId.substring(3, codeId.length() - 1);
+//        String validationId = CipherUtils.md5(validationI);
+//        httpParams.put("validationId", validationId);
+//        httpParams.put("opt", opt);
+        // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -58,82 +74,31 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         });
     }
 
-    @Override
-    public void postMailCaptcha(String mail, String postCode) {
-        if (StringUtils.isEmpty(mail)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
-            return;
-        }
-        if (mail.length() < 5) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
-            return;
-        }
-        // String regex = "^[A-Za-z]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";
-        if (!AccountValidatorUtil.isEmail(mail)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
-            return;
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("mail", mail);
-        httpParams.put("opt", postCode);
-        RequestClient.postEmailCaptcha(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-    }
 
     @Override
-    public void postRegister(String phone, String code, String pwd) {
-//        if (type.equals("phone")) {
+    public void postBindingPhone(String openid, String from, String phone, String code, String recommendcode) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
+
         if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
-//        } else {
-//            if (StringUtils.isEmpty(phone)) {
-//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
-//                return;
-//            }
-//            if (phone.length() < 5) {
-//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText1), 0);
-//                return;
-//            }
-//            if (!AccountValidatorUtil.isEmail(phone)) {
-//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintEmailText), 0);
-//                return;
-//            }
-        //  }
-        if (StringUtils.isEmpty(pwd)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
-            return;
-        }
-        if (pwd.length() < 6 || pwd.length() > 20) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText1), 0);
-            return;
-        }
+
         if (StringUtils.isEmpty(code)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
             return;
         }
+
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        //  Map<String, Object> map = new HashMap<String, Object>();
+        httpParams.put("openId", openid);
+        httpParams.put("type", from);
         httpParams.put("phone", phone);
         httpParams.put("code", code);
-        httpParams.put("password", pwd);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postRegister(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.postBindingPhone(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
@@ -145,6 +110,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             }
         });
     }
+
 
     @Override
     public void loginRongYun(String rongYunToken, LoginBean bean) {
@@ -172,14 +138,12 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                      * 获取用户信息
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
+                    if (RongIM.getInstance() != null && bean.getData() != null && StringUtils.isEmpty(bean.getData().getUsername())) {
                         UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                         mView.getSuccess("", 2);
-                        return;
                     }
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
                 }
 
                 /**
@@ -195,4 +159,5 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             });
         }
     }
+
 }

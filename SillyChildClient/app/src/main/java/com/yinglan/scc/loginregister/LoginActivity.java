@@ -19,20 +19,20 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareConfig;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.loginregister.LoginBean;
-import com.yinglan.scc.loginregister.bindingaccount.BindingAccountActivity;
+import com.yinglan.scc.loginregister.bindingaccount.BindingPhoneActivity;
 import com.yinglan.scc.loginregister.forgotpassword.RetrievePasswordActivity;
 import com.yinglan.scc.loginregister.register.RegisterActivity;
 import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
-
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -86,6 +86,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
      */
     @BindView(id = R.id.tv_login, click = true)
     private TextView tv_login;
+
     /**
      * 注册
      */
@@ -96,13 +97,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
      * 微信
      */
     @BindView(id = R.id.img_loginweixin, click = true)
-    private ImageView ll_loginweixin;
+    private ImageView img_loginweixin;
 
     /**
      * QQ
      */
     @BindView(id = R.id.img_loginqq, click = true)
-    private ImageView ll_loginqq;
+    private ImageView img_loginqq;
 
     private String openid;
     private String from;
@@ -193,16 +194,30 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
-            ((LoginContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 1) {
-            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            if (StringUtils.isEmpty(openid)) {
+                MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            } else {
+                MobclickAgent.onProfileSignIn(openid);
+            }
             dismissLoadingDialog();
             /**
              * 发送消息
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             finish();
+        } else if (flag == 2) {
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+            if (bean.getData().getResultX().contains("false")) {
+                errorMsg("4000", 0);
+                return;
+            }
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         }
     }
 
@@ -210,7 +225,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (msg.equals("4000")) {
-            Intent intent = new Intent(aty, BindingAccountActivity.class);
+            Intent intent = new Intent(aty, BindingPhoneActivity.class);
             intent.putExtra("openid", openid);
             intent.putExtra("from", from);
             intent.putExtra("nickname", nickname);
@@ -219,16 +234,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             showActivity(aty, intent);
             return;
         }
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", "");
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ViewInject.toast(msg);
-            }
-        });
+        UserUtil.clearUserInfo(this);
+        ViewInject.toast(msg);
     }
 
     @Override
@@ -316,13 +323,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 temp = temp + key + " : " + map.get(key) + "\n";
             }
             Log.d("tag111", temp);
-//            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
-//                sex = 1;
-//            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
-//                sex = 2;
-//            } else {
-//                sex = 0;
-//            }
+            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
+                sex = 1;
+            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
+                sex = 2;
+            } else {
+                sex = 0;
+            }
             //openid = map.get("uid");
             openid = map.get("openid");
             Log.d("tag111", openid);
@@ -332,9 +339,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             } else {
                 from = "qq";
             }
-//            nickname = map.get("name");
-//            head_pic = map.get("iconurl");
-            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from);
+            nickname = map.get("name");
+            head_pic = map.get("iconurl");
+            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
         }
 
         /**

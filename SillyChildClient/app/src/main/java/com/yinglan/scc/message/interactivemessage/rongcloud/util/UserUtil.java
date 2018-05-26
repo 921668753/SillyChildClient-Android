@@ -24,6 +24,7 @@ public class UserUtil {
      */
     public static void clearUserInfo(Context context) {
         PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", "");
+        quitRc(context);
     }
 
 
@@ -34,7 +35,7 @@ public class UserUtil {
      * @return
      */
     public static String getResTokenInfo(Context context) {
-        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", "4vHinW9AxeRovSolqdOniUgLxpt+nBW4IQ1aXmgroHahTJijh74RRDI5XGOgI0+rEffwEJaDPb/BoSPdb6sJrzdoyYFP+tgf");
+        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", "");
         if (rongYunToken != null) {
             return rongYunToken;
         } else {
@@ -49,7 +50,7 @@ public class UserUtil {
      * @return
      */
     public static String getRcId(Context context) {
-        String rongYunId = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunId", null);
+        String rongYunId = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunId", "");
         if (rongYunId != null) {
             return rongYunId;
         } else {

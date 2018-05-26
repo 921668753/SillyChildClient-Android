@@ -10,14 +10,22 @@ import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.retrofit.RequestClient;
+
+import org.json.JSONObject;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -51,9 +59,9 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("username", phone);
+        httpParams.put("phone", phone);
         httpParams.put("password", pwd);
-        httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -92,9 +100,9 @@ public class LoginPresenter implements LoginContract.Presenter {
                     /**
                      * 获取用户信息
                      */
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", 0);
-                    if (RongIM.getInstance() != null && bean.getData() != null && StringUtils.isEmpty(bean.getData().getUserid())) {
-                        UserInfo userInfo = new UserInfo(bean.getData().getUserid() + "", bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
+                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
+                        UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                         mView.getSuccess("", 1);
@@ -114,22 +122,21 @@ public class LoginPresenter implements LoginContract.Presenter {
                     mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
                 }
             });
+        } else {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
         }
     }
 
     @Override
-    public void postThirdToLogin(String openid, String from) {
+    public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openid", openid);
-        httpParams.put("from", from);
-//        httpParams.put("nickname", nickname);
-//        httpParams.put("head_pic", head_pic);
-//        httpParams.put("sex", sex);
-        httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        httpParams.put("openId", openid);
+        httpParams.put("type", from);
+        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 2);
             }
 
             @Override
@@ -139,4 +146,5 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
 
     }
+
 }
