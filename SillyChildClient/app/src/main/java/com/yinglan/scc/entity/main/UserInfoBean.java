@@ -14,117 +14,73 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
 
     public class DataBean {
         /**
-         * region : 三环到四环之间
-         * birthday : 1486396800
-         * face : http://192.168.1.105:8080/b2b2c/statics/attachment/faceFile/2017/2/7/13//12262189.jpg
-         * sex : 1
-         * tel :
-         * region_id : 2819
+         * birthday : null
+         * city : null
+         * signature : null
          * level_id : 1
-         * city : 朝阳区
-         * city_id : 72
-         * nick_name : Andste
-         * commentOrderCount : 0
-         * username : Andste
-         * level : 普通会员
-         * name : Andste
-         * province : 北京
-         * returnedOrderCount : 0
          * collectNum : 0
-         * zip :
-         * mp : 70
-         * province_id : 1
-         * favoriteStoreCount : 0
-         * point : 70
-         * favoriteCount : 0
-         * address : 朝阳区大妈研究中心
+         * point : 105
+         * province : null
+         * tel : null
+         * zip : null
+         * address : null
+         * mp : 105
+         * returnedOrderCount : 0
+         * level : 普通会员
+         * sex : 1
+         * region_id : null
+         * mobile : 17051335257
+         * commentOrderCount : 0
+         * face :
+         * province_id : null
+         * nick_name : 17051335257
+         * name : null
          * shippingOrderCount : 0
-         * mobile : 17180139650
+         * favoriteStoreCount : 0
+         * invite_code : null
          * paymentOrderCount : 0
+         * region : null
+         * username : 17051335257
+         * city_id : null
+         * favoriteCount : 0
          */
 
-        private String region;
-        private int birthday;
-        private String face;
-        private int sex;
-        private String tel;
-        private int region_id;
-        private int level_id;
+        private String birthday;
         private String city;
-        private int city_id;
-        private String nick_name;
-        private int commentOrderCount;
-        private String username;
-        private String level;
-        private String name;
-        private String province;
-        private int returnedOrderCount;
+        private String signature;
+        private int level_id;
         private int collectNum;
-        private String zip;
-        private int mp;
-        private int province_id;
-        private int favoriteStoreCount;
         private int point;
-        private int favoriteCount;
+        private String province;
+        private String tel;
+        private String zip;
         private String address;
-        private int shippingOrderCount;
+        private int mp;
+        private int returnedOrderCount;
+        private String level;
+        private int sex;
+        private String region_id;
         private String mobile;
+        private int commentOrderCount;
+        private String face;
+        private String province_id;
+        private String nick_name;
+        private String name;
+        private int shippingOrderCount;
+        private int favoriteStoreCount;
+        private String invite_code;
         private int paymentOrderCount;
+        private String region;
+        private String username;
+        private String city_id;
+        private int favoriteCount;
 
-        public String getRegion() {
-            return region;
-        }
-
-        public void setRegion(String region) {
-            this.region = region;
-        }
-
-        public int getBirthday() {
+        public String getBirthday() {
             return birthday;
         }
 
-        public void setBirthday(int birthday) {
+        public void setBirthday(String birthday) {
             this.birthday = birthday;
-        }
-
-        public String getFace() {
-            return face;
-        }
-
-        public void setFace(String face) {
-            this.face = face;
-        }
-
-        public int getSex() {
-            return sex;
-        }
-
-        public void setSex(int sex) {
-            this.sex = sex;
-        }
-
-        public String getTel() {
-            return tel;
-        }
-
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-
-        public int getRegion_id() {
-            return region_id;
-        }
-
-        public void setRegion_id(int region_id) {
-            this.region_id = region_id;
-        }
-
-        public int getLevel_id() {
-            return level_id;
-        }
-
-        public void setLevel_id(int level_id) {
-            this.level_id = level_id;
         }
 
         public String getCity() {
@@ -135,68 +91,20 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.city = city;
         }
 
-        public int getCity_id() {
-            return city_id;
+        public String getSignature() {
+            return signature;
         }
 
-        public void setCity_id(int city_id) {
-            this.city_id = city_id;
+        public void setSignature(String signature) {
+            this.signature = signature;
         }
 
-        public String getNick_name() {
-            return nick_name;
+        public int getLevel_id() {
+            return level_id;
         }
 
-        public void setNick_name(String nick_name) {
-            this.nick_name = nick_name;
-        }
-
-        public int getCommentOrderCount() {
-            return commentOrderCount;
-        }
-
-        public void setCommentOrderCount(int commentOrderCount) {
-            this.commentOrderCount = commentOrderCount;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getLevel() {
-            return level;
-        }
-
-        public void setLevel(String level) {
-            this.level = level;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getProvince() {
-            return province;
-        }
-
-        public void setProvince(String province) {
-            this.province = province;
-        }
-
-        public int getReturnedOrderCount() {
-            return returnedOrderCount;
-        }
-
-        public void setReturnedOrderCount(int returnedOrderCount) {
-            this.returnedOrderCount = returnedOrderCount;
+        public void setLevel_id(int level_id) {
+            this.level_id = level_id;
         }
 
         public int getCollectNum() {
@@ -207,38 +115,6 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.collectNum = collectNum;
         }
 
-        public String getZip() {
-            return zip;
-        }
-
-        public void setZip(String zip) {
-            this.zip = zip;
-        }
-
-        public int getMp() {
-            return mp;
-        }
-
-        public void setMp(int mp) {
-            this.mp = mp;
-        }
-
-        public int getProvince_id() {
-            return province_id;
-        }
-
-        public void setProvince_id(int province_id) {
-            this.province_id = province_id;
-        }
-
-        public int getFavoriteStoreCount() {
-            return favoriteStoreCount;
-        }
-
-        public void setFavoriteStoreCount(int favoriteStoreCount) {
-            this.favoriteStoreCount = favoriteStoreCount;
-        }
-
         public int getPoint() {
             return point;
         }
@@ -247,12 +123,28 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.point = point;
         }
 
-        public int getFavoriteCount() {
-            return favoriteCount;
+        public String getProvince() {
+            return province;
         }
 
-        public void setFavoriteCount(int favoriteCount) {
-            this.favoriteCount = favoriteCount;
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
+        }
+
+        public String getZip() {
+            return zip;
+        }
+
+        public void setZip(String zip) {
+            this.zip = zip;
         }
 
         public String getAddress() {
@@ -263,12 +155,44 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.address = address;
         }
 
-        public int getShippingOrderCount() {
-            return shippingOrderCount;
+        public int getMp() {
+            return mp;
         }
 
-        public void setShippingOrderCount(int shippingOrderCount) {
-            this.shippingOrderCount = shippingOrderCount;
+        public void setMp(int mp) {
+            this.mp = mp;
+        }
+
+        public int getReturnedOrderCount() {
+            return returnedOrderCount;
+        }
+
+        public void setReturnedOrderCount(int returnedOrderCount) {
+            this.returnedOrderCount = returnedOrderCount;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public void setLevel(String level) {
+            this.level = level;
+        }
+
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+
+        public String getRegion_id() {
+            return region_id;
+        }
+
+        public void setRegion_id(String region_id) {
+            this.region_id = region_id;
         }
 
         public String getMobile() {
@@ -279,12 +203,108 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.mobile = mobile;
         }
 
+        public int getCommentOrderCount() {
+            return commentOrderCount;
+        }
+
+        public void setCommentOrderCount(int commentOrderCount) {
+            this.commentOrderCount = commentOrderCount;
+        }
+
+        public String getFace() {
+            return face;
+        }
+
+        public void setFace(String face) {
+            this.face = face;
+        }
+
+        public String getProvince_id() {
+            return province_id;
+        }
+
+        public void setProvince_id(String province_id) {
+            this.province_id = province_id;
+        }
+
+        public String getNick_name() {
+            return nick_name;
+        }
+
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getShippingOrderCount() {
+            return shippingOrderCount;
+        }
+
+        public void setShippingOrderCount(int shippingOrderCount) {
+            this.shippingOrderCount = shippingOrderCount;
+        }
+
+        public int getFavoriteStoreCount() {
+            return favoriteStoreCount;
+        }
+
+        public void setFavoriteStoreCount(int favoriteStoreCount) {
+            this.favoriteStoreCount = favoriteStoreCount;
+        }
+
+        public String getInvite_code() {
+            return invite_code;
+        }
+
+        public void setInvite_code(String invite_code) {
+            this.invite_code = invite_code;
+        }
+
         public int getPaymentOrderCount() {
             return paymentOrderCount;
         }
 
         public void setPaymentOrderCount(int paymentOrderCount) {
             this.paymentOrderCount = paymentOrderCount;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getCity_id() {
+            return city_id;
+        }
+
+        public void setCity_id(String city_id) {
+            this.city_id = city_id;
+        }
+
+        public int getFavoriteCount() {
+            return favoriteCount;
+        }
+
+        public void setFavoriteCount(int favoriteCount) {
+            this.favoriteCount = favoriteCount;
         }
     }
 }

@@ -78,12 +78,12 @@
         <!--引导页-->
         <activity
             android:name="com.yinglan.scc.startpage.GuideViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--登录-->
         <activity
             android:name="com.yinglan.scc.loginregister.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--选择国家或地区-->
         <activity
@@ -93,22 +93,22 @@
         <!--注册-->
         <activity
             android:name="com.yinglan.scc.loginregister.register.RegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--登录 忘记密码-->
         <activity
             android:name="com.yinglan.scc.loginregister.forgotpassword.RetrievePasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--登录 第三方登录 绑定账号-->
         <activity
             android:name="com.yinglan.scc.loginregister.bindingaccount.BindingPhoneActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--注册 注册协议-->
         <activity
             android:name="com.yinglan.scc.loginregister.register.RegistrationAgreementActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--登录 綁定账号-->
         <activity
@@ -120,7 +120,7 @@
             android:name="com.yinglan.scc.main.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--主界面的后台-->
         <service android:name="com.yinglan.scc.services.MainService"></service>
@@ -128,17 +128,17 @@
         <!--首页   更多分类-->
         <activity
             android:name="com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--首页   商品列表-->
         <activity
             android:name="com.yinglan.scc.homepage.goodslist.GoodsListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--首页   商品详情-->
         <activity
             android:name="com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--首页   轮播图-->
         <activity
@@ -430,8 +430,8 @@
 
         <!--我的   我的购物车  编辑购物车-->
         <!--<activity-->
-            <!--android:name="com.yinglan.scc.mine.myshoppingcart.editmyshoppingcart.EditMyShoppingCartActivity"-->
-            <!--android:screenOrientation="portrait"></activity>-->
+        <!--android:name="com.yinglan.scc.mine.myshoppingcart.editmyshoppingcart.EditMyShoppingCartActivity"-->
+        <!--android:screenOrientation="portrait"></activity>-->
 
         <!--我的   我的钱包-->
         <activity
