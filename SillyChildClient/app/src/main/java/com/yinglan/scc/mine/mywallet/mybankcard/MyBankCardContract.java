@@ -1,6 +1,5 @@
 package com.yinglan.scc.mine.mywallet.mybankcard;
 
-
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -11,24 +10,25 @@ import com.common.cklibrary.common.BaseView;
 public interface MyBankCardContract {
 
     interface Presenter extends BasePresenter {
+
         /**
-         * 发送提现信息
+         * 获取银行卡列表
          */
         void getMyBankCard();
+
+        /**
+         * 设置默认银行卡
+         */
+        void postPurseDefault(int id);
+
+        /**
+         * 删除银行卡
+         */
+        void postRemoveBank(int id);
     }
 
     interface View extends BaseView<Presenter, String> {
-//        /**
-//         * http请求正确
-//         *
-//         * @param s
-//         */
-//        void getSuccess(String s);
-//
-//        /**
-//         * http请求错误
-//         */
-//        void error(String msg);
+
     }
 
 

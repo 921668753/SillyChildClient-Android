@@ -23,21 +23,19 @@ public class RechargePresenter implements RechargeContract.Presenter {
 
 
     @Override
-    public void doRecharge(String account,String payWay,double amount) {
-
-        if (TextUtils.isEmpty(account)){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputAccount),0);
+    public void doRecharge(String payWay, double amount) {
+        if (amount > 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseRechargeAmount1), 0);
             return;
         }
-
-        if (amount<0.01||amount>10000){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.rechargeConfine),0);
-            return;
-        }
+//        if (amount < 0.01 || amount > 10000) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.rechargeConfine), 0);
+//            return;
+//        }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("payWay",payWay);
-        httpParams.put("amount",amount+"");
+        httpParams.put("payWay", payWay);
+        httpParams.put("amount", String.valueOf(amount));
         RequestClient.getRecharge(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

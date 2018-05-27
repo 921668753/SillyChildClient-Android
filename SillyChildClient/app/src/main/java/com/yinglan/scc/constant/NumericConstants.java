@@ -168,4 +168,11 @@ public class NumericConstants {
      */
     public static final int DECIMAL_DIGITS = 2;
 
+    /** 银联支付 */
+    public static final int PLUGIN_VALID = 0;//已经安装银联插件
+    public static final int PLUGIN_NOT_INSTALLED = -1;//未安装银联插件
+    public static final int PLUGIN_NEED_UPGRADE = 2;//需要重新安装银联插件
+    /** mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境 */
+    public static final String MODE = "01";
+
 }

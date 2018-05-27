@@ -77,17 +77,17 @@ public class PayPasswordBouncedPresenter implements PayPasswordBouncedContract.P
         map.put("withdrawal_amount", withdrawalAmount);
         map.put("bank_id", bankId);
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postWithdrawal(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
+//        RequestClient.postWithdrawal(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
 //            }
 //        };
 //        submitBouncedDialog.show();

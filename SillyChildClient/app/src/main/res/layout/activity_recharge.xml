@@ -43,31 +43,33 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_leftup"
+                    <TextView
+                        android:id="@+id/tv_money100"
                         style="@style/Match58"
-                        android:background="@color/loginBackgroundColors"
+                        android:background="@color/greenColors"
                         android:gravity="center"
                         android:text="@string/money100"
                         android:textColor="@color/whiteColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_leftmiddle"
+                    <TextView
+                        android:id="@+id/tv_money500"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money500"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_leftdown"
+                    <TextView
+                        android:id="@+id/tv_money3000"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money3000"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
                 </LinearLayout>
 
@@ -77,30 +79,33 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_middleup"
+                    <TextView
+                        android:id="@+id/tv_money200"
                         style="@style/Match58"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money200"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_middlemiddle"
+                    <TextView
+                        android:id="@+id/tv_money1000"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money1000"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_middledown"
+                    <TextView
+                        android:id="@+id/tv_money5000"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money5000"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
                 </LinearLayout>
 
@@ -110,31 +115,33 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_rightup"
+                    <TextView
+                        android:id="@+id/tv_money300"
                         style="@style/Match58"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money300"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_rightmiddle"
+                    <TextView
+                        android:id="@+id/tv_money2000"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
+                        android:gravity="center"
                         android:text="@string/money2000"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
-                    <Button
-                        android:id="@+id/btn_rightdown"
+                    <TextView
+                        android:id="@+id/tv_moneyOther"
                         style="@style/Match58"
                         android:layout_marginTop="@dimen/dimen25"
                         android:background="@drawable/shape_rechargeunselected"
                         android:gravity="center"
                         android:text="@string/moneyOther"
-                        android:textColor="@color/loginBackgroundColors"
+                        android:textColor="@color/greenColors"
                         android:textSize="@dimen/textsize15" />
 
                 </LinearLayout>
@@ -190,7 +197,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
-                    android:id="@+id/iv_payweixin"
+                    android:id="@+id/iv_weChatPay"
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
@@ -224,7 +231,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
-                    android:id="@+id/iv_payzfb"
+                    android:id="@+id/iv_alipayToPay"
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
@@ -257,7 +264,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
-                    android:id="@+id/iv_payyl"
+                    android:id="@+id/iv_unionpayPay"
                     android:layout_width="@dimen/dimen48"
                     android:layout_height="@dimen/dimen48"
                     android:padding="@dimen/dimen15"
@@ -267,12 +274,12 @@
 
 
             <TextView
-                android:id="@+id/tv_determinepay"
+                android:id="@+id/tv_determinePay"
                 style="@style/Match44"
-                android:layout_marginBottom="@dimen/dimen45"
+                android:layout_marginBottom="@dimen/dimen41"
                 android:layout_marginLeft="@dimen/dimen72"
                 android:layout_marginRight="@dimen/dimen72"
-                android:layout_marginTop="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen20"
                 android:background="@drawable/shape_determinepay"
                 android:gravity="center"
                 android:text="@string/determinePay"

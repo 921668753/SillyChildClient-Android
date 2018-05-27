@@ -221,6 +221,12 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
                     GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), iv_minetouxiang, 0, R.mipmap.avatar);
                 }
                 tv_serialNumber.setText(userInfoBean.getData().getUsername());
+                if (StringUtils.isEmpty(userInfoBean.getData().getSignature())) {
+                    tv_synopsis.setVisibility(View.GONE);
+                } else {
+                    tv_synopsis.setVisibility(View.VISIBLE);
+                    tv_synopsis.setText(userInfoBean.getData().getSignature());
+                }
             }
         } else if (flag == 1) {
             Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
@@ -286,6 +292,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         tv_editData1.setVisibility(View.GONE);
         iv_minetouxiang.setVisibility(View.GONE);
         tv_nickname.setVisibility(View.GONE);
+        tv_synopsis.setVisibility(View.GONE);
         tv_serialNumber.setVisibility(View.GONE);
         ll_notLogin.setVisibility(View.VISIBLE);
     }

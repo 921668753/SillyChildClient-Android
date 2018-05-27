@@ -1,92 +1,86 @@
 package com.yinglan.scc.mine.mywallet.recharge;
 
-import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
+import com.unionpay.UPPayAssistEx;
 import com.yinglan.scc.R;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.entity.AlipayBean;
 import com.yinglan.scc.loginregister.LoginActivity;
-import com.yinglan.scc.main.MainActivity;
-import com.yinglan.scc.utils.DecimalLimit;
+import com.yinglan.scc.mine.mywallet.mybankcard.dialog.SubmitBouncedDialog;
 import com.yinglan.scc.utils.PayUtils;
+
+import static com.yinglan.scc.constant.NumericConstants.MODE;
 
 /**
  * 充值
  * Created by Administrator on 2017/9/2.
  */
 
-public class RechargeActivity extends BaseActivity implements RechargeContract.View, View.OnTouchListener {
+public class RechargeActivity extends BaseActivity implements RechargeContract.View {
 
-    private RechargeContract.Presenter mPresenter;
+    @BindView(id = R.id.tv_money100, click = true)
+    private TextView tv_money100;
 
-    @BindView(id = R.id.btn_leftup, click = true)
-    private Button btn_leftup;
+    @BindView(id = R.id.tv_money500, click = true)
+    private TextView tv_money500;
 
-    @BindView(id = R.id.btn_middleup, click = true)
-    private Button btn_middleup;
+    @BindView(id = R.id.tv_money3000, click = true)
+    private TextView tv_money3000;
 
-    @BindView(id = R.id.btn_rightup, click = true)
-    private Button btn_rightup;
+    @BindView(id = R.id.tv_money200, click = true)
+    private TextView tv_money200;
 
-    @BindView(id = R.id.btn_leftmiddle, click = true)
-    private Button btn_leftmiddle;
+    @BindView(id = R.id.tv_money1000, click = true)
+    private TextView tv_money1000;
 
-    @BindView(id = R.id.btn_middlemiddle, click = true)
-    private Button btn_middlemiddle;
+    @BindView(id = R.id.tv_money5000, click = true)
+    private TextView tv_money5000;
 
-    @BindView(id = R.id.btn_rightmiddle, click = true)
-    private Button btn_rightmiddle;
+    @BindView(id = R.id.tv_money300, click = true)
+    private TextView tv_money300;
 
-    @BindView(id = R.id.btn_leftdown, click = true)
-    private Button btn_leftdown;
+    @BindView(id = R.id.tv_money2000, click = true)
+    private TextView tv_money2000;
 
-    @BindView(id = R.id.btn_middledown, click = true)
-    private Button btn_middledown;
-
-    @BindView(id = R.id.btn_rightdown, click = true)
-    private Button btn_rightdown;
+    @BindView(id = R.id.tv_moneyOther, click = true)
+    private TextView tv_moneyOther;
 
     @BindView(id = R.id.et_pleaseRechargeAmount)
     private EditText et_pleaseRechargeAmount;
 
-    @BindView(id = R.id.ll_payweixin, click = true)
-    private LinearLayout ll_payweixin;
-    @BindView(id = R.id.iv_payweixin)
-    private ImageView iv_payweixin;
+    @BindView(id = R.id.iv_weChatPay, click = true)
+    private ImageView iv_weChatPay;
 
-    @BindView(id = R.id.ll_payzfb, click = true)
-    private LinearLayout ll_payzfb;
-    @BindView(id = R.id.iv_payzfb)
-    private ImageView iv_payzfb;
+    @BindView(id = R.id.iv_alipayToPay, click = true)
+    private ImageView iv_alipayToPay;
 
-    @BindView(id = R.id.tv_determinepay, click = true)
-    private TextView tv_determinepay;
-    private double rechargemoney = 0;
+    @BindView(id = R.id.iv_unionpayPay, click = true)
+    private ImageView iv_unionpayPay;
+
+
+    @BindView(id = R.id.tv_determinePay, click = true)
+    private TextView tv_determinePay;
+
+
+    private double rechargeMoney = 0;
 
     private String payWay;
-    private String choosemoney;
-    private InputMethodManager inputmanager;
+
     private PayUtils payUtils;
-    private DecimalLimit decimalLimit;
+
+    private SubmitBouncedDialog submitBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -97,19 +91,16 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     public void initData() {
         super.initData();
         mPresenter = new RechargePresenter(this);
-        inputmanager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
+        payUtils = new PayUtils(this, RechargeActivity.class);
+        initDialog();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         initTitle();
-        decimalLimit = new DecimalLimit();
-        et_pleaseRechargeAmount.setFilters(decimalLimit.getFilter(NumericConstants.DECIMAL_DIGITS));
-        et_pleaseRechargeAmount.setOnTouchListener(this);
-        clearBtns(btn_leftup);
-        clearimg(iv_payweixin);
+        cleanColors(tv_money100);
+        clearImg(iv_weChatPay);
         payWay = StringNewConstants.WeiXinPay;
 
     }
@@ -121,88 +112,111 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         ActivityTitleUtils.initToolbar(aty, getString(R.string.accountRecharge), true, R.id.titlebar);
     }
 
+    private void initDialog() {
+        submitBouncedDialog = new SubmitBouncedDialog(aty, getString(R.string.installUnionpayControl)) {
+            @Override
+            public void confirm(int id) {
+                this.dismiss();
+                UPPayAssistEx.installUPPayPlugin(aty);
+            }
+        };
+    }
+
+
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.btn_leftup:
-                clearBtns(btn_leftup);
+            case R.id.tv_money100:
+                cleanColors(tv_money100);
+                rechargeMoney = 100;
                 break;
-            case R.id.btn_middleup:
-                clearBtns(btn_middleup);
+            case R.id.tv_money200:
+                cleanColors(tv_money200);
+                rechargeMoney = 200;
                 break;
-            case R.id.btn_rightup:
-                clearBtns(btn_rightup);
+            case R.id.tv_money300:
+                cleanColors(tv_money300);
+                rechargeMoney = 300;
                 break;
-            case R.id.btn_leftmiddle:
-                clearBtns(btn_leftmiddle);
+            case R.id.tv_money500:
+                cleanColors(tv_money500);
+                rechargeMoney = 500;
                 break;
-            case R.id.btn_middlemiddle:
-                clearBtns(btn_middlemiddle);
+            case R.id.tv_money1000:
+                cleanColors(tv_money1000);
+                rechargeMoney = 1000;
                 break;
-            case R.id.btn_rightmiddle:
-                clearBtns(btn_rightmiddle);
+            case R.id.tv_money2000:
+                cleanColors(tv_money2000);
+                rechargeMoney = 2000;
                 break;
-            case R.id.btn_leftdown:
-                clearBtns(btn_leftdown);
+            case R.id.tv_money3000:
+                cleanColors(tv_money3000);
+                rechargeMoney = 3000;
                 break;
-            case R.id.btn_middledown:
-                clearBtns(btn_middledown);
+            case R.id.tv_money5000:
+                cleanColors(tv_money5000);
+                rechargeMoney = 5000;
                 break;
-            case R.id.ll_payweixin:
-                clearimg(iv_payweixin);
+            case R.id.tv_moneyOther:
+                cleanColors(tv_moneyOther);
+                break;
+            case R.id.iv_weChatPay:
+                clearImg(iv_weChatPay);
                 payWay = StringNewConstants.WeiXinPay;
                 break;
-            case R.id.ll_payzfb:
-                clearimg(iv_payzfb);
+            case R.id.iv_alipayToPay:
+                clearImg(iv_alipayToPay);
                 payWay = StringNewConstants.ZhiFuBaoPay;
                 break;
-
-            case R.id.tv_determinepay:
-                showLoadingDialog(getResources().getString(R.string.submissionLoad));
-                if (!TextUtils.isEmpty(et_pleaseRechargeAmount.getText().toString())) {
-                    rechargemoney = StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString());
+            case R.id.iv_unionpayPay:
+                clearImg(iv_unionpayPay);
+                payWay = StringNewConstants.ZhiFuBaoPay;
+                break;
+            case R.id.tv_determinePay:
+                showLoadingDialog(getString(R.string.submissionLoad));
+                if (!StringUtils.isEmpty(et_pleaseRechargeAmount.getText().toString()) && StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString().trim()) > 0) {
+                    rechargeMoney = StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString().trim());
                 }
-                //  mPresenter.doRecharge(et_phone.getText().toString(), payWay, rechargemoney);
+                ((RechargeContract.Presenter) mPresenter).doRecharge(payWay, rechargeMoney);
                 break;
         }
     }
 
-    private void clearBtns(Button btn) {
-        btn_leftup.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_leftup.setTextColor(getResources().getColor(R.color.textColor));
-        btn_middleup.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_middleup.setTextColor(getResources().getColor(R.color.textColor));
-        btn_rightup.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_rightup.setTextColor(getResources().getColor(R.color.textColor));
-        btn_leftmiddle.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_leftmiddle.setTextColor(getResources().getColor(R.color.textColor));
-        btn_middlemiddle.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_middlemiddle.setTextColor(getResources().getColor(R.color.textColor));
-        btn_rightmiddle.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_rightmiddle.setTextColor(getResources().getColor(R.color.textColor));
-        btn_leftdown.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_leftdown.setTextColor(getResources().getColor(R.color.textColor));
-        btn_middledown.setBackgroundResource(R.drawable.shape_addshoppingcarte);
-        btn_middledown.setTextColor(getResources().getColor(R.color.textColor));
-
-        if (btn == null) {
-            et_pleaseRechargeAmount.setCursorVisible(true);
-        } else {
-            inputmanager.hideSoftInputFromWindow(et_pleaseRechargeAmount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    private void cleanColors(TextView textView) {
+        tv_money100.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money100.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money500.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money500.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money3000.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money3000.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money200.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money200.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money1000.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money1000.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money5000.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money5000.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money300.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money300.setTextColor(getResources().getColor(R.color.greenColors));
+        tv_money2000.setBackgroundResource(R.drawable.shape_rechargeunselected);
+        tv_money2000.setTextColor(getResources().getColor(R.color.greenColors));
+        if (textView.getId() == R.id.tv_moneyOther) {
+            et_pleaseRechargeAmount.setVisibility(View.VISIBLE);
             et_pleaseRechargeAmount.setText("");
-            et_pleaseRechargeAmount.setCursorVisible(false);
-            btn.setBackgroundResource(R.drawable.shape_login1);
-            btn.setTextColor(getResources().getColor(R.color.whiteColors));
-            choosemoney = btn.getText().toString();
-            rechargemoney = Double.parseDouble(choosemoney.substring(0, choosemoney.length() - 1));
+        } else {
+            et_pleaseRechargeAmount.setVisibility(View.GONE);
+            et_pleaseRechargeAmount.setText("");
+            textView.setBackgroundResource(R.color.greenColors);
+            textView.setTextColor(getResources().getColor(R.color.whiteColors));
         }
     }
 
-    private void clearimg(ImageView img) {
-        iv_payweixin.setImageResource(R.mipmap.mineaddress_unselectxxx);
-        iv_payzfb.setImageResource(R.mipmap.mineaddress_unselectxxx);
-        img.setImageResource(R.mipmap.mineaddress_selectxxx);
+    private void clearImg(ImageView img) {
+        iv_weChatPay.setImageResource(R.mipmap.top_ups_unselected);
+        iv_alipayToPay.setImageResource(R.mipmap.top_ups_unselected);
+        iv_unionpayPay.setImageResource(R.mipmap.top_ups_unselected);
+        img.setImageResource(R.mipmap.top_ups_selected);
     }
 
     @Override
@@ -223,14 +237,24 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                     dismissLoadingDialog();
                     ViewInject.toast(getString(R.string.payParseError));
                 } else {
-                    if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
+                    if (payUtils == null) {
+                        payUtils = new PayUtils(this, RechargeActivity.class);
+                    }
                     dismissLoadingDialog();
                     payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
                 }
             } else if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.ZhiFuBaoPay)) {
-                if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
+                if (payUtils == null) {
+                    payUtils = new PayUtils(this, RechargeActivity.class);
+                }
                 dismissLoadingDialog();
                 payUtils.doPay(alipaybean.getData().getAliPayParams());
+            } else {
+                //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
+                if (payUtils == null) {
+                    payUtils = new PayUtils(this, RechargeActivity.class);
+                }
+                //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
             }
         }
     }
@@ -239,33 +263,39 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            finish();
-            KJActivityStack.create().finishToThis(LoginActivity.class, MainActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
-            switch (view.getId()) {
-                case R.id.et_pleaseRechargeAmount:
-                    clearBtns(null);
-                    et_pleaseRechargeAmount.setCursorVisible(true);// 再次点击显示光标
-                    break;
-            }
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
         }
-        return false;
+        /*
+         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+         */
+        String str = data.getExtras().getString("pay_result");
+        if (str.equalsIgnoreCase("success")) {
+            ViewInject.toast(getString(R.string.alipay_succeed));
+        } else if (str.equalsIgnoreCase("fail")) {
+            ViewInject.toast(getString(R.string.alipay_order_error));
+        } else if (str.equalsIgnoreCase("cancel")) {
+            ViewInject.toast(getString(R.string.alipay_order_cancel));
+        }
+
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        decimalLimit = null;
+        if (submitBouncedDialog != null) {
+            submitBouncedDialog.cancel();
+        }
+        submitBouncedDialog = null;
+        payUtils = null;
     }
 }

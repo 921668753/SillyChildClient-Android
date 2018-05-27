@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen290"
+        android:layout_height="@dimen/dimen294"
         android:background="@mipmap/my_wallet_background">
 
         <include layout="@layout/common_title" />
@@ -18,7 +18,8 @@
             android:layout_centerHorizontal="true"
             android:paddingLeft="@dimen/dimen20"
             android:paddingRight="@dimen/dimen20"
-            android:paddingTop="@dimen/dimen70"
+            android:paddingTop="@dimen/dimen40"
+            android:layout_below="@id/titlebarl"
             android:singleLine="true"
             android:text="￥5201314.00"
             android:textColor="@color/whiteColors"

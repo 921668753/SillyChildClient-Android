@@ -11,13 +11,15 @@ import com.yinglan.scc.mine.myorder.MyOrderActivity;
 public interface MyWalletContract {
     interface Presenter extends BasePresenter {
         /**
-         * 获取用户信息
+         * 获取钱包余额
          */
-        void getInfo();
+        void getMyWallet();
 
     }
 
     interface View extends BaseView<Presenter, String> {
+
+
     }
 
 }

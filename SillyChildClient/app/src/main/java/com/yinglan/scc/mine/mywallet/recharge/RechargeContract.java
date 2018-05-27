@@ -12,7 +12,7 @@ public interface RechargeContract {
         /**
          * 我的 我的钱包 充值
          */
-        void doRecharge(String account, String payWay, double amount);
+        void doRecharge(String payWay, double rechargeMoney);
 
     }
 

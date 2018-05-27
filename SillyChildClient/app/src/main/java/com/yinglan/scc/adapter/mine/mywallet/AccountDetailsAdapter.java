@@ -3,7 +3,7 @@ package com.yinglan.scc.adapter.mine.mywallet;
 import android.content.Context;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.mywallet.AccountDetailsBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.mywallet.accountdetails.AccountDetailsBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;

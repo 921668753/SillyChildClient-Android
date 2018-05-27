@@ -1,4 +1,4 @@
-package com.yinglan.scc.entity.mine;
+package com.yinglan.scc.entity.mine.mywallet.withdrawal;
 
 import com.common.cklibrary.entity.BaseResult;
 

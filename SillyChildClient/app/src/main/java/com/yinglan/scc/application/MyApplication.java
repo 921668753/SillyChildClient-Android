@@ -3,6 +3,7 @@ package com.yinglan.scc.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,19 +12,27 @@ import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
+import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.BuildConfig;
 
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.yinglan.scc.entity.application.RongCloudBean;
 import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealAppContext;
 import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealUserInfoManager;
 import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scc.retrofit.RequestClient;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 import static com.umeng.socialize.utils.Log.LOGTAG;
 
@@ -85,7 +94,7 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin(BuildConfig.WEIXIN_APPKEY, BuildConfig.WEIXIN_APPSECRET);
         // QQ和Qzone appid appkey
         PlatformConfig.setQQZone(BuildConfig.QQ_APPID, BuildConfig.QQ_APPKEY);
-       // PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
+        // PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
         Config.DEBUG = true;
     }
 
@@ -142,31 +151,27 @@ public class MyApplication extends Application {
                 public void onSuccess(String userid) {
                     Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
                     /**
-                     //                     * 获取用户信息
-                     //                     */
-//                    HttpParams httpParams = new HttpParams();
-//                    RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//                            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.json2Obj(response, UserInfoBean.class);
-//                            if (RongIM.getInstance() != null && userInfoBean.getResult() != null && userInfoBean.getResult().getUser_id() > 0) {
-//                                UserInfo userInfo = new UserInfo(userInfoBean.getResult().getUser_id() + "", userInfoBean.getResult().getHx_user_name(), Uri.parse(userInfoBean.getResult().getHead_pic()));
-//                                RongIM.getInstance().setCurrentUserInfo(userInfo);
-//                            }
-//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(String msg) {
-//                            Log.d("RongYun", "onSuccess");
-//                            //  mView.errorMsg(msg, 0);
-//                        }
-//                    });
-//                    com.sillykid.app.mine.data.UserInfo.Data userData = UserUtil.getUserData(getApplicationContext());
-//                    if (RongIM.getInstance() != null && userData != null) {
-//                        RongIM.getInstance().setCurrentUserInfo(new io.rong.imlib.model.UserInfo(userData.i_id, userData.n_name, Uri.parse(Config.IMG_URL + userData.head_img)));
-//                    }
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                     * 获取用户信息
+                     */
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
+                    HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                    httpParams.put("rong_cloud", userid);
+                    RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
+                        @Override
+                        public void onSuccess(String response) {
+                            RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                            if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
+                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickName(), Uri.parse(rongCloudBean.getData().getFace()));
+                                RongIM.getInstance().setCurrentUserInfo(userInfo);
+                            }
+                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+                            Log.d("RongYun", "onFailure");
+                        }
+                    });
                 }
 
                 /**

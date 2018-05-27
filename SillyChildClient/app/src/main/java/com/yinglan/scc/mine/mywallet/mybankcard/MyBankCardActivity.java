@@ -1,19 +1,20 @@
 package com.yinglan.scc.mine.mywallet.mybankcard;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.MyBankCardBean;
+import com.yinglan.scc.loginregister.LoginActivity;
+import com.yinglan.scc.mine.mywallet.mybankcard.dialog.SubmitBouncedDialog;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -23,8 +24,7 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/11/30.
  */
 
-public class MyBankCardActivity extends BaseActivity implements MyBankCardContract.View, AdapterView.OnItemClickListener {
-
+public class MyBankCardActivity extends BaseActivity implements MyBankCardContract.View, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
@@ -33,12 +33,15 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
      * 银行卡列表
      */
     @BindView(id = R.id.lv_bankCard)
-    private ChildListView lv_bankCard;
+    private ListView lv_bankCard;
 
     private MyBankCardViewAdapter myBankCardViewAdapter;
 
     private int type = 0;
-    private Handler handler = null;
+
+    private SubmitBouncedDialog submitBouncedDialog = null;
+
+    private int removePosition = 0;
 
     @Override
     public void setRootView() {
@@ -49,7 +52,6 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     public void initData() {
         super.initData();
         myBankCardViewAdapter = new MyBankCardViewAdapter(this);
-        handler = new Handler();
         mPresenter = new MyBankCardPresenter(this);
         type = getIntent().getIntExtra("type", 0);
         showLoadingDialog(getString(R.string.dataLoad));
@@ -59,14 +61,30 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void initWidget() {
         super.initWidget();
-        // ActivityTitleUtils.initToolbar(aty, getString(R.string.myBankCard), true, R.id.titlebar);
         initTitle();
         lv_bankCard.setAdapter(myBankCardViewAdapter);
         lv_bankCard.setOnItemClickListener(this);
+        lv_bankCard.setOnItemLongClickListener(this);
+        initDialog();
     }
 
+    private void initDialog() {
+        submitBouncedDialog = new SubmitBouncedDialog(aty, getString(R.string.deleteCard)) {
+            @Override
+            public void confirm(int id) {
+                showLoadingDialog(getString(R.string.deleteLoad));
+                ((MyBankCardContract.Presenter) mPresenter).postRemoveBank(myBankCardViewAdapter.getItem(removePosition).getId());
+            }
+        };
+    }
+
+
     private void initTitle() {
-        titlebar.setTitleText(R.string.myBankCard);
+        if (type == 1) {
+            titlebar.setTitleText(R.string.selectBankCard);
+        } else {
+            titlebar.setTitleText(R.string.myBankCard);
+        }
         titlebar.setRightDrawable(R.mipmap.bank_card_plus_sign);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
@@ -84,33 +102,25 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
         titlebar.setDelegate(simpleDelegate);
     }
 
-
-    @Override
-    public void widgetClick(View v) {
-        super.widgetClick(v);
-        switch (v.getId()) {
-//            case R.id.ll_addBankCard:
-//
-//                break;
-        }
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (type == 1) {
-            MyBankCardBean.ResultBean resultBean = myBankCardViewAdapter.getItem(position);
-            Intent intent = new Intent();
-            // 获取内容
-            intent.putExtra("bankCardName", resultBean.getBank());
-            intent.putExtra("bankCardNun", resultBean.getBank_card());
-            intent.putExtra("bankCardId", resultBean.getId());
-            // 设置结果 结果码，一个数据
-            setResult(RESULT_OK, intent);
-            // 结束该activity 结束之后，前面的activity才可以处理结果
-            aty.finish();
-            return;
+            removePosition = position;
+            ((MyBankCardContract.Presenter) mPresenter).postPurseDefault(myBankCardViewAdapter.getItem(removePosition).getId());
         }
     }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        if (submitBouncedDialog == null) {
+            initDialog();
+        }
+        submitBouncedDialog.show();
+        removePosition = position;
+        submitBouncedDialog.setId(removePosition);
+        return true;
+    }
+
 
     @Override
     public void setPresenter(MyBankCardContract.Presenter presenter) {
@@ -119,10 +129,29 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
     @Override
     public void getSuccess(String success, int flag) {
-        MyBankCardBean myBankCardBean = (MyBankCardBean) JsonUtil.getInstance().json2Obj(success, MyBankCardBean.class);
-        myBankCardViewAdapter.clear();
-        if (myBankCardBean.getData() != null && myBankCardBean.getData().size() > 0) {
-            myBankCardViewAdapter.addNewData(myBankCardBean.getData());
+        if (flag == 0) {
+            MyBankCardBean myBankCardBean = (MyBankCardBean) JsonUtil.getInstance().json2Obj(success, MyBankCardBean.class);
+            myBankCardViewAdapter.clear();
+            if (myBankCardBean.getData() != null && myBankCardBean.getData().size() > 0) {
+                myBankCardViewAdapter.addNewData(myBankCardBean.getData());
+            }
+        } else if (flag == 1) {
+            if (submitBouncedDialog != null && submitBouncedDialog.isShowing()) {
+                submitBouncedDialog.dismiss();
+            }
+            myBankCardViewAdapter.removeItem(removePosition);
+        } else if (flag == 2) {
+            MyBankCardBean.DataBean dataBean = myBankCardViewAdapter.getItem(removePosition);
+            Intent intent = getIntent();
+            // 获取内容
+            intent.putExtra("bankCardName", dataBean.getAccount_name());
+            intent.putExtra("bankCardNun", dataBean.getAccount_no());
+            intent.putExtra("bankCardId", dataBean.getId());
+            // 设置结果 结果码，一个数据
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            aty.finish();
+            return;
         }
         dismissLoadingDialog();
     }
@@ -130,13 +159,12 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (msg.trim().equals("暂无信息")) {
+        if (isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
             return;
         }
-//        if (!toLigon1(msg)) {
-//            finish();
-//            return;
-//        }
+        ViewInject.toast(msg);
+
     }
 
     /**
@@ -146,13 +174,7 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusAddBankCardEvent")) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showLoadingDialog(getString(R.string.dataLoad));
-                    ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
-                }
-            }, 800);
+            ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
         }
     }
 
@@ -161,9 +183,10 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
         super.onDestroy();
         myBankCardViewAdapter.clear();
         myBankCardViewAdapter = null;
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-            handler = null;
+        if (submitBouncedDialog != null) {
+            submitBouncedDialog.cancel();
         }
+        submitBouncedDialog = null;
     }
+
 }

@@ -30,6 +30,12 @@ public class URLConstants {
     public static String APPCONFIG = APIURL + "appConfig";
 
     /**
+     * 根据融云token获取头像性别昵称
+     */
+    public static String SYSRONGCLOUD = APIURL + "sys/rongCloud.do";
+
+
+    /**
      * 获取分类广告
      */
     public static String ADVCAT = APIURL + "adv/adv-cat.do";
@@ -199,6 +205,46 @@ public class URLConstants {
      * 添加认收货地址
      */
     public static String ADDADDRESS = APIURL + "address/add.do";
+
+    /**
+     * 获取钱包余额
+     */
+    public static String PURSEGET = APIURL + "purse/get.do";
+
+    /**
+     * 优惠券列表
+     */
+    public static String COUPONS = APIURL + "member/bonus-main.do";
+
+    /**
+     * 提现
+     */
+    public static String PURSECASH = APIURL + "purse/cash.do";
+
+    /**
+     * 银行卡列表
+     */
+    public static String PURSELIST = APIURL + "purse/list.do";
+
+    /**
+     * 银行卡列表
+     */
+    public static String PURSEBANK = APIURL + "purse/banks.do";
+
+    /**
+     * 删除银行卡
+     */
+    public static String PURSEREMOVE = APIURL + "purse/remove.do";
+
+    /**
+     * 设置默认银行卡
+     */
+    public static String PURSEDEFAULT = APIURL + "purse/default.do";
+
+    /**
+     * 添加银行卡(可添加支付宝账号)
+     */
+    public static String PURSEADD = APIURL + "purse/add.do";
 
     /**
      * 获取收藏商品列表

@@ -21,8 +21,6 @@ import com.yinglan.scc.mine.mywallet.mybankcard.AddBankCardActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.yinglan.scc.mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity;
 
-import cn.bingoogolapple.titlebar.BGATitleBar;
-
 import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE_SELECT;
 
@@ -94,9 +92,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         tv_money.setText(withdrawalAmount);
         if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
             tv_withdrawalBank.setText(getString(R.string.noCard));
+            tv_poundage.setVisibility(View.GONE);
             return;
         }
-        tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
+        tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
     }
 
 
@@ -132,7 +131,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         if (flag == 0) {
             Intent intent = new Intent(aty, WithdrawalCompleteActivity.class);
             intent.putExtra("estimatedTimeArrival", "");
-            intent.putExtra("cashCard", bankCardName + "  " + getString(R.string.tail) + bankCardNun + "");
+            intent.putExtra("cashCard", bankCardName + "  " + bankCardNun + "");
             intent.putExtra("withdrawalAmount", getString(R.string.renminbi) + et_withdrawalAmount1.getText().toString().trim());
             startActivityForResult(intent, REQUEST_CODE_SELECT);
         } else if (flag == 1) {
@@ -169,7 +168,8 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");
             bankCardId = data.getIntExtra("bankCardId", 0);
-            tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
+            tv_poundage.setVisibility(View.VISIBLE);
+            tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
         }
     }
 

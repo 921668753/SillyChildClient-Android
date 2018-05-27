@@ -1,4 +1,4 @@
-package com.yinglan.scc.entity.mine.mywallet;
+package com.yinglan.scc.entity.mine.mywallet.accountdetails;
 
 import com.common.cklibrary.entity.BaseResult;
 

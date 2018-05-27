@@ -1,6 +1,9 @@
 package com.yinglan.scc.mine.mywallet.mybankcard;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,12 +16,17 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.entity.mine.mywallet.mybankcard.AddBankCardBean;
+import com.yinglan.scc.entity.mine.mywallet.mybankcard.BankBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
+
+import java.util.List;
 
 /**
  * 添加银行卡
@@ -74,6 +82,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      */
     @BindView(id = R.id.et_verificationCode)
     private EditText et_verificationCode;
+
     @BindView(id = R.id.tv_verificationCode, click = true)
     private TextView tv_verificationCode;
 
@@ -84,9 +93,11 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private TextView tv_prepaidImmediately;
 
     private OptionsPickerView pvOptions;
-    // private List<BankBean.ResultBean> bankList;
 
-    private int bank_id = 0;
+    private List<BankBean.DataBean> bankList;
+
+
+    private int bankCardId = 1;
 
     @Override
     public void setRootView() {
@@ -107,6 +118,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addBankCard), true, R.id.titlebar);
+        changeInputView(et_phone);
     }
 
     @Override
@@ -123,9 +135,9 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
                 break;
             case R.id.tv_prepaidImmediately:
                 showLoadingDialog(getString(R.string.submissionLoad));
-//                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
-//                        bank_id, et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
-//                        et_verificationCode.getText().toString().trim());
+                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_idNumber.getText().toString().trim(),
+                        tv_openingBank.getText().toString(), et_bankCardNumber.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        et_verificationCode.getText().toString().trim());
                 break;
         }
     }
@@ -140,8 +152,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-//                bank_id = bankList.get(options1).getId();
-//                ((TextView) v).setText(bankList.get(options1).getBank());
+                //  bankName = bankList.get(options1).getId();
+                ((TextView) v).setText(bankList.get(options1).getName());
             }
         }).build();
     }
@@ -156,14 +168,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         public void onFinish() {// 计时完毕时触发
             tv_verificationCode.setText(getString(R.string.revalidation));
             tv_verificationCode.setClickable(true);
-            // tv_verificationCode.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
         }
 
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             tv_verificationCode.setClickable(false);
             tv_verificationCode.setText(millisUntilFinished / 1000 + getString(R.string.toResend));
-            //  tv_verificationCode.setTextColor(getResources().getColor(R.color.hintcolors));
+            tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
         }
     }
 
@@ -175,29 +187,33 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
     @Override
     public void getSuccess(String success, int flag) {
-        dismissLoadingDialog();
-//        if (flag == 0) {
-//            ViewInject.toast(getString(R.string.testget));
-//            time.start();
-//        } else if (flag == 1) {
-//            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
-//            bankList = bankBean.getResult();
-//            if (bankList != null && bankList.size() > 0) {
-//                pvOptions.setPicker(bankList);
-//            }
-//        } else if (flag == 2) {
-//            AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
-//            Intent intent = new Intent();
-//            // 获取内容
-//            intent.putExtra("bankCardName", tv_withdrawalsBank.getText().toString());
-//            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 5));
-//            intent.putExtra("bankCardId", addBankCardBean.getResult().getBank_id());
-        // 设置结果 结果码，一个数据
-        //     setResult(RESULT_OK, intent);
-        RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
-        finish();
-        return;
-        //   }
+        if (flag == 0) {
+            dismissLoadingDialog();
+            ViewInject.toast(getString(R.string.testget));
+            time.start();
+        } else if (flag == 1) {
+            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
+            bankList = bankBean.getData();
+            if (bankList != null && bankList.size() > 0) {
+                pvOptions.setPicker(bankList);
+            }
+            dismissLoadingDialog();
+        } else if (flag == 2) {
+            AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
+            bankCardId = addBankCardBean.getData().getId();
+            ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
+        } else if (flag == 3) {
+            dismissLoadingDialog();
+            Intent intent = getIntent();
+            // 获取内容
+            intent.putExtra("bankCardName", tv_openingBank.getText().toString());
+            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 4));
+            intent.putExtra("bankCardId", bankCardId);
+            //设置结果 结果码，一个数据
+            setResult(RESULT_OK, intent);
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
+            finish();
+        }
     }
 
     @Override
@@ -209,4 +225,34 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         }
         ViewInject.toast(msg);
     }
+
+    /**
+     * 监听EditText输入改变
+     */
+    @SuppressWarnings("deprecation")
+    public void changeInputView(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editText.getText().toString().length() == 11) {
+                    tv_verificationCode.setClickable(true);
+                    tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
+                } else {
+                    tv_verificationCode.setClickable(false);
+                    tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
 }

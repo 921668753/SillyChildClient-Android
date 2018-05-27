@@ -1,5 +1,7 @@
 package com.yinglan.scc.mine.mywallet.coupons;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -12,7 +14,7 @@ public interface CouponsContract {
         /**
          * 获取优惠券列表
          */
-        void getCoupons(String model_type, String type, int store_id);
+        void getCoupons(Context context, int type, int page);
 
     }
 

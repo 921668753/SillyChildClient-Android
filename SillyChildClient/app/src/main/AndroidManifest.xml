@@ -29,6 +29,7 @@
     <!-- 防止设备休眠 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -51,6 +52,12 @@
     <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" />
     <!--融云 GCM 配置开始  -->
 
+    <!--银联权限 选择智能卡方式 配置开始  -->
+    <!--<!— 如果选择智能卡方式(即sdkPro)集成，需要额外定义以下权限 –>-->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!--<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />-->
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
+    <!--银联权限 选择智能卡方式 配置开始  -->
 
     <!--用户端-->
     <application
@@ -436,35 +443,52 @@
         <!--我的   我的钱包-->
         <activity
             android:name="com.yinglan.scc.mine.mywallet.MyWalletActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的钱包  账户明细-->
         <activity
             android:name="com.yinglan.scc.mine.mywallet.accountdetails.AccountDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的钱包  优惠券-->
         <activity
             android:name="com.yinglan.scc.mine.mywallet.coupons.CouponsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的钱包  充值-->
         <activity
             android:name="com.yinglan.scc.mine.mywallet.recharge.RechargeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <!--我的   我的钱包  提现-->
+        <activity
+            android:name="com.yinglan.scc.mine.mywallet.withdrawal.WithdrawalActivity"
+            android:screenOrientation="portrait" />
 
         <!--我的   我的钱包  提现成功-->
         <activity
-            android:name="com.yinglan.scc.mine.mywallet.withdrawal.WithdrawalSuccessActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name="com.yinglan.scc.mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的钱包  我的银行卡-->
+        <activity
+            android:name="com.yinglan.scc.mine.mywallet.mybankcard.MyBankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的钱包  我的银行卡  添加银行卡-->
+        <activity
+            android:name="com.yinglan.scc.mine.mywallet.mybankcard.AddBankCardActivity"
+            android:screenOrientation="portrait" />
 
         <!--我的   个人资料-->
         <activity
             android:name="com.yinglan.scc.mine.personaldata.PersonalDataActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
 
         <!--我的   个人资料  绑定邮箱-->
         <activity
@@ -474,7 +498,7 @@
         <!--我的   个人资料  修改昵称-->
         <activity
             android:name="com.yinglan.scc.mine.personaldata.setnickname.SetNickNameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   个人资料  修改傻孩子号-->
         <activity
@@ -484,12 +508,12 @@
         <!--我的   个人资料  设置性别-->
         <activity
             android:name="com.yinglan.scc.mine.personaldata.setsex.SetSexActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   个人资料  修改个性签名-->
         <activity
             android:name="com.yinglan.scc.mine.personaldata.setsignature.SetSignatureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   个人资料  修改密码第一步-->
         <activity

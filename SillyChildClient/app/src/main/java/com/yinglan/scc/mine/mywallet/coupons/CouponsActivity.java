@@ -82,6 +82,7 @@ public class CouponsActivity extends BaseActivity {
     public void initTitle() {
         titlebar.setTitleText(R.string.coupons);
         titlebar.setRightText(R.string.instructions);
+        titlebar.setRightDrawable(getResources().getDrawable(R.mipmap.back));
         titlebar.getRightCtv().setTextColor(getResources().getColor(R.color.greenColors));
         titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {

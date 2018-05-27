@@ -26,7 +26,12 @@ public interface AddBankCardContract {
         /**
          * 添加银行卡
          */
-        void postAddBankCard(String cardholder, String bankCardNumber, int bank_id, String openingBank, String phone, String verificationCode);
+        void postAddBankCard(String account_name, String id_number, String open_bank, String account_no, String phone, String verificationCode);
+
+        /**
+         * 设置默认银行卡
+         */
+        void postPurseDefault(int id);
 
     }
 

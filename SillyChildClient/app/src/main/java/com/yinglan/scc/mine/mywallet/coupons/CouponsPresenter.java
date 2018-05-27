@@ -1,8 +1,10 @@
 package com.yinglan.scc.mine.mywallet.coupons;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -13,9 +15,8 @@ import com.yinglan.scc.retrofit.RequestClient;
  */
 
 public class CouponsPresenter implements CouponsContract.Presenter {
+
     private CouponsContract.View mView;
-    private Uri data;
-    private Intent jumpintent;
 
     public CouponsPresenter(CouponsContract.View view) {
         mView = view;
@@ -24,18 +25,11 @@ public class CouponsPresenter implements CouponsContract.Presenter {
 
 
     @Override
-    public void getCoupons(String model_type,String type,int store_id) {
+    public void getCoupons(Context context, int type, int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("m", "Api");
-        httpParams.put("c", "User");
-        httpParams.put("a", "getPackCouponList");
-        httpParams.put("model_type", model_type);
         httpParams.put("type", type);
-        if (store_id>0){
-            httpParams.put("store_id", store_id);
-        }
-
-        RequestClient.getCouponsList(httpParams, new ResponseListener<String>() {
+        httpParams.put("page", page);
+        RequestClient.getCouponsList(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

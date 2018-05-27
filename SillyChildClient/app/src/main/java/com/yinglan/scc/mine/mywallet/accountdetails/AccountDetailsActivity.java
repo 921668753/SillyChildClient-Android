@@ -19,8 +19,8 @@ import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mywallet.AccountDetailsAdapter;
-import com.yinglan.scc.entity.mine.mywallet.AccountDetailsBean;
-import com.yinglan.scc.entity.mine.mywallet.AccountDetailsBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.mywallet.accountdetails.AccountDetailsBean;
+import com.yinglan.scc.entity.mine.mywallet.accountdetails.AccountDetailsBean.ResultBean.ListBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 import java.util.Calendar;
