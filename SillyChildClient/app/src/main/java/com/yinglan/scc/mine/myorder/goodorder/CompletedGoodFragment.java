@@ -1,5 +1,6 @@
 package com.yinglan.scc.mine.myorder.goodorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,17 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
-import com.yinglan.scc.entity.CharterOrderBean;
+import com.yinglan.scc.entity.mine.myorder.GoodOrderBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
-import com.yinglan.scc.mine.myorder.charterorder.CharterOrderContract;
-import com.yinglan.scc.mine.myorder.charterorder.CharterOrderPresenter;
+import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 
-import java.util.List;
-
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -32,7 +32,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, CharterOrderContract.View {
+public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View ,BGAOnItemChildClickListener {
 
     private MyOrderActivity aty;
 
@@ -69,9 +69,10 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
      */
     private boolean isShowLoadingMore = false;
 
-    private CharterOrderBean charterOrderBean;
-
-    private List<CharterOrderBean.ResultBean.ListBean> databean;
+    /**
+     * 订单状态
+     */
+    private String status = "5";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -82,7 +83,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     protected void initData() {
         super.initData();
-        mPresenter = new CharterOrderPresenter(this);
+        mPresenter = new GoodOrderPresenter(this);
         mAdapter = new GoodsOrderViewAdapter(aty);
     }
 
@@ -92,8 +93,8 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
-//        showLoadingDialog(getString(R.string.dataLoad));
-//        mPresenter.getChartOrder(NumericConstants.NoPay+"");
+        mAdapter.setOnItemChildClickListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -116,7 +117,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
     }
 
     @Override
@@ -128,20 +129,20 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
         return true;
     }
 
     @Override
-    public void setPresenter(CharterOrderContract.Presenter presenter) {
+    public void setPresenter(GoodOrderContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-//        intent.putExtra("good_id", mAdapter.getItem(position).getGoods_id());
-//        showActivity(aty, intent);
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Intent intent = new Intent(aty, OrderDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+        aty.showActivity(aty, intent);
     }
 
     @Override
@@ -150,27 +151,27 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-//        MyCollectionBean myCollectionBean = (MyCollectionBean) JsonUtil.getInstance().json2Obj(success, MyCollectionBean.class);
-//        if (myCollectionBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            errorMsg(getString(R.string.noCollectedGoods), 1);
-//            return;
-//        } else if (myCollectionBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            ViewInject.toast(getString(R.string.noMoreData));
-//            isShowLoadingMore = false;
-//            dismissLoadingDialog();
-//            mRefreshLayout.endLoadingMore();
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(myCollectionBean.getData());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(myCollectionBean.getData());
-//        }
+        GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
+        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            errorMsg(getString(R.string.noOrder), 1);
+            return;
+        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            isShowLoadingMore = false;
+            dismissLoadingDialog();
+            mRefreshLayout.endLoadingMore();
+            return;
+        }
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            mAdapter.clear();
+            mAdapter.addNewData(goodOrderBean.getData().getResultX());
+        } else {
+            mRefreshLayout.endLoadingMore();
+            mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+        }
         dismissLoadingDialog();
     }
 
@@ -200,7 +201,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noAddress))) {
+        } else if (msg.contains(getString(R.string.noOrder))) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);
@@ -209,5 +210,14 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
+    }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+//        if (childView.getId() == R.id.tv_seeEvaluation) {
+//            Intent intent = new Intent(aty, SeeEvaluationActivity.class);
+//            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+//            aty.showActivity(aty, intent);
+//        }
     }
 }

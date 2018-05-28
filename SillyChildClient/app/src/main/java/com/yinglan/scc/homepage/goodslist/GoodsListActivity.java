@@ -1,11 +1,12 @@
 package com.yinglan.scc.homepage.goodslist;
 
-
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.homepage.goodslist.GoodsListBean;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
+import com.yinglan.scc.utils.SoftKeyboardUtils;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -49,7 +51,6 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
 
     @BindView(id = R.id.ll_pricePriority, click = true)
     private LinearLayout ll_pricePriority;
-
 
     @BindView(id = R.id.rv)
     private RecyclerView recyclerview;
@@ -105,6 +106,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         goodsListAdapter = new GoodsListViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。
         cat = getIntent().getIntExtra("cat", 0);
         mark = getIntent().getStringExtra("mark");
     }
@@ -114,6 +116,18 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         super.initWidget();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         initRecyclerView();
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    SoftKeyboardUtils.packUpKeyboard(aty);
+                    mRefreshLayout.beginRefreshing();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
         mRefreshLayout.beginRefreshing();
     }
 
@@ -237,7 +251,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noAddress))) {
+        } else if (msg.contains(getString(R.string.noale))) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);

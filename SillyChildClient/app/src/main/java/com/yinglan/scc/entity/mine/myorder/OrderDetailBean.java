@@ -1,4 +1,4 @@
-package com.yinglan.scc.entity;
+package com.yinglan.scc.entity.mine.myorder;
 
 import com.common.cklibrary.entity.BaseResult;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Admin on 2017/8/17.
  */
 
-public class GoodOrderBean extends BaseResult<GoodOrderBean.ResultBean> {
+public class OrderDetailBean extends BaseResult<OrderDetailBean.ResultBean> {
 
     public class ResultBean {
 

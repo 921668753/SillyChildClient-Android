@@ -5,8 +5,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.main.MallHomePageBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.HomePageBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
@@ -17,7 +18,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Administrator on 2017/9/6.
  */
 
-public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<ListBean> {
+public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<HomePageBean> {
 
     public MallHomePageViewAdapter(RecyclerView recyclerView) {
         super(recyclerView, R.layout.item_mallhomepage);
@@ -38,20 +39,30 @@ public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<ListBean> {
 //    }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, ListBean model) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getPrice(), (ImageView) helper.getView(R.id.img_good), R.mipmap.placeholderfigure);
-        helper.setText(R.id.tv_goodName, model.getTitle());
-        helper.setText(R.id.tv_goodSynopsis, model.getTitle());
-        helper.setText(R.id.tv_goodMoney, model.getTitle());
-        helper.setText(R.id.tv_brand, model.getTitle());
-        if (TextUtils.isEmpty(model.getTitle())) {
+    protected void fillData(BGAViewHolderHelper helper, int position, HomePageBean model) {
+        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), (ImageView) helper.getView(R.id.img_good), 5, R.mipmap.placeholderfigure);
+        helper.setText(R.id.tv_goodName, model.getName());
+        helper.setText(R.id.tv_goodSynopsis, model.getBrief());
+        helper.setText(R.id.tv_goodMoney, mContext.getString(R.string.renminbi) + model.getPrice());
+        helper.setText(R.id.tv_brand, model.getBrand_name());
+        if (StringUtils.isEmpty(model.getStore_name()) && StringUtils.isEmpty(model.getGoods_tag())) {
             helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
+        } else if (!StringUtils.isEmpty(model.getStore_name()) && StringUtils.isEmpty(model.getGoods_tag())) {
+            helper.setVisibility(R.id.ll_bottomLabel, View.VISIBLE);
+            helper.setVisibility(R.id.img_proprietary, View.VISIBLE);
+            helper.setVisibility(R.id.tv_timedSpecials, View.GONE);
+        } else if (StringUtils.isEmpty(model.getStore_name()) && !StringUtils.isEmpty(model.getGoods_tag())) {
+            helper.setVisibility(R.id.ll_bottomLabel, View.VISIBLE);
             helper.setVisibility(R.id.img_proprietary, View.GONE);
-            helper.setVisibility(R.id.img_timedSpecials, View.VISIBLE);
+            helper.setVisibility(R.id.tv_timedSpecials, View.VISIBLE);
+            helper.setText(R.id.tv_timedSpecials, model.getGoods_tag());
+        } else if (!StringUtils.isEmpty(model.getStore_name()) && !StringUtils.isEmpty(model.getGoods_tag())) {
+            helper.setVisibility(R.id.ll_bottomLabel, View.VISIBLE);
+            helper.setVisibility(R.id.img_proprietary, View.VISIBLE);
+            helper.setVisibility(R.id.tv_timedSpecials, View.VISIBLE);
+            helper.setText(R.id.tv_timedSpecials, model.getGoods_tag());
         } else {
             helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
-            helper.setVisibility(R.id.img_proprietary, View.GONE);
-            helper.setVisibility(R.id.img_timedSpecials, View.VISIBLE);
         }
     }
 

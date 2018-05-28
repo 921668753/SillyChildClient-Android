@@ -6,7 +6,7 @@ import android.util.SparseArray;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.Log;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.GoodOrderBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myorder.GoodOrderBean.DataBean.ListBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -31,10 +31,10 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
-        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getAvatar());
-        viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getAvatar());
-        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.general) + 2 + mContext.getString(R.string.items));
-        viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getAvatar());
+        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getPaymoney());
+        viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getPaymoney());
+        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + 2 + mContext.getString(R.string.goods));
+        viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getPaymoney());
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
         GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext);
         clv_shopgoods.setAdapter(adapter);

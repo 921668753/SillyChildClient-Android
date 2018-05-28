@@ -47,6 +47,7 @@
                 android:minWidth="@dimen/dimen150"
                 android:paddingLeft="@dimen/dimen10"
                 android:singleLine="true"
+                android:imeOptions="actionSearch"
                 android:textColorHint="@color/searchTextColors"
                 android:textCursorDrawable="@drawable/shape_cursor"
                 android:textSize="@dimen/textsize14" />

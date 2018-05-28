@@ -44,7 +44,6 @@
             android:textColor="@color/fF0000Colors"
             android:textSize="@dimen/textsize12" />
 
-
         <TextView
             android:id="@+id/tv_brand"
             style="@style/AutoWrap"
@@ -73,12 +72,16 @@
             android:src="@mipmap/home_self_support" />
 
 
-        <ImageView
-            android:id="@+id/img_timedSpecials"
+        <TextView
+            android:id="@+id/tv_timedSpecials"
             android:layout_width="@dimen/dimen42"
             android:layout_height="@dimen/dimen11"
             android:layout_marginLeft="@dimen/dimen10"
-            android:src="@mipmap/home_special_offer" />
+            android:background="@drawable/shape_timedspecials"
+            android:gravity="center"
+            android:text="限时特价"
+            android:textColor="@color/fF0000Colors"
+            android:textSize="@dimen/textsize8" />
 
 
     </LinearLayout>

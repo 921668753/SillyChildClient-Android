@@ -4,16 +4,19 @@ import android.text.TextUtils;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
-import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.BitmapCoreUtil;
+import com.common.cklibrary.utils.DataCleanManager;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.kymjs.rxvolley.client.ProgressListener;
+import com.nanchen.compresshelper.FileUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.retrofit.RequestClient;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -30,76 +33,66 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
     }
 
     @Override
-    public void upPictures(String paramname, File voule, int resultsource) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put(paramname,voule);
-//        RequestClient.upLoadImg(httpParams,0, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, resultsource);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, resultsource);
-//            }
-//        });
-    }
-
-    @Override
-    public void getTypes(int resultsource) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getFeedBackType(httpParams, new ResponseListener<String>() {
+    public void upPictures(String imgPath) {
+        if (StringUtils.isEmpty(imgPath)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
+            return;
+        }
+        File oldFile = new File(imgPath);
+        if (!(FileUtil.isFileExists(oldFile))) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 0);
+            return;
+        }
+        long fileSize = 0;
+        try {
+            fileSize = DataCleanManager.getFileSize(oldFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileSize = 0;
+        }
+        if (fileSize >= StringConstants.COMPRESSION_SIZE) {
+            oldFile = BitmapCoreUtil.customCompression(oldFile);
+        }
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), oldFile, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
+                mView.errorMsg(msg, 0);
             }
         });
     }
 
+
     @Override
-    public void submitFeed(int typeId, String imgs,String content, int resultsource) {
-        if (TextUtils.isEmpty(content)){
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.textDescribe),resultsource);
+    public void postAdvice(String feedType, String content, List<String> imgs) {
+        if (TextUtils.isEmpty(content)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.textDescribe), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("typeId",typeId);
-        if (!TextUtils.isEmpty(imgs)){
-            httpParams.put("imgs",imgs);
+        httpParams.put("type", feedType);
+        if (imgs.size() > 0) {
+            String imgsStr = "";
+            for (int i = 0; i < imgs.size(); i++) {
+                imgsStr = imgsStr + "," + imgs.get(i);
+            }
+            httpParams.put("imgUrls", imgsStr.substring(1));
         }
-        httpParams.put("content",content);
-        RequestClient.submitFeedHttp(httpParams,new ResponseListener<String>() {
+        httpParams.put("text", content);
+        RequestClient.postAdvice(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
+                mView.errorMsg(msg, 1);
             }
         });
-    }
-
-    @Override
-    public void getInfo() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
     }
 }

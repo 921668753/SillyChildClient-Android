@@ -29,17 +29,17 @@ public class PostCommentsPresenter implements PostCommentsContract.Presenter {
     public void upPictures(String paramname, File voule, int resultsource) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put(paramname, voule);
-        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, resultsource);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, resultsource);
-            }
-        });
+//        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, resultsource);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, resultsource);
+//            }
+//        });
     }
 
     @Override

@@ -8,106 +8,82 @@ import java.util.List;
  * Created by Admin on 2017/9/29.
  */
 
-public class MallHomePageBean extends BaseResult<MallHomePageBean.ResultBean> {
+public class MallHomePageBean extends BaseResult<MallHomePageBean.DataBean> {
 
+    public class DataBean {
+        private List<HomePageBean> homePage;
 
-    public static class ResultBean {
-        /**
-         * p : 1
-         * pageSize : 20
-         * totalRows : 1
-         * totalPages : 1
-         * list : [{"id":1000,"publishTime":1506679144,"price":"0.01","title":"包车标题（手动添加）","imgs":["http://gimg1.bitautoimg.com/ResourceFiles/0/3/406/20170712111916756.jpg","http://www.sinaimg.cn/qc/photo_auto/photopng/08/02/1470990802.png"],"publishTimeFmt":"2017.09.29","priceFmt":"¥0.01"}]
-         */
-
-        private int p;
-        private int pageSize;
-        private int totalRows;
-        private int totalPages;
-        private List<ListBean> list;
-
-        public int getP() {
-            return p;
+        public List<HomePageBean> getHomePage() {
+            return homePage;
         }
 
-        public void setP(int p) {
-            this.p = p;
+        public void setHomePage(List<HomePageBean> homePage) {
+            this.homePage = homePage;
         }
 
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public int getTotalRows() {
-            return totalRows;
-        }
-
-        public void setTotalRows(int totalRows) {
-            this.totalRows = totalRows;
-        }
-
-        public int getTotalPages() {
-            return totalPages;
-        }
-
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
-        }
-
-        public List<ListBean> getList() {
-            return list;
-        }
-
-        public void setList(List<ListBean> list) {
-            this.list = list;
-        }
-
-        public static class ListBean {
+        public class HomePageBean {
             /**
-             * id : 1000
-             * publishTime : 1506679144
-             * price : 0.01
-             * title : 包车标题（手动添加）
-             * imgs : ["http://gimg1.bitautoimg.com/ResourceFiles/0/3/406/20170712111916756.jpg","http://www.sinaimg.cn/qc/photo_auto/photopng/08/02/1470990802.png"]
-             * publishTimeFmt : 2017.09.29
-             * priceFmt : ¥0.01
+             * goods_id : 133
+             * name : ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋
+             * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_thumbnail.jpg
+             * price : 1298
+             * mktprice : 1698
+             * view_count : null
+             * buy_count : null
+             * store : null
+             * sn : null
+             * big : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_big.jpg
+             * small : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_small.jpg
+             * original : null
+             * commentCount : null
+             * commentPercent : null
+             * brief : null
+             * store_name :
+             * brand_name :
+             * goods_tag : 特价商品
              */
 
-            private int id;
-            private int publishTime;
-            private int type;
+            private int goods_id;
+            private String name;
+            private String thumbnail;
             private String price;
-            private String title;
-            private String publishTimeFmt;
-            private String priceFmt;
-            private String imgs;
+            private String mktprice;
+            private String view_count;
+            private String buy_count;
+            private String store;
+            private String sn;
+            private String big;
+            private String small;
+            private String original;
+            private String commentCount;
+            private String commentPercent;
+            private String brief;
+            private String store_name;
+            private String brand_name;
+            private String goods_tag;
 
-            public int getId() {
-                return id;
+            public int getGoods_id() {
+                return goods_id;
             }
 
-            public void setId(int id) {
-                this.id = id;
+            public void setGoods_id(int goods_id) {
+                this.goods_id = goods_id;
             }
 
-            public int getPublishTime() {
-                return publishTime;
+            public String getName() {
+                return name;
             }
 
-            public void setPublishTime(int publishTime) {
-                this.publishTime = publishTime;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public int getType() {
-                return type;
+            public String getThumbnail() {
+                return thumbnail;
             }
 
-            public void setType(int type) {
-                this.type = type;
+            public void setThumbnail(String thumbnail) {
+                this.thumbnail = thumbnail;
             }
 
             public String getPrice() {
@@ -118,36 +94,116 @@ public class MallHomePageBean extends BaseResult<MallHomePageBean.ResultBean> {
                 this.price = price;
             }
 
-            public String getTitle() {
-                return title;
+            public String getMktprice() {
+                return mktprice;
             }
 
-            public void setTitle(String title) {
-                this.title = title;
+            public void setMktprice(String mktprice) {
+                this.mktprice = mktprice;
             }
 
-            public String getPublishTimeFmt() {
-                return publishTimeFmt;
+            public String getView_count() {
+                return view_count;
             }
 
-            public void setPublishTimeFmt(String publishTimeFmt) {
-                this.publishTimeFmt = publishTimeFmt;
+            public void setView_count(String view_count) {
+                this.view_count = view_count;
             }
 
-            public String getPriceFmt() {
-                return priceFmt;
+            public String getBuy_count() {
+                return buy_count;
             }
 
-            public void setPriceFmt(String priceFmt) {
-                this.priceFmt = priceFmt;
+            public void setBuy_count(String buy_count) {
+                this.buy_count = buy_count;
             }
 
-            public String getImgs() {
-                return imgs;
+            public String getStore() {
+                return store;
             }
 
-            public void setImgs(String imgs) {
-                this.imgs = imgs;
+            public void setStore(String store) {
+                this.store = store;
+            }
+
+            public String getSn() {
+                return sn;
+            }
+
+            public void setSn(String sn) {
+                this.sn = sn;
+            }
+
+            public String getBig() {
+                return big;
+            }
+
+            public void setBig(String big) {
+                this.big = big;
+            }
+
+            public String getSmall() {
+                return small;
+            }
+
+            public void setSmall(String small) {
+                this.small = small;
+            }
+
+            public String getOriginal() {
+                return original;
+            }
+
+            public void setOriginal(String original) {
+                this.original = original;
+            }
+
+            public String getCommentCount() {
+                return commentCount;
+            }
+
+            public void setCommentCount(String commentCount) {
+                this.commentCount = commentCount;
+            }
+
+            public String getCommentPercent() {
+                return commentPercent;
+            }
+
+            public void setCommentPercent(String commentPercent) {
+                this.commentPercent = commentPercent;
+            }
+
+            public String getBrief() {
+                return brief;
+            }
+
+            public void setBrief(String brief) {
+                this.brief = brief;
+            }
+
+            public String getStore_name() {
+                return store_name;
+            }
+
+            public void setStore_name(String store_name) {
+                this.store_name = store_name;
+            }
+
+            public String getBrand_name() {
+                return brand_name;
+            }
+
+            public void setBrand_name(String brand_name) {
+                this.brand_name = brand_name;
+            }
+
+            public String getGoods_tag() {
+                return goods_tag;
+            }
+
+            public void setGoods_tag(String goods_tag) {
+                this.goods_tag = goods_tag;
             }
         }
     }

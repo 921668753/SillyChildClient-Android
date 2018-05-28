@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
@@ -21,12 +22,12 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.main.activities.BargainViewAdapter;
 import com.yinglan.scc.adapter.main.activities.ProductlViewAdapter;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.main.ActivitiesBean;
 import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
+import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 
@@ -55,6 +56,10 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     /**
      * 特价商品
      */
+
+    @BindView(id = R.id.ll_bargain, click = true)
+    private LinearLayout ll_bargain;
+
     @BindView(id = R.id.tv_seeMore, click = true)
     private TextView tv_seeMore;
 
@@ -71,8 +76,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     private RecyclerView recyclerview;
 
     private SpacesItemDecoration spacesItemDecoration;
-
-    private StaggeredGridLayoutManager layoutManager;
 
     private ProductlViewAdapter productlViewAdapter;
     private BargainViewAdapter bargainViewAdapter;
@@ -91,7 +94,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         bargainViewAdapter = new BargainViewAdapter(aty, hlv_bargain);
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         productlViewAdapter = new ProductlViewAdapter(recyclerview);
-        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
     }
 
     @Override
@@ -140,6 +142,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
      * 设置RecyclerView控件部分属性
      */
     private void initRecyclerView() {
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setAutoMeasureEnabled(true);
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setHasFixedSize(true);
@@ -153,7 +156,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     @Override
     public void onResume() {
         super.onResume();
-        if (aty.getChageIcon() == 0) {
+        if (aty.getChageIcon() == 2) {
             mForegroundBanner.startAutoPlay();
         }
     }
@@ -162,7 +165,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     @Override
     public void onPause() {
         super.onPause();
-        if (aty.getChageIcon() == 0) {
+        if (aty.getChageIcon() == 2) {
             mForegroundBanner.stopAutoPlay();
         }
     }
@@ -176,15 +179,29 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             AdvCatBean advCatBean = (AdvCatBean) JsonUtil.json2Obj(success, AdvCatBean.class);
-            processLogic(advCatBean.getData());
+            if (advCatBean != null && advCatBean.getData().size() > 0) {
+                processLogic(advCatBean.getData());
+            }
             ((ActivitiesContract.Presenter) mPresenter).getActivities();
         } else if (flag == 1) {
             ActivitiesBean activitiesBean = (ActivitiesBean) JsonUtil.json2Obj(success, ActivitiesBean.class);
-
-
+            if (activitiesBean.getData().getSpecial() == null || activitiesBean.getData().getSpecial().size() <= 0) {
+                ll_bargain.setVisibility(View.GONE);
+                hlv_bargain.setVisibility(View.GONE);
+            } else {
+                ll_bargain.setVisibility(View.VISIBLE);
+                hlv_bargain.setVisibility(View.VISIBLE);
+                bargainViewAdapter.clear();
+                activitiesBean.getData().getSpecial().get(activitiesBean.getData().getSpecial().size() - 1).setStatus("last");
+                bargainViewAdapter.addNewData(activitiesBean.getData().getSpecial());
+            }
+            if (activitiesBean.getData().getMonthHot() == null || activitiesBean.getData().getMonthHot().size() <= 0) {
+                return;
+            }
+            productlViewAdapter.clear();
+            productlViewAdapter.addNewData(activitiesBean.getData().getMonthHot());
             dismissLoadingDialog();
         }
-
     }
 
     /**
@@ -207,33 +224,27 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
 
     @Override
     public void errorMsg(String msg, int flag) {
-//        if (isLogin(msg)) {
-//            showActivity(aty, LoginActivity.class);
-//            return;
-//        }
-//        isShowLoadingMore = false;
-//        mRefreshLayout.setVisibility(View.GONE);
-//        ll_commonError.setVisibility(View.VISIBLE);
-//        tv_hintText.setText(msg + getString(R.string.clickRefresh));
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//        }
-//        dismissLoadingDialog();
+        dismissLoadingDialog();
+        if (flag == 1 && isLogin(msg)) {
+            Intent intent = new Intent(aty, LoginActivity.class);
+            // intent.putExtra("name", "GetOrderFragment");
+            aty.showActivity(aty, intent);
+            return;
+        }
+        ViewInject.toast(msg);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", bargainViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", productlViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
@@ -257,7 +268,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((ActivitiesContract.Presenter) mPresenter).getActivities();
     }
 
     @Override

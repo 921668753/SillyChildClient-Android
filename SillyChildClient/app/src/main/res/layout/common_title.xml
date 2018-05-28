@@ -9,9 +9,8 @@
         android:id="@+id/titlebar"
         style="@style/TitleBar"
         app:bgatitlebar_leftDrawable="@mipmap/back"
-        app:bgatitlebar_rightText="">
+        app:bgatitlebar_rightText=""/>
 
-    </cn.bingoogolapple.titlebar.BGATitleBar>
     <!--android:textStyle="normal|bold|italic"-->
     <!--<TextView style="@style/TitleDividerWidth" />-->
 </LinearLayout>

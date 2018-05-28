@@ -16,8 +16,10 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
+import com.yinglan.scc.entity.application.RongCloudBean;
 import com.yinglan.scc.message.interactivemessage.rongcloud.SealAction;
 import com.yinglan.scc.message.interactivemessage.rongcloud.UserInfoEngine;
 import com.yinglan.scc.message.interactivemessage.rongcloud.db.BlackList;
@@ -229,18 +231,16 @@ public class SealUserInfoManager implements OnDataListener {
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                     return;
                 }
-
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                RequestClient.getInfo(mContext,httpParams, new ResponseListener<String>() {
+                httpParams.put("userId", userId);
+                RequestClient.getRongCloud(mContext, httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        UserInfo userInfo = (UserInfo) JsonUtil.getInstance().json2Obj(response, UserInfo.class);
-//                        if (info != null && RongIM.getInstance() != null) {
-//                            if (TextUtils.isEmpty(info.getPortraitUri() == null ? null : info.getPortraitUri().toString())) {
-//                                info.setPortraitUri(Uri.parse(RongGenerate.generateDefaultAvatar(info.getName(), info.getUserId())));
-//                            }
-                        RongIM.getInstance().refreshUserInfoCache(userInfo);
-                        //   }
+                        RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                        if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
+                            UserInfo userInfo = new UserInfo(userId + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        }
                     }
 
                     @Override
@@ -1556,7 +1556,7 @@ public class SealUserInfoManager implements OnDataListener {
 
                             @Override
                             public void onSuccess(String s) {
-                                UserUtil.saveRcTokenId(mContext,token,s);
+                                UserUtil.saveRcTokenId(mContext, token, s);
                             }
 
                             @Override

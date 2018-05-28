@@ -1,8 +1,9 @@
-package com.yinglan.scc.entity.application;
+package com.yinglan.scc.entity.startpage;
 
 import com.common.cklibrary.entity.BaseResult;
 
-public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
+public class QiNiuKeyBean extends BaseResult<QiNiuKeyBean.DataBean> {
+
 
     public class DataBean {
         /**
@@ -10,25 +11,23 @@ public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
          * host : http://ovwiqces1.bkt.clouddn.com/
          */
 
-        private String face;
-        private String nickname;
+        private String authToken;
+        private String host;
 
-        public String getFace() {
-            return face;
+        public String getAuthToken() {
+            return authToken;
         }
 
-        public void setFace(String face) {
-            this.face = face;
+        public void setAuthToken(String authToken) {
+            this.authToken = authToken;
         }
 
-        public String getNickname() {
-            return nickname;
+        public String getHost() {
+            return host;
         }
 
-        public void setNickname(String nickname) {
-            this.nickname = nickname;
+        public void setHost(String host) {
+            this.host = host;
         }
     }
-
-
 }

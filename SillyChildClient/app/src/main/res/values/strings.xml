@@ -1046,7 +1046,7 @@
     <string name="confirmCompleted">确认完成</string>
     <string name="appraiseOrder">评价订单</string>
     <string name="cancelOrder">取消订单</string>
-
+    <string name="noOrder">亲，您还没有订单哟~</string>
 
     <!-- 个人中心 我的订单  包车订单-->
     <string name="ongoing">进行中</string>

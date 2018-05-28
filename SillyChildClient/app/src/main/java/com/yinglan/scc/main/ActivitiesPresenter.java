@@ -27,13 +27,12 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter {
         RequestClient.getAdvCat(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-
                 mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.getSuccess(msg, 0);
+                mView.errorMsg(msg, 0);
             }
         });
     }
@@ -41,12 +40,10 @@ public class ActivitiesPresenter implements ActivitiesContract.Presenter {
     @Override
     public void getActivities() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        String[] marks1 = new String[]{"special", "monthHot"};
-        httpParams.put("marks", JsonUtil.getInstance().obj2JsonString(marks1));
+        httpParams.put("marks", "special,monthHot");
         RequestClient.getActivities(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-
                 mView.getSuccess(response, 1);
             }
 

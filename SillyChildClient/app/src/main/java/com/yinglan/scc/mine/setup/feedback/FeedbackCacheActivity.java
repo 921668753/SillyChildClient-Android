@@ -63,7 +63,7 @@ public class FeedbackCacheActivity extends BaseActivity implements FeedbackContr
                 break;
             case R.id.ll_qiuzhu:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((FeedbackPresenter) mPresenter).getInfo();
+             //   ((FeedbackPresenter) mPresenter).getInfo();
                 break;
             case R.id.ll_guzhang:
                 showActivity(this, FeedbackActivity.class);

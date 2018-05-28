@@ -1,7 +1,10 @@
 package com.yinglan.scc.mine.myorder.goodorder;
 
+import android.content.Context;
+
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.retrofit.RequestClient;
 
@@ -19,10 +22,13 @@ public class GoodOrderPresenter implements GoodOrderContract.Presenter {
 
 
     @Override
-    public void getChartOrder(String type) {
+    public void getOrderList(Context context, String status, int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("type",type);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        if (!StringUtils.isEmpty(status)) {
+            httpParams.put("status", status);
+        }
+        httpParams.put("page", page);
+        RequestClient.getOrderList(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

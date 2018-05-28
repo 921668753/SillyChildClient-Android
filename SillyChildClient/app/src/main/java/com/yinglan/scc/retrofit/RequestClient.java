@@ -18,16 +18,21 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.yinglan.scc.R;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.entity.loginregister.LoginBean;
+import com.yinglan.scc.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scc.retrofit.uploadimg.UploadManagerUtil;
 
+
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,64 +47,87 @@ import static com.common.cklibrary.utils.httputil.HttpRequest.requestPostFORMHtt
 public class RequestClient {
 
     /**
-     * @param httpParams 上传头像图片
+     * 上传头像图片
      */
-    public static void upLoadImg(Context context, HttpParams httpParams, int type, final ResponseListener<String> listener) {
-//        for (int i = 0; i < files.size(); i++) {
-//            File file = new File(files.get(i));
-//            params.put("file" + i, file);
-//        }
-//        httpParams.put("Content-Type", "application/x-www-form-urlencoded");
-        doServer(context, new TokenCallback() {
+    public static void upLoadImg(Context context, File file, int type, ResponseListener<String> listener) {
+        long nowTime = System.currentTimeMillis();
+        String qiNiuImgTime = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgTime", "");
+        long qiNiuImgTime1 = 0;
+        if (StringUtils.isEmpty(qiNiuImgTime)) {
+            qiNiuImgTime1 = 0;
+        } else {
+            qiNiuImgTime1 = Long.decode(qiNiuImgTime);
+        }
+        long refreshTime = nowTime - qiNiuImgTime1 - (8 * 60 * 60 * 1000);
+        if (refreshTime <= 0) {
+            upLoadImgQiNiuYun(context, file, listener);
+            return;
+        }
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        getQiNiuKey(context, httpParams, new ResponseListener<String>() {
             @Override
-            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
-////                if (type == 0) {
-////                    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADAVATAR, httpParams, listener);
-////                } else {
-////                    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
-////                }
-                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
+            public void onSuccess(String response) {
+                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
+                if (qiNiuKeyBean == null && StringUtils.isEmpty(qiNiuKeyBean.getData().getAuthToken())) {
+                    listener.onFailure(context.getString(R.string.serverReturnsDataNullJsonError));
                     return;
                 }
-//                httpParams.putHeaders("authorization-token", accessToken);
-                //    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuToken", qiNiuKeyBean.getData().getAuthToken());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgHost", qiNiuKeyBean.getData().getHost());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgTime", String.valueOf(System.currentTimeMillis()));
+                upLoadImgQiNiuYun(context, file, listener);
             }
-        }, listener);
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
+
     }
 
 
     /**
-     * 上传图片
+     * 获取七牛云Token
      */
-    public static void upLoadImg(File file, String key, final ResponseListener<String> listener) {
+    private static void upLoadImgQiNiuYun(Context context, File file, ResponseListener<String> listener) {
+        String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
+        //     if (type == 0) {
+        String key = "SHZS_" + UserUtil.getRcId(context) + "_" + file.getName();
+        Log.d("ReadFragment", "key" + key);
+        //参数 图片路径,图片名,token,成功的回调
+        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), key, token, new UpCompletionHandler() {
+            @Override
+            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                if (responseInfo.isOK()) {
+                    String host = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgHost");
+                    String headpicPath = host + key;
+                    Log.i("ReadFragment", "complete: " + headpicPath);
+                    listener.onSuccess(headpicPath);
+                }
+            }
+        }, null);
+    }
 
-        // String key = "<指定七牛服务上的文件名，或 null>";
-        String token = " <从服务端SDK获取>";
-        //new一个uploadManager类
-//        UploadManager uploadManager = new UploadManager();
-//        uploadManager.put(file, key, token,
-//                new UpCompletionHandler() {
-//                    @Override
-//                    public void complete(String key, ResponseInfo info, JSONObject res) {
-//                        //res包含hash、key等信息，具体字段取决于上传策略的设置
-//                        if (info.isOK()) {
-//                            Log.i("qiniu", "Upload Success");
-//                        } else {
-//                            Log.i("qiniu", "Upload Fail");
-//                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-//                        }
-//                        Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
-//                    }
-//                }, null);
+
+    /**
+     * 获取七牛云Token
+     */
+
+    public static void getQiNiuKey(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.QINIUKEY, httpParams, listener);
+            }
+        }, listener);
 
     }
 
@@ -244,14 +272,14 @@ public class RequestClient {
     /**
      * 注册
      */
-    public static void postRegister(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postRegister(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestPostFORMHttp(context, URLConstants.REGISTER, httpParams, listener);
     }
 
     /**
      * 得到国家区号
      */
-    public static void getCountryNumber(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getCountryNumber(HttpParams httpParams, ResponseListener<String> listener) {
         //   HttpRequest.requestGetHttp(URLConstants.COUNTRYNUMBER, httpParams, listener);
     }
 
@@ -270,28 +298,28 @@ public class RequestClient {
      * 获取分类广告
      */
     public static void getAdvCat(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.ADVCAT, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.ADVCAT, httpParams, false, listener);
     }
 
     /**
-     * 首页
+     * 首页 活动
      */
-    public static void getHome(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.HOMEGOODS, httpParams, true, listener);
+    public static void getActivities(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.ACTIVITYGOOD, httpParams, false, listener);
     }
 
     /**
      * 首页---更多分类
      */
     public static void getClassification(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.GOODSCATLIST, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSCATLIST, httpParams, false, listener);
     }
 
     /**
      * 首页---更多分类----商品列表
      */
     public static void getGoodsList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.GOODSLIST, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSLIST, httpParams, false, listener);
     }
 
     /**
@@ -302,41 +330,35 @@ public class RequestClient {
     }
 
     public static void getStoreIndexGoods(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.STOREINDEXGOODS, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.STOREINDEXGOODS, httpParams, false, listener);
     }
 
     /**
      * 首页---更多分类----商品列表----店铺商品
      */
     public static void getStoreGoodsList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.STOREGOODSLIST, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.STOREGOODSLIST, httpParams, false, listener);
     }
 
     /**
      * 首页---更多分类----商品列表----商品详情
      */
     public static void getGoodDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.GOODDETAIL, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.GOODDETAIL, httpParams, false, listener);
     }
 
     /**
      * 首页---更多分类----商品列表----商品详情----商品规格
      */
     public static void getGoodsSpec(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.GOODSSPEC, httpParams, true, listener);
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSSPEC, httpParams, false, listener);
     }
 
-    /**
-     * 活动
-     */
-    public static void getActivities(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.ACTIVITYGOOD, httpParams, true, listener);
-    }
 
     /**
      * 得到地区的热门城市
      */
-    public static void getChildHotCity(HttpParams httpParams, int id, final ResponseListener<String> listener) {
+    public static void getChildHotCity(HttpParams httpParams, int id, ResponseListener<String> listener) {
         // HttpRequest.requestGetHttp(URLConstants.CHILDHOTCITY + "&id=" + id, httpParams, false, listener);
     }
 
@@ -1483,23 +1505,22 @@ public class RequestClient {
 
 
     /**
-     * 显示包车订单列表
+     * 显示订单列表
      */
-    public static void getOrderList(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getOnlineService");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //      HttpRequest.requestPostFORMHttp(URLConstants.SHOWORDERLIST, httpParams, listener);
-//            }
-//        }, listener);
-
+    public static void getOrderList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getOrderList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERLIST, httpParams, listener);
+            }
+        }, listener);
     }
 
     /**
@@ -2146,81 +2167,6 @@ public class RequestClient {
 //        }, listener);
     }
 
-    /**
-     * 获取评价详情
-     */
-    public static void getEvaluationShare(HttpParams httpParams, final ResponseListener<String> listener) {
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //      HttpRequest.requestGetHttp(URLConstants.COMMENTINFO, httpParams, listener);
-//            }
-//        }, listener);
-    }
-
-    /**
-     * 发送评价详情
-     */
-    public static void postEvaluationShare(HttpParams httpParams, final ResponseListener<String> listener) {
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //     HttpRequest.requestPostFORMHttp(URLConstants.SENDCOMMENTINFO, httpParams, listener);
-//            }
-//        }, listener);
-    }
-
-
-    /**
-     * 我的 设置 意见反馈
-     */
-    public static void getFeedBackType(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getOnlineService");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                //        HttpRequest.requestGetHttp(URLConstants.FEEDBACKTYPE, httpParams, listener);
-//            }
-//        }, listener);
-
-    }
-
-    /**
-     * 我的 设置 意见反馈 提交
-     */
-    public static void submitFeedHttp(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getOnlineService");
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //      HttpRequest.requestPostFORMHttp(URLConstants.FEEDBACKSUBMIT, httpParams, listener);
-//            }
-//        }, listener);
-
-    }
 
     /**
      * 我的 VIP紧急电话
@@ -2241,27 +2187,7 @@ public class RequestClient {
 
     }
 
-    /**
-     * 获取订单轨迹信息
-     *
-     * @param httpParams 提交参数
-     * @param listener   回调
-     */
-    public static void getTrajectory(HttpParams httpParams, final ResponseListener<String> listener) {
-        RxVolley.get(URLConstants.LOGISTICSPOSITIONING, httpParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                listener.onSuccess(t);
-            }
 
-            @Override
-            public void onFailure(int errorNo, String strMsg) {
-                super.onFailure(errorNo, strMsg);
-                doFailure(errorNo, strMsg, listener);
-            }
-        });
-    }
 
     /**
      * 修改密码
@@ -2300,6 +2226,24 @@ public class RequestClient {
         });
     }
 
+    /**
+     * 提交意见反馈
+     */
+    public static void postAdvice(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postAddBankCard");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ADVICEPOST, httpParams, listener);
+            }
+        }, listener);
+    }
 
     /**
      * 获取会员登录状态

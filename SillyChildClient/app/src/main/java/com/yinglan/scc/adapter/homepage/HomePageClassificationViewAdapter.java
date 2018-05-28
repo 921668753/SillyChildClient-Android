@@ -1,0 +1,41 @@
+package com.yinglan.scc.adapter.homepage;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.yinglan.scc.R;
+import com.yinglan.scc.entity.homepage.moreclassification.MoreClassificationBean.DataBean;
+import com.yinglan.scc.utils.GlideImageLoader;
+
+import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+
+/**
+ * 首页 分类 适配器
+ * Created by Admin on 2017/8/15.
+ */
+
+public class HomePageClassificationViewAdapter extends BGAAdapterViewAdapter<DataBean> {
+
+    public HomePageClassificationViewAdapter(Context context) {
+        super(context, R.layout.item_homeclassification);
+    }
+
+    @Override
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
+        Log.d("position", position + "");
+
+        /**
+         * 图片
+         */
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_icon), R.mipmap.placeholderfigure);
+
+
+        /**
+         * 分类名字
+         */
+        viewHolderHelper.setText(R.id.tv_classificationName, listBean.getName());
+    }
+
+}

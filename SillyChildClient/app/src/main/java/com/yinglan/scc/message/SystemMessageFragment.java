@@ -45,7 +45,7 @@ import static com.yinglan.scc.main.MainActivity.MESSAGE_RECEIVED_ACTION;
 public class SystemMessageFragment extends BaseSupportFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
-    private static BGARefreshLayout mRefreshLayout;
+    private BGARefreshLayout mRefreshLayout;
 
     private SystemMessageViewAdapter mAdapter;
 

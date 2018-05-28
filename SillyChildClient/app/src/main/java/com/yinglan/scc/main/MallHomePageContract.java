@@ -25,14 +25,16 @@ public interface MallHomePageContract {
         void getHomePage();
 
         /**
+         * 获取商品分类
+         */
+        void getClassification();
+
+        /**
          * 设置定位信息
          */
         void initLocation(Activity activity, LocationClient mLocationClient);
 
-        /**
-         * 判断是否登录
-         */
-        void isLogin(int flag);
+
     }
 
     interface View extends BaseView<Presenter, String> {

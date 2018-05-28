@@ -1,5 +1,7 @@
 package com.yinglan.scc.mine.myorder.goodorder;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -12,7 +14,7 @@ public interface GoodOrderContract {
         /**
          * 获取用户信息
          */
-        void getChartOrder(String type);
+        void getOrderList(Context context, String status, int page);
 
     }
 

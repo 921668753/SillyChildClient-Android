@@ -53,18 +53,33 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
     @Override
     public void getHomePage() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        String[] marks1 = new String[]{"homePage"};
-        httpParams.put("marks", JsonUtil.getInstance().obj2JsonString(marks1));
-        RequestClient.getHome(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("marks", "homePage");
+        RequestClient.getActivities(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-
                 mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.getSuccess(msg, 1);
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
+    @Override
+    public void getClassification() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("cat_id", 0);
+        RequestClient.getClassification(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 2);
             }
         });
     }
@@ -109,22 +124,6 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
         //可选，7.2版本新增能力，如果您设置了这个接口，首次启动定位时，会先判断当前WiFi是否超出有效期，超出有效期的话，会先重新扫描WiFi，然后再定位
         mLocationClient.setLocOption(option);
         choiceLocationWrapper(activity, mLocationClient);
-    }
-
-
-    @Override
-    public void isLogin(int flag) {
-//        RequestClient.isLogin(new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, flag);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 1);
-//            }
-//        });
     }
 
 

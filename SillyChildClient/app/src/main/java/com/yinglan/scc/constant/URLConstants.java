@@ -25,6 +25,11 @@ public class URLConstants {
     public static String APIURL = SERVERURL + "api/mobile/";
 
     /**
+     * 获取七牛云key-ok
+     */
+    public static String QINIUKEY = SERVERURL + "api/public/key/qiniu.do";
+
+    /**
      * 应用配置参数
      */
     public static String APPCONFIG = APIURL + "appConfig";
@@ -34,16 +39,15 @@ public class URLConstants {
      */
     public static String SYSRONGCLOUD = APIURL + "sys/rongCloud.do";
 
+    /**
+     * 首页  活动
+     */
+    public static String ACTIVITYGOOD = APIURL + "goods/activity-goods.do";
 
     /**
      * 获取分类广告
      */
     public static String ADVCAT = APIURL + "adv/adv-cat.do";
-
-    /**
-     * 首页
-     */
-    public static String HOMEGOODS = APIURL + "goods/home-goods";
 
     /**
      * 首页----获取商品分类
@@ -90,11 +94,6 @@ public class URLConstants {
      * 选中某条消息并设为已读
      */
     public static String NEWSELECT = APIURL + "news/select.do";
-
-    /**
-     * 活动
-     */
-    public static String ACTIVITYGOOD = APIURL + "goods/activity-goods";
 
 
     public static String GETPRIVATEDETAIL1 = APIURL + "m=web&c=route&a=detail&air_id=";
@@ -276,5 +275,14 @@ public class URLConstants {
      */
     public static String CARTUPDATE = APIURL + "cart/update.do";
 
+    /**
+     * 获取订单信息列表
+     */
+    public static String ORDERLIST = APIURL + "order/list.do";
 
+
+    /**
+     * 提交意见反馈
+     */
+    public static String ADVICEPOST = APIURL + "advice/post.do";
 }

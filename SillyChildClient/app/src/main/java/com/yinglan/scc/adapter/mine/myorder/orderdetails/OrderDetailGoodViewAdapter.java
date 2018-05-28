@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.OrderDetailBean.ResultBean.ListBean;
+import com.yinglan.scc.entity.mine.myorder.OrderDetailBean.ResultBean.ListBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;

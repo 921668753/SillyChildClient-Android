@@ -134,7 +134,7 @@
                 android:layout_marginTop="@dimen/dimen10">
 
                 <EditText
-                    android:id="@+id/tv_feed"
+                    android:id="@+id/et_feed"
                     style="@style/MatchMatch"
                     android:background="@color/whiteColors"
                     android:gravity="start"
@@ -180,6 +180,10 @@
                 android:divider="@null"
                 android:fadingEdge="none"
                 android:listSelector="@android:color/transparent"
+                android:paddingBottom="@dimen/dimen5"
+                android:paddingLeft="@dimen/dimen8"
+                android:paddingRight="@dimen/dimen8"
+                android:paddingTop="@dimen/dimen5"
                 android:scrollbarStyle="outsideOverlay"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="4"

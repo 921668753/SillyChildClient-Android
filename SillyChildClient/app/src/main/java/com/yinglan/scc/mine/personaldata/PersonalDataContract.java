@@ -25,7 +25,7 @@ public interface PersonalDataContract {
         /**
          * 上传图片
          */
-        void upPictures(String paramname);
+        void upPictures(String path);
 
         /**
          * 更改傻孩子账号

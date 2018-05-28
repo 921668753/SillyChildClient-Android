@@ -100,18 +100,14 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private PictureSourceDialog pictureSourceDialog;
 
-    private TimePickerView pvTime;
-
     public static final int REQUEST_CODE_SELECT = 100;
 
     private String touxiangpath;//所更换的头像的路径
+
     private UploadImageBean uploadimagebean;
 
     private long birthday = 0;//生日
     private Calendar birthdaycalendar = null;//生日
-
-    private String pickeraddress;//选择器返回的地址
-
 
     private int updatanum = 0;
 
@@ -284,9 +280,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 pvCustomTime.show(tv_personalbirthday);
                 break;
             case R.id.ll_personaldatadq:
-
                 pvNoLinkOptions.show(tv_personaldiqu);
-
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
@@ -521,19 +515,13 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
                 break;
             case 1:
-                GlideCatchUtil.getInstance().cleanImageDisk();
-                uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-                if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
-                    //   mPresenter.setupInfo("head_pic", uploadimagebean.getData().getFile().getUrl(), 3);
-
-                    showLoadingDialog(getString(R.string.saveLoad));
-                }
+                GlideImageLoader.glideLoader(aty, success, iv_personaltx, 0, R.mipmap.avatar);
                 isRefresh = true;
                 break;
             case 2:
                 String birthdayStr = DataUtil.formatData(birthday, "yyyy-MM-dd");
                 tv_personalbirthday.setText(birthdayStr);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", (int) birthday);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", String.valueOf(birthday));
                 break;
             case 3:
                 tv_personaldiqu.setText(provinceList.get(provinceOptions1).getLocal_name() + cityList.get(cityOptions2).getLocal_name() + areaList.get(areaOptions3).getLocal_name());
@@ -588,7 +576,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        pvTime = null;
         if (pictureSourceDialog != null) {
             pictureSourceDialog.cancel();
         }
@@ -597,8 +584,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         }
         pvNoLinkOptions = null;
         pictureSourceDialog = null;
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        GlideCatchUtil.getInstance().cleanCatchDisk();
     }
 
     /**

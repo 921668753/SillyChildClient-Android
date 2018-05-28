@@ -22,16 +22,16 @@ public class HomestayOrderPresenter implements HomestayOrderContract.Presenter {
     public void getChartOrder(String type) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("type",type);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 }

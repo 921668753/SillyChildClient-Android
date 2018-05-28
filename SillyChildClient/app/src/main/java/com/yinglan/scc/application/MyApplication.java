@@ -155,13 +155,13 @@ public class MyApplication extends Application {
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
                     HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                    httpParams.put("rong_cloud", userid);
+                    httpParams.put("userId", userid);
                     RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
                         @Override
                         public void onSuccess(String response) {
                             RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
                             if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickName(), Uri.parse(rongCloudBean.getData().getFace()));
+                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                                 RongIM.getInstance().setCurrentUserInfo(userInfo);
                             }
                             RongIM.getInstance().setMessageAttachedUserInfo(true);

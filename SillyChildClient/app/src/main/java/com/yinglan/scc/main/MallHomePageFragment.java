@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,13 +25,16 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.common.cklibrary.utils.myview.ScrollInterceptScrollView;
 import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
+import com.yinglan.scc.adapter.homepage.HomePageClassificationViewAdapter;
 import com.yinglan.scc.adapter.main.homepage.MallHomePageViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
+import com.yinglan.scc.entity.homepage.moreclassification.MoreClassificationBean;
 import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.entity.main.MallHomePageBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
@@ -41,7 +45,6 @@ import com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -54,7 +57,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Admin on 2017/8/10.
  */
 @SuppressLint("NewApi")
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, AdapterView.OnItemClickListener, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private MainActivity aty;
 
@@ -67,8 +70,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @BindView(id = R.id.img_search)
     private ImageView img_search;
 
-    @BindView(id = R.id.et_search)
-    private EditText et_search;
+//    @BindView(id = R.id.et_search)
+//    private EditText et_search;
 
     @BindView(id = R.id.ll_title1)
     private LinearLayout ll_title1;
@@ -76,8 +79,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @BindView(id = R.id.img_search1)
     private ImageView img_search1;
 
-    @BindView(id = R.id.et_search1)
-    private EditText et_search1;
+//    @BindView(id = R.id.et_search1)
+//    private EditText et_search1;
 
 
     @BindView(id = R.id.sv_home)
@@ -90,69 +93,14 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     private BGABanner mForegroundBanner;
 
     /**
-     * 护肤彩妆
+     * 分类
      */
-    @BindView(id = R.id.ll_cosmetics, click = true)
-    private LinearLayout ll_cosmetics;
-
-    /**
-     * 个人护理
-     */
-    @BindView(id = R.id.ll_personalCare, click = true)
-    private LinearLayout ll_personalCare;
-
-    /**
-     * 母婴
-     */
-    @BindView(id = R.id.ll_maternalAndInfant, click = true)
-    private LinearLayout ll_maternalAndInfant;
-
-    /**
-     * 包包配饰
-     */
-    @BindView(id = R.id.ll_bagAccessories, click = true)
-    private LinearLayout ll_bagAccessories;
-
-    /**
-     * 服装鞋帽
-     */
-    @BindView(id = R.id.ll_clothingAndShoes, click = true)
-    private LinearLayout ll_clothingAndShoes;
-
-    /**
-     * 家电数码
-     */
-    @BindView(id = R.id.ll_homeApplianceDigital, click = true)
-    private LinearLayout ll_homeApplianceDigital;
-
-    /**
-     * 家居
-     */
-    @BindView(id = R.id.ll_household, click = true)
-    private LinearLayout ll_household;
-
-    /**
-     * 美颜保健
-     */
-    @BindView(id = R.id.ll_beautyCare, click = true)
-    private LinearLayout ll_beautyCare;
-
-    /**
-     * 美食
-     */
-    @BindView(id = R.id.ll_food, click = true)
-    private LinearLayout ll_food;
-
-    /**
-     * 更多
-     */
-    @BindView(id = R.id.ll_more, click = true)
-    private LinearLayout ll_more;
+    @BindView(id = R.id.gv_classification)
+    private NoScrollGridView gv_classification;
 
     /**
      * 商品列表
      */
-
     @BindView(id = R.id.rv)
     private RecyclerView recyclerview;
 
@@ -162,10 +110,12 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
 
     private boolean isFirst = true;
-    private List listbean;
+
     private SpacesItemDecoration spacesItemDecoration = null;
 
     private MallHomePageViewAdapter mallHomePageViewAdapter = null;
+
+    private HomePageClassificationViewAdapter homePageClassificationViewAdapter = null;
 
 
     @Override
@@ -179,10 +129,10 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void initData() {
         super.initData();
         mPresenter = new MallHomePagePresenter(this);
+        homePageClassificationViewAdapter = new HomePageClassificationViewAdapter(aty);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
-        listbean = new ArrayList<>();
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         mallHomePageViewAdapter = new MallHomePageViewAdapter(recyclerview);
         sv_home.setOnScrollChangeListener(this);
@@ -193,6 +143,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         initBanner();
+        gv_classification.setAdapter(homePageClassificationViewAdapter);
+        gv_classification.setOnItemClickListener(this);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setAutoMeasureEnabled(true);
         recyclerview.setLayoutManager(layoutManager);
@@ -218,54 +170,6 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_cosmetics:
-                Intent cosmeticsIntent = new Intent(aty, GoodsListActivity.class);
-                cosmeticsIntent.putExtra("cat", "");
-                aty.showActivity(aty, cosmeticsIntent);
-                break;
-            case R.id.ll_personalCare:
-                Intent personalCareIntent = new Intent(aty, GoodsListActivity.class);
-                personalCareIntent.putExtra("cat", "");
-                aty.showActivity(aty, personalCareIntent);
-                break;
-            case R.id.ll_maternalAndInfant:
-                Intent maternalAndInfantIntent = new Intent(aty, GoodsListActivity.class);
-                maternalAndInfantIntent.putExtra("cat", "");
-                aty.showActivity(aty, maternalAndInfantIntent);
-                break;
-            case R.id.ll_bagAccessories:
-                Intent bagAccessories = new Intent(aty, GoodsListActivity.class);
-                bagAccessories.putExtra("cat", "");
-                aty.showActivity(aty, bagAccessories);
-                break;
-            case R.id.ll_clothingAndShoes:
-                Intent clothingAndShoesIntent = new Intent(aty, GoodsListActivity.class);
-                clothingAndShoesIntent.putExtra("cat", "");
-                aty.showActivity(aty, clothingAndShoesIntent);
-                break;
-            case R.id.ll_homeApplianceDigital:
-                Intent homeApplianceDigitalIntent = new Intent(aty, GoodsListActivity.class);
-                homeApplianceDigitalIntent.putExtra("cat", "");
-                aty.showActivity(aty, homeApplianceDigitalIntent);
-                break;
-            case R.id.ll_household:
-                Intent householdIntent = new Intent(aty, GoodsListActivity.class);
-                householdIntent.putExtra("cat", "");
-                aty.showActivity(aty, householdIntent);
-                break;
-            case R.id.ll_beautyCare:
-                Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
-                beautyCareIntent.putExtra("cat", "");
-                aty.showActivity(aty, beautyCareIntent);
-                break;
-            case R.id.ll_food:
-                Intent foodIntent = new Intent(aty, GoodsListActivity.class);
-                foodIntent.putExtra("cat", "");
-                aty.showActivity(aty, foodIntent);
-                break;
-            case R.id.ll_more:
-                aty.showActivity(aty, MoreClassificationActivity.class);
-                break;
             default:
                 break;
         }
@@ -280,28 +184,40 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             AdvCatBean advCatBean = (AdvCatBean) JsonUtil.json2Obj(success, AdvCatBean.class);
-            processLogic(advCatBean.getData());
-            ((MallHomePageContract.Presenter) mPresenter).getHomePage();
+            if (advCatBean != null && advCatBean.getData().size() > 0) {
+                processLogic(advCatBean.getData());
+            }
+            ((MallHomePageContract.Presenter) mPresenter).getClassification();
         } else if (flag == 1) {
             MallHomePageBean mallHomePageBean = (MallHomePageBean) JsonUtil.json2Obj(success, MallHomePageBean.class);
-
-
-
-
+            if (mallHomePageBean.getData().getHomePage() == null || mallHomePageBean.getData().getHomePage().size() <= 0) {
+                return;
+            }
+            mallHomePageViewAdapter.clear();
+            mallHomePageViewAdapter.addNewData(mallHomePageBean.getData().getHomePage());
             dismissLoadingDialog();
+        } else if (flag == 2) {
+            MoreClassificationBean moreClassificationBean = (MoreClassificationBean) JsonUtil.getInstance().json2Obj(success, MoreClassificationBean.class);
+            List<MoreClassificationBean.DataBean> moreClassificationList = moreClassificationBean.getData();
+            if (moreClassificationList != null && moreClassificationList.size() > 0) {
+                gv_classification.setVisibility(View.VISIBLE);
+                homePageClassificationViewAdapter.clear();
+                homePageClassificationViewAdapter.addMoreData(moreClassificationList);
+            } else {
+                gv_classification.setVisibility(View.GONE);
+            }
+            ((MallHomePageContract.Presenter) mPresenter).getHomePage();
         }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 1) {
-            if (isLogin(msg)) {
-                Intent intent = new Intent(aty, LoginActivity.class);
-                // intent.putExtra("name", "GetOrderFragment");
-                aty.showActivity(aty, intent);
-                return;
-            }
+        if (flag == 1 && isLogin(msg)) {
+            Intent intent = new Intent(aty, LoginActivity.class);
+            // intent.putExtra("name", "GetOrderFragment");
+            aty.showActivity(aty, intent);
+            return;
         }
         ViewInject.toast(msg);
     }
@@ -399,18 +315,12 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
-        String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "selectCity", getString(R.string.allAeservationNumber));
         showLoadingDialog(getString(R.string.dataLoad));
-        //   if (tv_address.getText().toString().equals(getString(R.string.allAeservationNumber))) {
         ((MallHomePageContract.Presenter) mPresenter).getHomePage();
-//        } else {
-//            ((HomePageContract.Presenter) mPresenter).getHomePage(tv_address.getText().toString());
-//        }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-
         return false;
     }
 
@@ -435,8 +345,15 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        // intent.putExtra("good_id", listbean.get(postion));
+        intent.putExtra("good_id", mallHomePageViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
+        beautyCareIntent.putExtra("cat", homePageClassificationViewAdapter.getItem(i).getCat_id());
+        aty.showActivity(aty, beautyCareIntent);
     }
 
 

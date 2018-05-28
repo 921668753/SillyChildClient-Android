@@ -13,7 +13,7 @@ import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAdapter;
-import com.yinglan.scc.entity.OrderDetailBean;
+import com.yinglan.scc.entity.mine.myorder.OrderDetailBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 
 /**

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
@@ -154,10 +155,22 @@ public class StartPagePresenter implements StartPageContract.Presenter {
 
     @Override
     public void getChatManagerListener() {
-       // EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        // EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
+    @Override
+    public void getQiNiuKey() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getQiNiuKey(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
 
-
-
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
 }
