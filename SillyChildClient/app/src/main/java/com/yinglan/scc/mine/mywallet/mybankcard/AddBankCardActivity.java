@@ -20,7 +20,6 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scc.R;
-import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.AddBankCardBean;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.BankBean;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -201,7 +200,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         } else if (flag == 2) {
             AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             bankCardId = addBankCardBean.getData().getId();
-            ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
+         //      getSuccess("", 3);
+          ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
         } else if (flag == 3) {
             dismissLoadingDialog();
             Intent intent = getIntent();
@@ -219,7 +219,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+        if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             return;
         }

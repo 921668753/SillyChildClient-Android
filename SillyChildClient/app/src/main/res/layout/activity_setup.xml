@@ -55,13 +55,14 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textsize15" />
 
+            <TextView style="@style/AutoWrap" />
+
             <TextView
                 android:id="@+id/tv_cache"
                 style="@style/WrapWrap"
-                android:layout_marginLeft="@dimen/dimen5"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="@color/greenColors"
+                android:textColor="@color/hintColors"
                 android:textSize="@dimen/textsize15" />
         </LinearLayout>
 
@@ -83,8 +84,8 @@
                 android:textSize="@dimen/textsize15" />
 
             <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/minearrowxxx" />
+                style="@style/Image812"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
         <!--意见反馈-->
         <include layout="@layout/common_dividerwidth1" />
@@ -105,8 +106,8 @@
                 android:textSize="@dimen/textsize15" />
 
             <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/minearrowxxx" />
+                style="@style/Image812"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
 
         <include layout="@layout/common_dividerwidth1" />
@@ -127,8 +128,8 @@
                 android:textSize="@dimen/textsize15" />
 
             <ImageView
-                style="@style/WrapWrap"
-                android:src="@mipmap/minearrowxxx" />
+                style="@style/Image812"
+                android:src="@mipmap/right_arrow" />
         </LinearLayout>
 
         <include layout="@layout/common_dividerwidth1" />

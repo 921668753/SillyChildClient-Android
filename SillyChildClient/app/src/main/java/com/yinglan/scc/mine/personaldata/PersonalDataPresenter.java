@@ -4,6 +4,7 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.BitmapCoreUtil;
 import com.common.cklibrary.utils.DataCleanManager;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
@@ -13,6 +14,8 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.retrofit.RequestClient;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -82,7 +85,9 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
      */
     private void setFace(String imgUrl) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("face", imgUrl);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("face", imgUrl);
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -99,7 +104,9 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     @Override
     public void setBirthday(long birthday) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("birthday", String.valueOf(birthday));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("birthday", String.valueOf(birthday));
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

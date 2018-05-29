@@ -40,6 +40,11 @@ public class URLConstants {
     public static String SYSRONGCLOUD = APIURL + "sys/rongCloud.do";
 
     /**
+     * 获取首页信息
+     */
+    public static String HOMEPAGE = APIURL + "page/home-list.do";
+
+    /**
      * 首页  活动
      */
     public static String ACTIVITYGOOD = APIURL + "goods/activity-goods.do";

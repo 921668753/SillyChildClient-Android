@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.HorizontalListView;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
@@ -68,9 +69,9 @@ public class BargainViewAdapter extends BGAAdapterViewAdapter<SpecialBean> {
 
         viewHolderHelper.setText(R.id.tv_goodName, listBean.getName());
 
-        viewHolderHelper.setText(R.id.tv_specialOffer, mContext.getString(R.string.renminbi) + listBean.getPrice());
+        viewHolderHelper.setText(R.id.tv_specialOffer, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
 
-        viewHolderHelper.setText(R.id.tv_marketPrice, mContext.getString(R.string.renminbi) + listBean.getMktprice());
+        viewHolderHelper.setText(R.id.tv_marketPrice, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(listBean.getMktprice())));
         viewHolderHelper.getTextView(R.id.tv_marketPrice).getPaint().setFlags((Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG));
     }
 

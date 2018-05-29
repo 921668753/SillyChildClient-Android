@@ -14,6 +14,8 @@ import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
@@ -82,7 +84,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         if (isUpdateApp) {
             tv_versionname.setText(getString(R.string.newVersion));
         } else {
-            tv_versionname.setText(SystemTool.getAppVersionName(this));
+            tv_versionname.setText("V" + SystemTool.getAppVersionName(this));
         }
     }
 
@@ -146,7 +148,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
      */
     public void queryCache() {
         try {
-            tv_cache.setText("(" + DataCleanManager.getTotalCacheSize(aty) + ")");
+            tv_cache.setText(DataCleanManager.getTotalCacheSize(aty));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,7 +164,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 @Override
                 public void clearCacheDo() {
                     DataCleanManager.clearAllCache(aty);
-                    tv_cache.setText("(0KB)");
+                    tv_cache.setText("0KB");
                     ViewInject.toast(getString(R.string.clearSuccess));
                 }
             };
@@ -247,6 +249,10 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             File path = new File((String) baseResult.getData());
             FileNewUtil.installApkFile(this, path.getAbsolutePath());
         } else if (flag == 1) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             skipActivity(aty, LoginActivity.class);
         }
         dismissLoadingDialog();

@@ -14,20 +14,20 @@ public interface MallHomePageContract {
 
     interface Presenter extends BasePresenter {
 
-        /**
-         * 获取分类广告
-         */
-        void getAdvCat();
+//        /**
+//         * 获取分类广告
+//         */
+//        void getAdvCat();
 
         /**
          * 获取首页信息
          */
         void getHomePage();
-
-        /**
-         * 获取商品分类
-         */
-        void getClassification();
+//
+//        /**
+//         * 获取商品分类
+//         */
+//        void getClassification();
 
         /**
          * 设置定位信息

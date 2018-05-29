@@ -3,11 +3,15 @@ package com.yinglan.scc.mine.personaldata.setsignature;
 import android.text.TextUtils;
 
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
 import com.yinglan.scc.retrofit.RequestClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -27,9 +31,10 @@ public class SetSignaturePresenter implements SetSignatureContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillSignature), 0);
             return;
         }
-
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("personalized_signature", personalized_signature);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("signature", personalized_signature);
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

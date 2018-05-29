@@ -32,57 +32,56 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
         mView.setPresenter(this);
     }
 
+//    @Override
+//    public void getAdvCat() {
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        httpParams.put("acid", "1");
+//        RequestClient.getAdvCat(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.getSuccess(msg, 0);
+//            }
+//        });
+//    }
+
     @Override
-    public void getAdvCat() {
+    public void getHomePage() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("acid", "1");
-        RequestClient.getAdvCat(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getHomePage(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-
                 mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.getSuccess(msg, 0);
+                mView.errorMsg(msg, 0);
             }
         });
     }
 
-    @Override
-    public void getHomePage() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("marks", "homePage");
-        RequestClient.getActivities(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
-    }
-
-    @Override
-    public void getClassification() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("cat_id", 0);
-        RequestClient.getClassification(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
-            }
-        });
-    }
+//    @Override
+//    public void getClassification() {
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        httpParams.put("cat_id", 0);
+//        RequestClient.getClassification(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 2);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 2);
+//            }
+//        });
+//    }
 
     @Override
     public void initLocation(Activity activity, LocationClient mLocationClient) {

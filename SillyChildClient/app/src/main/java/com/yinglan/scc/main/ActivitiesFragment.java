@@ -78,6 +78,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     private SpacesItemDecoration spacesItemDecoration;
 
     private ProductlViewAdapter productlViewAdapter;
+
     private BargainViewAdapter bargainViewAdapter;
 
 

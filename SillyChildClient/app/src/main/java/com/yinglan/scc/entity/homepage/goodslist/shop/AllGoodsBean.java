@@ -8,36 +8,44 @@ public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
 
     public class DataBean {
         /**
-         * goods_id : 289
-         * name : 宝矿力水特24瓶 整箱
-         * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_thumbnail.jpg
-         * price : 93
-         * mktprice : 93
-         * view_count : 3
-         * buy_count : 1
-         * store : 99
-         * sn : 950824
-         * big : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_big.jpg
-         * small : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541_small.jpg
-         * original : http://static.b2b2cv2.javamall.com.cn/attachment/store/15/goods/201509091611073541.jpg
+         * goods_id : 162
+         * name : 真他妈的好吃
+         * thumbnail : http://ovwiqces1.bkt.clouddn.com/attachment//store/18/goods/2018/5/11/17//10097266_thumbnail.jpg
+         * price : 20000
+         * mktprice : 100000
+         * view_count : 6
+         * buy_count : 2
+         * store : 3
+         * sn : 2838
+         * big : fs:/attachment//store/18/goods/2018/5/11/17//10097266_big.jpg
+         * small : fs:/attachment//store/18/goods/2018/5/11/17//10097266_small.jpg
+         * original : fs:/attachment//store/18/goods/2018/5/11/17//10097266.jpg
          * commentCount : null
          * commentPercent : null
+         * brief : null
+         * store_name :
+         * brand_name : 旺旺
+         * goods_tag : 特价商品
          */
 
         private int goods_id;
         private String name;
         private String thumbnail;
         private String price;
-        private int mktprice;
-        private int view_count;
-        private int buy_count;
-        private int store;
+        private String mktprice;
+        private String view_count;
+        private String buy_count;
+        private String store;
         private String sn;
         private String big;
         private String small;
         private String original;
         private String commentCount;
         private String commentPercent;
+        private String brief;
+        private String store_name;
+        private String brand_name;
+        private String goods_tag;
 
         public int getGoods_id() {
             return goods_id;
@@ -71,35 +79,35 @@ public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
             this.price = price;
         }
 
-        public int getMktprice() {
+        public String getMktprice() {
             return mktprice;
         }
 
-        public void setMktprice(int mktprice) {
+        public void setMktprice(String mktprice) {
             this.mktprice = mktprice;
         }
 
-        public int getView_count() {
+        public String getView_count() {
             return view_count;
         }
 
-        public void setView_count(int view_count) {
+        public void setView_count(String view_count) {
             this.view_count = view_count;
         }
 
-        public int getBuy_count() {
+        public String getBuy_count() {
             return buy_count;
         }
 
-        public void setBuy_count(int buy_count) {
+        public void setBuy_count(String buy_count) {
             this.buy_count = buy_count;
         }
 
-        public int getStore() {
+        public String getStore() {
             return store;
         }
 
-        public void setStore(int store) {
+        public void setStore(String store) {
             this.store = store;
         }
 
@@ -135,7 +143,7 @@ public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
             this.original = original;
         }
 
-        public String getCommentCount() {
+        public Object getCommentCount() {
             return commentCount;
         }
 
@@ -149,6 +157,38 @@ public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
 
         public void setCommentPercent(String commentPercent) {
             this.commentPercent = commentPercent;
+        }
+
+        public String getBrief() {
+            return brief;
+        }
+
+        public void setBrief(String brief) {
+            this.brief = brief;
+        }
+
+        public String getStore_name() {
+            return store_name;
+        }
+
+        public void setStore_name(String store_name) {
+            this.store_name = store_name;
+        }
+
+        public String getBrand_name() {
+            return brand_name;
+        }
+
+        public void setBrand_name(String brand_name) {
+            this.brand_name = brand_name;
+        }
+
+        public String getGoods_tag() {
+            return goods_tag;
+        }
+
+        public void setGoods_tag(String goods_tag) {
+            this.goods_tag = goods_tag;
         }
     }
 }

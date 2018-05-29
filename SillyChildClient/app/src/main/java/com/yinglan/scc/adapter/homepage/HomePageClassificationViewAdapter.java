@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.homepage.moreclassification.MoreClassificationBean.DataBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.ApiCatTreeBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
@@ -16,14 +16,14 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class HomePageClassificationViewAdapter extends BGAAdapterViewAdapter<DataBean> {
+public class HomePageClassificationViewAdapter extends BGAAdapterViewAdapter<ApiCatTreeBean> {
 
     public HomePageClassificationViewAdapter(Context context) {
         super(context, R.layout.item_homeclassification);
     }
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ApiCatTreeBean listBean) {
         Log.d("position", position + "");
 
         /**

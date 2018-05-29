@@ -53,7 +53,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
     @Override
     public void getBank() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getBank(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getBank(KJActivityStack.create().topActivity(),httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
@@ -84,6 +84,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseidNumber), 0);
             return;
         }
+
         if (StringUtils.isEmpty(open_bank)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.openingBank1), 0);
             return;

@@ -295,6 +295,13 @@ public class RequestClient {
 //    }
 
     /**
+     * 获取首页信息
+     */
+    public static void getHomePage(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.HOMEPAGE, httpParams, false, listener);
+    }
+
+    /**
      * 获取分类广告
      */
     public static void getAdvCat(Context context, HttpParams httpParams, ResponseListener<String> listener) {
@@ -1212,7 +1219,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestPostFORMHttp(context, URLConstants.SAVEINFO, httpParams, listener);
+                HttpRequest.requestPostHttp(context, URLConstants.SAVEINFO, httpParams, listener);
             }
         }, listener);
     }
@@ -2186,7 +2193,6 @@ public class RequestClient {
 //        }, listener);
 
     }
-
 
 
     /**

@@ -44,7 +44,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("phone", phone);
+        httpParams.put("mobile", phone);
         RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

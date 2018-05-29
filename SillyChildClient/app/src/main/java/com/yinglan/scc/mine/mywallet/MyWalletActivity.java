@@ -9,46 +9,44 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.mywallet.MyWalletBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mywallet.accountdetails.AccountDetailsActivity;
-import com.yinglan.scc.mine.mywallet.coupons.CouponsActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.MyBankCardActivity;
-import com.yinglan.scc.mine.mywallet.recharge.RechargeActivity;
 import com.yinglan.scc.mine.mywallet.withdrawal.WithdrawalActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
  * 我的钱包
- * Created by Administrator on 2017/9/2.
  */
-
 public class MyWalletActivity extends BaseActivity implements MyWalletContract.View {
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
 
-    @BindView(id = R.id.ll_recharge, click = true)
-    private LinearLayout ll_recharge;
+    @BindView(id = R.id.tv_yue)
+    private TextView tv_yue;
 
     @BindView(id = R.id.ll_withdraw, click = true)
     private LinearLayout ll_withdraw;
 
-    @BindView(id = R.id.ll_coupons, click = true)
-    private LinearLayout ll_coupons;
-
     @BindView(id = R.id.ll_bankCard, click = true)
     private LinearLayout ll_bankCard;
 
-    @BindView(id = R.id.tv_yue)
-    private TextView tv_yue;
+
+    private String bankCardName;
+    private String bankCardNun;
+    private int bankCardId = 0;
 
 
     @Override
@@ -94,22 +92,17 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myWallet), getString(R.string.accountDetails), R.id.titlebar, simpleDelegate);
     }
 
+
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_recharge:
-                showActivity(this, RechargeActivity.class);
-                break;
             case R.id.ll_withdraw:
-                Intent withdrawalIntent = new Intent(aty, WithdrawalActivity.class);
-                withdrawalIntent.putExtra("bankCardName", "");
-                withdrawalIntent.putExtra("bankCardNun", "");
-                withdrawalIntent.putExtra("bankCardId", "");
-                showActivity(aty, withdrawalIntent);
-                break;
-            case R.id.ll_coupons:
-                showActivity(this, CouponsActivity.class);
+                Intent intent = new Intent(aty, WithdrawalActivity.class);
+                intent.putExtra("bankCardName", bankCardName);
+                intent.putExtra("bankCardNun", bankCardNun);
+                intent.putExtra("bankCardId", bankCardId);
+                showActivity(aty, intent);
                 break;
             case R.id.ll_bankCard:
                 showActivity(aty, MyBankCardActivity.class);
@@ -127,7 +120,14 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         if (flag == 0) {
             MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
             if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
-                tv_yue.setText(getString(R.string.renminbi) + myWalletBean.getData().getBalance());
+                tv_yue.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
+                    bankCardName = myWalletBean.getData().getOpen_bank();
+                    bankCardNun = myWalletBean.getData().getAccount_no();
+                    bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
+                    bankCardId = myWalletBean.getData().getBank_id();
+                }
             }
         }
         dismissLoadingDialog();
@@ -135,13 +135,13 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
 
     @Override
     public void errorMsg(String msg, int flag) {
-        dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             finish();
-            return;
+        } else {
+            ViewInject.toast(msg);
         }
-        ViewInject.toast(msg);
+        dismissLoadingDialog();
     }
 
     @Override
@@ -151,5 +151,6 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             ((MyWalletContract.Presenter) mPresenter).getMyWallet();
         }
     }
+
 
 }

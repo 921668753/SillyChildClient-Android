@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -35,13 +34,14 @@ import com.yinglan.scc.adapter.homepage.HomePageClassificationViewAdapter;
 import com.yinglan.scc.adapter.main.homepage.MallHomePageViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.homepage.moreclassification.MoreClassificationBean;
-import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.entity.main.MallHomePageBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.AdvcatBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.ApiCatTreeBean;
+import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.HomePageBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
-import com.yinglan.scc.homepage.moreclassification.MoreClassificationActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 
@@ -57,7 +57,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Admin on 2017/8/10.
  */
 @SuppressLint("NewApi")
-public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, AdapterView.OnItemClickListener, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+public class MallHomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, View.OnScrollChangeListener, AdapterView.OnItemClickListener, MallHomePageContract.View, BGABanner.Delegate<ImageView, AdvcatBean>, BGABanner.Adapter<ImageView, AdvcatBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private MainActivity aty;
 
@@ -160,7 +160,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         //注册监听函数
         ((MallHomePageContract.Presenter) mPresenter).initLocation(aty, mLocationClient);
         showLoadingDialog(aty.getString(R.string.dataLoad));
-        ((MallHomePageContract.Presenter) mPresenter).getAdvCat();
+        ((MallHomePageContract.Presenter) mPresenter).getHomePage();
     }
 
     /**
@@ -183,30 +183,25 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            AdvCatBean advCatBean = (AdvCatBean) JsonUtil.json2Obj(success, AdvCatBean.class);
-            if (advCatBean != null && advCatBean.getData().size() > 0) {
-                processLogic(advCatBean.getData());
-            }
-            ((MallHomePageContract.Presenter) mPresenter).getClassification();
-        } else if (flag == 1) {
             MallHomePageBean mallHomePageBean = (MallHomePageBean) JsonUtil.json2Obj(success, MallHomePageBean.class);
+            List<AdvcatBean> advCatBeanList = mallHomePageBean.getData().getAdvcat();
+            if (advCatBeanList != null && advCatBeanList.size() > 0) {
+                processLogic(advCatBeanList);
+            }
+            List<ApiCatTreeBean> apiCatTreeBeanList = mallHomePageBean.getData().getApiCatTree();
+            if (apiCatTreeBeanList != null && apiCatTreeBeanList.size() > 0) {
+                gv_classification.setVisibility(View.VISIBLE);
+                homePageClassificationViewAdapter.clear();
+                homePageClassificationViewAdapter.addMoreData(apiCatTreeBeanList);
+            } else {
+                gv_classification.setVisibility(View.GONE);
+            }
             if (mallHomePageBean.getData().getHomePage() == null || mallHomePageBean.getData().getHomePage().size() <= 0) {
                 return;
             }
             mallHomePageViewAdapter.clear();
             mallHomePageViewAdapter.addNewData(mallHomePageBean.getData().getHomePage());
             dismissLoadingDialog();
-        } else if (flag == 2) {
-            MoreClassificationBean moreClassificationBean = (MoreClassificationBean) JsonUtil.getInstance().json2Obj(success, MoreClassificationBean.class);
-            List<MoreClassificationBean.DataBean> moreClassificationList = moreClassificationBean.getData();
-            if (moreClassificationList != null && moreClassificationList.size() > 0) {
-                gv_classification.setVisibility(View.VISIBLE);
-                homePageClassificationViewAdapter.clear();
-                homePageClassificationViewAdapter.addMoreData(moreClassificationList);
-            } else {
-                gv_classification.setVisibility(View.GONE);
-            }
-            ((MallHomePageContract.Presenter) mPresenter).getHomePage();
         }
     }
 
@@ -243,7 +238,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
      * 广告轮播图
      */
     @SuppressWarnings("unchecked")
-    private void processLogic(List<AdvCatBean.DataBean> list) {
+    private void processLogic(List<AdvcatBean> list) {
         if (list != null && list.size() > 0) {
             if (list.size() == 1) {
                 mForegroundBanner.setAutoPlayAble(false);
@@ -277,13 +272,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
 
     @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvcatBean model, int position) {
         //   GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView);
         GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvcatBean model, int position) {
         if (StringUtils.isEmpty(model.getUrl())) {
             return;
         }

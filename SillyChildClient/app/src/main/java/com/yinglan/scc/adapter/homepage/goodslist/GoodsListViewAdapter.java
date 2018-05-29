@@ -1,10 +1,10 @@
 package com.yinglan.scc.adapter.homepage.goodslist;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.homepage.goodslist.GoodsListBean.DataBean;
@@ -29,7 +29,7 @@ public class GoodsListViewAdapter extends BGARecyclerViewAdapter<DataBean> {
         GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), (ImageView) helper.getView(R.id.img_good), 5, R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
         helper.setText(R.id.tv_goodSynopsis, model.getBrief());
-        helper.setText(R.id.tv_goodMoney, mContext.getString(R.string.renminbi) + model.getPrice());
+        helper.setText(R.id.tv_goodMoney, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         helper.setText(R.id.tv_brand, model.getBrand_name());
         if (StringUtils.isEmpty(model.getStore_name()) && StringUtils.isEmpty(model.getGoods_tag())) {
             helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
