@@ -31,6 +31,7 @@
             android:textSize="@dimen/textsize15" />
 
         <TextView
+            android:id="@+id/tv_withdrawalRequestSubmissionSuccess"
             style="@style/WrapWrap"
             android:layout_marginBottom="@dimen/dimen15"
             android:paddingTop="@dimen/dimen5"
@@ -99,7 +100,7 @@
 
             <TextView
                 style="@style/WrapWrap"
-                android:text="@string/withdrawalAmount4"
+                android:text="@string/withdrawalAmount"
                 android:textColor="@color/tabColors"
                 android:textSize="@dimen/textsize12" />
 

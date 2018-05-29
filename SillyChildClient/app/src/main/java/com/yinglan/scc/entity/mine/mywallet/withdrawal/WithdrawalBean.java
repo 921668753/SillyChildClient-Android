@@ -1,37 +1,44 @@
-package com.yinglan.scc.entity.mine.mywallet.mybankcard;
+package com.yinglan.scc.entity.mine.mywallet.withdrawal;
 
 import com.common.cklibrary.entity.BaseResult;
 
-import java.util.List;
-
-public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
+public class WithdrawalBean extends BaseResult<WithdrawalBean.DataBean> {
 
 
     public class DataBean {
         /**
-         * id : 1
+         * id : 3
          * member_id : 29
-         * bank : null
-         * open_bank : 农业银行
-         * account_no : 14444777777
-         * account_name : 回老家了
-         * is_deleted : 0
-         * phone : 17051335257
+         * balance : 495
+         * freeze_amount : 0
+         * bank : 中国工商银行
+         * open_bank : 中国工商银行
+         * account_no : 12345678912
+         * account_name : 啦啦啦
+         * is_deleted : false
+         * phone : 17051333525
          * is_default : 1
          * id_number : 111111111111111111
+         * fee : 5
+         * get_time : 5
+         * bank_id : 21
          */
 
         private int id;
         private int member_id;
+        private String balance;
+        private String freeze_amount;
         private String bank;
         private String open_bank;
         private String account_no;
         private String account_name;
-        private int is_deleted;
+        private boolean is_deleted;
         private String phone;
         private int is_default;
         private String id_number;
         private String fee;
+        private String get_time;
+        private int bank_id;
 
         public int getId() {
             return id;
@@ -47,6 +54,22 @@ public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
 
         public void setMember_id(int member_id) {
             this.member_id = member_id;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
+        }
+
+        public String getFreeze_amount() {
+            return freeze_amount;
+        }
+
+        public void setFreeze_amount(String freeze_amount) {
+            this.freeze_amount = freeze_amount;
         }
 
         public String getBank() {
@@ -81,11 +104,11 @@ public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
             this.account_name = account_name;
         }
 
-        public int getIs_deleted() {
+        public boolean isIs_deleted() {
             return is_deleted;
         }
 
-        public void setIs_deleted(int is_deleted) {
+        public void setIs_deleted(boolean is_deleted) {
             this.is_deleted = is_deleted;
         }
 
@@ -120,6 +143,21 @@ public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
         public void setFee(String fee) {
             this.fee = fee;
         }
+
+        public String getGet_time() {
+            return get_time;
+        }
+
+        public void setGet_time(String get_time) {
+            this.get_time = get_time;
+        }
+
+        public int getBank_id() {
+            return bank_id;
+        }
+
+        public void setBank_id(int bank_id) {
+            this.bank_id = bank_id;
+        }
     }
 }
-

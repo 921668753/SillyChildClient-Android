@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.common.cklibrary.common.BaseSupportFragment;
+import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
@@ -42,10 +42,10 @@ import static com.yinglan.scc.main.MainActivity.MESSAGE_RECEIVED_ACTION;
  * Created by Admin on 2017/8/17.
  */
 
-public class SystemMessageFragment extends BaseSupportFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class SystemMessageFragment extends BaseFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
-    private BGARefreshLayout mRefreshLayout;
+    private static BGARefreshLayout mRefreshLayout;
 
     private SystemMessageViewAdapter mAdapter;
 
@@ -102,13 +102,13 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         DataBean dataBean = mAdapter.getItem(i);
         Intent intent = new Intent(aty, SystemMessageListActivity.class);
-        intent.putExtra("news_title", dataBean.getNews_title());
-        if (dataBean.getNews_title().contains(getString(R.string.orderM))) {
-            intent.putExtra("type", "order");
-        } else if (dataBean.getNews_title().contains(getString(R.string.system))) {
-            intent.putExtra("type", "system");
-        } else if (dataBean.getNews_title().contains(getString(R.string.delivery))) {
-            intent.putExtra("type", "delivery");
+        intent.putExtra("type", dataBean.getNews_title());
+        if (dataBean.getNews_title().contains("order")) {
+            intent.putExtra("news_title", getString(R.string.orderMessage));
+        } else if (dataBean.getNews_title().contains("delivery")) {
+            intent.putExtra("news_title", getString(R.string.deliveryMessage));
+        } else {
+            intent.putExtra("news_title", getString(R.string.systemMessage));
         }
         startActivityForResult(intent, REQUEST_CODE);
     }
@@ -149,13 +149,13 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
         mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        SystemMessageBean goodOrderBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(success, SystemMessageBean.class);
-        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+        SystemMessageBean systemMessageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(success, SystemMessageBean.class);
+        if (systemMessageBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                systemMessageBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             errorMsg(getString(R.string.noSystemMessage), 1);
             return;
-        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+        } else if (systemMessageBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                systemMessageBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             ViewInject.toast(getString(R.string.noMoreData));
             dismissLoadingDialog();
             mRefreshLayout.endLoadingMore();
@@ -164,12 +164,11 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(goodOrderBean.getData());
+            mAdapter.addNewData(systemMessageBean.getData());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(goodOrderBean.getData());
+            mAdapter.addMoreData(systemMessageBean.getData());
         }
-        dismissLoadingDialog();
         dismissLoadingDialog();
     }
 
@@ -206,7 +205,6 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
-
     }
 
     @Override
