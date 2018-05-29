@@ -289,5 +289,5 @@ public class URLConstants {
     /**
      * 提交意见反馈
      */
-    public static String ADVICEPOST = APIURL + "advice/post.do";
+    public static String ADVICEPOST = SERVERURL + "api/member/advice/post.do";
 }
