@@ -6,26 +6,27 @@ import java.util.List;
 
 public class ShopHomePageBean extends BaseResult<List<ShopHomePageBean.DataBean>> {
 
+
     public class DataBean {
         /**
-         * goods_id : 162
-         * name : 真他妈的好吃
-         * thumbnail : http://ovwiqces1.bkt.clouddn.com/attachment//store/18/goods/2018/5/11/17//10097266_thumbnail.jpg
-         * price : 20000
-         * mktprice : 100000
-         * view_count : 6
-         * buy_count : 2
-         * store : 3
-         * sn : 2838
-         * big : fs:/attachment//store/18/goods/2018/5/11/17//10097266_big.jpg
-         * small : fs:/attachment//store/18/goods/2018/5/11/17//10097266_small.jpg
-         * original : fs:/attachment//store/18/goods/2018/5/11/17//10097266.jpg
+         * goods_id : 144
+         * name : 中国红cashmere春秋围巾女羊绒披肩纯色长款百搭薄款两用
+         * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//19507086_thumbnail.jpg
+         * price : 398
+         * mktprice : 1128
+         * view_count : null
+         * buy_count : null
+         * store : null
+         * sn : null
+         * big : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//19507086_big.jpg
+         * small : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//19507086_small.jpg
+         * original : null
          * commentCount : null
          * commentPercent : null
          * brief : null
          * store_name :
-         * brand_name : 旺旺
-         * goods_tag : 特价商品
+         * brand_name :
+         * goods_tag :
          */
 
         private int goods_id;
@@ -143,7 +144,7 @@ public class ShopHomePageBean extends BaseResult<List<ShopHomePageBean.DataBean>
             this.original = original;
         }
 
-        public Object getCommentCount() {
+        public String getCommentCount() {
             return commentCount;
         }
 

@@ -5,15 +5,15 @@
     android:id="@+id/mRefreshLayout"
     style="@style/MatchMatch">
 
-    <ScrollView
+    <com.common.cklibrary.utils.myview.ScrollInterceptScrollView
         style="@style/MatchMatch"
         android:background="@color/background"
         android:orientation="vertical"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/MatchMatch"
-            android:orientation="vertical">
+            android:descendantFocusability="blocksDescendants">
 
             <cn.bingoogolapple.bgabanner.BGABanner
                 android:id="@+id/banner_ad"
@@ -30,14 +30,15 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
                 style="@style/MatchWrap"
+                android:layout_below="@id/banner_ad"
                 android:layout_marginTop="@dimen/dimen15"
                 android:background="@android:color/transparent"
                 tools:listitem="@layout/item_mallhomepage" />
 
             <include layout="@layout/common_error" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </ScrollView>
+    </com.common.cklibrary.utils.myview.ScrollInterceptScrollView>
 </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 

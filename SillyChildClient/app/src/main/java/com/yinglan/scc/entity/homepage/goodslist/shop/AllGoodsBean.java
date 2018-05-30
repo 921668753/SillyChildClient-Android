@@ -6,26 +6,27 @@ import java.util.List;
 
 public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
 
+
     public class DataBean {
         /**
-         * goods_id : 162
-         * name : 真他妈的好吃
-         * thumbnail : http://ovwiqces1.bkt.clouddn.com/attachment//store/18/goods/2018/5/11/17//10097266_thumbnail.jpg
-         * price : 20000
-         * mktprice : 100000
-         * view_count : 6
-         * buy_count : 2
-         * store : 3
-         * sn : 2838
-         * big : fs:/attachment//store/18/goods/2018/5/11/17//10097266_big.jpg
-         * small : fs:/attachment//store/18/goods/2018/5/11/17//10097266_small.jpg
-         * original : fs:/attachment//store/18/goods/2018/5/11/17//10097266.jpg
+         * goods_id : 125
+         * name : 夏季冰丝针织衫女新款套头宽松短袖薄款韩版圆领短款蝙蝠袖上衣
+         * thumbnail : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//26312429_thumbnail.jpg
+         * price : 99
+         * mktprice : 159
+         * view_count : 0
+         * buy_count : 0
+         * store : 0
+         * sn : 00021
+         * big : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//26312429_big.jpg
+         * small : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//26312429_small.jpg
+         * original : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//26312429.jpg
          * commentCount : null
          * commentPercent : null
          * brief : null
          * store_name :
-         * brand_name : 旺旺
-         * goods_tag : 特价商品
+         * brand_name :
+         * goods_tag :
          */
 
         private int goods_id;
@@ -143,7 +144,7 @@ public class AllGoodsBean extends BaseResult<List<AllGoodsBean.DataBean>> {
             this.original = original;
         }
 
-        public Object getCommentCount() {
+        public String getCommentCount() {
             return commentCount;
         }
 
