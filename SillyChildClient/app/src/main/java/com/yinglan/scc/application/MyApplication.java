@@ -129,8 +129,8 @@ public class MyApplication extends Application {
      */
     private void initRongCloud() {
         RongIM.init(this);
-        SealAppContext.init(this);//初始化融云相关监听 事件集合类
-        openSealDBIfHasCachedToken();//打开融云本地数据库
+//        SealAppContext.init(this);//初始化融云相关监听 事件集合类
+//        openSealDBIfHasCachedToken();//打开融云本地数据库
         String rcToken = UserUtil.getResTokenInfo(this);
         if (!StringUtils.isEmpty(rcToken)) {
             RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -36,9 +37,14 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     private TimeCount time;
 
     /**
+     * 返回
+     */
+    @BindView(id = R.id.img_back, click = true)
+    private ImageView img_back;
+
+    /**
      * 注册协议
      */
-
     @BindView(id = R.id.tv_agreement, click = true)
     private TextView tv_agreement;
 
@@ -91,6 +97,9 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
                 ((BindingPhoneContract.Presenter) mPresenter).postCode(et_phone.getText().toString(), opt);
