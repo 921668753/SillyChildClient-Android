@@ -1,17 +1,22 @@
 package com.yinglan.scc.homepage.goodslist.goodsdetails;
 
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
+import com.yinglan.scc.entity.homepage.goodslist.goodsdetails.GoodsDetailsBean;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.CommentsActivity;
 import com.yinglan.scc.homepage.goodslist.shop.ShopActivity;
+import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
@@ -30,14 +35,21 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     @BindView(id = R.id.web_content)
     private WebViewLayout1 webViewLayout;
 
+    /**
+     * 店铺
+     */
     @BindView(id = R.id.ll_shop, click = true)
     private LinearLayout ll_shop;
 
-
+    /**
+     * 客服
+     */
     @BindView(id = R.id.ll_customerService, click = true)
     private LinearLayout ll_customerService;
 
-
+    /**
+     * 收藏
+     */
     @BindView(id = R.id.ll_follow, click = true)
     private LinearLayout ll_follow;
 
@@ -47,7 +59,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     @BindView(id = R.id.tv_addShoppingCart, click = true)
     private TextView tv_addShoppingCart;
 
+    private int goodsid = 0;
+
     private String goodName = "";
+    private int store_id = 0;
+
+    private boolean favorited = false;
+    private int isRefresh = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_goodsdetails);
@@ -61,6 +80,9 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         super.initData();
         mPresenter = new GoodsDetailsPresenter(this);
         goodName = getIntent().getStringExtra("goodName");
+        goodsid = getIntent().getIntExtra("goodsid", 0);
+        isRefresh = getIntent().getIntExtra("isRefresh", 0);
+        ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(goodsid);
     }
 
     /**
@@ -85,6 +107,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
                 SoftKeyboardUtils.packUpKeyboard(aty);
+                if (isRefresh == 1) {
+                    Intent intent = getIntent();
+                    setResult(RESULT_OK, intent);
+                }
                 aty.finish();
             }
 
@@ -101,6 +127,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     public void initView() {
         webViewLayout.setTitleVisibility(false);
+        webViewLayout.setWebViewCallBack(this);
 //        if (!StringUtils.isEmpty(url)) {
 //            webViewLayout.loadUrl(url);
 //        }
@@ -113,14 +140,19 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         switch (v.getId()) {
             case R.id.ll_shop:
                 Intent shopIntent = new Intent(aty, ShopActivity.class);
-                shopIntent.putExtra("", "");
+                shopIntent.putExtra("storeid", store_id);
                 showActivity(aty, shopIntent);
                 break;
             case R.id.ll_customerService:
 
                 break;
             case R.id.ll_follow:
-
+                showLoadingDialog(getString(R.string.dataLoad));
+                if (!favorited) {
+                    ((GoodsDetailsContract.Presenter) mPresenter).postFavoriteAdd(goodsid);
+                } else {
+                    ((GoodsDetailsContract.Presenter) mPresenter).postUnfavorite(goodsid);
+                }
                 break;
             case R.id.tv_buyNow:
                 Intent buyNowIntent = new Intent(aty, OrderDetailsActivity.class);
@@ -128,6 +160,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 showActivity(aty, buyNowIntent);
                 break;
             case R.id.tv_addShoppingCart:
+
 
                 break;
         }
@@ -140,12 +173,35 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @Override
     public void getSuccess(String success, int flag) {
+        if (flag == 0) {
+            GoodsDetailsBean goodsDetailsBean = (GoodsDetailsBean) JsonUtil.json2Obj(success, GoodsDetailsBean.class);
+            if (goodsDetailsBean != null && goodsDetailsBean.getData() != null && goodsDetailsBean.getData().getGoods_id() > 0) {
+                goodsid = goodsDetailsBean.getData().getGoods_id();
+                store_id = goodsDetailsBean.getData().getStore_id();
+                favorited = goodsDetailsBean.getData().isFavorited();
+            }
+        } else if (flag == 1) {
+            favorited = true;
+            isRefresh = 1;
+            ll_follow.setBackgroundResource(R.mipmap.mall_collect);
+            ViewInject.toast(getString(R.string.collectionSuccess));
+        } else if (flag == 2) {
+            favorited = false;
+            isRefresh = 1;
+            ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
+            ViewInject.toast(getString(R.string.uncollectible));
+        }
         dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
+        if (isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+        } else {
+            ViewInject.toast(msg);
+        }
     }
 
     @Override
@@ -165,4 +221,25 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     public void loadFailedError() {
 
     }
+
+    /**
+     * 退出应用
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (isRefresh == 1) {
+                    Intent intent = getIntent();
+                    setResult(RESULT_OK, intent);
+                }
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+
 }

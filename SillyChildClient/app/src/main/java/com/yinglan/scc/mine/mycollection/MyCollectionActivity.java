@@ -27,6 +27,8 @@ import com.yinglan.scc.mine.mycollection.dialog.DeleteCollectionDialog;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE;
+
 /**
  * 我的收藏中的商品
  * Created by Administrator on 2017/9/2.
@@ -167,12 +169,15 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", mAdapter.getItem(position).getGoods_id());
-        showActivity(aty, intent);
+        intent.putExtra("goodName", mAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", mAdapter.getItem(position).getGoods_id());
+        intent.putExtra("isRefresh", 1);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        positionItem = position;
         if (childView.getId() == R.id.img_delete) {
             if (deleteCollectionDialog == null) {
                 initDeleteCollectionDialog();
@@ -237,7 +242,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
         isShowLoadingMore = false;
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
@@ -253,7 +257,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
             img_err.setImageResource(R.mipmap.no_login);
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
-           // ViewInject.toast(getString(R.string.reloginPrompting));
+            // ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
@@ -264,26 +268,23 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);
-        } else {
+        } else if (flag == 0) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
+        } else {
+            mRefreshLayout.setPullDownRefreshEnable(true);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            ll_commonError.setVisibility(View.GONE);
+            ViewInject.toast(msg);
         }
-//        } else {
-//            ViewInject.toast(msg);
-//        }
     }
 
-
-    /**
-     * 在接收消息的时候，选择性接收消息：
-     */
     @Override
-    public void callMsgEvent(MsgEvent msgEvent) {
-        super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusMyCollectionEvent")) {
-            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-            ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
         }
     }
 

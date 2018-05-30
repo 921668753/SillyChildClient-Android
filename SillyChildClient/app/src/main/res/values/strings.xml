@@ -599,7 +599,6 @@
     <string name="leftbracket">（</string>
     <string name="rightbracket">）</string>
     <string name="seeMore">查看更多</string>
-    <string name="buyNow">立即购买</string>
     <string name="customerService">客服</string>
     <string name="noale">亲，您来的太早了，还没有商品出售哟~</string>
 
@@ -609,6 +608,7 @@
     <string name="color">颜色</string>
     <string name="selectColor">请选择颜色</string>
     <string name="inventoryEnough">库存充足</string>
+    <string name="buyNow">立即购买</string>
 
 
     <!--商城  店铺首页  全部商品-->

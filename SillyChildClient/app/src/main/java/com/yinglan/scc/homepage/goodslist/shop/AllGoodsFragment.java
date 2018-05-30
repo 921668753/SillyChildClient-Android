@@ -172,7 +172,8 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", mAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", mAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", mAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 

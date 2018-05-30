@@ -56,6 +56,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
 
     private OrderDetailBean orderDetailBean;
+
     private OrderDetailGoodViewAdapter madapter;
 
 

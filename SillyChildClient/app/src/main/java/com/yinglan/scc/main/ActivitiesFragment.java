@@ -228,7 +228,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         dismissLoadingDialog();
         if (flag == 1 && isLogin(msg)) {
             Intent intent = new Intent(aty, LoginActivity.class);
-            // intent.putExtra("name", "GetOrderFragment");
             aty.showActivity(aty, intent);
             return;
         }
@@ -238,14 +237,16 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", bargainViewAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", bargainViewAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", bargainViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", productlViewAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", productlViewAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", productlViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.yinglan.scc.R;
 
 /**
@@ -42,6 +43,7 @@ public class ShopActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.shop), true, R.id.titlebar);
         if (chageIcon == 0) {
             cleanColors(0);
             changeFragment(contentFragment);

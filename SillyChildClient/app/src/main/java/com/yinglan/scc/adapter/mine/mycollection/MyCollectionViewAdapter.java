@@ -34,7 +34,7 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          *商品图片
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getSmall(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getThumbnail(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
 
         /**
          *商品名字
@@ -55,7 +55,6 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
          *是否自营
          */
         viewHolderHelper.setVisibility(R.id.tv_proprietary, View.GONE);
-
     }
 
 }

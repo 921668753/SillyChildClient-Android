@@ -142,8 +142,6 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         if (flag == 0) {
 
 
-
-
             ((ShopHomePageContract.Presenter) mPresenter).getStoreIndexGoods(storeid);
         } else if (flag == 1) {
             ShopHomePageBean shopHomePageBean = (ShopHomePageBean) JsonUtil.getInstance().json2Obj(success, ShopHomePageBean.class);
@@ -184,7 +182,8 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", shopHomepageAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", shopHomepageAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", shopHomepageAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 

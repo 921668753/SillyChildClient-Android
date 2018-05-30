@@ -340,7 +340,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", mallHomePageViewAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", mallHomePageViewAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", mallHomePageViewAdapter.getItem(position).getGoods_id());
         aty.showActivity(aty, intent);
     }
 

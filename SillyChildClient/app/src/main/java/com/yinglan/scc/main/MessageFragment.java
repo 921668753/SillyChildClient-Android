@@ -15,7 +15,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scc.R;
-import com.yinglan.scc.message.InteractiveMessageFragment;
 import com.yinglan.scc.message.SystemMessageFragment;
 
 import io.rong.imkit.fragment.ConversationListFragment;

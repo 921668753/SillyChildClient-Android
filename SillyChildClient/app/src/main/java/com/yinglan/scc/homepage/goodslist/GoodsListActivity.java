@@ -222,7 +222,8 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-        intent.putExtra("good_id", goodsListAdapter.getItem(position).getGoods_id());
+        intent.putExtra("goodName", goodsListAdapter.getItem(position).getName());
+        intent.putExtra("goodsid", goodsListAdapter.getItem(position).getGoods_id());
         showActivity(aty, intent);
     }
 

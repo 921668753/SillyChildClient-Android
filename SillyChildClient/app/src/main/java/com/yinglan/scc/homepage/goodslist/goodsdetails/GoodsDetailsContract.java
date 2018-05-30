@@ -15,6 +15,15 @@ public interface GoodsDetailsContract {
          */
         void getGoodDetail(int goodsid);
 
+        /**
+         * 收藏商品
+         */
+        void postFavoriteAdd(int goodsid);
+
+        /**
+         * 取消商品
+         */
+        void postUnfavorite(int goodsid);
     }
 
     interface View extends BaseView<Presenter, String> {

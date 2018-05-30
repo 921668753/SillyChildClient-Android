@@ -81,6 +81,16 @@ public class URLConstants {
     public static String GOODDETAIL = APIURL + "goods/detail.do";
 
     /**
+     * 首页---更多分类----商品列表----商品详情---收藏商品
+     */
+    public static String FAVORITADD = APIURL + "favorite/add.do";
+
+    /**
+     * 首页---更多分类----商品列表----商品详情----取消收藏商品
+     */
+    public static String UNFAVORIT = APIURL + "favorite/unfavorite.do";
+
+    /**
      * 首页---更多分类----商品列表----商品详情----商品规格
      */
     public static String GOODSSPEC = APIURL + "goods/spec.do";

@@ -17,6 +17,7 @@
         <ListView
             android:id="@+id/lv_myCollection"
             style="@style/MatchMatch"
+            android:divider="@color/background"
             android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
             android:scrollbars="none"
