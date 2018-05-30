@@ -351,6 +351,8 @@ public class RequestClient {
      * 首页---更多分类----商品列表----商品详情
      */
     public static void getGoodDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+        httpParams.putHeaders("Cookie", cookies);
         HttpRequest.requestGetHttp(context, URLConstants.GOODDETAIL, httpParams, false, listener);
     }
 
