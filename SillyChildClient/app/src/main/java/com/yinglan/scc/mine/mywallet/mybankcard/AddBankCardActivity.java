@@ -94,7 +94,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private List<BankBean.DataBean> bankList;
 
 
-    private int bankCardId = 1;
+    private int bankCardId = 0;
 
     @Override
     public void setRootView() {
@@ -198,8 +198,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         } else if (flag == 2) {
             AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             bankCardId = addBankCardBean.getData().getId();
-         //      getSuccess("", 3);
-          ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
+            getSuccess("", 3);
+         //   ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
         } else if (flag == 3) {
             dismissLoadingDialog();
             Intent intent = getIntent();
@@ -248,4 +248,10 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         });
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pvOptions = null;
+    }
 }

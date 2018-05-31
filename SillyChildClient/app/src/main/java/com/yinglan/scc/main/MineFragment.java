@@ -265,6 +265,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         PreferenceHelper.write(aty, StringConstants.FILENAME, "region", userInfoBean.getData().getRegion());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", userInfoBean.getData().getRegion_id());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "address", userInfoBean.getData().getAddress());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "signature", userInfoBean.getData().getSignature());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getData().getMobile());
     }
 

@@ -28,12 +28,13 @@ public class AllGoodsPresenter implements AllGoodsContract.Presenter {
     }
 
     @Override
-    public void getStoreGoodsList(int storeid, int cat_id, int page, String sort) {
+    public void getStoreGoodsList(int storeid, int key, String order, int page, String keyword) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("storeid", storeid);
-        httpParams.put("cat_id", cat_id);
+        httpParams.put("key", key);
+        httpParams.put("order", order);
         httpParams.put("page", page);
-        httpParams.put("sort", sort);
+        httpParams.put("keyword", keyword);
         RequestClient.getStoreGoodsList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

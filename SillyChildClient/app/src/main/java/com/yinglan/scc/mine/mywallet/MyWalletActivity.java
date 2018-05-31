@@ -21,7 +21,9 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.mywallet.MyWalletBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mywallet.accountdetails.AccountDetailsActivity;
+import com.yinglan.scc.mine.mywallet.coupons.CouponsActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.MyBankCardActivity;
+import com.yinglan.scc.mine.mywallet.recharge.RechargeActivity;
 import com.yinglan.scc.mine.mywallet.withdrawal.WithdrawalActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -37,12 +39,34 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @BindView(id = R.id.tv_yue)
     private TextView tv_yue;
 
+    /**
+     * 提现
+     */
     @BindView(id = R.id.ll_withdraw, click = true)
     private LinearLayout ll_withdraw;
 
+    /**
+     * 充值
+     */
+    @BindView(id = R.id.ll_recharge, click = true)
+    private LinearLayout ll_recharge;
+
+    /**
+     * 优惠券
+     */
+    @BindView(id = R.id.ll_coupons, click = true)
+    private LinearLayout ll_coupons;
+    @BindView(id = R.id.tv_coupons)
+    private TextView tv_coupons;
+
+
+    /**
+     * 银行卡
+     */
     @BindView(id = R.id.ll_bankCard, click = true)
     private LinearLayout ll_bankCard;
-
+    @BindView(id = R.id.tv_bankCard)
+    private TextView tv_bankCard;
 
     private String bankCardName;
     private String bankCardNun;
@@ -99,10 +123,13 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         switch (v.getId()) {
             case R.id.ll_withdraw:
                 Intent intent = new Intent(aty, WithdrawalActivity.class);
-                intent.putExtra("bankCardName", bankCardName);
-                intent.putExtra("bankCardNun", bankCardNun);
-                intent.putExtra("bankCardId", bankCardId);
                 showActivity(aty, intent);
+                break;
+            case R.id.ll_recharge:
+                showActivity(aty, RechargeActivity.class);
+                break;
+            case R.id.ll_coupons:
+                showActivity(aty, CouponsActivity.class);
                 break;
             case R.id.ll_bankCard:
                 showActivity(aty, MyBankCardActivity.class);
@@ -147,7 +174,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent") || ((String) msgEvent.getData()).equals("RxBusAddBankCardEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent")) {
             ((MyWalletContract.Presenter) mPresenter).getMyWallet();
         }
     }

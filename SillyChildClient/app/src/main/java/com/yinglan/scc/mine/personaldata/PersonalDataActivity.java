@@ -98,6 +98,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.ll_personaldatagxqm, click = true)
     private LinearLayout ll_personaldatagxqm;
 
+    @BindView(id = R.id.tv_signature)
+    private TextView tv_signature;
+
+
     private PictureSourceDialog pictureSourceDialog;
 
     public static final int REQUEST_CODE_SELECT = 100;
@@ -203,21 +207,23 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         } else {
             tv_personalsex.setText(getString(R.string.secret));
         }
-        birthday = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "birthday", 0);
+        birthday = StringUtils.toLong(PreferenceHelper.readString(aty, StringConstants.FILENAME, "birthday"));
         if (birthday > 0) {
             String birthdayStr = DataUtil.formatData(birthday, "yyyy-MM-dd");
             tv_personalbirthday.setText(birthdayStr);
         } else {
             tv_personalbirthday.setText(getString(R.string.pleaseSelect));
         }
-        String province = PreferenceHelper.readString(aty, StringConstants.FILENAME, "province");
-        String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "city");
-        String region = PreferenceHelper.readString(aty, StringConstants.FILENAME, "region");
+        province = PreferenceHelper.readString(aty, StringConstants.FILENAME, "province");
+        city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "city");
+        region = PreferenceHelper.readString(aty, StringConstants.FILENAME, "region");
         if (StringUtils.isEmpty(province) || StringUtils.isEmpty(city) || StringUtils.isEmpty(region)) {
             tv_personaldiqu.setText(getString(R.string.pleaseSelect));
         } else {
             tv_personaldiqu.setText(province + city + region);
         }
+        String signature = PreferenceHelper.readString(aty, StringConstants.FILENAME, "signature");
+        tv_signature.setText(signature);
     }
 
 
@@ -284,7 +290,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
-                setSignatureIntent.putExtra("signature", "");
+                setSignatureIntent.putExtra("signature", tv_signature.getText().toString().trim());
                 showActivityForResult(this, setSignatureIntent, RESULT_CODE_BASKET_MINUSALL);
                 break;
         }
@@ -318,7 +324,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", sex);
                     break;
                 case RESULT_CODE_BASKET_MINUSALL:
-
+                    String signature = data.getStringExtra("signature");
+                    tv_signature.setText(signature);
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "signature", signature);
                     isRefresh = true;
                     break;
                 case REQUEST_CODE_SELECT:
@@ -486,15 +494,15 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      */
     private void getRegionList(List<RegionListBean.DataBean> list, String positionName, int flag) {
         for (int i = 0; i < list.size(); i++) {
-            if (positionName.contains(list.get(i).getLocal_name()) && flag == 5 || StringUtils.isEmpty(positionName) && i == 0 && flag == 5) {
+            if (StringUtils.isEmpty(positionName) && i == 0 && flag == 5 || !StringUtils.isEmpty(positionName) && positionName.contains(list.get(i).getLocal_name()) && flag == 5) {
                 provinceOptions1 = i;
                 ((PersonalDataContract.Presenter) mPresenter).getRegionList(list.get(i).getRegion_id(), flag);
                 return;
-            } else if (positionName.contains(list.get(i).getLocal_name()) && flag == 6 || StringUtils.isEmpty(positionName) && i == 0 && flag == 6) {
+            } else if (StringUtils.isEmpty(positionName) && i == 0 && flag == 6 || !StringUtils.isEmpty(positionName) && positionName.contains(list.get(i).getLocal_name()) && flag == 6) {
                 cityOptions2 = i;
                 ((PersonalDataContract.Presenter) mPresenter).getRegionList(list.get(i).getRegion_id(), flag);
                 return;
-            } else if (positionName.contains(list.get(i).getLocal_name()) && flag == 7 || StringUtils.isEmpty(positionName) && i == 0 && flag == 7) {
+            } else if (StringUtils.isEmpty(positionName) && i == 0 && flag == 7 || !StringUtils.isEmpty(positionName) && positionName.contains(list.get(i).getLocal_name()) && flag == 7) {
                 areaOptions3 = i;
                 return;
             }
@@ -525,7 +533,12 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 break;
             case 3:
                 tv_personaldiqu.setText(provinceList.get(provinceOptions1).getLocal_name() + cityList.get(cityOptions2).getLocal_name() + areaList.get(areaOptions3).getLocal_name());
-                //   GlideImageLoader.glideLoader(this, touxiangpath, iv_personaltx, 0);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "province", provinceList.get(provinceOptions1).getLocal_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "province_id", String.valueOf(provinceList.get(provinceOptions1).getRegion_id()));
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "city", cityList.get(cityOptions2).getLocal_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "city_id", String.valueOf(areaList.get(areaOptions3).getRegion_id()));
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "region", areaList.get(areaOptions3).getLocal_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", String.valueOf(areaList.get(areaOptions3).getRegion_id()));
                 break;
             case 4:
                 RegionListBean regionListBean = (RegionListBean) JsonUtil.json2Obj(success, RegionListBean.class);

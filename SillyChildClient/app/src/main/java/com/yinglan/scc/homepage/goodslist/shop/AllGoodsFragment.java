@@ -86,8 +86,8 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     private SpacesItemDecoration spacesItemDecoration;
 
     private int storeid = 0;
-    private String sort = "def_desc";
-    private int cat_id = 0;
+    private String order = "desc";
+    private int key = 0;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -103,7 +103,6 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         spacesItemDecoration = new SpacesItemDecoration(5, 10);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         storeid = aty.getIntent().getIntExtra("storeid", 0);
-        cat_id = aty.getIntent().getIntExtra("cat_id", 0);
     }
 
     @Override
@@ -136,26 +135,29 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_comprehensive:
-                if (sort.equals("def_desc")) {
-                    sort = "def_asc";
+                key = 0;
+                if (order.equals("desc")) {
+                    order = "asc";
                 } else {
-                    sort = "def_desc";
+                    order = "desc";
                 }
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_sales:
-                if (sort.equals("buynum_desc")) {
-                    sort = "buynum_asc";
+                key = 3;
+                if (order.equals("desc")) {
+                    order = "asc";
                 } else {
-                    sort = "buynum_desc";
+                    order = "desc";
                 }
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_price:
-                if (sort.equals("price_desc")) {
-                    sort = "price_asc";
+                key = 2;
+                if (order.equals("desc")) {
+                    order = "asc";
                 } else {
-                    sort = "price_desc";
+                    order = "desc";
                 }
                 mRefreshLayout.beginRefreshing();
                 break;
@@ -182,7 +184,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, cat_id, mMorePageNumber, sort);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, key, order, mMorePageNumber, "");
     }
 
     @Override
@@ -194,7 +196,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, cat_id, mMorePageNumber, sort);
+        ((AllGoodsContract.Presenter) mPresenter).getStoreGoodsList(storeid, key, order, mMorePageNumber, "");
         return true;
     }
 

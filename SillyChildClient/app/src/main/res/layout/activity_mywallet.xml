@@ -121,6 +121,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <TextView
+                    android:id="@+id/tv_coupons"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen5"
                     android:text="3个"
@@ -158,6 +159,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <TextView
+                    android:id="@+id/tv_bankCard"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen5"
                     android:text="3张"

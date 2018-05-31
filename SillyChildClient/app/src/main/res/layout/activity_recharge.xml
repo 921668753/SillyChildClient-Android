@@ -156,6 +156,7 @@
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
                 android:textColor="@color/titletextcolors"
+                android:textCursorDrawable="@drawable/shape_cursor"
                 android:textSize="@dimen/textsize15"
                 android:visibility="gone" />
 

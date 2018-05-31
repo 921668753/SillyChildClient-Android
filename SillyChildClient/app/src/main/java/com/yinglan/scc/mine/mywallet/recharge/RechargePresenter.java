@@ -24,7 +24,7 @@ public class RechargePresenter implements RechargeContract.Presenter {
 
     @Override
     public void doRecharge(String payWay, double amount) {
-        if (amount > 0) {
+        if (amount <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseRechargeAmount1), 0);
             return;
         }

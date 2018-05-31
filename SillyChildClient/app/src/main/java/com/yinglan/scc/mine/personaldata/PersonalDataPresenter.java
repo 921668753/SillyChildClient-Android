@@ -127,12 +127,14 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("province", province);
-        httpParams.put("province_id", province_id);
-        httpParams.put("city", city);
-        httpParams.put("city_id", city_id);
-        httpParams.put("region", region);
-        httpParams.put("region_id", region_id);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("province", province);
+        map.put("province_id", province_id);
+        map.put("city", city);
+        map.put("city_id", city_id);
+        map.put("region", region);
+        map.put("region_id", region_id);
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

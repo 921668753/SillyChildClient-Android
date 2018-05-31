@@ -230,6 +230,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_signature"
                     style="@style/AutoMatch"
                     android:gravity="right|center_vertical"
                     android:textColor="@color/hintColors"

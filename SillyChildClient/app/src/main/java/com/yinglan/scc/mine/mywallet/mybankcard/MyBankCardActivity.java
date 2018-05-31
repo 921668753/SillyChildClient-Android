@@ -9,7 +9,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.MyBankCardBean;
@@ -17,6 +16,8 @@ import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.dialog.SubmitBouncedDialog;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
+
+import static com.yinglan.scc.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
 
 /**
@@ -96,7 +97,8 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
             @Override
             public void onClickRightCtv() {
                 super.onClickRightCtv();
-                showActivity(aty, AddBankCardActivity.class);
+                Intent intent = new Intent(aty, AddBankCardActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
             }
         };
         titlebar.setDelegate(simpleDelegate);
@@ -163,16 +165,15 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
     }
 
-    /**
-     * 在接收消息的时候，选择性接收消息：
-     */
+
     @Override
-    public void callMsgEvent(MsgEvent msgEvent) {
-        super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusAddBankCardEvent")) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
         }
     }
+
 
     @Override
     protected void onDestroy() {
