@@ -1,35 +1,36 @@
 package com.yinglan.scc.message;
 
-import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scc.R;
+import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.main.MainActivity;
 
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
+
 
 /**
  * 互动消息
  * Created by Admin on 2017/8/10.
  */
 
-public class InteractiveMessageFragment extends ConversationListFragment {
-//    @BindView(id = R.id.rl_listview)
-//    private RelativeLayout rl_listview;
-//
-//
+public class InteractiveMessageFragment extends BaseFragment implements InteractiveMessageContract.View {
+
     private MainActivity aty;
-//
-//    private Activity context;
+
     /**
      * 错误提示页
      */
@@ -39,47 +40,101 @@ public class InteractiveMessageFragment extends ConversationListFragment {
     @BindView(id = R.id.img_err)
     private ImageView img_err;
 
-    @BindView(id = R.id.tv_hintText, click = true)
+    @BindView(id = R.id.tv_hintText)
     private TextView tv_hintText;
 
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
+
+    @Override
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        aty = (MainActivity) getActivity();
+        return View.inflate(aty, R.layout.fragment_interactivemessage, null);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter = new InteractiveMessagePresenter(this);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty);
+    }
 
 
-//    @Override
-//    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-//        aty = (MainActivity) getActivity();
-//        return View.inflate(aty, R.layout.fragment_im, null);
-//    }
-//
-//    @Override
-//    protected void initData() {
-//        super.initData();
-//        mPresenter = new ShopMessagePresenter(this);
-////        showLoadingDialog(getString(R.string.dataLoad));
-////        ((ShopMessageContract.Presenter) mPresenter).getShopMessage();
-//    }
+    /**
+     * 控件监听事件
+     */
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    return;
+                }
+                aty.showActivity(aty, LoginActivity.class);
+                break;
+        }
+    }
 
-//    @Override
-//    public void setPresenter(ShopMessageContract.Presenter presenter) {
-//
-//    }
-//
-//    @Override
-//    public void getSuccess(String success, int flag) {
-//
-//    }
-//
-//    @Override
-//    public void errorMsg(String msg, int flag) {
-//
-//    }
-//
-//    @Override
-//    public void showLoadingDialog(String title) {
-//
-//    }
-//
-//    @Override
-//    public void dismissLoadingDialog() {
-//
-//    }
+    @Override
+    public void setPresenter(InteractiveMessageContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        ll_commonError.setVisibility(View.GONE);
+        //会话列表
+        ConversationListFragment conversationListFragment = new ConversationListFragment();
+        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                .build();
+        conversationListFragment.setUri(uri);
+        FragmentManager fragmentManager = aty.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.rong_container, conversationListFragment);
+        transaction.commit();
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        ll_commonError.setVisibility(View.VISIBLE);
+        tv_hintText.setVisibility(View.VISIBLE);
+        tv_button.setVisibility(View.VISIBLE);
+        if (isLogin(msg)) {
+            img_err.setImageResource(R.mipmap.no_login);
+            tv_hintText.setVisibility(View.GONE);
+            tv_button.setText(getString(R.string.login));
+            // ViewInject.toast(getString(R.string.reloginPrompting));
+         //   aty.showActivity(aty, LoginActivity.class);
+        } else if (msg.contains(getString(R.string.checkNetwork))) {
+            img_err.setImageResource(R.mipmap.no_network);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        } else if (msg.contains(getString(R.string.noSystemMessage))) {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setVisibility(View.GONE);
+        } else {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        }
+    }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+            ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty);
+        }
+    }
 }

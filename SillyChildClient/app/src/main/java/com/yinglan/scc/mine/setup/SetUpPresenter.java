@@ -11,8 +11,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scc.R;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealUserInfoManager;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scc.retrofit.RequestClient;
 
 import io.rong.imkit.RongIM;
@@ -92,9 +91,7 @@ public class SetUpPresenter implements SetUpContract.Presenter {
         //清除本app所有用户信息
         UserUtil.clearUserInfo(activity);
         //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
-        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "read_message_count", true);
         //清除融云信息，退出登陆
-        SealUserInfoManager.getInstance().closeDB();
         RongIM.getInstance().logout();
         mView.getSuccess("", 1);
     }

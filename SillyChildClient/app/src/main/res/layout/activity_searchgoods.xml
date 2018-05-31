@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/whiteColors"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/Match44"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dimen39"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:src="@mipmap/back" />
+
+        <LinearLayout
+            android:id="@+id/ll_title1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen34"
+            android:layout_weight="1"
+            android:background="@mipmap/home_border"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_search1"
+                android:layout_width="@dimen/dimen14"
+                android:layout_height="@dimen/dimen14"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:src="@mipmap/search" />
+
+            <EditText
+                android:id="@+id/et_search1"
+                style="@style/AutoMatch"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/search"
+                android:maxLength="20"
+                android:minWidth="@dimen/dimen150"
+                android:paddingLeft="@dimen/dimen10"
+                android:singleLine="true"
+                android:textColorHint="@color/hintColors"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/WrapMatch"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:text="@string/search"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/WrapWrap"
+        android:paddingBottom="@dimen/dimen15"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen15"
+        android:text="@string/recentSearch"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize14" />
+
+
+    <cn.bingoogolapple.flowlayout.BGAFlowLayout
+        style="@style/MatchWrap"
+        app:fl_horizontalChildGap="@dimen/dimen10"
+        app:fl_isDistributionWhiteSpacing="false"
+        app:fl_verticalChildGap="@dimen/dimen15">
+
+    </cn.bingoogolapple.flowlayout.BGAFlowLayout>
+
+
+    <TextView
+        style="@style/WrapWrap"
+        android:paddingBottom="@dimen/dimen15"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen15"
+        android:text="@string/searchFound"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize14" />
+
+
+    <cn.bingoogolapple.flowlayout.BGAFlowLayout
+        style="@style/MatchWrap"
+        app:fl_horizontalChildGap="@dimen/dimen10"
+        app:fl_isDistributionWhiteSpacing="false"
+        app:fl_verticalChildGap="@dimen/dimen15">
+
+
+    </cn.bingoogolapple.flowlayout.BGAFlowLayout>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:paddingBottom="@dimen/dimen15"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen15"
+        android:text="@string/commonlyClassification"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize14"
+        android:visibility="gone" />
+
+
+    <com.common.cklibrary.utils.myview.NoScrollGridView
+        android:id="@+id/gv_seachClassification"
+        style="@style/MatchWrap"
+        android:background="@android:color/white"
+        android:horizontalSpacing="@dimen/dimen30"
+        android:numColumns="5"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:scrollbars="none"
+        android:verticalSpacing="@dimen/dimen15"
+        android:visibility="gone"
+        tools:listitem="@layout/item_seachclassification" />
+
+
+</LinearLayout>

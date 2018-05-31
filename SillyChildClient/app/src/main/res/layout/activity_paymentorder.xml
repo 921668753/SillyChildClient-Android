@@ -98,6 +98,7 @@
 
             </RelativeLayout>
 
+
             <TextView
                 style="@style/MatchWrap"
                 android:layout_marginTop="@dimen/dimen10"
@@ -111,13 +112,15 @@
 
             <View style="@style/DividerWidth" />
 
-
             <com.common.cklibrary.utils.myview.ChildListView
                 android:id="@+id/lv_makeSureOrder"
                 style="@style/MatchWrap"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 tools:listitem="@layout/item_makesureorder" />
+
+            <TextView style="@style/DividerWidth" />
+
 
             <TextView
                 style="@style/MatchWrap"
@@ -206,28 +209,11 @@
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
 
-                <TextView
-                    style="@style/AutoMatch"
-                    android:gravity="right"
-                    android:paddingBottom="@dimen/dimen10"
-                    android:singleLine="true"
-                    android:text="@string/usable1"
-                    android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize12" />
-
-                <ImageView
-                    android:layout_width="@dimen/dimen5"
-                    android:layout_height="@dimen/dimen10"
-                    android:layout_marginBottom="@dimen/dimen10"
-                    android:layout_marginLeft="@dimen/dimen6"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:src="@mipmap/order_right_arrow" />
 
             </LinearLayout>
 
             <LinearLayout
                 style="@style/MatchWrap"
-                android:layout_marginBottom="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
@@ -250,6 +236,164 @@
             </LinearLayout>
 
 
+            <TextView
+                style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen15"
+                android:text="@string/choosePaymentMethod"
+                android:textColor="@color/tabColors"
+                android:textSize="@dimen/textsize14" />
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen34"
+                    android:layout_height="@dimen/dimen34"
+                    android:layout_marginBottom="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen13"
+                    android:src="@mipmap/top_ups_balance_payment" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/balancePay"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/currentBalance"
+                    android:textColor="@color/tabColors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:maxWidth="@dimen/dimen140"
+                    android:singleLine="true"
+                    android:text="@string/renminbi"
+                    android:textColor="@color/tabColors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:maxWidth="@dimen/dimen140"
+                    android:singleLine="true"
+                    android:text="1000"
+                    android:textColor="@color/tabColors"
+                    android:textSize="@dimen/textsize13" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen48"
+                    android:layout_height="@dimen/dimen48"
+                    android:padding="@dimen/dimen15"
+                    android:src="@mipmap/top_ups_selected" />
+
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen34"
+                    android:layout_height="@dimen/dimen34"
+                    android:layout_marginBottom="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen13"
+                    android:src="@mipmap/weixin_payxxx" />
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/weChatPay"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen48"
+                    android:layout_height="@dimen/dimen48"
+                    android:padding="@dimen/dimen15"
+                    android:src="@mipmap/top_ups_unselected" />
+
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen34"
+                    android:layout_height="@dimen/dimen34"
+                    android:layout_marginBottom="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen13"
+                    android:src="@mipmap/mine_zfbxxx" />
+
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/alipayToPay"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen48"
+                    android:layout_height="@dimen/dimen48"
+                    android:padding="@dimen/dimen15"
+                    android:src="@mipmap/top_ups_unselected" />
+
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen34"
+                    android:layout_height="@dimen/dimen34"
+                    android:layout_marginBottom="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen13"
+                    android:src="@mipmap/mine_unionpayxxx" />
+
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/unionpayPay"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen48"
+                    android:layout_height="@dimen/dimen48"
+                    android:padding="@dimen/dimen15"
+                    android:src="@mipmap/top_ups_unselected" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -267,8 +411,8 @@
         <TextView
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
-            android:text="@string/total"
-            android:textColor="@color/textColor"
+            android:text="@string/actualPaymentInCart"
+            android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize14" />
 
         <TextView
@@ -279,9 +423,8 @@
 
         <TextView
             style="@style/WrapWrap"
-            android:singleLine="true"
             android:text="504.00"
-            android:textColor="@color/fF0000Colors"
+            android:textColor="@color/redColors"
             android:textSize="@dimen/textsize16" />
 
         <TextView style="@style/AutoWrap" />
@@ -289,10 +432,10 @@
         <TextView
             android:layout_width="@dimen/dimen90"
             android:layout_height="@dimen/dimen35"
-            android:background="@drawable/shape_goodbtn"
+            android:background="@drawable/shape_determinepay"
             android:gravity="center"
             android:text="@string/submitOrder"
-            android:textColor="@color/greenColors"
+            android:textColor="@color/whiteColors"
             android:textSize="@dimen/textsize16" />
     </LinearLayout>
 

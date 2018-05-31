@@ -327,10 +327,16 @@
             android:screenOrientation="portrait"></activity>
 
 
+        <!--消息   消息列表-->
+        <activity
+            android:name="com.yinglan.scc.message.systemmessage.SystemMessageListActivity"
+            android:screenOrientation="portrait" />
+
         <!--消息   系统消息详情-->
         <activity
             android:name="com.yinglan.scc.message.systemmessage.SystemMessageDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
 
         <!--消息   司导信息-->
         <!--<activity-->
@@ -590,7 +596,7 @@
         <!--</activity>-->
         <!--会话界面-->
         <activity
-            android:name=".message.interactivemessage.rongcloud.ConversationActivity"
+            android:name=".message.interactivemessage.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
 

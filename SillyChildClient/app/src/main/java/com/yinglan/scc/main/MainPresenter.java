@@ -1,5 +1,6 @@
 package com.yinglan.scc.main;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 
 public class MainPresenter implements MainContract.Presenter {
+
     private MainContract.View mView;
 
     public MainPresenter(MainContract.View view) {
@@ -28,6 +30,21 @@ public class MainPresenter implements MainContract.Presenter {
         mView.setPresenter(this);
     }
 
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
+    }
 
     @Override
     public void getSystemMessage() {

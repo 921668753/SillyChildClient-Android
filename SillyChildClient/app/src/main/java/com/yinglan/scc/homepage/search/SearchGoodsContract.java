@@ -1,22 +1,20 @@
-package com.yinglan.scc.message;
-
-import android.content.Context;
+package com.yinglan.scc.homepage.search;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
 /**
- * Created by Admin on 2017/9/21.
+ * Created by ruitu on 2016/9/24.
  */
 
-public class InteractiveMessageContract {
+public interface SearchGoodsContract {
 
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取会员登录状态
+         * 搜索发现
          */
-        void getIsLogin(Context context);
+        void getStrategy();
 
     }
 
@@ -24,3 +22,5 @@ public class InteractiveMessageContract {
     }
 
 }
+
+

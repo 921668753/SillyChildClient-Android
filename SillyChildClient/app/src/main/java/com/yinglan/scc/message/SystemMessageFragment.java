@@ -15,11 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
-import com.common.cklibrary.common.BaseSupportFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.message.SystemMessageViewAdapter;
@@ -43,14 +43,14 @@ import static com.yinglan.scc.main.MainActivity.MESSAGE_RECEIVED_ACTION;
  * Created by Admin on 2017/8/17.
  */
 
-public class SystemMessageFragment extends BaseSupportFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
-
-    @BindView(id = R.id.mRefreshLayout)
-    private static BGARefreshLayout mRefreshLayout;
+public class SystemMessageFragment extends BaseFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private SystemMessageViewAdapter mAdapter;
 
     private MainActivity aty;
+
+    @BindView(id = R.id.mRefreshLayout)
+    private BGARefreshLayout mRefreshLayout;
 
     @BindView(id = R.id.lv_systemMessage)
     private ListView lv_systemMessage;
@@ -76,6 +76,10 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
 
+    /**
+     * 消息总数
+     */
+    // private int sum = 0;
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
@@ -103,14 +107,7 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         DataBean dataBean = mAdapter.getItem(i);
         Intent intent = new Intent(aty, SystemMessageListActivity.class);
-        intent.putExtra("type", dataBean.getNews_title());
-        if (dataBean.getNews_title().contains("order")) {
-            intent.putExtra("news_title", getString(R.string.orderMessage));
-        } else if (dataBean.getNews_title().contains("delivery")) {
-            intent.putExtra("news_title", getString(R.string.deliveryMessage));
-        } else {
-            intent.putExtra("news_title", getString(R.string.systemMessage));
-        }
+        intent.putExtra("news_title", dataBean.getNews_title());
         startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -165,6 +162,13 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
+//            for (int i = 0; i < systemMessageBean.getData().size(); i++) {
+//                sum = sum + systemMessageBean.getData().get(i).getNum();
+//            }
+//            if (sum == 0) {
+//                errorMsg(getString(R.string.noSystemMessage), 1);
+//                return;
+//            }
             mAdapter.addNewData(systemMessageBean.getData());
         } else {
             mRefreshLayout.endLoadingMore();
@@ -191,7 +195,7 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
             // ViewInject.toast(getString(R.string.reloginPrompting));
-            aty.showActivity(aty, LoginActivity.class);
+        //    aty.showActivity(aty, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
             img_err.setImageResource(R.mipmap.no_network);
@@ -249,11 +253,25 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
     }
 
 
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            mRefreshLayout.beginRefreshing();
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
         }
     }
 

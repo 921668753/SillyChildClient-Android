@@ -1,13 +1,17 @@
 package com.yinglan.scc.adapter.message;
 
 import android.content.Context;
+import android.view.View;
 
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.message.SystemMessageBean.DataBean;
+import com.yinglan.scc.utils.DataUtil;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+
 
 /**
  * 系统消息 适配器
@@ -26,24 +30,22 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 头像
          */
-        GlideImageLoader.glideLoader(mContext, listBean.getNews_text(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
+        GlideImageLoader.glideLoader(mContext, listBean.getTitle_img(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
 
         /**
          * 未读消息数
          */
-        viewHolderHelper.setText(R.id.tv_messageTag, String.valueOf(listBean.getNum()));
+        if (listBean.getNum() <= 0) {
+            viewHolderHelper.setVisibility(R.id.tv_messageTag, View.GONE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.tv_messageTag, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_messageTag, String.valueOf(listBean.getNum()));
+        }
 
         /**
          * 标题
          */
-        if (listBean.getNews_title().contains("order")) {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.orderMessage));
-        } else if (listBean.getNews_title().contains("delivery")) {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.deliveryMessage));
-        } else {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.systemMessage));
-        }
-
+        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_title());
 
         /**
          * 内容
@@ -53,7 +55,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 时间
          */
-        viewHolderHelper.setText(R.id.tv_time, listBean.getLasttime());
+        viewHolderHelper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(listBean.getLastTime()), "yyyy-MM-dd HH:mm"));
 
     }
 

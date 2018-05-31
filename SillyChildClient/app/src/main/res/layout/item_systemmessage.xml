@@ -10,12 +10,12 @@
         android:layout_width="@dimen/dimen44"
         android:layout_height="@dimen/dimen44">
 
-
         <ImageView
+            android:id="@+id/img_head"
             android:layout_width="@dimen/dimen40"
             android:layout_height="@dimen/dimen40"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/avatar" />
 
         <TextView
             android:id="@+id/tv_messageTag"

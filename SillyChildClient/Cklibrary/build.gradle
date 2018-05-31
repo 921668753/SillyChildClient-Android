@@ -98,6 +98,12 @@ dependencies {
     compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
 
     /**
+     * https://github.com/bingoogolapple/BGAFlowLayout-Android
+     * Android流式布局
+     */
+    compile 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
+
+    /**
      * https://github.com/Bigkoo/Android-PickerView
      * 滚动PickerView选择控件
      */

@@ -21,6 +21,7 @@ import com.kymjs.common.Log;
 import com.yinglan.scc.R;
 import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.custominterfaces.MainCallBack;
+import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.message.SystemMessageFragment.MessageReceiver;
 import com.yinglan.scc.receivers.MainReceiver;
 import com.yinglan.scc.services.MainService;
@@ -121,10 +122,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void initWidget() {
         super.initWidget();
-        boolean isShow = getIntent().getBooleanExtra("isShow", false);
-        if (isShow) {
-            tv_messageTag.setVisibility(View.VISIBLE);
-        }
+//        boolean isShow = getIntent().getBooleanExtra("isShow", false);
+//        if (isShow) {
+//            tv_messageTag.setVisibility(View.VISIBLE);
+//        }
         initColors();
     }
 
@@ -183,7 +184,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 cleanColors(0);
                 break;
             case R.id.bottombar_message:
-                cleanColors(1);
+                ((MainContract.Presenter) mPresenter).getIsLogin(this, 0);
                 break;
             case R.id.bottombar_activities:
                 cleanColors(2);
@@ -350,14 +351,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void getSuccess(String success, int flag) {
-//        if (flag == 0) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_messageTag.setVisibility(View.VISIBLE);
-//                }
-//            });
-//        }
+        if (flag == 0) {
+            cleanColors(1);
+        }
     }
 
 
@@ -378,23 +374,20 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void errorMsg(String msg, int flag) {
-//        if (flag == 0) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_messageTag.setVisibility(View.GONE);
-//                }
-//            });
-//        }
+        if (flag == 0 && isLogin(msg) || flag == 1 && isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+        } else if (flag == 0) {
+            cleanColors(1);
+        }
     }
 
     @Override
     public void msgStyle(boolean havemsg) {
-        if (havemsg) {
-            tv_messageTag.setVisibility(View.VISIBLE);
-        } else {
-            tv_messageTag.setVisibility(View.GONE);
-        }
+//        if (havemsg) {
+//            tv_messageTag.setVisibility(View.VISIBLE);
+//        } else {
+//            tv_messageTag.setVisibility(View.GONE);
+//        }
     }
 
     public int getChageIcon() {

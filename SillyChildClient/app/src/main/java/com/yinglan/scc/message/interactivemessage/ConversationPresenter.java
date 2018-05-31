@@ -1,7 +1,6 @@
-package com.yinglan.scc.message;
+package com.yinglan.scc.message.interactivemessage;
 
-import android.content.Context;
-
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -11,20 +10,20 @@ import com.yinglan.scc.retrofit.RequestClient;
  * Created by ruitu on 2016/9/24.
  */
 
-public class InteractiveMessagePresenter implements InteractiveMessageContract.Presenter {
+public class ConversationPresenter implements ConversationContract.Presenter {
+    private ConversationContract.View mView;
 
-    private InteractiveMessageContract.View mView;
-
-    public InteractiveMessagePresenter(InteractiveMessageContract.View view) {
+    public ConversationPresenter(ConversationContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
 
 
     @Override
-    public void getIsLogin(Context context) {
+    public void getUserInfo(String targetId) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+        httpParams.put("userId", targetId);
+        RequestClient.getRongCloud(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

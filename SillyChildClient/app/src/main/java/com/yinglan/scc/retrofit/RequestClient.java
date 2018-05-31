@@ -26,7 +26,7 @@ import com.yinglan.scc.constant.StringNewConstants;
 import com.yinglan.scc.constant.URLConstants;
 import com.yinglan.scc.entity.loginregister.LoginBean;
 import com.yinglan.scc.entity.startpage.QiNiuKeyBean;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scc.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scc.retrofit.uploadimg.UploadManagerUtil;
 
 
@@ -1147,7 +1147,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestGetHttp(context, URLConstants.NEWTITLE, httpParams, listener);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.NEWTITLE, httpParams, listener);
             }
         }, listener);
     }

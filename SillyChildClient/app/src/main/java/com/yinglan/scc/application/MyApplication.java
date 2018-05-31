@@ -5,34 +5,21 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
-import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.httputil.HttpUtilParams;
-import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
-import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.BuildConfig;
 
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-import com.yinglan.scc.entity.application.RongCloudBean;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealAppContext;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.SealUserInfoManager;
-import com.yinglan.scc.message.interactivemessage.rongcloud.util.UserUtil;
-import com.yinglan.scc.retrofit.RequestClient;
+import com.yinglan.scc.message.interactivemessage.imuitl.RongCloudEvent;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 
 import static com.umeng.socialize.utils.Log.LOGTAG;
 
@@ -129,83 +116,7 @@ public class MyApplication extends Application {
      */
     private void initRongCloud() {
         RongIM.init(this);
-//        SealAppContext.init(this);//初始化融云相关监听 事件集合类
-//        openSealDBIfHasCachedToken();//打开融云本地数据库
-        String rcToken = UserUtil.getResTokenInfo(this);
-        if (!StringUtils.isEmpty(rcToken)) {
-            RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
-
-                /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
-                @Override
-                public void onTokenIncorrect() {
-                }
-
-                /**
-                 * 连接融云成功
-                 * @param userid 当前 token 对应的用户 id
-                 */
-                @Override
-                public void onSuccess(String userid) {
-                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
-                    /**
-                     * 获取用户信息
-                     */
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-                    HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                    httpParams.put("userId", userid);
-                    RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
-                        @Override
-                        public void onSuccess(String response) {
-                            RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
-                            if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
-                                RongIM.getInstance().setCurrentUserInfo(userInfo);
-                            }
-                            RongIM.getInstance().setMessageAttachedUserInfo(true);
-                        }
-
-                        @Override
-                        public void onFailure(String msg) {
-                            Log.d("RongYun", "onFailure");
-                        }
-                    });
-                }
-
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.i("XJ", "--errorCode" + errorCode);
-                }
-            });
-        }
-    }
-
-    private void openSealDBIfHasCachedToken() {
-        String rcToken = UserUtil.getResTokenInfo(this);
-        if (!TextUtils.isEmpty(rcToken)) {
-            String current = getCurProcessName(this);
-            String mainProcessName = getPackageName();
-            if (mainProcessName.equals(current)) {
-                SealUserInfoManager.getInstance().openDB();
-            }
-        }
-    }
-
-    public static String getCurProcessName(Context context) {
-        int pid = android.os.Process.myPid();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
-            if (appProcess.pid == pid) {
-                return appProcess.processName;
-            }
-        }
-        return null;
+        RongCloudEvent.init(this);
     }
 
     //查询缓存

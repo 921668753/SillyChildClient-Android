@@ -3,12 +3,10 @@ package com.yinglan.scc.main;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
-import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
-import com.yinglan.scc.retrofit.RequestClient;
 
 import java.util.HashMap;
 import java.util.Map;
