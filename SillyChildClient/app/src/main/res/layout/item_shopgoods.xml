@@ -29,15 +29,17 @@
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen10"
         android:paddingRight="@dimen/dimen10">
 
 
         <ImageView
             android:id="@+id/img_checkbox"
             android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
-            android:padding="@dimen/dimen11"
+            android:layout_height="@dimen/dimen60"
+            android:paddingBottom="@dimen/dimen20"
+            android:paddingRight="@dimen/dimen11"
+            android:paddingLeft="@dimen/dimen11"
+            android:paddingTop="@dimen/dimen20"
             android:src="@mipmap/shopping_cart_unselected" />
 
 
@@ -95,7 +97,7 @@
 
                 <LinearLayout
                     android:layout_width="@dimen/dimen85"
-                    android:layout_height="@dimen/dimen23"
+                    android:layout_height="@dimen/dimen25"
                     android:background="@drawable/shape_addshoppingcarte"
                     android:minWidth="@dimen/dimen85"
                     android:orientation="horizontal">
@@ -106,7 +108,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="@string/subtract"
-                        android:textColor="@color/hintColors"
+                        android:textColor="@color/bEBEBEColors"
                         android:textSize="@dimen/textsize15" />
 
                     <View style="@style/DividerHeight" />
@@ -131,6 +133,11 @@
                         android:textSize="@dimen/textsize15" />
                 </LinearLayout>
             </LinearLayout>
+
+
+
+
+
 
         </LinearLayout>
 

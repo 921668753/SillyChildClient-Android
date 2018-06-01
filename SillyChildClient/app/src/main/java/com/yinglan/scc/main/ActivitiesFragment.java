@@ -27,6 +27,7 @@ import com.yinglan.scc.entity.main.AdvCatBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
+import com.yinglan.scc.homepage.search.SearchGoodsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.utils.GlideImageLoader;
 import com.yinglan.scc.utils.SpacesItemDecoration;
@@ -47,6 +48,14 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
+
+    /**
+     * 搜索
+     */
+    @BindView(id = R.id.ll_search, click = true)
+    private LinearLayout ll_search;
+
+
     /**
      * 轮播图
      */
@@ -56,7 +65,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     /**
      * 特价商品
      */
-
     @BindView(id = R.id.ll_bargain, click = true)
     private LinearLayout ll_bargain;
 
@@ -113,6 +121,9 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.ll_search:
+                aty.showActivity(aty, SearchGoodsActivity.class);
+                break;
             case R.id.tv_seeMore:
                 Intent goodsListIntent = new Intent(aty, GoodsListActivity.class);
                 goodsListIntent.putExtra("mark", "special");

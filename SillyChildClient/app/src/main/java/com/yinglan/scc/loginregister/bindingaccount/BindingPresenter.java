@@ -122,7 +122,7 @@ public class BindingPresenter implements BindingContract.Presenter {
         httpParams.put("countroy_code", countroy_code);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postBindingPhone(httpParams, new ResponseListener<String>() {
+        RequestClient.postBindingPhone(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);

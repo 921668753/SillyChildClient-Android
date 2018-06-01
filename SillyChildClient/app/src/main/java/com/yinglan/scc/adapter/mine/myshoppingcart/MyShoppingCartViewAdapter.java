@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.common.cklibrary.utils.MathUtil;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 import com.yinglan.scc.utils.GlideImageLoader;
@@ -60,17 +62,19 @@ public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<GoodslistBe
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, GoodslistBean listBean) {
         BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_myShoppingCart);
         if (listBean.getIsEdit() == 0) {
-            viewHolderHelper.setVisibility(R.id.img_checkbox, View.GONE);
+            // viewHolderHelper.setVisibility(R.id.img_checkbox, View.GONE);
             swipeItemLayout.setSwipeAble(true);
         } else {
-            if (listBean.getIsSelected() == 0) {
-                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_unselected);
-            } else {
-                viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_selected);
-            }
-            viewHolderHelper.setVisibility(R.id.img_checkbox, View.VISIBLE);
             swipeItemLayout.setSwipeAble(false);
         }
+
+        if (listBean.getIsSelected() == 0) {
+            viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_unselected);
+        } else {
+            viewHolderHelper.setImageResource(R.id.img_checkbox, R.mipmap.shopping_cart_selected);
+        }
+        //  viewHolderHelper.setVisibility(R.id.img_checkbox, View.VISIBLE);
+
 
         /**
          *商品图片
@@ -85,17 +89,17 @@ public class MyShoppingCartViewAdapter extends BGAAdapterViewAdapter<GoodslistBe
         /**
          *商品简介
          */
-        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getStore_name());
+        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
 
         /**
          *商品价格
          */
-        viewHolderHelper.setText(R.id.tv_money, listBean.getPrice());
+        viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
 
         /**
          *商品数量
          */
-        viewHolderHelper.setText(R.id.tv_goodNumber, listBean.getNum());
+        viewHolderHelper.setText(R.id.tv_goodNumber, String.valueOf(listBean.getNum()));
 
     }
 

@@ -24,10 +24,12 @@ public interface MyShoppingCartContract {
          */
         void postDeleteGood(List<GoodslistBean> masageList);
 
+        void postDeleteGood(GoodslistBean goodslistBean);
+
         /**
          * 更新商品数量
          */
-        void postCartUpdate(int cartid, int num, int productid);
+        void postCartUpdate(int cartid, int num, int productid, int flag);
     }
 
     interface View extends BaseView<Presenter, String> {

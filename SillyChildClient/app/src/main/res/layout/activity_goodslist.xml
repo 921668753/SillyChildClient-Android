@@ -9,6 +9,7 @@
     <LinearLayout
         style="@style/Match44"
         android:background="@color/whiteColors"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -21,11 +22,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen30"
+            android:layout_height="@dimen/dimen36"
             android:layout_marginLeft="@dimen/dimen5"
             android:layout_marginRight="@dimen/dimen24"
-            android:layout_marginTop="@dimen/dimen7"
-            android:background="@drawable/shape_search"
+            android:background="@mipmap/home_search_bar_bg"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center|center_vertical"
@@ -37,19 +37,18 @@
                 android:layout_marginLeft="@dimen/dimen14"
                 android:src="@mipmap/search" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_search"
                 style="@style/AutoMatch"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/checkProduct"
+                android:imeOptions="actionSearch"
                 android:maxLength="20"
                 android:minWidth="@dimen/dimen150"
                 android:paddingLeft="@dimen/dimen10"
                 android:singleLine="true"
-                android:imeOptions="actionSearch"
                 android:textColorHint="@color/searchTextColors"
-                android:textCursorDrawable="@drawable/shape_cursor"
                 android:textSize="@dimen/textsize14" />
 
         </LinearLayout>

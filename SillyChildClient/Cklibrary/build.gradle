@@ -49,9 +49,6 @@ dependencies {
 
     //  compile 'com.google.code.gson:gson:latest.release'
 
-//    //流式布局
-//    compile 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
-
     //SweetAlertDialog弹框  https://github.com/F0RIS/sweet-alert-dialog
     compile 'com.github.f0ris.sweetalert:library:1.5.3'
 
@@ -98,9 +95,11 @@ dependencies {
     compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
 
     /**
+     * https://github.com/hongyangAndroid/FlowLayout
      * https://github.com/bingoogolapple/BGAFlowLayout-Android
      * Android流式布局
      */
+    compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
 
     /**

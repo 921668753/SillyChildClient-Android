@@ -210,14 +210,15 @@ public class RequestClient {
     /**
      * 绑定手机
      */
-    public static void postBindingPhone(HttpParams httpParams, final ResponseListener<String> listener) {
-//        String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//        if (StringUtils.isEmpty(accessToken)) {
-//            listener.onFailure(NumericConstants.TOLINGIN + "");
-//            return;
-//        }
-//        httpParams.put("token", accessToken);
-        // HttpRequest.requestPostFORMHttp(URLConstants.BINDPHONE, httpParams, listener);
+    public static void postBindingPhone(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.REGISTER, httpParams, listener);
+    }
+
+    /**
+     * 获取第三方登录验证码
+     */
+    public static void postThirdCode(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.THIRDCODE, httpParams, listener);
     }
 
     /**

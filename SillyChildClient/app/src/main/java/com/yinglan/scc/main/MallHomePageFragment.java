@@ -40,6 +40,7 @@ import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.ApiCatTreeBean;
 import com.yinglan.scc.entity.main.MallHomePageBean.DataBean.HomePageBean;
 import com.yinglan.scc.homepage.BannerDetailsActivity;
 import com.yinglan.scc.homepage.goodslist.GoodsListActivity;
+import com.yinglan.scc.homepage.search.SearchGoodsActivity;
 import com.yinglan.scc.utils.SpacesItemDecoration;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -64,7 +65,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    @BindView(id = R.id.ll_title)
+    @BindView(id = R.id.ll_title, click = true)
     private LinearLayout ll_title;
 
     @BindView(id = R.id.img_search)
@@ -73,7 +74,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 //    @BindView(id = R.id.et_search)
 //    private EditText et_search;
 
-    @BindView(id = R.id.ll_title1)
+    @BindView(id = R.id.ll_title1, click = true)
     private LinearLayout ll_title1;
 
     @BindView(id = R.id.img_search1)
@@ -170,6 +171,10 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.ll_title:
+            case R.id.ll_title1:
+                aty.showActivity(aty, SearchGoodsActivity.class);
+                break;
             default:
                 break;
         }
@@ -351,7 +356,6 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         beautyCareIntent.putExtra("cat", homePageClassificationViewAdapter.getItem(i).getCat_id());
         aty.showActivity(aty, beautyCareIntent);
     }
-
 
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override

@@ -278,6 +278,7 @@
             android:textSize="@dimen/textsize16" />
 
         <TextView
+            android:id="@+id/tv_money"
             style="@style/WrapWrap"
             android:singleLine="true"
             android:text="504.00"

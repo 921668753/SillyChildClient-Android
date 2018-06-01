@@ -2,6 +2,7 @@ package com.yinglan.scc.entity.mine.myshoppingcart;
 
 import com.common.cklibrary.entity.BaseResult;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> {
@@ -9,21 +10,31 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
 
     public class DataBean {
         /**
-         * total : 394
-         * count : 2
-         * storelist : [{"storeprice":{"goodsPrice":394,"orderPrice":394,"shippingPrice":0,"needPayMoney":394,"discountPrice":0,"weight":2100,"point":0,"discountItem":{},"actDiscount":0,"gift_id":0,"bonus_id":0,"is_free_ship":0,"act_free_ship":0,"exchange_point":null,"activity_point":null,"credit_pay":null},"store_id":17,"goodslist":[{"id":1,"product_id":407,"goods_id":401,"name":"菲诗小铺（THE FACE SHOP）金盏花舒缓补水系列","mktprice":58,"price":58,"coupPrice":58,"subtotal":348,"num":6,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/17/goods/2016/5/30/10//02365691_thumbnail.jpg","point":0,"itemtype":0,"sn":"201605300001","addon":null,"specs":null,"catid":45,"others":{},"exchange":null,"unit":null,"goods_type":0,"pmtList":null,"weight":300,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":17,"store_name":"化妆品店铺","goods_transfee_charge":1},{"id":2,"product_id":408,"goods_id":402,"name":"菲诗小铺（THE FACE SHOP）大米调理保湿系列爽肤水","mktprice":46,"price":46,"coupPrice":46,"subtotal":46,"num":1,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/17/goods/2016/5/30/10//20467387_thumbnail.jpg","point":0,"itemtype":0,"sn":"201605300002","addon":null,"specs":null,"catid":42,"others":{},"exchange":null,"unit":null,"goods_type":0,"pmtList":null,"weight":300,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":17,"store_name":"化妆品店铺","goods_transfee_charge":1}],"store_name":"化妆品店铺"}]
+         * total : 2596
+         * countNum : 2
+         * count : 1
+         * storelist : [{"store_id":5,"store_name":"时尚女装/搭配","goodslist":[{"id":56,"product_id":133,"goods_id":133,"name":"ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋","mktprice":1698,"price":1298,"coupPrice":1298,"subtotal":2596,"num":2,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_thumbnail.jpg","point":0,"itemtype":0,"sn":"00029","addon":null,"specs":null,"catid":112,"others":{},"exchange":null,"unit":"","goods_type":0,"pmtList":null,"weight":599,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":5,"store_name":"时尚女装/搭配","goods_transfee_charge":1,"activity_type":0}]}]
          */
 
-        private int total;
+        private String total;
+        private int countNum;
         private int count;
         private List<StorelistBean> storelist;
 
-        public int getTotal() {
+        public String getTotal() {
             return total;
         }
 
-        public void setTotal(int total) {
+        public void setTotal(String total) {
             this.total = total;
+        }
+
+        public int getCountNum() {
+            return countNum;
+        }
+
+        public void setCountNum(int countNum) {
+            this.countNum = countNum;
         }
 
         public int getCount() {
@@ -44,24 +55,14 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
 
         public class StorelistBean {
             /**
-             * storeprice : {"goodsPrice":394,"orderPrice":394,"shippingPrice":0,"needPayMoney":394,"discountPrice":0,"weight":2100,"point":0,"discountItem":{},"actDiscount":0,"gift_id":0,"bonus_id":0,"is_free_ship":0,"act_free_ship":0,"exchange_point":null,"activity_point":null,"credit_pay":null}
-             * store_id : 17
-             * goodslist : [{"id":1,"product_id":407,"goods_id":401,"name":"菲诗小铺（THE FACE SHOP）金盏花舒缓补水系列","mktprice":58,"price":58,"coupPrice":58,"subtotal":348,"num":6,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/17/goods/2016/5/30/10//02365691_thumbnail.jpg","point":0,"itemtype":0,"sn":"201605300001","addon":null,"specs":null,"catid":45,"others":{},"exchange":null,"unit":null,"goods_type":0,"pmtList":null,"weight":300,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":17,"store_name":"化妆品店铺","goods_transfee_charge":1},{"id":2,"product_id":408,"goods_id":402,"name":"菲诗小铺（THE FACE SHOP）大米调理保湿系列爽肤水","mktprice":46,"price":46,"coupPrice":46,"subtotal":46,"num":1,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/17/goods/2016/5/30/10//20467387_thumbnail.jpg","point":0,"itemtype":0,"sn":"201605300002","addon":null,"specs":null,"catid":42,"others":{},"exchange":null,"unit":null,"goods_type":0,"pmtList":null,"weight":300,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":17,"store_name":"化妆品店铺","goods_transfee_charge":1}]
-             * store_name : 化妆品店铺
+             * store_id : 5
+             * store_name : 时尚女装/搭配
+             * goodslist : [{"id":56,"product_id":133,"goods_id":133,"name":"ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋","mktprice":1698,"price":1298,"coupPrice":1298,"subtotal":2596,"num":2,"limitnum":null,"image_default":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_thumbnail.jpg","point":0,"itemtype":0,"sn":"00029","addon":null,"specs":null,"catid":112,"others":{},"exchange":null,"unit":"","goods_type":0,"pmtList":null,"weight":599,"activity_id":null,"is_check":1,"snapshot_id":null,"store_id":5,"store_name":"时尚女装/搭配","goods_transfee_charge":1,"activity_type":0}]
              */
 
-            private StorepriceBean storeprice;
             private int store_id;
             private String store_name;
             private List<GoodslistBean> goodslist;
-
-            public StorepriceBean getStoreprice() {
-                return storeprice;
-            }
-
-            public void setStoreprice(StorepriceBean storeprice) {
-                this.storeprice = storeprice;
-            }
 
             public int getStore_id() {
                 return store_id;
@@ -87,237 +88,70 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                 this.goodslist = goodslist;
             }
 
-            public class StorepriceBean {
+            public class GoodslistBean implements Serializable {
                 /**
-                 * goodsPrice : 394
-                 * orderPrice : 394
-                 * shippingPrice : 0
-                 * needPayMoney : 394
-                 * discountPrice : 0
-                 * weight : 2100
-                 * point : 0
-                 * discountItem : {}
-                 * actDiscount : 0
-                 * gift_id : 0
-                 * bonus_id : 0
-                 * is_free_ship : 0
-                 * act_free_ship : 0
-                 * exchange_point : null
-                 * activity_point : null
-                 * credit_pay : null
-                 */
-
-                private int goodsPrice;
-                private int orderPrice;
-                private int shippingPrice;
-                private int needPayMoney;
-                private int discountPrice;
-                private int weight;
-                private int point;
-                private DiscountItemBean discountItem;
-                private int actDiscount;
-                private int gift_id;
-                private int bonus_id;
-                private int is_free_ship;
-                private int act_free_ship;
-                private Object exchange_point;
-                private Object activity_point;
-                private Object credit_pay;
-
-                public int getGoodsPrice() {
-                    return goodsPrice;
-                }
-
-                public void setGoodsPrice(int goodsPrice) {
-                    this.goodsPrice = goodsPrice;
-                }
-
-                public int getOrderPrice() {
-                    return orderPrice;
-                }
-
-                public void setOrderPrice(int orderPrice) {
-                    this.orderPrice = orderPrice;
-                }
-
-                public int getShippingPrice() {
-                    return shippingPrice;
-                }
-
-                public void setShippingPrice(int shippingPrice) {
-                    this.shippingPrice = shippingPrice;
-                }
-
-                public int getNeedPayMoney() {
-                    return needPayMoney;
-                }
-
-                public void setNeedPayMoney(int needPayMoney) {
-                    this.needPayMoney = needPayMoney;
-                }
-
-                public int getDiscountPrice() {
-                    return discountPrice;
-                }
-
-                public void setDiscountPrice(int discountPrice) {
-                    this.discountPrice = discountPrice;
-                }
-
-                public int getWeight() {
-                    return weight;
-                }
-
-                public void setWeight(int weight) {
-                    this.weight = weight;
-                }
-
-                public int getPoint() {
-                    return point;
-                }
-
-                public void setPoint(int point) {
-                    this.point = point;
-                }
-
-                public DiscountItemBean getDiscountItem() {
-                    return discountItem;
-                }
-
-                public void setDiscountItem(DiscountItemBean discountItem) {
-                    this.discountItem = discountItem;
-                }
-
-                public int getActDiscount() {
-                    return actDiscount;
-                }
-
-                public void setActDiscount(int actDiscount) {
-                    this.actDiscount = actDiscount;
-                }
-
-                public int getGift_id() {
-                    return gift_id;
-                }
-
-                public void setGift_id(int gift_id) {
-                    this.gift_id = gift_id;
-                }
-
-                public int getBonus_id() {
-                    return bonus_id;
-                }
-
-                public void setBonus_id(int bonus_id) {
-                    this.bonus_id = bonus_id;
-                }
-
-                public int getIs_free_ship() {
-                    return is_free_ship;
-                }
-
-                public void setIs_free_ship(int is_free_ship) {
-                    this.is_free_ship = is_free_ship;
-                }
-
-                public int getAct_free_ship() {
-                    return act_free_ship;
-                }
-
-                public void setAct_free_ship(int act_free_ship) {
-                    this.act_free_ship = act_free_ship;
-                }
-
-                public Object getExchange_point() {
-                    return exchange_point;
-                }
-
-                public void setExchange_point(Object exchange_point) {
-                    this.exchange_point = exchange_point;
-                }
-
-                public Object getActivity_point() {
-                    return activity_point;
-                }
-
-                public void setActivity_point(Object activity_point) {
-                    this.activity_point = activity_point;
-                }
-
-                public Object getCredit_pay() {
-                    return credit_pay;
-                }
-
-                public void setCredit_pay(Object credit_pay) {
-                    this.credit_pay = credit_pay;
-                }
-
-                public class DiscountItemBean {
-                }
-            }
-
-            public class GoodslistBean {
-                /**
-                 * id : 1
-                 * product_id : 407
-                 * goods_id : 401
-                 * name : 菲诗小铺（THE FACE SHOP）金盏花舒缓补水系列
-                 * mktprice : 58
-                 * price : 58
-                 * coupPrice : 58
-                 * subtotal : 348
-                 * num : 6
+                 * id : 56
+                 * product_id : 133
+                 * goods_id : 133
+                 * name : ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋
+                 * mktprice : 1698
+                 * price : 1298
+                 * coupPrice : 1298
+                 * subtotal : 2596
+                 * num : 2
                  * limitnum : null
-                 * image_default : http://static.b2b2cv2.javamall.com.cn/attachment//store/17/goods/2016/5/30/10//02365691_thumbnail.jpg
+                 * image_default : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_thumbnail.jpg
                  * point : 0
                  * itemtype : 0
-                 * sn : 201605300001
+                 * sn : 00029
                  * addon : null
                  * specs : null
-                 * catid : 45
+                 * catid : 112
                  * others : {}
                  * exchange : null
-                 * unit : null
+                 * unit :
                  * goods_type : 0
                  * pmtList : null
-                 * weight : 300
+                 * weight : 599
                  * activity_id : null
                  * is_check : 1
                  * snapshot_id : null
-                 * store_id : 17
-                 * store_name : 化妆品店铺
+                 * store_id : 5
+                 * store_name : 时尚女装/搭配
                  * goods_transfee_charge : 1
+                 * activity_type : 0
                  */
 
                 private int id;
                 private int product_id;
                 private int goods_id;
                 private String name;
-                private int mktprice;
+                private String mktprice;
                 private String price;
-                private int coupPrice;
-                private int subtotal;
+                private String coupPrice;
+                private String subtotal;
                 private int num;
-                private Object limitnum;
+                private String limitnum;
                 private String image_default;
                 private int point;
                 private int itemtype;
                 private String sn;
-                private Object addon;
-                private Object specs;
+                private String addon;
+                private String specs;
                 private int catid;
                 private OthersBean others;
-                private Object exchange;
-                private Object unit;
+                private String exchange;
+                private String unit;
                 private int goods_type;
-                private Object pmtList;
+                private String pmtList;
                 private int weight;
-                private Object activity_id;
+                private String activity_id;
                 private int is_check;
-                private Object snapshot_id;
+                private String snapshot_id;
                 private int store_id;
                 private String store_name;
                 private int goods_transfee_charge;
+                private int activity_type;
                 private int isSelected;
                 private int isEdit;
 
@@ -353,11 +187,11 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.name = name;
                 }
 
-                public int getMktprice() {
+                public String getMktprice() {
                     return mktprice;
                 }
 
-                public void setMktprice(int mktprice) {
+                public void setMktprice(String mktprice) {
                     this.mktprice = mktprice;
                 }
 
@@ -369,19 +203,19 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.price = price;
                 }
 
-                public int getCoupPrice() {
+                public String getCoupPrice() {
                     return coupPrice;
                 }
 
-                public void setCoupPrice(int coupPrice) {
+                public void setCoupPrice(String coupPrice) {
                     this.coupPrice = coupPrice;
                 }
 
-                public int getSubtotal() {
+                public String getSubtotal() {
                     return subtotal;
                 }
 
-                public void setSubtotal(int subtotal) {
+                public void setSubtotal(String subtotal) {
                     this.subtotal = subtotal;
                 }
 
@@ -393,11 +227,11 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.num = num;
                 }
 
-                public Object getLimitnum() {
+                public String getLimitnum() {
                     return limitnum;
                 }
 
-                public void setLimitnum(Object limitnum) {
+                public void setLimitnum(String limitnum) {
                     this.limitnum = limitnum;
                 }
 
@@ -433,19 +267,19 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.sn = sn;
                 }
 
-                public Object getAddon() {
+                public String getAddon() {
                     return addon;
                 }
 
-                public void setAddon(Object addon) {
+                public void setAddon(String addon) {
                     this.addon = addon;
                 }
 
-                public Object getSpecs() {
+                public String getSpecs() {
                     return specs;
                 }
 
-                public void setSpecs(Object specs) {
+                public void setSpecs(String specs) {
                     this.specs = specs;
                 }
 
@@ -465,19 +299,19 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.others = others;
                 }
 
-                public Object getExchange() {
+                public String getExchange() {
                     return exchange;
                 }
 
-                public void setExchange(Object exchange) {
+                public void setExchange(String exchange) {
                     this.exchange = exchange;
                 }
 
-                public Object getUnit() {
+                public String getUnit() {
                     return unit;
                 }
 
-                public void setUnit(Object unit) {
+                public void setUnit(String unit) {
                     this.unit = unit;
                 }
 
@@ -489,11 +323,11 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.goods_type = goods_type;
                 }
 
-                public Object getPmtList() {
+                public String getPmtList() {
                     return pmtList;
                 }
 
-                public void setPmtList(Object pmtList) {
+                public void setPmtList(String pmtList) {
                     this.pmtList = pmtList;
                 }
 
@@ -505,11 +339,11 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.weight = weight;
                 }
 
-                public Object getActivity_id() {
+                public String getActivity_id() {
                     return activity_id;
                 }
 
-                public void setActivity_id(Object activity_id) {
+                public void setActivity_id(String activity_id) {
                     this.activity_id = activity_id;
                 }
 
@@ -521,11 +355,11 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.is_check = is_check;
                 }
 
-                public Object getSnapshot_id() {
+                public String getSnapshot_id() {
                     return snapshot_id;
                 }
 
-                public void setSnapshot_id(Object snapshot_id) {
+                public void setSnapshot_id(String snapshot_id) {
                     this.snapshot_id = snapshot_id;
                 }
 
@@ -553,6 +387,14 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.goods_transfee_charge = goods_transfee_charge;
                 }
 
+                public int getActivity_type() {
+                    return activity_type;
+                }
+
+                public void setActivity_type(int activity_type) {
+                    this.activity_type = activity_type;
+                }
+
                 public int getIsSelected() {
                     return isSelected;
                 }
@@ -569,7 +411,7 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.isEdit = isEdit;
                 }
 
-                public class OthersBean {
+                public class OthersBean implements Serializable {
                 }
             }
         }

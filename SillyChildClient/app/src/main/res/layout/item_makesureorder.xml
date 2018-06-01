@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_goodtitle"
+            android:id="@+id/tv_goodName"
             style="@style/MatchWrap"
             android:paddingTop="@dimen/dimen5"
             android:singleLine="true"
@@ -64,7 +64,7 @@
                 android:textSize="@dimen/textsize15" />
 
             <TextView
-                android:id="@+id/tv_number"
+                android:id="@+id/tv_goodNumber"
                 style="@style/WrapWrap"
                 android:singleLine="true"
                 android:text="1"

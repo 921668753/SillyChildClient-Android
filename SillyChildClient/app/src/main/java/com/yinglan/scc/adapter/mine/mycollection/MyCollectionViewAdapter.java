@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.common.cklibrary.utils.MathUtil;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.mycollection.MyCollectionBean.DataBean;
 import com.yinglan.scc.utils.GlideImageLoader;
@@ -44,12 +46,12 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          *商品简介
          */
-        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getBrief());
+        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
 
         /**
          *商品价格
          */
-        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + listBean.getPrice());
+        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
 
         /**
          *是否自营

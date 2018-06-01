@@ -147,6 +147,11 @@
             android:name="com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--首页   搜索界面-->
+        <activity
+            android:name="com.yinglan.scc.homepage.search.SearchGoodsActivity"
+            android:screenOrientation="portrait" />
+
         <!--首页   轮播图-->
         <activity
             android:name="com.yinglan.scc.homepage.BannerDetailsActivity"
@@ -434,12 +439,12 @@
         <!--我的   我的购物车-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.MyShoppingCartActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   我的购物车  确认订单-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.MakeSureOrderActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   我的购物车  编辑购物车-->
         <!--<activity-->
@@ -614,20 +619,20 @@
 
         <!--聚合会话列表-->
         <!--<activity-->
-            <!--android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <!--<data-->
-                    <!--android:host="@string/applicationId"-->
-                    <!--android:pathPrefix="/subconversationlist"-->
-                    <!--android:scheme="rong" />-->
-            <!--</intent-filter>-->
+        <!--<data-->
+        <!--android:host="@string/applicationId"-->
+        <!--android:pathPrefix="/subconversationlist"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--融云end-->
         <!--融云end-->
@@ -687,7 +692,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1106793234" />
+                <data android:scheme="tencent1106946302" />
             </intent-filter>
         </activity>
         <activity

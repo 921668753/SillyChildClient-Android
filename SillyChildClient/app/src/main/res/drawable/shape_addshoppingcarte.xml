@@ -5,7 +5,7 @@
 
     <stroke
         android:width="@dimen/dimen1"
-        android:color="@color/dividercolors1" />
+        android:color="@color/cACACAColors" />
 
     <solid android:color="@android:color/transparent" />
 </shape>

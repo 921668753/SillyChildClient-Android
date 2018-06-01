@@ -32,24 +32,34 @@
     <View style="@style/DividerWidth" />
 
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen49"
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen10"
         android:paddingRight="@dimen/dimen10">
 
-        <ImageView
-            style="@style/WrapWrap"
-            android:src="@mipmap/shopping_cart_selected" />
+        <LinearLayout
+            android:id="@+id/ll_allcheck"
+            style="@style/WrapMatch"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen18">
 
-        <TextView
-            style="@style/WrapWrap"
-            android:paddingLeft="@dimen/dimen7"
-            android:text="@string/allcheck"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize14" />
+            <ImageView
+                android:id="@+id/img_unselected"
+                android:layout_width="@dimen/dimen18"
+                android:layout_height="@dimen/dimen18"
+                android:src="@mipmap/shopping_cart_unselected" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:paddingLeft="@dimen/dimen7"
+                android:text="@string/allcheck"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
 
         <View
             android:layout_width="0dp"
@@ -69,27 +79,31 @@
 
 
         <TextView
+            android:id="@+id/tv_total"
             style="@style/WrapWrap"
             android:text="@string/total"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_renminbi"
             style="@style/WrapWrap"
             android:text="@string/renminbi"
             android:textColor="@color/fF3542Colors"
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:singleLine="true"
-            android:text="504.00000"
+            android:text="0.00"
             android:textColor="@color/fF3542Colors"
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_settleAccounts"
             android:layout_width="@dimen/dimen120"
             android:layout_height="@dimen/dimen35"
             android:layout_marginLeft="@dimen/dimen5"

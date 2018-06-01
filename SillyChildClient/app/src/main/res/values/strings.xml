@@ -164,10 +164,10 @@
 
 
     <!--搜索界面-->
+    <string name="searchThousandsOverseasGoods">在万千海外商品中搜索</string>
     <string name="recentSearch">最近搜索</string>
     <string name="searchFound">搜索发现</string>
     <string name="commonlyClassification">常用分类</string>
-
 
 
     <!--国外城市列表-->
@@ -717,7 +717,7 @@
     <string name="makeSureAddShoppingCart">确定加入购物车</string>
     <string name="determineDeleteCollection">确定删除该商品收藏</string>
     <string name="addCartSuccess">加入购物车成功</string>
-    <string name="notAnythingAdd">亲，您还没有加入任何商品哟~</string>
+
 
     <!--个人中心  收货地址-->
     <string name="defaultAddress">设为默认</string>
@@ -917,6 +917,9 @@
     <string name="multiply">x</string>
     <string name="complete">完成</string>
     <string name="items">件商品</string>
+    <string name="babyNotReduced">该宝贝不能在减少了哟~</string>
+    <string name="notAnythingAdd">亲，您还没有加入任何商品哟~</string>
+    <string name="notChosenAnything">亲，您还没有选择任何商品哟~</string>
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>

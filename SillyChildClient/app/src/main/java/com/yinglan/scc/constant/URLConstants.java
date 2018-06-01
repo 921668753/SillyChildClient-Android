@@ -139,6 +139,12 @@ public class URLConstants {
      */
     public static String USERTHIRDLOGIN = APIURL + "m=Api&c=User&a=thirdLogin";
 
+
+    /**
+     * 获取第三方登录验证码
+     */
+    public static String THIRDCODE = APIURL + "member/thirdCode.do";
+
     /**
      * 短信验证码【手机号注册】
      * 验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.

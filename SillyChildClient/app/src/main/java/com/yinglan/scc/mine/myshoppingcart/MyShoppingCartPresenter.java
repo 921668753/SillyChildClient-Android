@@ -1,20 +1,16 @@
 package com.yinglan.scc.mine.myshoppingcart;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean;
 import com.yinglan.scc.mine.myshoppingcart.dialog.DeleteGoodDialog;
 import com.yinglan.scc.retrofit.RequestClient;
 import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2018/5/15.
@@ -68,7 +64,7 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
     }
 
     /**
-     * @param cartidsList 删除商品
+     * @param cartidsList 批量删除商品
      */
     @Override
     public void postDeleteGood(List<GoodslistBean> cartidsList) {
@@ -101,11 +97,47 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
         deleteGoodDialog.show();
     }
 
+
+    /**
+     * @param goodslistBean 批量删除商品
+     */
+    @Override
+    public void postDeleteGood(GoodslistBean goodslistBean) {
+        String cartidsStr = String.valueOf(goodslistBean.getId());
+        if (StringUtils.isEmpty(cartidsStr)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.delete2), 4);
+            return;
+        }
+        DeleteGoodDialog deleteGoodDialog = new DeleteGoodDialog(KJActivityStack.create().topActivity(), KJActivityStack.create().topActivity().getString(R.string.confirmDeletionGoods));
+        deleteGoodDialog.setDialogCallBack(new DeleteGoodDialog.DialogCallBack() {
+            @Override
+            public void confirm() {
+                deleteGoodDialog.cancel();
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                httpParams.put("cartids", cartidsStr);
+                RequestClient.postCartDelete(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 4);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 4);
+                    }
+                });
+            }
+        });
+        deleteGoodDialog.show();
+    }
+
+
     /**
      * 更新商品数量
      */
     @Override
-    public void postCartUpdate(int cartid, int num, int productid) {
+    public void postCartUpdate(int cartid, int num, int productid, int flag) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("cartid", cartid);
         httpParams.put("num", num);
@@ -113,12 +145,12 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
         RequestClient.postCartUpdate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(String.valueOf(num), flag);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
+                mView.errorMsg(msg, flag);
             }
         });
     }
