@@ -220,7 +220,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
                 } else {
                     GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), iv_minetouxiang, 0, R.mipmap.avatar);
                 }
-                tv_serialNumber.setText(userInfoBean.getData().getUsername());
+                tv_serialNumber.setText(userInfoBean.getData().getShz());
                 if (StringUtils.isEmpty(userInfoBean.getData().getSignature())) {
                     tv_synopsis.setVisibility(View.GONE);
                 } else {
@@ -256,6 +256,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         PreferenceHelper.write(aty, StringConstants.FILENAME, "username", userInfoBean.getData().getUsername());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "nick_name", userInfoBean.getData().getNick_name());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getData().getBirthday());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "shz", userInfoBean.getData().getShz());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "face", userInfoBean.getData().getFace());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getData().getSex());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "province", userInfoBean.getData().getProvince());
@@ -267,6 +268,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         PreferenceHelper.write(aty, StringConstants.FILENAME, "address", userInfoBean.getData().getAddress());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "signature", userInfoBean.getData().getSignature());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getData().getMobile());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "invite_code", userInfoBean.getData().getInvite_code());
     }
 
     @Override

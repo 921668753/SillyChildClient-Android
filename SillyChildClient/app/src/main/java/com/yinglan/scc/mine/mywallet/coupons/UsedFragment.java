@@ -15,7 +15,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.mine.mywallet.coupons.CouponsAdapter;
+import com.yinglan.scc.adapter.mine.mywallet.coupons.CouponsViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.mine.mywallet.coupons.CouponsBean;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -62,7 +62,7 @@ public class UsedFragment extends BaseFragment implements CouponsContract.View, 
      */
     private boolean isShowLoadingMore = false;
 
-    private CouponsAdapter couponsAdapter;
+    private CouponsViewAdapter couponsAdapter;
 
     private int type = 2;
 
@@ -76,7 +76,7 @@ public class UsedFragment extends BaseFragment implements CouponsContract.View, 
     protected void initData() {
         super.initData();
         mPresenter = new CouponsPresenter(this);
-        couponsAdapter = new CouponsAdapter(aty);
+        couponsAdapter = new CouponsViewAdapter(aty, type);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.yinglan.scc.mine.mywallet.recharge;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,8 +14,8 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.StringUtils;
 import com.unionpay.UPPayAssistEx;
 import com.yinglan.scc.R;
-import com.yinglan.scc.constant.StringNewConstants;
-import com.yinglan.scc.entity.AlipayBean;
+import com.yinglan.scc.entity.mine.mywallet.recharge.AlipayBean;
+import com.yinglan.scc.entity.mine.mywallet.recharge.WeChatPayBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.dialog.SubmitBouncedDialog;
 import com.yinglan.scc.utils.PayUtils;
@@ -74,9 +73,9 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     private TextView tv_determinePay;
 
 
-    private double rechargeMoney = 0;
+    private double rechargeMoney = 100;
 
-    private String payWay;
+    private int payWay = 2;
 
     private PayUtils payUtils;
 
@@ -101,8 +100,6 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         initTitle();
         cleanColors(tv_money100);
         clearImg(iv_weChatPay);
-        payWay = StringNewConstants.WeiXinPay;
-
     }
 
     /**
@@ -164,15 +161,15 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 break;
             case R.id.iv_weChatPay:
                 clearImg(iv_weChatPay);
-                payWay = StringNewConstants.WeiXinPay;
+                payWay = 2;
                 break;
             case R.id.iv_alipayToPay:
                 clearImg(iv_alipayToPay);
-                payWay = StringNewConstants.ZhiFuBaoPay;
+                payWay = 1;
                 break;
             case R.id.iv_unionpayPay:
                 clearImg(iv_unionpayPay);
-                payWay = StringNewConstants.ZhiFuBaoPay;
+                payWay = 3;
                 break;
             case R.id.tv_determinePay:
                 showLoadingDialog(getString(R.string.submissionLoad));
@@ -226,36 +223,36 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
 
     @Override
     public void getSuccess(String success, int flag) {
-        AlipayBean alipaybean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
-        if (alipaybean == null || alipaybean.getData() == null) {
-            dismissLoadingDialog();
-            ViewInject.toast(getString(R.string.payParseError));
-        } else {
-            if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.WeiXinPay)) {
-                AlipayBean.ResultBean.WxPayParamsBean wxPayParamsBean = alipaybean.getData().getWxPayParams();
-                if (wxPayParamsBean == null) {
-                    dismissLoadingDialog();
-                    ViewInject.toast(getString(R.string.payParseError));
-                } else {
-                    if (payUtils == null) {
-                        payUtils = new PayUtils(this, RechargeActivity.class);
-                    }
-                    dismissLoadingDialog();
-                    payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
-                }
-            } else if (!TextUtils.isEmpty(payWay) && payWay.equals(StringNewConstants.ZhiFuBaoPay)) {
-                if (payUtils == null) {
-                    payUtils = new PayUtils(this, RechargeActivity.class);
-                }
+        if (payWay == 2) {
+            WeChatPayBean weChatPayBean = (WeChatPayBean) JsonUtil.getInstance().json2Obj(success, WeChatPayBean.class);
+            if (weChatPayBean.getData() == null || StringUtils.isEmpty(weChatPayBean.getData().getAppid())) {
                 dismissLoadingDialog();
-                payUtils.doPay(alipaybean.getData().getAliPayParams());
-            } else {
-                //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
-                if (payUtils == null) {
-                    payUtils = new PayUtils(this, RechargeActivity.class);
-                }
-                //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
+                ViewInject.toast(getString(R.string.payParseError));
+                return;
             }
+            if (payUtils == null) {
+                payUtils = new PayUtils(this, RechargeActivity.class);
+            }
+            dismissLoadingDialog();
+            //    payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
+        } else if (payWay == 1) {
+            AlipayBean alipayBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
+            if (alipayBean.getData() == null || StringUtils.isEmpty(alipayBean.getData().getOrderString())) {
+                dismissLoadingDialog();
+                ViewInject.toast(getString(R.string.payParseError));
+                return;
+            }
+            if (payUtils == null) {
+                payUtils = new PayUtils(this, RechargeActivity.class);
+            }
+            dismissLoadingDialog();
+            payUtils.doPay(alipayBean.getData().getOrderString());
+        } else {
+            //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
+            if (payUtils == null) {
+                payUtils = new PayUtils(this, RechargeActivity.class);
+            }
+            //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
         }
     }
 

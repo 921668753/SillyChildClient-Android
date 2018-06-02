@@ -1,7 +1,6 @@
 package com.yinglan.scc.entity.mine.mywallet.coupons;
 
 import com.common.cklibrary.entity.BaseResult;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -11,46 +10,42 @@ import java.util.List;
 
 public class CouponsBean extends BaseResult<List<CouponsBean.DataBean>> {
 
+
     public class DataBean {
         /**
-         * id : 63
-         * cid : 25
-         * type : 0         发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放  优惠券获取方式 4 充值 5分享 6其他
-         * uid : 60
-         * order_id : 0
-         * get_order_id : null
-         * use_time : 0
-         * code :
-         * send_time : 1477566074
-         * store_id : 1
-         * status : 0
-         * deleted : 0
-         * drv_id : null
-         * model_type : 0     //0|1|2    0  1  2    0|1   0|2  1|2
-         * home_id : null
-         * name : TPshop100元券
-         * use_type : 0
-         * money : 100.00
-         * use_start_time : 1477497600
-         * use_end_time : 1536768000
-         * condition : 899.00
+         * type_id : 1
+         * type_money : 100
+         * type_name : 真正的优惠券
+         * min_goods_amount : 1000
+         * used_time : null
+         * bonus_id : 13
+         * order_id : null
+         * create_time : 1527908816
+         * platform :
+         * limit_days : 3
+         * use_scope :
+         * uname : 18550875927
          */
 
-        private int id;
+        private int type_id;
         private String type_money;
         private String type_name;
         private String min_goods_amount;
-        private String uname;
         private String used_time;
-        private String effective_start;
-        private String effective_end;
+        private int bonus_id;
+        private String order_id;
+        private int create_time;
+        private String platform;
+        private int limit_days;
+        private String use_scope;
+        private String uname;
 
-        public int getId() {
-            return id;
+        public int getType_id() {
+            return type_id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setType_id(int type_id) {
+            this.type_id = type_id;
         }
 
         public String getType_money() {
@@ -77,14 +72,6 @@ public class CouponsBean extends BaseResult<List<CouponsBean.DataBean>> {
             this.min_goods_amount = min_goods_amount;
         }
 
-        public String getUname() {
-            return uname;
-        }
-
-        public void setUname(String uname) {
-            this.uname = uname;
-        }
-
         public String getUsed_time() {
             return used_time;
         }
@@ -93,20 +80,60 @@ public class CouponsBean extends BaseResult<List<CouponsBean.DataBean>> {
             this.used_time = used_time;
         }
 
-        public String getEffective_start() {
-            return effective_start;
+        public int getBonus_id() {
+            return bonus_id;
         }
 
-        public void setEffective_start(String effective_start) {
-            this.effective_start = effective_start;
+        public void setBonus_id(int bonus_id) {
+            this.bonus_id = bonus_id;
         }
 
-        public String getEffective_end() {
-            return effective_end;
+        public String getOrder_id() {
+            return order_id;
         }
 
-        public void setEffective_end(String effective_end) {
-            this.effective_end = effective_end;
+        public void setOrder_id(String order_id) {
+            this.order_id = order_id;
+        }
+
+        public int getCreate_time() {
+            return create_time;
+        }
+
+        public void setCreate_time(int create_time) {
+            this.create_time = create_time;
+        }
+
+        public String getPlatform() {
+            return platform;
+        }
+
+        public void setPlatform(String platform) {
+            this.platform = platform;
+        }
+
+        public int getLimit_days() {
+            return limit_days;
+        }
+
+        public void setLimit_days(int limit_days) {
+            this.limit_days = limit_days;
+        }
+
+        public String getUse_scope() {
+            return use_scope;
+        }
+
+        public void setUse_scope(String use_scope) {
+            this.use_scope = use_scope;
+        }
+
+        public String getUname() {
+            return uname;
+        }
+
+        public void setUname(String uname) {
+            this.uname = uname;
         }
     }
 }

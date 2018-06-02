@@ -1966,21 +1966,20 @@ public class RequestClient {
     /**
      * 充值
      */
-    public static void getRecharge(HttpParams httpParams, final ResponseListener<String> listener) {
-//        doServer(new TokenCallback() {
-//            @Override
-//            public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
-//                }
-//                httpParams.put("token", accessToken);
-//                //   HttpRequest.requestGetHttp(URLConstants.RECHARGEBYALIPAY, httpParams, listener);
-//            }
-//        }, listener);
-
-
+    public static void postRecharge(Context context,HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postRecharge");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ONLINEREC, httpParams, listener);
+            }
+        }, listener);
     }
 
     /**

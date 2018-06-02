@@ -65,12 +65,9 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
      */
     @BindView(id = R.id.ll_bankCard, click = true)
     private LinearLayout ll_bankCard;
+
     @BindView(id = R.id.tv_bankCard)
     private TextView tv_bankCard;
-
-    private String bankCardName;
-    private String bankCardNun;
-    private int bankCardId = 0;
 
 
     @Override
@@ -149,12 +146,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
                 tv_yue.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
                 PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
-                if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
-                    bankCardName = myWalletBean.getData().getOpen_bank();
-                    bankCardNun = myWalletBean.getData().getAccount_no();
-                    bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
-                    bankCardId = myWalletBean.getData().getBank_id();
-                }
+                tv_coupons.setText(StringUtils.toInt(myWalletBean.getData().getBonusNum(), 0) + getString(R.string.ge));
+                tv_bankCard.setText(StringUtils.toInt(myWalletBean.getData().getBankNum(), 0) + getString(R.string.ge));
             }
         }
         dismissLoadingDialog();
@@ -174,7 +167,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent") || ((String) msgEvent.getData()).equals("RxBusAddBankCardEvent")) {
             ((MyWalletContract.Presenter) mPresenter).getMyWallet();
         }
     }

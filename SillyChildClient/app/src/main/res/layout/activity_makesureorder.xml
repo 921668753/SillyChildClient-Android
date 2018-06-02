@@ -132,7 +132,6 @@
 
             <View style="@style/DividerWidth" />
 
-
             <LinearLayout
                 style="@style/MatchWrap"
                 android:background="@color/whiteColors"

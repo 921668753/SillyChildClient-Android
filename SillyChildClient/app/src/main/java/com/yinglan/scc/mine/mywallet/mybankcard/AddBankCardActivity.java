@@ -17,6 +17,8 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.AddBankCardBean;
 import com.yinglan.scc.entity.mine.mywallet.mybankcard.BankBean;
@@ -205,6 +207,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             Intent intent = getIntent();
             //设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
             finish();
         }
     }

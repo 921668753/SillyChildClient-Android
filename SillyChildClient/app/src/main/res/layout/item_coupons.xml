@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/dimen15">
 
     <LinearLayout
+        android:id="@+id/ll_coupons"
         style="@style/MatchWrap"
         android:background="@mipmap/coupon_used"
         android:orientation="horizontal">
@@ -26,7 +27,7 @@
                     style="@style/WrapWrap"
                     android:text="@string/renminbi"
                     android:textColor="@color/whiteColors"
-                    android:textSize="@dimen/textsize14" />
+                    android:textSize="@dimen/textsize12" />
 
                 <TextView
                     android:id="@+id/tv_redpacketnum"
@@ -34,7 +35,7 @@
                     android:singleLine="true"
                     android:text="111"
                     android:textColor="@color/whiteColors"
-                    android:textSize="@dimen/textsize40" />
+                    android:textSize="@dimen/textsize31" />
             </LinearLayout>
 
             <TextView

@@ -263,8 +263,15 @@ public class URLConstants {
 
     /**
      * 添加银行卡(可添加支付宝账号)
-     */
+            */
     public static String PURSEADD = APIURL + "purse/add.do";
+
+
+    /**
+     * 用户充值信息接口
+     */
+    public static String ONLINEREC = APIURL + "online/rec.do";
+
 
     /**
      * 获取收藏商品列表

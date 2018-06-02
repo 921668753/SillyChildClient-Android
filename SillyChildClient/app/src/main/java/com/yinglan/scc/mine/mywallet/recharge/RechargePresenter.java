@@ -1,7 +1,5 @@
 package com.yinglan.scc.mine.mywallet.recharge;
 
-import android.text.TextUtils;
-
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
@@ -21,22 +19,17 @@ public class RechargePresenter implements RechargeContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
-    public void doRecharge(String payWay, double amount) {
+    public void doRecharge(int payWay, double amount) {
         if (amount <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseRechargeAmount1), 0);
             return;
         }
-//        if (amount < 0.01 || amount > 10000) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.rechargeConfine), 0);
-//            return;
-//        }
-
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("payWay", payWay);
+        httpParams.put("pay_type", payWay);
+        httpParams.put("order_type", "CZ");
         httpParams.put("amount", String.valueOf(amount));
-        RequestClient.getRecharge(httpParams, new ResponseListener<String>() {
+        RequestClient.postRecharge(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

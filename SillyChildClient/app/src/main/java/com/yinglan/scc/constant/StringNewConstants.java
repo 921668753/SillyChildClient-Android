@@ -73,16 +73,6 @@ public class StringNewConstants {
     public static String CountyLevel = "直辖县级";
 
     /**
-     * 微信充值
-     */
-    public static String WeiXinPay = "wx";
-
-    /**
-     * 支付宝充值
-     */
-    public static String ZhiFuBaoPay = "zfb";
-
-    /**
      * 主页的后台
      */
     public static String MainServiceAction = "com.yinglan.scc.services.MainReceiver";

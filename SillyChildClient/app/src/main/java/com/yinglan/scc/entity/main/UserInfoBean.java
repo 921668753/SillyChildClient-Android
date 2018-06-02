@@ -14,38 +14,40 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
 
     public class DataBean {
         /**
-         * birthday : null
-         * city : null
+         * birthday : 1527772195
+         * shz : shz37
+         * city : 东城区
          * signature : null
          * level_id : 1
          * collectNum : 0
-         * point : 105
-         * province : null
+         * point : 60
+         * province : 北京
          * tel : null
          * zip : null
          * address : null
-         * mp : 105
+         * mp : 60
          * returnedOrderCount : 0
          * level : 普通会员
          * sex : 1
-         * region_id : null
-         * mobile : 17051335257
+         * region_id : 2821
+         * mobile : 18550875927
          * commentOrderCount : 0
          * face :
-         * province_id : null
-         * nick_name : 17051335257
+         * province_id : 1
+         * nick_name : 18550875927
          * name : null
          * shippingOrderCount : 0
          * favoriteStoreCount : 0
          * invite_code : null
          * paymentOrderCount : 0
-         * region : null
-         * username : 17051335257
-         * city_id : null
-         * favoriteCount : 0
+         * region : 内环到三环里
+         * username : 18550875927
+         * city_id : 2802
+         * favoriteCount : 3
          */
 
         private String birthday;
+        private String shz;
         private String city;
         private String signature;
         private int level_id;
@@ -59,11 +61,11 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
         private int returnedOrderCount;
         private String level;
         private int sex;
-        private String region_id;
+        private int region_id;
         private String mobile;
         private int commentOrderCount;
         private String face;
-        private String province_id;
+        private int province_id;
         private String nick_name;
         private String name;
         private int shippingOrderCount;
@@ -72,7 +74,7 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
         private int paymentOrderCount;
         private String region;
         private String username;
-        private String city_id;
+        private int city_id;
         private int favoriteCount;
 
         public String getBirthday() {
@@ -81,6 +83,14 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
 
         public void setBirthday(String birthday) {
             this.birthday = birthday;
+        }
+
+        public String getShz() {
+            return shz;
+        }
+
+        public void setShz(String shz) {
+            this.shz = shz;
         }
 
         public String getCity() {
@@ -187,11 +197,11 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.sex = sex;
         }
 
-        public String getRegion_id() {
+        public int getRegion_id() {
             return region_id;
         }
 
-        public void setRegion_id(String region_id) {
+        public void setRegion_id(int region_id) {
             this.region_id = region_id;
         }
 
@@ -219,11 +229,11 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.face = face;
         }
 
-        public String getProvince_id() {
+        public int getProvince_id() {
             return province_id;
         }
 
-        public void setProvince_id(String province_id) {
+        public void setProvince_id(int province_id) {
             this.province_id = province_id;
         }
 
@@ -291,11 +301,11 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.username = username;
         }
 
-        public String getCity_id() {
+        public int getCity_id() {
             return city_id;
         }
 
-        public void setCity_id(String city_id) {
+        public void setCity_id(int city_id) {
             this.city_id = city_id;
         }
 
