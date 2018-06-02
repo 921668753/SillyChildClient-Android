@@ -6,13 +6,13 @@ import android.widget.ImageView;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
+import com.yinglan.scc.entity.mine.myshoppingcart.makesureorder.MakeSureOrderBean.DataBean.GoodsBean;
 import com.yinglan.scc.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
-public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodslistBean> {
+public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodsBean> {
 
 
     public MakeSureOrderViewAdaper(Context context) {
@@ -20,16 +20,16 @@ public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodslistBean
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, GoodslistBean model) {
+    protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, GoodsBean model) {
         /**
          *商品图片
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getImage_default(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.getGoods_img(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
 
         /**
          *商品名字
          */
-        viewHolderHelper.setText(R.id.tv_goodName, model.getName());
+        viewHolderHelper.setText(R.id.tv_goodName, model.getGoods_name());
 
         /**
          *商品简介
@@ -39,7 +39,7 @@ public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodslistBean
         /**
          *商品价格
          */
-        viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
+        viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getAmount()) / StringUtils.toDouble(model.getNum())));
 
         /**
          *商品数量

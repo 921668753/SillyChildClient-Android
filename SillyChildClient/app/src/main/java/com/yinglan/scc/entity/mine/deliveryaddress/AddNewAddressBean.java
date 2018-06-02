@@ -2,30 +2,31 @@ package com.yinglan.scc.entity.mine.deliveryaddress;
 
 import com.common.cklibrary.entity.BaseResult;
 
-public class AddressBean extends BaseResult<AddressBean.DataBean> {
+public class AddNewAddressBean extends BaseResult<AddNewAddressBean.DataBean> {
+
 
     public class DataBean {
         /**
-         * addr_id : 1
-         * member_id : 27
-         * name : food
+         * addr_id : 8
+         * member_id : 37
+         * name : 沉了
          * country : null
-         * province_id : 130000
-         * city_id : 131000
-         * region_id : 131082
-         * town_id : 131082450
-         * province : 河北省
-         * city : 廊坊市
-         * region : 三河市
-         * town : 燕郊经济技术开发区
-         * addr : 维多利亚D座22层2333
-         * zip : null
-         * tel : null
-         * mobile : 17188888888
+         * province_id : 2
+         * city_id : 2815
+         * region_id : 51975
+         * town_id : 0
+         * province : 上海
+         * city : 长宁区
+         * region : 城区
+         * town :
+         * addr : 1301好
+         * zip :
+         * tel :
+         * mobile : 17051335257
          * def_addr : 1
          * remark : null
          * isDel : 0
-         * shipAddressName : 公司
+         * shipAddressName : null
          * addressToBeEdit : null
          */
 

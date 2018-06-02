@@ -263,7 +263,7 @@ public class URLConstants {
 
     /**
      * 添加银行卡(可添加支付宝账号)
-            */
+     */
     public static String PURSEADD = APIURL + "purse/add.do";
 
 
@@ -302,6 +302,16 @@ public class URLConstants {
      * 更新购物车某项商品数量
      */
     public static String CARTUPDATE = APIURL + "cart/update.do";
+
+    /**
+     * 确认订单
+     */
+    public static String CARTBALANCE = APIURL + "order/cartBalance.do";
+
+    /**
+     * 创建付款订单
+     */
+    public static String CREATEORDER = APIURL + "order/createOrder.do";
 
     /**
      * 获取订单信息列表

@@ -16,6 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mywallet.coupons.CouponsViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
@@ -71,6 +72,8 @@ public class UnusedFragment extends BaseFragment implements CouponsContract.View
 
     private int type = 1;
 
+    private String money = "";
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (CouponsActivity) getActivity();
@@ -82,6 +85,7 @@ public class UnusedFragment extends BaseFragment implements CouponsContract.View
         super.initData();
         mPresenter = new CouponsPresenter(this);
         couponsAdapter = new CouponsViewAdapter(aty, type);
+        money = aty.getIntent().getStringExtra("money");
     }
 
     @Override
@@ -110,20 +114,18 @@ public class UnusedFragment extends BaseFragment implements CouponsContract.View
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         DataBean dataBean = couponsAdapter.getItem(i);
+        if (StringUtils.toDouble(money) < StringUtils.toDouble(dataBean.getMin_goods_amount())) {
+            ViewInject.toast(getString(R.string.notConformUsageRules));
+            return;
+        }
         Intent intent = new Intent();
-//        if (type.equals("confirmOrder") && resultBean.getModel_type() == 0 && StringUtils.toDouble(total_price) >= StringUtils.toDouble(resultBean.getCondition())) {
-//            // 获取内容
-//            intent.putExtra("money", resultBean.getMoney());
-//            intent.putExtra("id", resultBean.getId());
-//        } else {
-//            ViewInject.toast(getString(R.string.couponCannotUsed));
-//            return;
-//        }
+        // 获取内容
+        intent.putExtra("money", dataBean.getType_money());
+        intent.putExtra("id", dataBean.getBonus_id());
         // 设置结果 结果码，一个数据
         aty.setResult(RESULT_OK, intent);
         // 结束该activity 结束之后，前面的activity才可以处理结果
         aty.finish();
-
     }
 
 

@@ -34,7 +34,7 @@ public class CouponsBean extends BaseResult<List<CouponsBean.DataBean>> {
         private String used_time;
         private int bonus_id;
         private String order_id;
-        private int create_time;
+        private String create_time;
         private String platform;
         private int limit_days;
         private String use_scope;
@@ -96,11 +96,11 @@ public class CouponsBean extends BaseResult<List<CouponsBean.DataBean>> {
             this.order_id = order_id;
         }
 
-        public int getCreate_time() {
+        public String getCreate_time() {
             return create_time;
         }
 
-        public void setCreate_time(int create_time) {
+        public void setCreate_time(String create_time) {
             this.create_time = create_time;
         }
 

@@ -31,6 +31,7 @@
                     android:paddingTop="@dimen/dimen14">
 
                     <TextView
+                        android:id="@+id/tv_name"
                         style="@style/WrapWrap"
                         android:maxWidth="@dimen/dimen170"
                         android:text="小仙女"
@@ -38,6 +39,7 @@
                         android:textSize="@dimen/textsize16" />
 
                     <TextView
+                        android:id="@+id/tv_phone"
                         style="@style/WrapWrap"
                         android:maxWidth="@dimen/dimen130"
                         android:paddingLeft="@dimen/dimen12"
@@ -49,6 +51,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_address"
                     style="@style/MatchWrap"
                     android:layout_below="@id/ll_name"
                     android:background="@color/whiteColors"
@@ -68,7 +71,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_tagpersonname"
+                            android:id="@+id/tv_tagpersonName"
                             style="@style/WrapWrap"
                             android:maxWidth="@dimen/dimen300"
                             android:text="上海市 闵行区 放鹤路1088号"
@@ -76,7 +79,7 @@
                             android:textSize="@dimen/textsize13" />
 
                         <TextView
-                            android:id="@+id/tv_tagpersonaddress"
+                            android:id="@+id/tv_tagpersonAddress"
                             style="@style/WrapWrap"
                             android:layout_marginTop="@dimen/dimen5"
                             android:maxWidth="@dimen/dimen300"
@@ -147,7 +150,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
-                    android:id="@+id/tv_goodsmoney"
+                    android:id="@+id/tv_goodsMoney"
                     style="@style/AutoWrap"
                     android:paddingLeft="@dimen/dimen20"
                     android:singleLine="true"
@@ -197,6 +200,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_couponsMoney"
                     style="@style/AutoWrap"
                     android:paddingBottom="@dimen/dimen10"
                     android:paddingLeft="@dimen/dimen35"
@@ -206,6 +210,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_usable"
                     style="@style/AutoMatch"
                     android:gravity="right"
                     android:paddingBottom="@dimen/dimen10"
@@ -287,6 +292,7 @@
         <TextView style="@style/AutoWrap" />
 
         <TextView
+            android:id="@+id/tv_submitOrder"
             android:layout_width="@dimen/dimen90"
             android:layout_height="@dimen/dimen35"
             android:background="@drawable/shape_goodbtn"

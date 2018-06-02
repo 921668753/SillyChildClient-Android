@@ -35,7 +35,7 @@ public class CouponsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
 
         if (type == 1) {
             viewHolderHelper.setBackgroundRes(R.id.ll_coupons, R.mipmap.coupon_unused);
-            //  viewHolderHelper.setText(R.id.tv_expirydate, DataUtil.formatData(StringUtils.toLong(dataBean.getEffective_end()), "yyyy-MM-dd"));
+            viewHolderHelper.setText(R.id.tv_expirydate, DataUtil.formatData(StringUtils.toLong(dataBean.getCreate_time()) + dataBean.getLimit_days() * 3600 * 24, "yyyy-MM-dd"));
             viewHolderHelper.setVisibility(R.id.iv_image, View.GONE);
         } else if (type == 2) {
             viewHolderHelper.setBackgroundRes(R.id.ll_coupons, R.mipmap.coupon_unused);
@@ -43,7 +43,7 @@ public class CouponsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
             viewHolderHelper.setVisibility(R.id.iv_image, View.GONE);
         } else {
             viewHolderHelper.setBackgroundRes(R.id.ll_coupons, R.mipmap.coupon_used);
-            //  viewHolderHelper.setText(R.id.tv_expirydate, DataUtil.formatData(StringUtils.toLong(dataBean.getEffective_end()), "yyyy-MM-dd"));
+            viewHolderHelper.setText(R.id.tv_expirydate, DataUtil.formatData(StringUtils.toLong(dataBean.getCreate_time()) + dataBean.getLimit_days() * 3600 * 24, "yyyy-MM-dd"));
             viewHolderHelper.setVisibility(R.id.iv_image, View.VISIBLE);
         }
     }

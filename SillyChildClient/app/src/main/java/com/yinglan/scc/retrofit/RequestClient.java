@@ -9,6 +9,8 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpRequest;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.Log;
 import com.kymjs.common.NetworkUtils;
@@ -1435,7 +1437,7 @@ public class RequestClient {
     /**
      * 获取收藏商品列表
      */
-    public static void getFavoriteGoodList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getFavoriteGoodList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getFavoriteGoodList");
         doServer(context, new TokenCallback() {
             @Override
@@ -1455,7 +1457,7 @@ public class RequestClient {
     /**
      * 我的收藏   取消收藏
      */
-    public static void postUnFavoriteGood(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postUnFavoriteGood(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "postUnFavoriteGood");
         doServer(context, new TokenCallback() {
             @Override
@@ -1474,7 +1476,7 @@ public class RequestClient {
     /**
      * 我的收藏   添加到购物车
      */
-    public static void postAddCartGood(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postAddCartGood(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "postAddCartGood");
         doServer(context, new TokenCallback() {
             @Override
@@ -1493,7 +1495,7 @@ public class RequestClient {
     /**
      * 获取购物车商品列表
      */
-    public static void getCartList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getCartList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getCartList");
         doServer(context, new TokenCallback() {
             @Override
@@ -1513,7 +1515,7 @@ public class RequestClient {
     /**
      * 删除购物车中的某项
      */
-    public static void postCartDelete(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postCartDelete(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getCartDelete");
         doServer(context, new TokenCallback() {
             @Override
@@ -1533,7 +1535,7 @@ public class RequestClient {
     /**
      * 更新购物车某项商品数量
      */
-    public static void postCartUpdate(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postCartUpdate(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getCartUpdate");
         doServer(context, new TokenCallback() {
             @Override
@@ -1549,6 +1551,43 @@ public class RequestClient {
         }, listener);
     }
 
+    /**
+     * 获取购物车商品列表
+     */
+    public static void getCartBalance(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getCartBalance");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.CARTBALANCE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 创建付款订单
+     */
+    public static void postCreateOrder(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postCreateOrder");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.CREATEORDER, httpParams, listener);
+            }
+        }, listener);
+    }
 
     /**
      * 显示订单列表
@@ -1966,7 +2005,7 @@ public class RequestClient {
     /**
      * 充值
      */
-    public static void postRecharge(Context context,HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postRecharge(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
         Log.d("tag", "postRecharge");
         doServer(context, new TokenCallback() {
             @Override
@@ -2335,8 +2374,11 @@ public class RequestClient {
         String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
-            PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
-            PreferenceHelper.write(context, StringConstants.FILENAME, "cookies", "");
+            UserUtil.clearUserInfo(context);
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }

@@ -9,6 +9,11 @@ import com.yinglan.scc.R;
 public class PaymentOrderActivity extends BaseActivity {
 
 
+
+
+
+
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_paymentorder);

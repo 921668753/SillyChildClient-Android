@@ -81,7 +81,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     @BindView(id = R.id.tv_nickname, click = true)
     private TextView tv_nickname;
 
-
     @BindView(id = R.id.tv_serialNumber)
     private TextView tv_serialNumber;
 

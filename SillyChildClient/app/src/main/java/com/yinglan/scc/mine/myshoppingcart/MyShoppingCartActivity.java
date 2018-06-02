@@ -219,13 +219,13 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
                 ((MyShoppingCartContract.Presenter) mPresenter).postDeleteGood(mAdapter.getData());
                 break;
             case R.id.tv_settleAccounts:
-                ArrayList<GoodslistBean> list = getAllSelected(mAdapter.getData());
-                if (list.isEmpty() || list.size() <= 0) {
+                String list = ((MyShoppingCartContract.Presenter) mPresenter).getCartIdList(mAdapter.getData());
+                if (StringUtils.isEmpty(list) || list.length() <= 0) {
                     ViewInject.toast(getString(R.string.notChosenAnything));
                     return;
                 }
                 Intent intent = new Intent(aty, MakeSureOrderActivity.class);
-                intent.putExtra("goodslistBean",(Serializable) list);
+                intent.putExtra("goodslistBean", list);
                 intent.putExtra("totalPrice", tv_money.getText().toString().trim());
                 startActivity(intent);
                 break;

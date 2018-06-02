@@ -19,6 +19,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
+import com.yinglan.scc.entity.mine.deliveryaddress.AddNewAddressBean;
 import com.yinglan.scc.entity.mine.deliveryaddress.RegionListBean;
 import com.yinglan.scc.entity.mine.deliveryaddress.RegionListBean.DataBean;
 import com.yinglan.scc.loginregister.LoginActivity;
@@ -212,8 +213,20 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
             } else {
                 iv_defaultAddress.setImageResource(R.mipmap.address_set_as_default_unselected);
             }
-        } else if (flag == 1 || flag == 2) {
+        } else if (flag == 1) {
             Intent intent = getIntent();
+            setResult(RESULT_OK, intent);
+            finish();
+        } else if (flag == 2) {
+            AddNewAddressBean addNewAddressBean = (AddNewAddressBean) JsonUtil.getInstance().json2Obj(success, AddNewAddressBean.class);
+            Intent intent = getIntent();
+            if (addNewAddressBean.getData() != null && addNewAddressBean.getData().getAddr_id() > 0) {
+                intent.putExtra("addr_id", addNewAddressBean.getData().getAddr_id());
+                intent.putExtra("name", addNewAddressBean.getData().getName());
+                intent.putExtra("mobile", addNewAddressBean.getData().getMobile());
+                intent.putExtra("provinceRegion", addNewAddressBean.getData().getProvince() + "  " + addNewAddressBean.getData().getCity() + "  " + addNewAddressBean.getData().getRegion());
+                intent.putExtra("addr", addNewAddressBean.getData().getAddr());
+            }
             setResult(RESULT_OK, intent);
             finish();
         } else if (flag == 3) {

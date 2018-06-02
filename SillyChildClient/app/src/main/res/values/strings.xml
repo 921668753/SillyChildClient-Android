@@ -770,10 +770,6 @@
     <string name="ge">个</string>
 
 
-
-
-
-
     <string name="ellipsis">***</string>
 
 
@@ -786,6 +782,8 @@
     <string name="retry">重试</string>
     <string name="withdrawalRuleDescription">提现规则说明</string>
     <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
+
+
     <!--优惠券 -->
     <string name="unused">未使用</string>
     <string name="used">已使用</string>
@@ -798,7 +796,7 @@
     <string name="unusedCoupons">亲，您还没有未使用的优惠券哟~</string>
     <string name="usedCoupons">亲，您还没有已使用的优惠券哟~</string>
     <string name="expiredCoupons">亲，您还没有已过期的优惠券哟~</string>
-
+    <string name="notConformUsageRules">该优惠券不符合使用规则</string>
 
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>
@@ -926,6 +924,11 @@
     <string name="babyNotReduced">该宝贝不能在减少了哟~</string>
     <string name="notAnythingAdd">亲，您还没有加入任何商品哟~</string>
     <string name="notChosenAnything">亲，您还没有选择任何商品哟~</string>
+
+    <!-- 个人中心 我的购物车 确认订单-->
+    <string name="noAddress1">暂无地址信息</string>
+    <string name="selectAddress">请选择地址</string>
+
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>

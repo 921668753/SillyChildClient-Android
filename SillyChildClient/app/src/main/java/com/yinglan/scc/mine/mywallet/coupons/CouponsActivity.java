@@ -53,6 +53,8 @@ public class CouponsActivity extends BaseActivity {
     @BindView(id = R.id.coupons_content)
     private FrameLayout coupons_content;
 
+    private int type = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_coupons);
@@ -65,7 +67,7 @@ public class CouponsActivity extends BaseActivity {
         usedFragment = new UsedFragment();
         expiredFragment = new ExpiredFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
-
+        type = getIntent().getIntExtra("type", 0);
     }
 
     @Override
@@ -113,9 +115,15 @@ public class CouponsActivity extends BaseActivity {
                 cleanColors(0);
                 break;
             case R.id.ll_useed:
+                if (type == -1) {
+                    return;
+                }
                 cleanColors(1);
                 break;
             case R.id.ll_expired:
+                if (type == -1) {
+                    return;
+                }
                 cleanColors(2);
                 break;
         }

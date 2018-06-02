@@ -29,7 +29,8 @@ public class MyShoppingCartPresenter implements MyShoppingCartContract.Presenter
     /**
      * 获取标记的id
      */
-    private String getCartIdList(List<GoodslistBean> cartsList) {
+    @Override
+    public String getCartIdList(List<GoodslistBean> cartsList) {
         String cartsIdStr = "";
         for (int i = 0; i < cartsList.size(); i++) {
             if (cartsList.get(i).getIsSelected() == 1) {

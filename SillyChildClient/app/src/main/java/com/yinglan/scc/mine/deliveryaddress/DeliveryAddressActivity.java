@@ -18,6 +18,7 @@ import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.deliveryaddress.DeliveryAddressViewAdapter;
 import com.yinglan.scc.entity.mine.deliveryaddress.DeliveryAddressBean;
+import com.yinglan.scc.entity.mine.deliveryaddress.DeliveryAddressBean.DataBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.deliveryaddress.dialog.DeleteAddressDialog;
 
@@ -191,22 +192,19 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        //编辑地址
-//        Intent intent = new Intent(aty, AddNewAddressActivity.class);
-//        intent.putExtra("addr_id", mAdapter.getItem(position).getAddr_id());
-//        intent.putExtra("name", mAdapter.getItem(position).getName());
-//        intent.putExtra("mobile", mAdapter.getItem(position).getMobile());
-//        intent.putExtra("province", mAdapter.getItem(position).getProvince());
-//        intent.putExtra("province_id", mAdapter.getItem(position).getProvince_id());
-//        intent.putExtra("city", mAdapter.getItem(position).getCity());
-//        intent.putExtra("city_id", mAdapter.getItem(position).getCity_id());
-//        intent.putExtra("region", mAdapter.getItem(position).getRegion());
-//        intent.putExtra("region_id", mAdapter.getItem(position).getRegion_id());
-//        //  intent.putExtra("town_id", mAdapter.getItem(position).getTown_id());
-//        intent.putExtra("addr", mAdapter.getItem(position).getAddr());
-//        intent.putExtra("def_addr", mAdapter.getItem(position).getDef_addr());
-//        intent.putExtra("title", getString(R.string.editAddress));
-//        startActivityForResult(intent, REQUEST_CODE);
+        if (getIntent().getIntExtra("type", 0) == -1) {
+            DataBean dataBean = mAdapter.getItem(position);
+            Intent intent = getIntent();
+            if (dataBean != null && dataBean.getAddr_id() > 0) {
+                intent.putExtra("addr_id", dataBean.getAddr_id());
+                intent.putExtra("name", dataBean.getName());
+                intent.putExtra("mobile", dataBean.getMobile());
+                intent.putExtra("provinceRegion", dataBean.getProvince() + "  " + dataBean.getCity() + "  " + dataBean.getRegion());
+                intent.putExtra("addr", dataBean.getAddr());
+            }
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     @Override

@@ -14,6 +14,13 @@ import java.util.List;
 public interface MyShoppingCartContract {
 
     interface Presenter extends BasePresenter {
+
+
+        /**
+         * 获取标记的id
+         */
+        String getCartIdList(List<GoodslistBean> cartsList);
+
         /**
          * 获取购物车列表
          */

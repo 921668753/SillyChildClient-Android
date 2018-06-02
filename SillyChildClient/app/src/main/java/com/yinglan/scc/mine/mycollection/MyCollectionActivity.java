@@ -15,7 +15,6 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.mycollection.MyCollectionViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
