@@ -931,11 +931,13 @@
     <string name="selectAddress">请选择地址</string>
 
     <!--个人中心 我的购物车 支付订单 -->
+    <string name="paymentOrder">支付订单</string>
     <string name="tradingClosed">交易关闭</string>
     <string name="minute">分</string>
     <string name="seconds">秒</string>
 
     <!--个人中心 我的购物车 支付订单 支付完成-->
+
     <string name="buyingSillyChildren">感谢您在傻孩子购买商品！</string>
 
 

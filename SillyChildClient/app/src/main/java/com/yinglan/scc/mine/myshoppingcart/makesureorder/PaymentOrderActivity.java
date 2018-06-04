@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.TimeCount;
@@ -88,18 +89,18 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
         mPresenter = new PaymentOrderPresenter(this);
         order_id = getIntent().getStringExtra("order_id");
         payUtils = new PayUtils(this);
-        time = new TimeCount();
     }
 
 
     @Override
     public void initWidget() {
         super.initWidget();
+        initTitle();
         String money = getIntent().getStringExtra("money");
         tv_money.setText(money);
         String last_time = getIntent().getStringExtra("last_time");
+        time = new TimeCount(StringUtils.toLong(last_time) * 1000 - System.currentTimeMillis(), 1000);
         time.setTimeCountCallBack(this);
-        time.setMillisCountDown(StringUtils.toLong(last_time) * 1000, 1000);
         time.start();
         String balance = getIntent().getStringExtra("balance");
         tv_currentBalance.setText(MathUtil.keepTwo(StringUtils.toDouble(balance)));
@@ -110,6 +111,13 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
             clearImg(img_currentBalance);
             pay_type = "qianbao";
         }
+    }
+
+    /**
+     * 设置标题
+     */
+    public void initTitle() {
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.paymentOrder), true, R.id.titlebar);
     }
 
     @Override
@@ -236,7 +244,7 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
     }
 
     public String getPayMoney() {
-        return getIntent().getStringExtra("money");
+        return getString(R.string.renminbi) + getIntent().getStringExtra("money");
     }
 
 
