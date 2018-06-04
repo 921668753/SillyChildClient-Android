@@ -3,14 +3,16 @@ package com.yinglan.scc.homepage.goodslist.goodsdetails.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.common.cklibrary.common.BaseDialog;
 import com.common.cklibrary.common.ViewInject;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yinglan.scc.R;
 
 /**
@@ -18,19 +20,13 @@ import com.yinglan.scc.R;
  * Created by Administrator on 2017/8/21.
  */
 
-public abstract class SpecificationsBouncedDialog extends Dialog implements View.OnClickListener {
+public abstract class SpecificationsBouncedDialog extends BaseDialog implements View.OnClickListener, SpecificationsBouncedContract.View {
 
+    private int goodsid = 0;
 
-    private Context context;
-    private LinearLayout ll_weChatFriends;
-    private LinearLayout ll_circleFriends;
-    private LinearLayout ll_QQFriends;
-    private LinearLayout ll_sinaWeibo;
-    private TextView tv_cancel;
-
-    public SpecificationsBouncedDialog(Context context) {
+    public SpecificationsBouncedDialog(@NonNull Context context, int goodsid) {
         super(context, R.style.MyDialog);
-        this.context = context;
+        this.goodsid = goodsid;
     }
 
     @Override
@@ -45,45 +41,49 @@ public abstract class SpecificationsBouncedDialog extends Dialog implements View
     }
 
     private void initView() {
-        ll_weChatFriends = (LinearLayout) findViewById(R.id.ll_weChatFriends);
-        ll_weChatFriends.setOnClickListener(this);
-        ll_circleFriends = (LinearLayout) findViewById(R.id.ll_circleFriends);
-        ll_circleFriends.setOnClickListener(this);
-        ll_QQFriends = (LinearLayout) findViewById(R.id.ll_QQFriends);
-        ll_QQFriends.setOnClickListener(this);
-        ll_sinaWeibo = (LinearLayout) findViewById(R.id.ll_sinaWeibo);
-        ll_sinaWeibo.setOnClickListener(this);
-        tv_cancel = (TextView) findViewById(R.id.tv_cancel);
-        tv_cancel.setOnClickListener(this);
+        ImageView img_cancel = (ImageView) findViewById(R.id.img_cancel);
+        img_cancel.setOnClickListener(this);
+        ImageView img_good = (ImageView) findViewById(R.id.img_good);
+
+        TextView tv_inventoryEnough = (TextView) findViewById(R.id.tv_inventoryEnough);
+
+        ListView lv_specifications = (ListView) findViewById(R.id.lv_specifications);
+        // lv_specifications.setAdapter();
+        TextView tv_determine = (TextView) findViewById(R.id.tv_determine);
+        tv_determine.setOnClickListener(this);
+        mPresenter = new SpecificationsBouncedPresenter(this);
+        showLoadingDialog(mContext.getString(R.string.dataLoad));
+        ((SpecificationsBouncedContract.Presenter) mPresenter).getGoodsSpec(mContext, goodsid);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_weChatFriends:
-                dismiss();
-                share(SHARE_MEDIA.WEIXIN);
-                break;
-            case R.id.ll_circleFriends:
-                dismiss();
-                share(SHARE_MEDIA.WEIXIN_CIRCLE);
-                break;
-            case R.id.ll_QQFriends:
-                dismiss();
-                share(SHARE_MEDIA.QQ);
-                break;
-            case R.id.ll_sinaWeibo:
-                dismiss();
-                ViewInject.toast("暂未开发");
-                //   share(SHARE_MEDIA.QZONE);
-                break;
-            case R.id.tv_cancel:
+            case R.id.img_cancel:
                 dismiss();
                 break;
+
+
+
         }
     }
 
-    public abstract void share(SHARE_MEDIA platform);
+    public abstract void share(String platform);
 
 
+    @Override
+    public void setPresenter(SpecificationsBouncedContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        ViewInject.toast(msg);
+    }
 }

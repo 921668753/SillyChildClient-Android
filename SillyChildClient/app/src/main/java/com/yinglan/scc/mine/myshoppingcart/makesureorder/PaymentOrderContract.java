@@ -13,9 +13,9 @@ public interface PaymentOrderContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取购物车列表
+         * 订单支付信息接口
          */
-        void getMyShoppingCartList();
+        void getOnlinePay(String order_id, String pay_type);
     }
 
     interface View extends BaseView<Presenter, String> {

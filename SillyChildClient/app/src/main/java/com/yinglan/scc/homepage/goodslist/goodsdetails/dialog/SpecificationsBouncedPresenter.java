@@ -12,6 +12,7 @@ import com.yinglan.scc.retrofit.RequestClient;
  */
 
 public class SpecificationsBouncedPresenter implements SpecificationsBouncedContract.Presenter {
+
     private SpecificationsBouncedContract.View mView;
 
     public SpecificationsBouncedPresenter(SpecificationsBouncedContract.View view) {
@@ -22,7 +23,7 @@ public class SpecificationsBouncedPresenter implements SpecificationsBouncedCont
     @Override
     public void getGoodsSpec(Context context, int id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("id", id);
+        httpParams.put("goodsid", id);
         RequestClient.getGoodsSpec(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -1,7 +1,6 @@
 package com.yinglan.scc.mine.myshoppingcart;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.yinglan.scc.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

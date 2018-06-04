@@ -14,14 +14,13 @@ import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.adapter.mine.myshoppingcart.MakeSureOrderViewAdaper;
-import com.yinglan.scc.entity.mine.myshoppingcart.MyShoppingCartBean.DataBean.StorelistBean.GoodslistBean;
+import com.yinglan.scc.adapter.mine.myshoppingcart.makesureorder.MakeSureOrderViewAdaper;
+import com.yinglan.scc.entity.mine.myshoppingcart.makesureorder.CreateOrderBean;
 import com.yinglan.scc.entity.mine.myshoppingcart.makesureorder.MakeSureOrderBean;
+import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.deliveryaddress.AddNewAddressActivity;
 import com.yinglan.scc.mine.deliveryaddress.DeliveryAddressActivity;
 import com.yinglan.scc.mine.mywallet.coupons.CouponsActivity;
-
-import java.util.ArrayList;
 
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scc.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
@@ -64,11 +63,12 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
     @BindView(id = R.id.tv_goodsMoney)
     private TextView tv_goodsMoney;
 
+
     /**
-     * 价格
+     * 运费
      */
-    @BindView(id = R.id.tv_money)
-    public TextView tv_money;
+    @BindView(id = R.id.tv_freightMoney)
+    public TextView tv_freightMoney;
 
 
     /**
@@ -79,6 +79,19 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
 
     @BindView(id = R.id.tv_usable, click = true)
     public TextView tv_usable;
+
+
+    /**
+     * 优惠活动
+     */
+    @BindView(id = R.id.tv_preferentialActivities)
+    public TextView tv_preferentialActivities;
+
+    /**
+     * 合计价格
+     */
+    @BindView(id = R.id.tv_money)
+    public TextView tv_money;
 
     @BindView(id = R.id.tv_submitOrder, click = true)
     public TextView tv_submitOrder;
@@ -154,7 +167,6 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
                 break;
         }
 
-
     }
 
     @Override
@@ -175,20 +187,38 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
                 tv_name.setText(getString(R.string.noAddress1));
                 tv_phone.setVisibility(View.GONE);
                 ll_address.setVisibility(View.GONE);
-                return;
+            } else {
+                addr_id = makeSureOrderBean.getData().getAddress().getAddr_id();
+                tv_phone.setVisibility(View.VISIBLE);
+                ll_address.setVisibility(View.VISIBLE);
+                tv_name.setText(makeSureOrderBean.getData().getAddress().getName());
+                tv_phone.setText(makeSureOrderBean.getData().getAddress().getMobile());
+                tv_tagpersonName.setText(makeSureOrderBean.getData().getAddress().getProvince() + "  " + makeSureOrderBean.getData().getAddress().getCity() + "  " + makeSureOrderBean.getData().getAddress().getRegion());
+                tv_tagpersonAddress.setText(makeSureOrderBean.getData().getAddress().getAddr());
             }
-            tv_phone.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            tv_name.setText(makeSureOrderBean.getData().getAddress().getName());
-            tv_phone.setText(makeSureOrderBean.getData().getAddress().getMobile());
-            tv_tagpersonName.setText(makeSureOrderBean.getData().getAddress().getProvince() + "  " + makeSureOrderBean.getData().getAddress().getCity() + "  " + makeSureOrderBean.getData().getAddress().getRegion());
-            tv_tagpersonAddress.setText(makeSureOrderBean.getData().getAddress().getAddr());
             if (makeSureOrderBean.getData().getGoods() != null && makeSureOrderBean.getData().getGoods().size() > 0) {
                 makeSureOrderViewAdaper.clear();
                 makeSureOrderViewAdaper.addMoreData(makeSureOrderBean.getData().getGoods());
             }
+            tv_goodsMoney.setText(getString(R.string.renminbi) + totalPrice);
+            tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getShip_account())));
+            tv_usable.setText(makeSureOrderBean.getData().getOrderInfo().getBonus_account() + getString(R.string.usable1));
+            if (StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getActivity_account()) > 0) {
+                tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getActivity_account())));
+            }
         } else if (flag == 1) {
+            CreateOrderBean createOrderBean = (CreateOrderBean) JsonUtil.getInstance().json2Obj(success, CreateOrderBean.class);
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
+
+            intent.putExtra("name", tv_name.getText().toString().trim());
+            intent.putExtra("mobile", tv_phone.getText().toString().trim());
+            intent.putExtra("address", tv_tagpersonName.getText().toString().trim().replace(" ", "") + tv_tagpersonAddress.getText().toString().trim());
+
+            intent.putExtra("orderCode", "orderCode");
+            intent.putExtra("money", tv_money.getText().toString().trim());
+            intent.putExtra("order_id", createOrderBean.getData().getOrder_id());
+            intent.putExtra("last_time", createOrderBean.getData().getLast_time());
+            intent.putExtra("balance", createOrderBean.getData().getBalance());
             showActivity(aty, intent);
         }
         dismissLoadingDialog();
@@ -197,8 +227,14 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-
-
+        if (isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+            if (flag == 0) {
+                finish();
+            }
+            return;
+        }
+        ViewInject.toast(msg);
     }
 
 
@@ -206,15 +242,11 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_CODE_GET && resultCode == RESULT_OK) {
-            //   tv_money.setText(withdrawalAmount);
             String money = data.getStringExtra("money");
             bonusid = data.getIntExtra("id", 0);
-            tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(money)));
-        } else if (requestCode == RESULT_CODE_BASKET_ADD && resultCode == RESULT_OK) {
-            String money = data.getStringExtra("money");
-            bonusid = data.getIntExtra("id", 0);
-            tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(money)));
-        } else if (requestCode == RESULT_CODE_BASKET_MINUS && resultCode == RESULT_OK) {
+            tv_couponsMoney.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(money)));
+            tv_money.setText(calculationTotal());
+        } else if (requestCode == RESULT_CODE_BASKET_ADD && resultCode == RESULT_OK || requestCode == RESULT_CODE_BASKET_MINUS && resultCode == RESULT_OK) {
             String name = data.getStringExtra("name");
             addr_id = data.getIntExtra("addr_id", 0);
             String mobile = data.getStringExtra("mobile");
@@ -228,6 +260,16 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
             tv_tagpersonName.setText(provinceRegion);
             tv_tagpersonAddress.setText(addr);
         }
+    }
+
+    /**
+     * 计算合计
+     */
+    private String calculationTotal() {
+        double total = 0;
+        total = StringUtils.toDouble(tv_goodsMoney.getText().toString().trim().substring(1)) + StringUtils.toDouble(tv_freightMoney.getText().toString().trim().substring(1))
+                + StringUtils.toDouble(tv_couponsMoney.getText().toString().trim().substring(1)) + StringUtils.toDouble(tv_preferentialActivities.getText().toString().trim().substring(1));
+        return MathUtil.keepTwo(total);
     }
 
 

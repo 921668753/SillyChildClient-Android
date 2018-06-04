@@ -8,6 +8,7 @@ import android.support.v4.content.FileProvider;
 
 import com.common.cklibrary.common.StringConstants;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,11 +38,11 @@ public class UserUtil {
      * @return
      */
     public static String getResTokenInfo(Context context) {
-        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", "");
+        String rongYunToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "rongYunToken", null);
         if (rongYunToken != null) {
             return rongYunToken;
         } else {
-            return "";
+            return null;
         }
     }
 
@@ -100,10 +101,12 @@ public class UserUtil {
      *                退出融云
      */
     public static void quitRc(Context context) {
+        if (!StringUtils.isEmpty(getResTokenInfo(context))) {
+            //清除融云信息，退出登陆
+            RongIM.getInstance().logout();
+        }
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", null);
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", null);
         //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
-        //清除融云信息，退出登陆
-        RongIM.getInstance().logout();
     }
 }

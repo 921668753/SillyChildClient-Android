@@ -90,6 +90,7 @@
         <!--登录-->
         <activity
             android:name="com.yinglan.scc.loginregister.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--选择国家或地区-->
@@ -444,6 +445,16 @@
         <!--我的   我的购物车  确认订单-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.MakeSureOrderActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--我的   我的购物车  支付订单-->
+        <activity
+            android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.PaymentOrderActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--我的   我的购物车  支付订单  支付完成-->
+        <activity
+            android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.payresult.PayCompleteActivity"
             android:screenOrientation="portrait"/>
 
         <!--我的   我的购物车  编辑购物车-->

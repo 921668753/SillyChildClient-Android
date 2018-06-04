@@ -157,7 +157,6 @@ public class URLConstants {
      */
     public static String SENDFINFDCODE = APIURL + "member/send-find-code.do";
 
-
     /**
      * 用户注册
      */
@@ -169,17 +168,10 @@ public class URLConstants {
      */
     public static String USERRESTPWD = APIURL + "member/mobile-change-pass.do";
 
-
-    /**
-     * 物流定位轨迹搜素
-     */
-    public static String LOGISTICSPOSITIONING = "http://yuntuapi.amap.com/datamanage/data/list";
-
     /**
      * 消息-系统消息列表
      */
     public static String SYSTEMMESSAGELIST = APIURL + "m=Api&c=Message&a=getSystemMessage";
-
 
     /**
      * 获取用户信息
@@ -312,6 +304,11 @@ public class URLConstants {
      * 创建付款订单
      */
     public static String CREATEORDER = APIURL + "order/createOrder.do";
+
+    /**
+     * 订单支付信息接口
+     */
+    public static String ONLINEPAY = APIURL + "online/pay.do";
 
     /**
      * 获取订单信息列表

@@ -6,13 +6,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen370"
+        android:layout_height="@dimen/dimen470"
         android:layout_alignParentBottom="true"
         android:background="@color/whiteColors"
         android:orientation="vertical">
 
         <LinearLayout
             style="@style/MatchWrap"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -27,9 +28,11 @@
             <TextView style="@style/AutoWrap" />
 
             <ImageView
+                android:id="@+id/img_cancel"
                 android:layout_width="@dimen/dimen42"
                 android:layout_height="@dimen/dimen42"
-                android:padding="@dimen/dimen15" />
+                android:padding="@dimen/dimen15"
+                android:src="@mipmap/quxiao" />
 
         </LinearLayout>
 
@@ -42,6 +45,7 @@
 
 
             <ImageView
+                android:id="@+id/img_good"
                 android:layout_width="@dimen/dimen70"
                 android:layout_height="@dimen/dimen70"
                 android:layout_margin="@dimen/dimen15"
@@ -54,6 +58,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_money"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen17"
                     android:text="￥340.00"
@@ -68,6 +73,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_inventoryEnough"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen5"
                     android:text="@string/inventoryEnough"
@@ -79,16 +85,89 @@
 
         <TextView style="@style/DividerWidth" />
 
-        <ListView
-            android:id="@+id/lv_specifications"
+        <ScrollView
             style="@style/MatchAuto"
-            android:divider="@color/background"
-            android:dividerHeight="@dimen/dimen1"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"
-            tools:listitem="@layout/dialog_item_specificationsbounced" />
+            android:scrollbars="none">
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="vertical">
+
+                <com.common.cklibrary.utils.myview.ChildListView
+                    android:id="@+id/lv_specifications"
+                    style="@style/MatchAuto"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="@dimen/dimen1"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none"
+                    android:visibility="gone"
+                    tools:listitem="@layout/dialog_item_specificationsbounced" />
+
+                <TextView style="@style/DividerWidth" />
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginBottom="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15">
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:text="@string/purchaseQuantity"
+                        android:textColor="@color/hintColors"
+                        android:textSize="@dimen/textsize13" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dimen85"
+                        android:layout_height="@dimen/dimen25"
+
+                        android:background="@drawable/shape_addshoppingcarte"
+                        android:minWidth="@dimen/dimen85"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_subtract"
+                            android:layout_width="@dimen/dimen23"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/subtract"
+                            android:textColor="@color/bEBEBEColors"
+                            android:textSize="@dimen/textsize15" />
+
+                        <View style="@style/DividerHeight" />
+
+                        <TextView
+                            android:id="@+id/tv_goodNumber"
+                            style="@style/AutoMatch"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/textsize15" />
+
+                        <View style="@style/DividerHeight" />
+
+                        <TextView
+                            android:id="@+id/tv_add"
+                            android:layout_width="@dimen/dimen23"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/textsize15" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
         <TextView
+            android:id="@+id/tv_determine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen40"
             android:background="@color/greenColors"

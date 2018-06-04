@@ -1584,10 +1584,30 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestGetHttp(context, URLConstants.CREATEORDER, httpParams, listener);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.CREATEORDER, httpParams, listener);
             }
         }, listener);
     }
+
+    /**
+     * 订单支付信息接口
+     */
+    public static void getOnlinePay(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOnlinePay");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ONLINEPAY, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 显示订单列表
@@ -2375,10 +2395,12 @@ public class RequestClient {
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
             UserUtil.clearUserInfo(context);
-            /**
-             * 发送消息
-             */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MineFragment"))) {
+                /**
+                 * 发送消息
+                 */
+                RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+            }
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }

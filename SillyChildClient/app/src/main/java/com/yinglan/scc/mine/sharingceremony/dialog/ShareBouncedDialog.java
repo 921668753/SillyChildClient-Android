@@ -1,4 +1,4 @@
-package com.yinglan.scc.dialog;
+package com.yinglan.scc.mine.sharingceremony.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.common.cklibrary.common.ViewInject;
 import com.yinglan.scc.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -22,11 +21,6 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
 
 
     private Context context;
-    private LinearLayout ll_weChatFriends;
-    private LinearLayout ll_circleFriends;
-    private LinearLayout ll_QQFriends;
-    private LinearLayout ll_sinaWeibo;
-    private TextView tv_cancel;
 
     public ShareBouncedDialog(Context context) {
         super(context, R.style.MyDialog);
@@ -45,15 +39,15 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
     }
 
     private void initView() {
-        ll_weChatFriends = (LinearLayout) findViewById(R.id.ll_weChatFriends);
+        LinearLayout ll_weChatFriends = (LinearLayout) findViewById(R.id.ll_weChatFriends);
         ll_weChatFriends.setOnClickListener(this);
-        ll_circleFriends = (LinearLayout) findViewById(R.id.ll_circleFriends);
+        LinearLayout ll_circleFriends = (LinearLayout) findViewById(R.id.ll_circleFriends);
         ll_circleFriends.setOnClickListener(this);
-        ll_QQFriends = (LinearLayout) findViewById(R.id.ll_QQFriends);
+        LinearLayout ll_QQFriends = (LinearLayout) findViewById(R.id.ll_QQFriends);
         ll_QQFriends.setOnClickListener(this);
-        ll_sinaWeibo = (LinearLayout) findViewById(R.id.ll_sinaWeibo);
+        LinearLayout ll_sinaWeibo = (LinearLayout) findViewById(R.id.ll_sinaWeibo);
         ll_sinaWeibo.setOnClickListener(this);
-        tv_cancel = (TextView) findViewById(R.id.tv_cancel);
+        TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
     }
 
@@ -74,8 +68,7 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
                 break;
             case R.id.ll_sinaWeibo:
                 dismiss();
-                ViewInject.toast("暂未开发");
-                //   share(SHARE_MEDIA.QZONE);
+                share(SHARE_MEDIA.QZONE);
                 break;
             case R.id.tv_cancel:
                 dismiss();

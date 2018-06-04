@@ -1,4 +1,4 @@
-package com.yinglan.scc.adapter.mine.myshoppingcart;
+package com.yinglan.scc.adapter.mine.myshoppingcart.makesureorder;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -12,6 +12,9 @@ import com.yinglan.scc.utils.GlideImageLoader;
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
+/**
+ * 确认订单
+ */
 public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodsBean> {
 
 
@@ -39,7 +42,7 @@ public class MakeSureOrderViewAdaper extends BGAAdapterViewAdapter<GoodsBean> {
         /**
          *商品价格
          */
-        viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getAmount()) / StringUtils.toDouble(model.getNum())));
+        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
 
         /**
          *商品数量

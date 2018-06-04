@@ -133,7 +133,7 @@
     <dimen name="dimen320">320dp</dimen>
     <dimen name="dimen350">350dp</dimen>
     <dimen name="dimen370">370dp</dimen>
-
+    <dimen name="dimen470">470dp</dimen>
 
     <dimen name="textsize6">6sp</dimen>
     <dimen name="textsize8">8sp</dimen>

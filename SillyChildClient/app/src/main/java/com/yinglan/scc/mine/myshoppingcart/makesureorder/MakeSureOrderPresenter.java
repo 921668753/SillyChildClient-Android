@@ -48,9 +48,11 @@ public class MakeSureOrderPresenter implements MakeSureOrderContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("cartIds", cartIds);
+        httpParams.put("paymentId", 0);
         httpParams.put("addressId", addressId);
-        httpParams.put("bonusid", bonusid);
+        if (bonusid != 0) {
+            httpParams.put("bonusid", bonusid);
+        }
         RequestClient.postCreateOrder(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

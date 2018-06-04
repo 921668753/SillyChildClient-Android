@@ -90,7 +90,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     public void initData() {
         super.initData();
         mPresenter = new RechargePresenter(this);
-        payUtils = new PayUtils(this, RechargeActivity.class);
+        payUtils = new PayUtils(this);
         initDialog();
     }
 
@@ -176,6 +176,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 if (!StringUtils.isEmpty(et_pleaseRechargeAmount.getText().toString()) && StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString().trim()) > 0) {
                     rechargeMoney = StringUtils.toDouble(et_pleaseRechargeAmount.getText().toString().trim());
                 }
+
                 ((RechargeContract.Presenter) mPresenter).doRecharge(payWay, rechargeMoney);
                 break;
         }
@@ -231,10 +232,10 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 return;
             }
             if (payUtils == null) {
-                payUtils = new PayUtils(this, RechargeActivity.class);
+                payUtils = new PayUtils(this);
             }
             dismissLoadingDialog();
-            //    payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
+            payUtils.doPayment(weChatPayBean.getData().getAppid(), weChatPayBean.getData().getPartnerid(), weChatPayBean.getData().getPrepayid(), weChatPayBean.getData().getPackageX(), weChatPayBean.getData().getNoncestr(), weChatPayBean.getData().getTimestamp(), weChatPayBean.getData().getSign());
         } else if (payWay == 1) {
             AlipayBean alipayBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
             if (alipayBean.getData() == null || StringUtils.isEmpty(alipayBean.getData().getOrderString())) {
@@ -243,14 +244,14 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 return;
             }
             if (payUtils == null) {
-                payUtils = new PayUtils(this, RechargeActivity.class);
+                payUtils = new PayUtils(this);
             }
             dismissLoadingDialog();
             payUtils.doPay(alipayBean.getData().getOrderString());
         } else {
             //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
             if (payUtils == null) {
-                payUtils = new PayUtils(this, RechargeActivity.class);
+                payUtils = new PayUtils(this);
             }
             //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
         }

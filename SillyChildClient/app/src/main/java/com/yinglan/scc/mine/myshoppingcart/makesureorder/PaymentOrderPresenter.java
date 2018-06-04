@@ -25,11 +25,12 @@ public class PaymentOrderPresenter implements PaymentOrderContract.Presenter {
      * 获取购物车列表
      */
     @Override
-    public void getMyShoppingCartList() {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
-
+    public void getOnlinePay(String order_id, String pay_type) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getCartList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("order_id", order_id);
+        httpParams.put("order_type", "DD");
+        httpParams.put("pay_type", pay_type);
+        RequestClient.getOnlinePay(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

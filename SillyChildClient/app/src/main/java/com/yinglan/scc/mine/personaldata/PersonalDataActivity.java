@@ -411,7 +411,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 birthday = date.getTime() / 1000;
                 //birthdaycalendar.setTime(date);
                 showLoadingDialog(getString(R.string.saveLoad));

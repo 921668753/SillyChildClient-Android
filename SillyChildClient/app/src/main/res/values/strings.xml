@@ -14,6 +14,7 @@
     <string name="download">下载中&#8230;</string>
     <string name="shareJumpLoad">分享跳转中&#8230;</string>
     <string name="saveLoad">保存中&#8230;</string>
+    <string name="paymentLoad">支付中&#8230;</string>
     <string name="deleteLoad">删除中&#8230;</string>
     <string name="addLoad">加入中&#8230;</string>
     <!--Dialog-->
@@ -614,7 +615,7 @@
     <string name="selectColor">请选择颜色</string>
     <string name="inventoryEnough">库存充足</string>
     <string name="buyNow">立即购买</string>
-
+    <string name="purchaseQuantity">购买数量</string>
 
     <!--商城  店铺首页  全部商品-->
     <string name="shopHomepage">店铺首页</string>
@@ -929,6 +930,14 @@
     <string name="noAddress1">暂无地址信息</string>
     <string name="selectAddress">请选择地址</string>
 
+    <!--个人中心 我的购物车 支付订单 -->
+    <string name="tradingClosed">交易关闭</string>
+    <string name="minute">分</string>
+    <string name="seconds">秒</string>
+
+    <!--个人中心 我的购物车 支付订单 支付完成-->
+    <string name="buyingSillyChildren">感谢您在傻孩子购买商品！</string>
+
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
@@ -1134,7 +1143,7 @@
     <string name="goodsTogether">商品合计：</string>
     <string name="freight1">运费：</string>
     <string name="coupons1">优惠券：</string>
-    <string name="usable1">一张可用</string>
+    <string name="usable1">张可用</string>
     <string name="preferentialActivities">活动优惠：</string>
     <string name="submitTime">提交时间：</string>
     <string name="amountRealPay">实付金额：</string>
@@ -1142,7 +1151,8 @@
     <string name="deliveryTime">发货时间：</string>
 
     <string name="waitingPayment">等待买家付款</string>
-    <string name="lateCancelled">请在50分钟内付款，逾期订单将被取消</string>
+    <string name="lateCancelled">请在</string>
+    <string name="lateCancelled1">内付款，逾期订单将被取消</string>
     <string name="payment1">付款</string>
     <string name="checkLogistics">查看物流</string>
 

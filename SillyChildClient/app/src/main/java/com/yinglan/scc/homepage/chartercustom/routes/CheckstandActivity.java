@@ -237,14 +237,14 @@ public class CheckstandActivity extends BaseActivity implements CheckstandContra
                             dismissLoadingDialog();
                             ViewInject.toast(getString(R.string.payParseError));
                         }else{
-                            if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
+                            if (payUtils == null) payUtils = new PayUtils(this);
                             dismissLoadingDialog();
                             payUtils.doPayment(wxPayParamsBean.getAppid(), wxPayParamsBean.getPartnerid(), wxPayParamsBean.getPrepayid(), wxPayParamsBean.getPackageX(), wxPayParamsBean.getNoncestr(), wxPayParamsBean.getTimestamp(), wxPayParamsBean.getSign());
                         }
                         break;
                     case NumericConstants.orderAplipay:
                         Log.d("调试","订单支付宝支付结果："+success);
-                        if (payUtils == null) payUtils = new PayUtils(this, RechargeActivity.class);
+                        if (payUtils == null) payUtils = new PayUtils(this);
                         payUtils.doPay(payFinshBean.getData().getAliPayParams());
                         break;
                     case NumericConstants.orderBalance:

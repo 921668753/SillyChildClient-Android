@@ -85,7 +85,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_buyNow"
+            android:id="@+id/tv_addShoppingCart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.9"
@@ -96,7 +96,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
-            android:id="@+id/tv_addShoppingCart"
+            android:id="@+id/tv_buyNow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.9"

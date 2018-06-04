@@ -51,7 +51,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
 
     private MainActivity aty;
 
-    @BindView(id = R.id.mRefreshLayout, click = true)
+    @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
     @BindView(id = R.id.sv_mine)
@@ -127,8 +127,8 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
-        mRefreshLayout.beginRefreshing();
         sv_mine.setOnScrollChangeListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
 

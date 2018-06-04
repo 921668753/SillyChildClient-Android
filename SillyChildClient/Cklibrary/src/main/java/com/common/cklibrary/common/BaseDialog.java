@@ -1,21 +1,28 @@
 package com.common.cklibrary.common;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.view.View;
 
+import com.common.cklibrary.R;
+import com.kymjs.rxvolley.RxVolley;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by Administrator on 2017/9/7.
  */
 
-public abstract class BaseDialog extends Dialog implements View.OnClickListener, I_KJDialog {
+public class BaseDialog extends Dialog implements LoadingDialogView {
+
+    public Object mPresenter = null;
 
     public Context mContext;
+
+    private SweetAlertDialog mLoadingDialog = null;
 
     public BaseDialog(@NonNull Context context) {
         super(context);
@@ -32,62 +39,49 @@ public abstract class BaseDialog extends Dialog implements View.OnClickListener,
         this.mContext = context;
     }
 
+    /**
+     * @param title show Dialog
+     */
+    @SuppressWarnings("deprecation")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRootView(); // 必须放在annotate之前调用
-        AnnotateUtil.initBindView((Activity) mContext);
-        initData();
-        initWidget();
-    }
-
-    /**
-     * @param id  控件id
-     * @param <T> 注解的控件
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    protected <T extends View> T bindView(int id) {
-        return (T) findViewById(id);
-    }
-
-    /**
-     * @param id    控件id
-     * @param click 控件监听事件
-     * @param <T>   注解的控件
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    protected <T extends View> T bindView(int id, boolean click) {
-        T view = (T) findViewById(id);
-        if (click) {
-            view.setOnClickListener(this);
+    public void showLoadingDialog(String title) {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
+            mLoadingDialog.getProgressHelper().setBarColor(mContext.getResources().getColor(R.color.dialogLoadingColor));
+            mLoadingDialog.setCancelable(false);
         }
-        return view;
+        mLoadingDialog.setTitleText(title);
+        mLoadingDialog.show();
+        ((View) mLoadingDialog.getButton(SweetAlertDialog.BUTTON_CONFIRM).getParent()).setVisibility(View.GONE);
     }
 
     /**
-     * @param view 控件监听事件
+     * 关闭 Dialog
      */
     @Override
-    public void onClick(View view) {
-        widgetClick(view);
-    }
-
-
-    @Override
-    public void initData() {
-
-    }
-
-
-    @Override
-    public void initWidget() {
-
+    public void dismissLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            try {
+                mLoadingDialog.dismiss();
+            } catch (Exception e) {
+                mLoadingDialog = null;
+            }
+        }
+        mLoadingDialog = null;
     }
 
     @Override
-    public void widgetClick(View v) {
-
+    public void dismiss() {
+        RxVolley.getRequestQueue().cancelAll(mContext.getClass().getName());
+        super.dismiss();
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            try {
+                mLoadingDialog.dismiss();
+            } catch (Exception e) {
+                mLoadingDialog = null;
+            }
+        }
+        mLoadingDialog = null;
+        mPresenter = null;
     }
 }

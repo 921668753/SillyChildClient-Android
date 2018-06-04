@@ -20,6 +20,7 @@ import com.yinglan.scc.R;
 import com.yinglan.scc.entity.PayResult;
 import com.yinglan.scc.homepage.chartercustom.routes.CheckstandActivity;
 import com.yinglan.scc.homepage.chartercustom.routes.PaySuccessActivity;
+import com.yinglan.scc.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 import com.yinglan.scc.mine.mywallet.mybankcard.dialog.SubmitBouncedDialog;
 import com.yinglan.scc.mine.mywallet.recharge.RechargeActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -39,13 +40,9 @@ import static com.yinglan.scc.constant.NumericConstants.PLUGIN_NOT_INSTALLED;
 public class PayUtils {
 
     private final Activity context;
-    private final Class<?> cls;
 
-
-    public PayUtils(Activity context, Class<?> cls) {
+    public PayUtils(Activity context) {
         this.context = context;
-        this.cls = cls;
-
     }
 
     private static final int SDK_PAY_FLAG = 1;
@@ -93,43 +90,47 @@ public class PayUtils {
                     String resultStatus = payResult.getResultStatus();
                     if (!StringUtils.isEmpty(result)) {
                         if (TextUtils.equals(resultStatus, "9000")) {// 操作成功
-                            PreferenceHelper.write(context, StringConstants.FILENAME, "isRefreshMineFragment", true);
-                            if (RechargeActivity.class.equals(cls)) {
+                            if (context.getClass().getName().contains("RechargeActivity")) {
                                 ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_succeed));
-                            } else if (CheckstandActivity.class.equals(cls)) {
-                                Intent jumpintent = new Intent(context, PaySuccessActivity.class);
-                                jumpintent.putExtra("orderid", ((CheckstandActivity) context).getOrderid());
-                                jumpintent.putExtra("paytype", ((CheckstandActivity) context).getPaytype());
-                                jumpintent.putExtra("paymoney", ((CheckstandActivity) context).getPaymoney_fmt());
-                                ((CheckstandActivity) context).showActivity(context, jumpintent);
-                                KJActivityStack.create().finishActivity(cls);
+                            } else if (context.getClass().getName().contains("PaymentOrderActivity")) {
+                                ((PaymentOrderActivity) context).jumpPayComplete(1);
                             }
-                        } else if (TextUtils.equals(resultStatus, "4000")) {// 系统异常
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else if (TextUtils.equals(resultStatus, "4001")) {// 数据格式不正确
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else if (TextUtils.equals(resultStatus, "4003")) {// 该用户绑定的支付宝账户被冻结或不允许支付
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_account_exception));
-                        } else if (TextUtils.equals(resultStatus, "4004")) {// 该用户已解除绑定
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_has_unbound));
-                        } else if (TextUtils.equals(resultStatus, "4005")) {// 绑定失败或没有绑定
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else if (TextUtils.equals(resultStatus, "4006")) {// 订单支付失败
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_error));
-                        } else if (TextUtils.equals(resultStatus, "4010")) {// 重新绑定账户
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else if (TextUtils.equals(resultStatus, "6000")) {// 支付服务正在进行升级操作
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else if (TextUtils.equals(resultStatus, "6001")) {// 用户中途取消支付操作
+                        }
+//                        else if (TextUtils.equals(resultStatus, "4000")) {// 系统异常
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        } else if (TextUtils.equals(resultStatus, "4001")) {// 数据格式不正确
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        } else if (TextUtils.equals(resultStatus, "4003")) {// 该用户绑定的支付宝账户被冻结或不允许支付
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_account_exception));
+//                        } else if (TextUtils.equals(resultStatus, "4004")) {// 该用户已解除绑定
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_has_unbound));
+//                        } else if (TextUtils.equals(resultStatus, "4005")) {// 绑定失败或没有绑定
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        } else if (TextUtils.equals(resultStatus, "4006")) {// 订单支付失败
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_error));
+//                        } else if (TextUtils.equals(resultStatus, "4010")) {// 重新绑定账户
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        } else if (TextUtils.equals(resultStatus, "6000")) {// 支付服务正在进行升级操作
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        }
+                        else if (TextUtils.equals(resultStatus, "6001")) {// 用户中途取消支付操作
                             ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_cancel));
-                        } else if (TextUtils.equals(resultStatus, "6002")) {// 网络连接异常
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_network));
-                        } else if (TextUtils.equals(resultStatus, "7001")) {// 网页支付失败
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_error));
-                        } else if (TextUtils.equals(resultStatus, "8000")) {// 代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
-                        } else {
+                        }
+//                        else if (TextUtils.equals(resultStatus, "6002")) {// 网络连接异常
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_network));
+//                        } else if (TextUtils.equals(resultStatus, "7001")) {// 网页支付失败
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_error));
+//                        } else if (TextUtils.equals(resultStatus, "8000")) {// 代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
+//                        }
+                        else {
                             ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_error));
+                            if (context.getClass().getName().contains("RechargeActivity")) {
+
+                            } else if (context.getClass().getName().contains("PaymentOrderActivity")) {
+                                ((PaymentOrderActivity) context).jumpPayComplete(0);
+                            }
+
                         }
                     } else {
                         ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
@@ -151,7 +152,6 @@ public class PayUtils {
      * @param paySign
      */
     public void doPayment(String appId, String partnerId, String prepayId, String packages, String nonceStr, String timeStamp, String paySign) {
-        PreferenceHelper.write(context, StringConstants.FILENAME, "payClass", context.getClass().getName());
         IWXAPI msgApi = WXAPIFactory.createWXAPI(context, appId);
         if (msgApi.isWXAppInstalled() && msgApi.isWXAppSupportAPI()) {
             msgApi.registerApp(appId);

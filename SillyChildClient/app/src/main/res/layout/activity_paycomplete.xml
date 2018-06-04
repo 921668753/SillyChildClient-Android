@@ -22,7 +22,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <LinearLayout
             style="@style/WrapWrap"
             android:layout_marginTop="@dimen/dimen67"
@@ -30,6 +29,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/img_pay"
                 android:layout_width="@dimen/dimen30"
                 android:layout_height="@dimen/dimen30"
                 android:scaleType="fitXY"
@@ -41,21 +41,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_payStatus"
                     style="@style/WrapWrap"
-                    android:text="支付失败"
+                    android:text="@string/pay_error"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen5"
-                    android:text="感谢您在傻孩子购买商品！"
+                    android:text="@string/buyingSillyChildren"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize12" />
 
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -79,7 +78,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <TextView
-                android:id="@+id/tv_estimatedTimeArrival"
+                android:id="@+id/tv_orderNumber"
                 style="@style/WrapWrap"
                 android:paddingLeft="@dimen/dimen25"
                 android:singleLine="true"
@@ -103,7 +102,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <TextView
-                android:id="@+id/tv_cashCard"
+                android:id="@+id/tv_consignee"
                 style="@style/WrapWrap"
                 android:paddingLeft="@dimen/dimen25"
                 android:singleLine="true"
@@ -112,6 +111,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <TextView
+                android:id="@+id/tv_phone"
                 style="@style/WrapWrap"
                 android:paddingLeft="@dimen/dimen15"
                 android:singleLine="true"
@@ -135,7 +135,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <TextView
-                android:id="@+id/tv_withdrawalAmount"
+                android:id="@+id/tv_deliveryAddress"
                 style="@style/WrapWrap"
                 android:paddingLeft="@dimen/dimen12"
                 android:singleLine="true"
@@ -160,6 +160,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <TextView
+                android:id="@+id/tv_payMoney"
                 style="@style/WrapWrap"
                 android:paddingLeft="@dimen/dimen37"
                 android:singleLine="true"
@@ -211,7 +212,8 @@
         android:layout_below="@id/tv_divider"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen15"
-        android:src="@mipmap/back" />
-
+        android:background="@drawable/shape_pay"
+        android:padding="@dimen/dimen8"
+        android:src="@mipmap/no_data" />
 
 </RelativeLayout>

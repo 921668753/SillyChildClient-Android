@@ -9,11 +9,13 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
 
     public class DataBean {
         /**
-         * address : {"addr_id":8,"member_id":37,"name":"18550875927","country":null,"province_id":2,"city_id":2815,"region_id":51975,"town_id":0,"region":"城区","city":"长宁区","province":"上海","town":"","addr":"1301好","zip":"","tel":"","mobile":"185****5927","def_addr":1,"isDel":0,"shipAddressName":null}
-         * goods : [{"goods_name":"Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿","goods_img":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//55481895_big.jpg","specs":null,"amount":48,"num":1,"activity_money":0,"ship_money":0}]
+         * address : {"addr_id":8,"member_id":37,"name":"沉了","country":null,"province_id":2,"city_id":2815,"region_id":51975,"town_id":0,"region":"城区","city":"长宁区","province":"上海","town":"","addr":"1301好","zip":"","tel":"","mobile":"170****5257","def_addr":1,"isDel":0,"shipAddressName":null}
+         * orderInfo : {"ship_account":0,"activity_account":0,"bonus_account":4}
+         * goods : [{"goods_name":"ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋","goods_img":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_big.jpg","specs":null,"price":1298,"num":2,"activity_money":0,"ship_money":0},{"goods_name":"Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿","goods_img":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//55481895_big.jpg","specs":null,"price":48,"num":1,"activity_money":0,"ship_money":0}]
          */
 
         private AddressBean address;
+        private OrderInfoBean orderInfo;
         private List<GoodsBean> goods;
 
         public AddressBean getAddress() {
@@ -22,6 +24,14 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
 
         public void setAddress(AddressBean address) {
             this.address = address;
+        }
+
+        public OrderInfoBean getOrderInfo() {
+            return orderInfo;
+        }
+
+        public void setOrderInfo(OrderInfoBean orderInfo) {
+            this.orderInfo = orderInfo;
         }
 
         public List<GoodsBean> getGoods() {
@@ -36,7 +46,7 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
             /**
              * addr_id : 8
              * member_id : 37
-             * name : 18550875927
+             * name : 沉了
              * country : null
              * province_id : 2
              * city_id : 2815
@@ -49,7 +59,7 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
              * addr : 1301好
              * zip :
              * tel :
-             * mobile : 185****5927
+             * mobile : 170****5257
              * def_addr : 1
              * isDel : 0
              * shipAddressName : null
@@ -228,13 +238,49 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
             }
         }
 
+        public class OrderInfoBean {
+            /**
+             * ship_account : 0
+             * activity_account : 0
+             * bonus_account : 4
+             */
+
+            private String ship_account;
+            private String activity_account;
+            private String bonus_account;
+
+            public String getShip_account() {
+                return ship_account;
+            }
+
+            public void setShip_account(String ship_account) {
+                this.ship_account = ship_account;
+            }
+
+            public String getActivity_account() {
+                return activity_account;
+            }
+
+            public void setActivity_account(String activity_account) {
+                this.activity_account = activity_account;
+            }
+
+            public String getBonus_account() {
+                return bonus_account;
+            }
+
+            public void setBonus_account(String bonus_account) {
+                this.bonus_account = bonus_account;
+            }
+        }
+
         public class GoodsBean {
             /**
-             * goods_name : Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿
-             * goods_img : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//55481895_big.jpg
+             * goods_name : ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋
+             * goods_img : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/13//50085050_big.jpg
              * specs : null
-             * amount : 48
-             * num : 1
+             * price : 1298
+             * num : 2
              * activity_money : 0
              * ship_money : 0
              */
@@ -242,7 +288,7 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
             private String goods_name;
             private String goods_img;
             private String specs;
-            private String amount;
+            private String price;
             private String num;
             private String activity_money;
             private String ship_money;
@@ -271,12 +317,12 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
                 this.specs = specs;
             }
 
-            public String getAmount() {
-                return amount;
+            public String getPrice() {
+                return price;
             }
 
-            public void setAmount(String amount) {
-                this.amount = amount;
+            public void setPrice(String price) {
+                this.price = price;
             }
 
             public String getNum() {

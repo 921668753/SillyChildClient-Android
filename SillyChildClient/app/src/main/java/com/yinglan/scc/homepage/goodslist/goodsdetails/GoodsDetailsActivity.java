@@ -12,12 +12,15 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yinglan.scc.R;
 import com.yinglan.scc.entity.homepage.goodslist.goodsdetails.GoodsDetailsBean;
 import com.yinglan.scc.homepage.goodslist.goodsdetails.comments.CommentsActivity;
+import com.yinglan.scc.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedDialog;
 import com.yinglan.scc.homepage.goodslist.shop.ShopActivity;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.yinglan.scc.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 import com.yinglan.scc.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -64,6 +67,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private String goodName = "";
     private int store_id = 0;
 
+    private SpecificationsBouncedDialog specificationsBouncedDialog = null;
+
     private boolean favorited = false;
     private int isRefresh = 0;
 
@@ -83,12 +88,24 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         goodsid = getIntent().getIntExtra("goodsid", 0);
         isRefresh = getIntent().getIntExtra("isRefresh", 0);
         ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(goodsid);
+        initDialog();
     }
+
+    private void initDialog() {
+        specificationsBouncedDialog = new SpecificationsBouncedDialog(this,goodsid) {
+            @Override
+            public void share(String platform) {
+
+            }
+        };
+    }
+
 
     /**
      * 初始化控件
      */
     @Override
+
     public void initWidget() {
         super.initWidget();
         initTitle();
@@ -154,14 +171,17 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                     ((GoodsDetailsContract.Presenter) mPresenter).postUnfavorite(goodsid);
                 }
                 break;
-            case R.id.tv_buyNow:
-                Intent buyNowIntent = new Intent(aty, OrderDetailsActivity.class);
-                buyNowIntent.putExtra("", "");
-                showActivity(aty, buyNowIntent);
-                break;
             case R.id.tv_addShoppingCart:
-
-
+                if (specificationsBouncedDialog == null) {
+                    initDialog();
+                }
+                specificationsBouncedDialog.show();
+                break;
+            case R.id.tv_buyNow:
+                Intent buyNowIntent = new Intent(aty, MakeSureOrderActivity.class);
+                buyNowIntent.putExtra("goodslistBean", "");
+                buyNowIntent.putExtra("totalPrice", "");
+                showActivity(aty, buyNowIntent);
                 break;
         }
     }
@@ -178,7 +198,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             if (goodsDetailsBean != null && goodsDetailsBean.getData() != null && goodsDetailsBean.getData().getGoods_id() > 0) {
                 goodsid = goodsDetailsBean.getData().getGoods_id();
                 store_id = goodsDetailsBean.getData().getStore_id();
-                favorited = goodsDetailsBean.getData().isFavorited();
+             //   favorited = goodsDetailsBean.getData().isFavorited();
+               // price = goodsDetailsBean.getData().get();
             }
         } else if (flag == 1) {
             favorited = true;

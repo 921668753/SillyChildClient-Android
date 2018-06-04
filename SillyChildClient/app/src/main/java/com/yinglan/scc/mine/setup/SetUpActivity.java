@@ -260,13 +260,12 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         if (isLogin(msg)) {
-            dismissLoadingDialog();
             showActivity(aty, LoginActivity.class);
             return;
         }
         isUpdateApp = false;
-        dismissLoadingDialog();
         ViewInject.toast(msg);
     }
 }
