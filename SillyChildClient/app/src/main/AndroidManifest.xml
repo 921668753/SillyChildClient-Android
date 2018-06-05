@@ -406,12 +406,28 @@
             android:name=".mine.myorder.goodorder.orderdetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的   我的订单   申请售后-->
+        <activity
+            android:name=".mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的订单   售后详情-->
+        <activity
+            android:name=".mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的订单   服务详情-->
+        <activity
+            android:name=".mine.myorder.goodorder.aftersalesdetails.ServiceDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的   我的订单 发布订单评论-->
         <activity
             android:name=".mine.myorder.orderevaluation.PostEvaluationActivity"
             android:screenOrientation="portrait">
 
         </activity>
+
         <!--我的   我的订单 查看评论-->
         <activity
             android:name=".mine.myorder.orderevaluation.SeeEvaluationActivity"

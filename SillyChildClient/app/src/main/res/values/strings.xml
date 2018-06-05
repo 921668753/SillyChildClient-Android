@@ -1088,6 +1088,10 @@
     <string name="confirmReminderDelivery">确定提醒发货</string>
     <string name="confirmReceiptGoods">确定已收到货物</string>
 
+    <!-- 个人中心 我的订单  售后详情-->
+    <string name="afterSalesDetails">售后详情</string>
+    <string name="serviceDetails">服务详情</string>
+
 
     <!-- 个人中心 我的订单  包车订单-->
     <string name="ongoing">进行中</string>
