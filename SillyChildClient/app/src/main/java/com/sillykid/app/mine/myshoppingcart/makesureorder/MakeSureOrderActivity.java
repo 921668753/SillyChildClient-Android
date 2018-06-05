@@ -209,13 +209,6 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
         } else if (flag == 1) {
             CreateOrderBean createOrderBean = (CreateOrderBean) JsonUtil.getInstance().json2Obj(success, CreateOrderBean.class);
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
-
-            intent.putExtra("name", tv_name.getText().toString().trim());
-            intent.putExtra("mobile", tv_phone.getText().toString().trim());
-            intent.putExtra("address", tv_tagpersonName.getText().toString().trim().replace(" ", "") + tv_tagpersonAddress.getText().toString().trim());
-
-            intent.putExtra("orderCode", "orderCode");
-            intent.putExtra("money", tv_money.getText().toString().trim());
             intent.putExtra("order_id", createOrderBean.getData().getOrder_id());
             intent.putExtra("last_time", createOrderBean.getData().getLast_time());
             intent.putExtra("balance", createOrderBean.getData().getBalance());

@@ -1166,7 +1166,7 @@
     <string name="payment1">付款</string>
     <string name="checkLogistics">查看物流</string>
 
-
+    <string name="remindSuccessfulDelivery">提醒发货成功</string>
     <string name="afterType">售后类型</string>
     <string name="refundAmount">退款金额</string>
     <string name="afterWhy">售后原因</string>

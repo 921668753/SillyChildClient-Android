@@ -1608,6 +1608,25 @@ public class RequestClient {
         }, listener);
     }
 
+    /**
+     * 获取订单简要信息
+     */
+    public static void getOrderSimple(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOrderSimple");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ONLINESIMPLE, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 显示订单列表

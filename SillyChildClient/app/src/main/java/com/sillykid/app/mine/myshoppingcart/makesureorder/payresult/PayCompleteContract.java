@@ -15,7 +15,7 @@ public interface PayCompleteContract {
         /**
          * 获取订单部分信息
          */
-        void getCartBalance(String cartIds);
+        void getOrderSimple(String order_id);
 
     }
 

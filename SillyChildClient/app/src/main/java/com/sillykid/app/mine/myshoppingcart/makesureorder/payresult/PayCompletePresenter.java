@@ -7,7 +7,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.retrofit.RequestClient;
 
 /**
- * Created by Administrator on 2018/5/15.
+ * Created by Administrator on 2018/6/15.
  */
 
 public class PayCompletePresenter implements PayCompleteContract.Presenter {
@@ -23,10 +23,10 @@ public class PayCompletePresenter implements PayCompleteContract.Presenter {
      * 获取购物车列表
      */
     @Override
-    public void getCartBalance(String cartIds) {
+    public void getOrderSimple(String order_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("cartIds", cartIds);
-        RequestClient.getCartBalance(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("order_id", order_id);
+        RequestClient.getOrderSimple(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

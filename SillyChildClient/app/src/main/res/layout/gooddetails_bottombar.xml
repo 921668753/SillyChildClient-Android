@@ -64,17 +64,6 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tv_applyAfterSales"
-        style="@style/Match9035"
-        android:layout_marginLeft="@dimen/dimen10"
-        android:background="@drawable/shape_goodbtn"
-        android:gravity="center"
-        android:text="@string/applyAfterSales"
-        android:textColor="@color/greenColors"
-        android:textSize="@dimen/textsize15"
-        android:visibility="gone" />
-
-    <TextView
         android:id="@+id/tv_appraiseOrder"
         style="@style/Match9035"
         android:layout_marginLeft="@dimen/dimen10"
@@ -85,14 +74,4 @@
         android:textSize="@dimen/textsize15"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_checkAfterSale"
-        style="@style/Match9035"
-        android:layout_marginLeft="@dimen/dimen10"
-        android:background="@drawable/shape_goodbtn"
-        android:gravity="center"
-        android:text="@string/checkAfterSale"
-        android:textColor="@color/greenColors"
-        android:textSize="@dimen/textsize15"
-        android:visibility="gone" />
 </LinearLayout>

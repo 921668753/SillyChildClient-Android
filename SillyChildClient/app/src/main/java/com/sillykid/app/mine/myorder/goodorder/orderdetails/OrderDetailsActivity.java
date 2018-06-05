@@ -236,22 +236,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TextView tv_confirmReceipt;
 
     /**
-     * 申请售后
-     */
-    @BindView(id = R.id.tv_applyAfterSales, click = true)
-    private TextView tv_applyAfterSales;
-
-    /**
      * 评价订单
      */
     @BindView(id = R.id.tv_appraiseOrder, click = true)
     private TextView tv_appraiseOrder;
-
-    /**
-     * 查看售后
-     */
-    @BindView(id = R.id.tv_checkAfterSale, click = true)
-    private TextView tv_checkAfterSale;
 
     private int orderId = 0;
 
@@ -365,21 +353,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                     orderBouncedDialog.setIdContentFlag(orderId, getString(R.string.confirmReceiptGoods), 2);
                 }
                 break;
-            case R.id.tv_applyAfterSales:
-                Intent intent = new Intent(aty, ApplyAfterSalesActivity.class);
-                intent.putExtra("order_id", String.valueOf(orderId));
-                intent.putExtra("good_id", String.valueOf(orderId));
-                showActivity(aty, intent);
-                break;
             case R.id.tv_appraiseOrder:
                 Intent publishedeEvaluationIntent = new Intent(aty, PublishedeEvaluationActivity.class);
                 publishedeEvaluationIntent.putExtra("order_id", String.valueOf(orderId));
                 showActivity(aty, publishedeEvaluationIntent);
-                break;
-            case R.id.tv_checkAfterSale:
-                Intent afterSalesDetailsIntent = new Intent(aty, AfterSalesDetailsActivity.class);
-                afterSalesDetailsIntent.putExtra("order_id", String.valueOf(orderId));
-                showActivity(aty, afterSalesDetailsIntent);
                 break;
         }
     }
@@ -409,6 +386,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 tradingClosedGood();
             }
             status = orderDetailBean.getData().getStatus();
+            mAdapter.setStatus(status);
             tv_name.setText(orderDetailBean.getData().getShip_name());
             tv_phone.setText(orderDetailBean.getData().getShip_mobile());
             tv_address.setText(orderDetailBean.getData().getShipping_area());
@@ -444,9 +422,12 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
             tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
             dismissLoadingDialog();
-        } else if (flag == 1 || flag == 2 || flag == 4) {
+        } else if (flag == 1 || flag == 4) {
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+        } else if (flag == 2) {
+            ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
+            dismissLoadingDialog();
         } else if (flag == 3) {
             dismissLoadingDialog();
             String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
@@ -499,9 +480,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_remindDelivery.setVisibility(View.GONE);
         tv_checkLogistics.setVisibility(View.GONE);
         tv_confirmReceipt.setVisibility(View.GONE);
-        tv_applyAfterSales.setVisibility(View.GONE);
         tv_appraiseOrder.setVisibility(View.GONE);
-        tv_checkAfterSale.setVisibility(View.GONE);
     }
 
     /**
@@ -528,9 +507,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_remindDelivery.setVisibility(View.VISIBLE);
         tv_checkLogistics.setVisibility(View.GONE);
         tv_confirmReceipt.setVisibility(View.GONE);
-        tv_applyAfterSales.setVisibility(View.GONE);
         tv_appraiseOrder.setVisibility(View.GONE);
-        tv_checkAfterSale.setVisibility(View.GONE);
     }
 
     /**
@@ -557,9 +534,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_remindDelivery.setVisibility(View.GONE);
         tv_checkLogistics.setVisibility(View.VISIBLE);
         tv_confirmReceipt.setVisibility(View.VISIBLE);
-        tv_applyAfterSales.setVisibility(View.GONE);
         tv_appraiseOrder.setVisibility(View.GONE);
-        tv_checkAfterSale.setVisibility(View.GONE);
     }
 
     /**
@@ -586,9 +561,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_remindDelivery.setVisibility(View.GONE);
         tv_checkLogistics.setVisibility(View.GONE);
         tv_confirmReceipt.setVisibility(View.GONE);
-        tv_applyAfterSales.setVisibility(View.VISIBLE);
         tv_appraiseOrder.setVisibility(View.VISIBLE);
-        tv_checkAfterSale.setVisibility(View.GONE);
     }
 
     /**
@@ -615,9 +588,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_remindDelivery.setVisibility(View.GONE);
         tv_checkLogistics.setVisibility(View.GONE);
         tv_confirmReceipt.setVisibility(View.GONE);
-        tv_applyAfterSales.setVisibility(View.GONE);
         tv_appraiseOrder.setVisibility(View.GONE);
-        tv_checkAfterSale.setVisibility(View.VISIBLE);
     }
 
 

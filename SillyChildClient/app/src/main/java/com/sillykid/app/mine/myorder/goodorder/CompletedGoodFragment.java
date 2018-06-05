@@ -23,6 +23,7 @@ import com.sillykid.app.entity.mine.myorder.GoodOrderBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.sillykid.app.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -32,7 +33,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View ,BGAOnItemChildClickListener {
+public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
 
     private MyOrderActivity aty;
 
@@ -117,7 +118,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
     }
 
     @Override
@@ -129,7 +130,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
         return true;
     }
 
@@ -214,12 +215,10 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-        if (childView.getId() == R.id.tv_applyAfterSales) {
-
-
-        } else if (childView.getId() == R.id.tv_appraiseOrder) {
-
-
+        if (childView.getId() == R.id.tv_appraiseOrder) {
+            Intent publishedeEvaluationIntent = new Intent(aty, PublishedeEvaluationActivity.class);
+            publishedeEvaluationIntent.putExtra("order_id", String.valueOf(mAdapter.getItem(position).getOrderId()));
+            aty.showActivity(aty, publishedeEvaluationIntent);
         }
     }
 }

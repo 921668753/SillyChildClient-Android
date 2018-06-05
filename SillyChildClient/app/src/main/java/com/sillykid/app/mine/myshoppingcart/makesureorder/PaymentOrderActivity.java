@@ -215,36 +215,11 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
         Intent intent = new Intent(aty, PayCompleteActivity.class);
         intent.putExtra("order_status", order_status);
         intent.putExtra("order_id", order_id);
-        intent.putExtra("orderCode", getOrderCode());
-        intent.putExtra("name", getName());
-        intent.putExtra("mobile", getMobile());
-        intent.putExtra("address", getAddress());
-        intent.putExtra("money", getPayMoney());
         showActivity(aty, intent);
-    }
-
-    public String getOrderCode() {
-        return getIntent().getStringExtra("orderCode");
-    }
-
-    public String getName() {
-        return getIntent().getStringExtra("name");
-    }
-
-    public String getMobile() {
-        return getIntent().getStringExtra("mobile");
-    }
-
-    public String getAddress() {
-        return getIntent().getStringExtra("address");
     }
 
     public String getOrderId() {
         return order_id;
-    }
-
-    public String getPayMoney() {
-        return getString(R.string.renminbi) + getIntent().getStringExtra("money");
     }
 
 

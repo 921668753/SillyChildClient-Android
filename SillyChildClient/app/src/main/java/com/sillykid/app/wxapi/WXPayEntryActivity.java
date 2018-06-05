@@ -94,11 +94,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
             Intent intent = new Intent(aty, PayCompleteActivity.class);
             intent.putExtra("order_status", order_status);
             intent.putExtra("order_id", ((PaymentOrderActivity) context).getOrderId());
-            intent.putExtra("orderCode", ((PaymentOrderActivity) context).getOrderCode());
-            intent.putExtra("name", ((PaymentOrderActivity) context).getName());
-            intent.putExtra("mobile", ((PaymentOrderActivity) context).getMobile());
-            intent.putExtra("address", ((PaymentOrderActivity) context).getAddress());
-            intent.putExtra("money", ((PaymentOrderActivity) context).getPayMoney());
             showActivity(this, jumpintent);
         }
     }

@@ -115,12 +115,12 @@ public class BindingPresenter implements BindingContract.Presenter {
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openid", openid);
+        httpParams.put("open_id", openid);
         httpParams.put("from", from);
-        httpParams.put("mobile", phone);
+        httpParams.put("phone", phone);
         httpParams.put("code", code);
-        httpParams.put("countroy_code", countroy_code);
-        httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        //  httpParams.put("countroy_code", countroy_code);
+        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postBindingPhone(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
@@ -180,12 +180,12 @@ public class BindingPresenter implements BindingContract.Presenter {
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //   Map<String, Object> map = new HashMap<String, Object>();
-        httpParams.put("openid", openid);
-        httpParams.put("from", from);
+        httpParams.put("openId", openid);
+        httpParams.put("type", from);
         httpParams.put("nickname", nickname);
         httpParams.put("head_pic", head_pic);
         httpParams.put("sex", sex);
-        httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

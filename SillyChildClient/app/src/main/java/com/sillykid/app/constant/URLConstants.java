@@ -137,7 +137,7 @@ public class URLConstants {
     /**
      * 第三方登录
      */
-    public static String USERTHIRDLOGIN = APIURL + "m=Api&c=User&a=thirdLogin";
+    public static String USERTHIRDLOGIN = APIURL + "member/thirdLogin.do";
 
 
     /**
@@ -309,6 +309,11 @@ public class URLConstants {
      * 订单支付信息接口
      */
     public static String ONLINEPAY = APIURL + "online/pay.do";
+
+    /**
+     * 获取订单简要信息
+     */
+    public static String ONLINESIMPLE = APIURL + "order/simple.do";
 
     /**
      * 获取订单信息列表

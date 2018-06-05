@@ -8,8 +8,13 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.mine.myshoppingcart.makesureorder.payresult.PayCompleteBean;
 import com.sillykid.app.main.MainActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.MyShoppingCartActivity;
@@ -19,7 +24,7 @@ import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 /**
  * 支付完成/支付失败
  */
-public class PayCompleteActivity extends BaseActivity {
+public class PayCompleteActivity extends BaseActivity implements PayCompleteContract.View {
 
     /**
      * 支付状态
@@ -70,7 +75,9 @@ public class PayCompleteActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+        mPresenter = new PayCompletePresenter(this);
         order_id = getIntent().getStringExtra("order_id");
+        ((PayCompleteContract.Presenter) mPresenter).getOrderSimple(order_id);
     }
 
     @Override
@@ -85,11 +92,6 @@ public class PayCompleteActivity extends BaseActivity {
             tv_payStatus.setText(getString(R.string.pay_error));
             tv_returnHomePage.setText(getString(R.string.payAgain));
         }
-        tv_orderNumber.setText(getIntent().getStringExtra("orderCode"));
-        tv_consignee.setText(getIntent().getStringExtra("name"));
-        tv_phone.setText(getIntent().getStringExtra("mobile"));
-        tv_deliveryAddress.setText(getIntent().getStringExtra("address"));
-        tv_payMoney.setText(getIntent().getStringExtra("money"));
     }
 
     /**
@@ -125,4 +127,29 @@ public class PayCompleteActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void setPresenter(PayCompleteContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
+        PayCompleteBean payCompleteBean = (PayCompleteBean) JsonUtil.getInstance().json2Obj(success, PayCompleteBean.class);
+        tv_orderNumber.setText(payCompleteBean.getData().getSn());
+        tv_consignee.setText(payCompleteBean.getData().getShip_name());
+        tv_phone.setText(payCompleteBean.getData().getShip_mobile());
+        tv_deliveryAddress.setText(payCompleteBean.getData().getShip_area() + payCompleteBean.getData().getShip_addr());
+        tv_payMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(payCompleteBean.getData().getNeed_pay_money())));
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        if (isLogin(msg)) {
+            finish();
+            return;
+        }
+        ViewInject.toast(msg);
+    }
 }
