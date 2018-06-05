@@ -126,12 +126,12 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
                 break;
             case R.id.tv_seeMore:
                 Intent goodsListIntent = new Intent(aty, GoodsListActivity.class);
-                goodsListIntent.putExtra("mark", "special");
+                goodsListIntent.putExtra("mark", "85");
                 aty.showActivity(aty, goodsListIntent);
                 break;
             case R.id.tv_productlSeeMore:
                 Intent goodsListIntent1 = new Intent(aty, GoodsListActivity.class);
-                goodsListIntent1.putExtra("mark", "monthHot");
+                goodsListIntent1.putExtra("mark", "86");
                 aty.showActivity(aty, goodsListIntent1);
                 break;
         }

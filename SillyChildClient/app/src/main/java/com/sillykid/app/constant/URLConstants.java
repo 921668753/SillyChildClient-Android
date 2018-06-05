@@ -37,7 +37,7 @@ public class URLConstants {
     /**
      * 根据融云token获取头像性别昵称
      */
-    public static String SYSRONGCLOUD = APIURL + "sys/rongCloud.do";
+    public static String SYSRONGCLOUD = APIURL + "member/rongCloud.do";
 
     /**
      * 获取首页信息

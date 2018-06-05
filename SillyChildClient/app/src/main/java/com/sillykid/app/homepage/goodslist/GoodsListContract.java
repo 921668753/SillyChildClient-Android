@@ -10,7 +10,7 @@ public class GoodsListContract {
         /**
          * 获取商品列表
          */
-        void getGoodsList(int page, int cat, String sort, String keyword, String mark);
+        void getGoodsList(int page, int cat, String sort, String keyword, String tag);
     }
 
     interface View extends BaseView<Presenter, String> {

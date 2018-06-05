@@ -22,12 +22,15 @@ import com.sillykid.app.adapter.homepage.goodslist.GoodsListViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.homepage.goodslist.GoodsListBean;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
+import com.sillykid.app.homepage.search.SearchGoodsActivity;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.utils.SoftKeyboardUtils;
 import com.sillykid.app.utils.SpacesItemDecoration;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
 
 /**
  * 商品列表
@@ -37,8 +40,8 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @BindView(id = R.id.iv_back, click = true)
     private ImageView iv_back;
 
-    @BindView(id = R.id.et_search)
-    private EditText et_search;
+    @BindView(id = R.id.ll_checkProduct, click = true)
+    private LinearLayout ll_checkProduct;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -91,7 +94,10 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     private SpacesItemDecoration spacesItemDecoration = null;
 
     private StaggeredGridLayoutManager layoutManager;
+
     private String mark = "";
+
+    private String keyword = "";
 
     @Override
     public void setRootView() {
@@ -109,6 +115,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。
         cat = getIntent().getIntExtra("cat", 0);
         mark = getIntent().getStringExtra("mark");
+        keyword = getIntent().getStringExtra("keyword");
     }
 
     @Override
@@ -116,18 +123,6 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         super.initWidget();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         initRecyclerView();
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    SoftKeyboardUtils.packUpKeyboard(aty);
-                    mRefreshLayout.beginRefreshing();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
         mRefreshLayout.beginRefreshing();
     }
 
@@ -149,6 +144,11 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.ll_checkProduct:
+                Intent intent = new Intent(aty, SearchGoodsActivity.class);
+                intent.putExtra("tag", 1);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.ll_comprehensiveRanking:
                 if (sort.equals("def_desc")) {
@@ -271,7 +271,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim(), mark);
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, keyword, mark);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, et_search.getText().toString().trim(), mark);
+        ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, keyword, mark);
         return true;
     }
 
@@ -292,6 +292,19 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         super.onDestroy();
         goodsListAdapter.clear();
         goodsListAdapter = null;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
+            keyword = data.getStringExtra("keyword");
+//            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+//            showLoadingDialog(getString(R.string.dataLoad));
+//            ((GoodsListContract.Presenter) mPresenter).getGoodsList(mMorePageNumber, cat, sort, keyword, mark);
+            mRefreshLayout.beginRefreshing();
+        }
     }
 
 

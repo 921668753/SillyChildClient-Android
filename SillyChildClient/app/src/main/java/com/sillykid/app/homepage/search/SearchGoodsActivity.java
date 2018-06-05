@@ -13,7 +13,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.JsonUtil;
-import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
@@ -91,9 +90,16 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     SoftKeyboardUtils.packUpKeyboard(aty);
                     saveRecentSearchHistory(textView.getText().toString().trim());
-                    Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
-                    beautyCareIntent.putExtra("cat", textView.getText().toString().trim());
-                    skipActivity(aty, beautyCareIntent);
+                    Intent beautyCareIntent = new Intent();
+                    if (getIntent().getIntExtra("tag", 0) == 1) {
+                        beautyCareIntent.putExtra("keyword", textView.getText().toString().trim());
+                        setResult(RESULT_OK, beautyCareIntent);
+                    } else {
+                        beautyCareIntent.setClass(aty, GoodsListActivity.class);
+                        beautyCareIntent.putExtra("keyword", textView.getText().toString().trim());
+                        showActivity(aty, beautyCareIntent);
+                    }
+                    finish();
                     handled = true;
                 }
                 return handled;
@@ -166,7 +172,7 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
     public boolean onTagClick(View view, int position, FlowLayout parent) {
         if (parent.getId() == R.id.tfl_recentSearch) {
             Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
-            beautyCareIntent.putExtra("cat", recentSearchTagAdapter.getItem(position).getName());
+            beautyCareIntent.putExtra("keyword", recentSearchTagAdapter.getItem(position).getName());
             skipActivity(aty, beautyCareIntent);
         } else if (parent.getId() == R.id.tfl_searchFound) {
 
