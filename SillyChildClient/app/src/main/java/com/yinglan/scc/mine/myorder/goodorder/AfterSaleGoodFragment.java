@@ -118,7 +118,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
         return true;
     }
 
@@ -215,10 +215,9 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-//        if (childView.getId() == R.id.tv_refused) {
-//            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());
-//        } else if (childView.getId() == R.id.tv_agreed) {
-//            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 1, "", mAdapter.getItem(position).getPaymoney());
-//        }
+        if (childView.getId() == R.id.tv_checkAfterSale) {
+
+
+        }
     }
 }

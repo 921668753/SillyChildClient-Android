@@ -15,6 +15,7 @@
     <string name="shareJumpLoad">分享跳转中&#8230;</string>
     <string name="saveLoad">保存中&#8230;</string>
     <string name="paymentLoad">支付中&#8230;</string>
+    <string name="cancelLoad">取消中&#8230;</string>
     <string name="deleteLoad">删除中&#8230;</string>
     <string name="addLoad">加入中&#8230;</string>
     <!--Dialog-->
@@ -1077,11 +1078,16 @@
     <string name="delivered">已发货</string>
     <string name="confirmReceipt">确认收货</string>
     <string name="applyAfterSales">申请售后</string>
+    <string name="checkAfterSale">查看售后</string>
     <string name="appraise">评价</string>
     <string name="confirmCompleted">确认完成</string>
     <string name="appraiseOrder">评价订单</string>
     <string name="cancelOrder">取消订单</string>
     <string name="noOrder">亲，您还没有订单哟~</string>
+    <string name="confirmCancellationOrder">确定取消订单</string>
+    <string name="confirmReminderDelivery">确定提醒发货</string>
+    <string name="confirmReceiptGoods">确定已收到货物</string>
+
 
     <!-- 个人中心 我的订单  包车订单-->
     <string name="ongoing">进行中</string>

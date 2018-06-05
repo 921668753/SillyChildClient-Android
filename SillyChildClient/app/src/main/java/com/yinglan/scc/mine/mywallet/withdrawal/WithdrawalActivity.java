@@ -124,6 +124,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
             WithdrawalBean myWalletBean = (WithdrawalBean) JsonUtil.getInstance().json2Obj(success, WithdrawalBean.class);
             if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
                 PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                PreferenceHelper.write(this, StringConstants.FILENAME, "balance", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
                 if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
                     bankCardName = myWalletBean.getData().getOpen_bank();
                     bankCardNun = myWalletBean.getData().getAccount_no();

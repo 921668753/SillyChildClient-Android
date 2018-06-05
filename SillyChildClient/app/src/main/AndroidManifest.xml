@@ -156,7 +156,7 @@
         <!--首页   轮播图-->
         <activity
             android:name="com.yinglan.scc.homepage.BannerDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--首页   地址选择-->
         <activity
@@ -384,22 +384,27 @@
         <!--我的   收货地址-->
         <activity
             android:name="com.yinglan.scc.mine.deliveryaddress.DeliveryAddressActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的 收货地址  新增地址-->
         <activity
             android:name="com.yinglan.scc.mine.deliveryaddress.AddNewAddressActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的收藏-->
         <activity
             android:name="com.yinglan.scc.mine.mycollection.MyCollectionActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的订单-->
         <activity
             android:name="com.yinglan.scc.mine.myorder.MyOrderActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的订单   订单详情-->
+        <activity
+            android:name="com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
 
         <!--我的   我的订单 发布订单评论-->
         <activity
@@ -440,22 +445,22 @@
         <!--我的   我的购物车-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.MyShoppingCartActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的购物车  确认订单-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.MakeSureOrderActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的购物车  支付订单-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.PaymentOrderActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的购物车  支付订单  支付完成-->
         <activity
             android:name="com.yinglan.scc.mine.myshoppingcart.makesureorder.payresult.PayCompleteActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的购物车  编辑购物车-->
         <!--<activity-->

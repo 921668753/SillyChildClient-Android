@@ -145,6 +145,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
             if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
                 tv_yue.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                PreferenceHelper.write(this, StringConstants.FILENAME, "balance", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
                 PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
                 tv_coupons.setText(StringUtils.toInt(myWalletBean.getData().getBonusNum(), 0) + getString(R.string.ge));
                 tv_bankCard.setText(StringUtils.toInt(myWalletBean.getData().getBankNum(), 0) + getString(R.string.ge));

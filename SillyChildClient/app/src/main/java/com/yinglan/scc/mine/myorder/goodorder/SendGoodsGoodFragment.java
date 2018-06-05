@@ -22,6 +22,7 @@ import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.mine.myorder.GoodOrderBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
+import com.yinglan.scc.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
@@ -74,6 +75,8 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
      */
     private String status = "2";
 
+    private OrderBouncedDialog orderBouncedDialog = null;
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
@@ -85,6 +88,20 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
         mAdapter = new GoodsOrderViewAdapter(aty);
+        initDialog();
+    }
+
+
+    private void initDialog() {
+        orderBouncedDialog = new OrderBouncedDialog(aty, "") {
+            @Override
+            public void toDialogDo(int id, int flag) {
+                if (flag == 1) {
+                    showLoadingDialog(getString(R.string.submissionLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderRemind(aty, id);
+                }
+            }
+        };
     }
 
     @Override
@@ -148,39 +165,47 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-//        if (childView.getId() == R.id.tv_confirmDelivery) {
-//            Intent intent = new Intent(aty, OrderDetailsActivity.class);
-//            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
-//            aty.showActivity(aty, intent);
-//        }
+        if (childView.getId() == R.id.tv_remindDelivery) {
+            if (orderBouncedDialog == null) {
+                initDialog();
+            }
+            if (orderBouncedDialog != null && !orderBouncedDialog.isShowing()) {
+                orderBouncedDialog.show();
+                orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmReminderDelivery), 1);
+            }
+        }
     }
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        mRefreshLayout.setPullDownRefreshEnable(true);
-        ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-        GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
-        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noOrder), 1);
-            return;
-        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            isShowLoadingMore = false;
-            dismissLoadingDialog();
-            mRefreshLayout.endLoadingMore();
-            return;
-        }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            mAdapter.clear();
-            mAdapter.addNewData(goodOrderBean.getData().getResultX());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+        if (flag == 0) {
+            isShowLoadingMore = true;
+            mRefreshLayout.setPullDownRefreshEnable(true);
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
+            if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                errorMsg(getString(R.string.noOrder), 1);
+                return;
+            } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                ViewInject.toast(getString(R.string.noMoreData));
+                isShowLoadingMore = false;
+                dismissLoadingDialog();
+                mRefreshLayout.endLoadingMore();
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(goodOrderBean.getData().getResultX());
+            } else {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+            }
+        } else if (flag == 2) {
+            mRefreshLayout.beginRefreshing();
         }
         dismissLoadingDialog();
     }
@@ -188,37 +213,44 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
-        isShowLoadingMore = false;
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-        } else {
-            mRefreshLayout.endLoadingMore();
-        }
-        mRefreshLayout.setPullDownRefreshEnable(false);
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setVisibility(View.VISIBLE);
-        tv_button.setVisibility(View.VISIBLE);
-        if (isLogin(msg)) {
-            img_err.setImageResource(R.mipmap.no_login);
-            tv_hintText.setVisibility(View.GONE);
-            tv_button.setText(getString(R.string.login));
-            // ViewInject.toast(getString(R.string.reloginPrompting));
-            aty.showActivity(aty, LoginActivity.class);
-            return;
-        } else if (msg.contains(getString(R.string.checkNetwork))) {
-            img_err.setImageResource(R.mipmap.no_network);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noOrder))) {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setVisibility(View.GONE);
-        } else {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
+        if (flag == 0) {
+            isShowLoadingMore = false;
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+            mRefreshLayout.setPullDownRefreshEnable(false);
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setVisibility(View.VISIBLE);
+            tv_button.setVisibility(View.VISIBLE);
+            if (isLogin(msg)) {
+                img_err.setImageResource(R.mipmap.no_login);
+                tv_hintText.setVisibility(View.GONE);
+                tv_button.setText(getString(R.string.login));
+                // ViewInject.toast(getString(R.string.reloginPrompting));
+                aty.showActivity(aty, LoginActivity.class);
+                return;
+            } else if (msg.contains(getString(R.string.checkNetwork))) {
+                img_err.setImageResource(R.mipmap.no_network);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            } else if (msg.contains(getString(R.string.noOrder))) {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setVisibility(View.GONE);
+            } else {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            }
+        } else if (flag == 2) {
+            if (isLogin(msg)) {
+                aty.showActivity(aty, LoginActivity.class);
+                return;
+            }
+            ViewInject.toast(msg);
         }
     }
 

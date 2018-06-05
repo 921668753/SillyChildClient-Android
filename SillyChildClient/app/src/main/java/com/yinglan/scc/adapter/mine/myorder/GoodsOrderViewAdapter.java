@@ -2,11 +2,14 @@ package com.yinglan.scc.adapter.mine.myorder;
 
 import android.content.Context;
 import android.util.SparseArray;
+import android.view.View;
 
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
-import com.yinglan.scc.entity.mine.myorder.GoodOrderBean.DataBean.ListBean;
+import com.yinglan.scc.entity.mine.myorder.GoodOrderBean.DataBean.ResultBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -16,7 +19,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
@@ -30,44 +33,101 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
-        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getPaymoney());
-        viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getPaymoney());
-        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + 2 + mContext.getString(R.string.goods));
-        viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getPaymoney());
+    protected void setItemChildListener(BGAViewHolderHelper helper) {
+        super.setItemChildListener(helper);
+        helper.setItemChildClickListener(R.id.tv_cancelOrder);
+        helper.setItemChildClickListener(R.id.tv_payment);
+        helper.setItemChildClickListener(R.id.tv_remindDelivery);
+        helper.setItemChildClickListener(R.id.tv_checkLogistics);
+        helper.setItemChildClickListener(R.id.tv_confirmReceipt);
+        helper.setItemChildClickListener(R.id.tv_applyAfterSales);
+        helper.setItemChildClickListener(R.id.tv_appraiseOrder);
+        helper.setItemChildClickListener(R.id.tv_checkAfterSale);
+    }
+
+    @Override
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ResultBean model) {
+        viewHolderHelper.setText(R.id.tv_orderNumber, model.getSn());
+        if (model.getStatus() == 1) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.obligation));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
+        } else if (model.getStatus() == 2) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.sendGoods));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
+        } else if (model.getStatus() == 3) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.waitGoods));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
+        } else if (model.getStatus() == 4) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
+        } else if (model.getStatus() == 5) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
+        } else if (model.getStatus() == 7) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_payment, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);
+        } else {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.tradingClosed));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
+        }
+
+        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + model.getItemsCount() + mContext.getString(R.string.goods));
+        viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
         GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext);
         clv_shopgoods.setAdapter(adapter);
         adapter.clear();
-        //    adapter.addNewData(charterOrderBean.getResult().getList());
+        adapter.addNewData(model.getOrderItems());
         //将此 countDownTimer 放入list.
         countDownCounters.put(clv_shopgoods.hashCode(), adapter);
-
-
-//        /**
-//         * 图片
-//         */
-//        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getAvatar(), (ImageView) viewHolderHelper.getView(R.id.img_localTalent));
-//
-//        /**
-//         * 姓名
-//         */
-//        viewHolderHelper.setText(R.id.tv_name, listBean.getName());
-//
-//        /**
-//         * 地址
-//         */
-//        viewHolderHelper.setText(R.id.tv_address, "泰国·曼谷");
-//
-//        /**
-//         * 类别
-//         */
-//        viewHolderHelper.setText(R.id.tv_sort, "泰国·曼谷");
-//
-//        /**
-//         * 赞数
-//         */
-//        viewHolderHelper.setText(R.id.tv_greatNumber, "赞" + mContext.getString(R.string.zan));
     }
 
 

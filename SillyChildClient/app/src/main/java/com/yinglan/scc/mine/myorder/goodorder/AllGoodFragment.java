@@ -13,16 +13,23 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scc.R;
 import com.yinglan.scc.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.yinglan.scc.constant.NumericConstants;
 import com.yinglan.scc.entity.mine.myorder.GoodOrderBean;
+import com.yinglan.scc.entity.mine.myorder.GoodOrderBean.DataBean.ResultBean;
 import com.yinglan.scc.loginregister.LoginActivity;
 import com.yinglan.scc.mine.myorder.MyOrderActivity;
+import com.yinglan.scc.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.yinglan.scc.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.yinglan.scc.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -32,7 +39,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View,BGAOnItemChildClickListener {
+public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
 
     private MyOrderActivity aty;
 
@@ -74,6 +81,9 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
      */
     private String status = null;
 
+
+    private OrderBouncedDialog orderBouncedDialog = null;
+
     @Override
 
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -86,7 +96,27 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
         mAdapter = new GoodsOrderViewAdapter(aty);
+        initDialog();
     }
+
+    private void initDialog() {
+        orderBouncedDialog = new OrderBouncedDialog(aty, "") {
+            @Override
+            public void toDialogDo(int id, int flag) {
+                if (flag == 0) {
+                    showLoadingDialog(getString(R.string.cancelLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderCancel(aty, id);
+                } else if (flag == 1) {
+                    showLoadingDialog(getString(R.string.submissionLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderRemind(aty, id);
+                } else if (flag == 2) {
+                    showLoadingDialog(getString(R.string.submissionLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderConfirm(aty, id);
+                }
+            }
+        };
+    }
+
 
     @Override
     protected void initWidget(View parentView) {
@@ -118,7 +148,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
     }
 
     @Override
@@ -130,7 +160,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty,status, mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
         return true;
     }
 
@@ -148,30 +178,42 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        mRefreshLayout.setPullDownRefreshEnable(true);
-        ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-        GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
-        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noOrder), 1);
-            return;
-        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            isShowLoadingMore = false;
-            dismissLoadingDialog();
-            mRefreshLayout.endLoadingMore();
-            return;
-        }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            mAdapter.clear();
-            mAdapter.addNewData(goodOrderBean.getData().getResultX());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+        if (flag == 0) {
+            isShowLoadingMore = true;
+            mRefreshLayout.setPullDownRefreshEnable(true);
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
+            if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                errorMsg(getString(R.string.noOrder), 1);
+                return;
+            } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                ViewInject.toast(getString(R.string.noMoreData));
+                isShowLoadingMore = false;
+                dismissLoadingDialog();
+                mRefreshLayout.endLoadingMore();
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(goodOrderBean.getData().getResultX());
+            } else {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+            }
+        } else if (flag == 1 || flag == 2 || flag == 4) {
+            mRefreshLayout.beginRefreshing();
+        } else if (flag == 3) {
+            ResultBean resultBean = (ResultBean) JsonUtil.getInstance().json2Obj(success, ResultBean.class);
+            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
+            Intent intent = new Intent(aty, PaymentOrderActivity.class);
+            intent.putExtra("order_id", String.valueOf(resultBean.getOrderId()));
+            intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
+            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
+            aty.showActivity(aty, intent);
         }
         dismissLoadingDialog();
     }
@@ -179,54 +221,87 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
-        isShowLoadingMore = false;
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-        } else {
-            mRefreshLayout.endLoadingMore();
-        }
-        mRefreshLayout.setPullDownRefreshEnable(false);
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setVisibility(View.VISIBLE);
-        tv_button.setVisibility(View.VISIBLE);
-        if (isLogin(msg)) {
-            img_err.setImageResource(R.mipmap.no_login);
-            tv_hintText.setVisibility(View.GONE);
-            tv_button.setText(getString(R.string.login));
-            // ViewInject.toast(getString(R.string.reloginPrompting));
-            aty.showActivity(aty, LoginActivity.class);
-            return;
-        } else if (msg.contains(getString(R.string.checkNetwork))) {
-            img_err.setImageResource(R.mipmap.no_network);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noOrder))) {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setVisibility(View.GONE);
-        } else {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
+        if (flag == 0) {
+            isShowLoadingMore = false;
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+            mRefreshLayout.setPullDownRefreshEnable(false);
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setVisibility(View.VISIBLE);
+            tv_button.setVisibility(View.VISIBLE);
+            if (isLogin(msg)) {
+                img_err.setImageResource(R.mipmap.no_login);
+                tv_hintText.setVisibility(View.GONE);
+                tv_button.setText(getString(R.string.login));
+                // ViewInject.toast(getString(R.string.reloginPrompting));
+                aty.showActivity(aty, LoginActivity.class);
+                return;
+            } else if (msg.contains(getString(R.string.checkNetwork))) {
+                img_err.setImageResource(R.mipmap.no_network);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            } else if (msg.contains(getString(R.string.noOrder))) {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setVisibility(View.GONE);
+            } else {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            }
+        } else if (flag == 1 || flag == 2 || flag == 3 || flag == 4) {
+            if (isLogin(msg)) {
+                aty.showActivity(aty, LoginActivity.class);
+                return;
+            }
+            ViewInject.toast(msg);
         }
     }
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-//        if (childView.getId() == R.id.tv_confirmDelivery) {
-//            Intent intent = new Intent(aty, OrderDetailsActivity.class);
-//            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
-//            aty.showActivity(aty, intent);
-//        } else if (childView.getId() == R.id.tv_seeEvaluation) {
-//            Intent intent = new Intent(aty, SeeEvaluationActivity.class);
-//            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
-//            aty.showActivity(aty, intent);
-//        } else if (childView.getId() == R.id.tv_refused) {
-//            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());
-//        } else if (childView.getId() == R.id.tv_agreed) {
-//            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 1, "", mAdapter.getItem(position).getPaymoney());
-//        }
+        if (childView.getId() == R.id.tv_cancelOrder) {
+            if (orderBouncedDialog == null) {
+                initDialog();
+            }
+            if (orderBouncedDialog != null && !orderBouncedDialog.isShowing()) {
+                orderBouncedDialog.show();
+                orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmCancellationOrder), 0);
+            }
+        } else if (childView.getId() == R.id.tv_payment) {
+            ((GoodOrderContract.Presenter) mPresenter).getMyWallet(aty, mAdapter.getItem(position));
+        } else if (childView.getId() == R.id.tv_remindDelivery) {
+            if (orderBouncedDialog == null) {
+                initDialog();
+            }
+            if (orderBouncedDialog != null && !orderBouncedDialog.isShowing()) {
+                orderBouncedDialog.show();
+                orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmReminderDelivery), 1);
+            }
+        } else if (childView.getId() == R.id.tv_checkLogistics) {
+
+
+        } else if (childView.getId() == R.id.tv_confirmReceipt) {
+            if (orderBouncedDialog == null) {
+                initDialog();
+            }
+            if (orderBouncedDialog != null && !orderBouncedDialog.isShowing()) {
+                orderBouncedDialog.show();
+                orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmReceiptGoods), 2);
+            }
+        } else if (childView.getId() == R.id.tv_applyAfterSales) {
+
+
+        } else if (childView.getId() == R.id.tv_appraiseOrder) {
+
+
+        } else if (childView.getId() == R.id.tv_checkAfterSale) {
+
+
+        }
     }
 }

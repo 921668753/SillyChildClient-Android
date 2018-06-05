@@ -214,10 +214,12 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-//        if (childView.getId() == R.id.tv_seeEvaluation) {
-//            Intent intent = new Intent(aty, SeeEvaluationActivity.class);
-//            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
-//            aty.showActivity(aty, intent);
-//        }
+        if (childView.getId() == R.id.tv_applyAfterSales) {
+
+
+        } else if (childView.getId() == R.id.tv_appraiseOrder) {
+
+
+        }
     }
 }

@@ -1612,7 +1612,7 @@ public class RequestClient {
     /**
      * 显示订单列表
      */
-    public static void getOrderList(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getOrderList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getOrderList");
         doServer(context, new TokenCallback() {
             @Override
@@ -1624,6 +1624,44 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("Cookie", cookies);
                 HttpRequest.requestGetHttp(context, URLConstants.ORDERLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 取消订单
+     */
+    public static void postOrderCancel(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postOrderCancel");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ORDERCANCEL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 确认收货
+     */
+    public static void postOrderConfirm(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postOrderConfirm");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ORDERCONFIRM, httpParams, listener);
             }
         }, listener);
     }

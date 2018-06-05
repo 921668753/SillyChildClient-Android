@@ -315,6 +315,15 @@ public class URLConstants {
      */
     public static String ORDERLIST = APIURL + "order/list.do";
 
+    /**
+     * 取消订单
+     */
+    public static String ORDERCANCEL = APIURL + "order/cancel.do";
+
+    /**
+     * 确认收货
+     */
+    public static String ORDERCONFIRM = APIURL + "order/confirm.do";
 
     /**
      * 提交意见反馈
