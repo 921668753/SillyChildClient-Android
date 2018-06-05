@@ -33,7 +33,7 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    android:id="@+id/et_personalcode"
+                    android:id="@+id/tv_personalcode"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:gravity="right|center_vertical"

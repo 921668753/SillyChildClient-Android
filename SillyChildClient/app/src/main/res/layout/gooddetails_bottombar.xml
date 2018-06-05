@@ -91,7 +91,7 @@
         android:layout_marginLeft="@dimen/dimen10"
         android:background="@drawable/shape_goodbtn"
         android:gravity="center"
-        android:text="@string/applyAfterSales"
+        android:text="@string/checkAfterSale"
         android:textColor="@color/greenColors"
         android:textSize="@dimen/textsize15"
         android:visibility="gone" />
