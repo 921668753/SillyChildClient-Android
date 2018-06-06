@@ -10,26 +10,11 @@ import com.common.cklibrary.common.BaseView;
 public interface ServiceDetailsContract {
 
     interface Presenter extends BasePresenter {
-        /**
-         * 获取订单详情
-         */
-        void getOrderDetails();
 
         /**
-         * 付款
+         * 获取服务详情
          */
-        void Pay();
-
-        /**
-         * 申请售后
-         */
-        void getAfterSale();
-
-        /**
-         * 评价
-         */
-        void toAppraise();
-
+        void getSellBackService(String orderid);
 
     }
 

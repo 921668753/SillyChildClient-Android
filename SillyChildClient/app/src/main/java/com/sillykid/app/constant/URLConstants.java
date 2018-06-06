@@ -361,6 +361,16 @@ public class URLConstants {
     public static String ORDERREFUNDLIST = APIURL + "order/refund-list.do";
 
     /**
+     * 售后详情
+     */
+    public static String SELLBACKDETAIL = APIURL + "order/sell-back-detail.do";
+
+    /**
+     * 服务详情
+     */
+    public static String SELLBACKSERVICE = APIURL + "order/sell-back-service.do";
+
+    /**
      * 提交意见反馈
      */
     public static String ADVICEPOST = SERVERURL + "api/member/advice/post.do";

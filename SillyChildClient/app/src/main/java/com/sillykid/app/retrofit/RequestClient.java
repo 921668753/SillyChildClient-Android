@@ -1789,6 +1789,44 @@ public class RequestClient {
 
 
     /**
+     * 售后详情
+     */
+    public static void getSellBackDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getSellBackDetail");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.SELLBACKDETAIL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 服务详情
+     */
+    public static void getSellBackService(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getSellBackService");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.SELLBACKSERVICE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 包车订单确认结束
      */
     public static void finishOrder(HttpParams httpParams, final ResponseListener<String> listener) {
