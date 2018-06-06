@@ -42,7 +42,6 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     @BindView(id = R.id.img_back, click = true)
     private ImageView img_back;
 
-
     /**
      * 注册协议
      */
@@ -109,7 +108,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             case R.id.tv_binding:
                 tv_binding.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
-                ((BindingPhoneContract.Presenter) mPresenter).postBindingPhone(getIntent().getStringExtra("openid"),
+                ((BindingPhoneContract.Presenter) mPresenter).postBindingPhone(getIntent().getStringExtra("openid"), getIntent().getStringExtra("head_pic"),
                         getIntent().getStringExtra("from"), et_phone.getText().toString(), et_code.getText().toString(), "");
                 break;
             case R.id.tv_agreement:
@@ -164,10 +163,10 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             /**
              * 发送消息
              */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
-            MobclickAgent.onProfileSignIn(getIntent().getStringExtra("openid"));
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(getIntent().getStringExtra("openid"));
             aty.finish();
         }
     }

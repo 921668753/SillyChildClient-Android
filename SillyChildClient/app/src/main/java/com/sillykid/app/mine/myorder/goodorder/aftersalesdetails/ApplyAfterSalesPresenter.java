@@ -3,7 +3,9 @@ package com.sillykid.app.mine.myorder.goodorder.aftersalesdetails;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.sillykid.app.R;
 import com.sillykid.app.retrofit.RequestClient;
 
 /**
@@ -18,12 +20,11 @@ public class ApplyAfterSalesPresenter implements ApplyAfterSalesContract.Present
         mView.setPresenter(this);
     }
 
-
     @Override
-    public void getOrderRefund(String order_id) {
+    public void getOrderRefundList() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("order_id", order_id);
-        RequestClient.getOrderRefund(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getOrderRefundList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -37,9 +38,23 @@ public class ApplyAfterSalesPresenter implements ApplyAfterSalesContract.Present
     }
 
     @Override
-    public void postOrderRefund(int orderid, String typeCode, String reasonCode, String apply_alltotal) {
+    public void postOrderRefund(String orderid, String typeCode, String reasonCode, String apply_alltotal) {
+
+        if (StringUtils.isEmpty(typeCode)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + KJActivityStack.create().topActivity().getString(R.string.afterType), 1);
+            return;
+        }
+
+        if (StringUtils.isEmpty(reasonCode)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + KJActivityStack.create().topActivity().getString(R.string.afterWhy), 1);
+            return;
+        }
+
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("order_id", orderid);
+        httpParams.put("typeCode", typeCode);
+        httpParams.put("reasonCode", reasonCode);
+        httpParams.put("apply_alltotal", apply_alltotal);
         RequestClient.postOrderRefund(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

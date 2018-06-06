@@ -1,4 +1,4 @@
-package com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.postcomments;
+package com.sillykid.app.homepage.goodslist.goodsdetails.comments.postcomments;
 
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;

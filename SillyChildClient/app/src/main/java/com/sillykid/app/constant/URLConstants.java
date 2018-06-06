@@ -81,6 +81,11 @@ public class URLConstants {
     public static String GOODDETAIL = APIURL + "goods/detail.do";
 
     /**
+     * 首页---更多分类----商品列表----商品详情----获取评论列表
+     */
+    public static String COMMENTLIST = APIURL + "comment/list.do";
+
+    /**
      * 首页---更多分类----商品列表----商品详情---收藏商品
      */
     public static String FAVORITADD = APIURL + "favorite/add.do";
@@ -93,7 +98,7 @@ public class URLConstants {
     /**
      * 首页---更多分类----商品列表----商品详情----商品规格
      */
-    public static String GOODSSPEC = APIURL + "goods/spec.do";
+    public static String GOODSSPEC = APIURL + "goods/specs.do";
 
     /**
      * 获取系统消息首页
@@ -207,6 +212,11 @@ public class URLConstants {
      * 根据父id获取地址列表
      */
     public static String REGIONLIST = APIURL + "address/region-list.do";
+
+    /**
+     * 根据parentid获取所有地区列表
+     */
+    public static String ADDRESSREGIONLIST = APIURL + "address/region-list-all.do";
 
     /**
      * 编辑收货地址
@@ -344,6 +354,11 @@ public class URLConstants {
      * 获取售后信息
      */
     public static String ORDERREFUND = APIURL + "order/refund.do";
+
+    /**
+     * 退货类型,退货原因
+     */
+    public static String ORDERREFUNDLIST = APIURL + "order/refund-list.do";
 
     /**
      * 提交意见反馈

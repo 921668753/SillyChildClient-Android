@@ -138,7 +138,6 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
                 return;
             }
             PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", "");
-            jumpTo(true);
 //            ((StartPageContract.Presenter) mPresenter).getSystemMessage();
             ((StartPageContract.Presenter) mPresenter).getQiNiuKey();
         } else {

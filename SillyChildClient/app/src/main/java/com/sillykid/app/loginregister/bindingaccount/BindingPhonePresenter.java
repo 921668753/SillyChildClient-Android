@@ -76,7 +76,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
 
 
     @Override
-    public void postBindingPhone(String openid, String from, String phone, String code, String recommendcode) {
+    public void postBindingPhone(String openid, String face, String from, String phone, String code, String recommendcode) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
@@ -96,6 +96,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
         httpParams.put("open_id", openid);
         httpParams.put("type", from);
         httpParams.put("phone", phone);
+        httpParams.put("face", face);
         httpParams.put("code", code);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postBindingPhone(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
@@ -138,12 +139,14 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                      * 获取用户信息
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-                    if (RongIM.getInstance() != null && bean.getData() != null && StringUtils.isEmpty(bean.getData().getUsername())) {
+                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
                         UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                         mView.getSuccess("", 2);
+                        return;
                     }
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
                 }
 
                 /**

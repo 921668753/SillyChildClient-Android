@@ -3,11 +3,8 @@ package com.sillykid.app.homepage.goodslist;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +21,6 @@ import com.sillykid.app.entity.homepage.goodslist.GoodsListBean;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.homepage.search.SearchGoodsActivity;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.utils.SoftKeyboardUtils;
 import com.sillykid.app.utils.SpacesItemDecoration;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -60,9 +56,6 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
 
     private GoodsListViewAdapter goodsListAdapter = null;
 
-    /**
-     * 错误提示页
-     */
     /**
      * 错误提示页
      */

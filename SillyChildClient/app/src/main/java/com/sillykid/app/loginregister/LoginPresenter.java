@@ -130,10 +130,10 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openId", openid);
+        httpParams.put("open_id", openid);
         httpParams.put("type", from);
         httpParams.put("nickname", nickname);
-        httpParams.put("head_pic", head_pic);
+        httpParams.put("face", head_pic);
         httpParams.put("sex", sex);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {

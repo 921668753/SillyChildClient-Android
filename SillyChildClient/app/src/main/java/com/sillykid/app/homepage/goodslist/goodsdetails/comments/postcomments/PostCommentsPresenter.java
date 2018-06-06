@@ -1,4 +1,4 @@
-package com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.postcomments;
+package com.sillykid.app.homepage.goodslist.goodsdetails.comments.postcomments;
 
 import android.text.TextUtils;
 
@@ -7,7 +7,7 @@ import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.R;
-import com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.postcomments.PostCommentsContract;
+import com.sillykid.app.homepage.goodslist.goodsdetails.comments.postcomments.PostCommentsContract;
 import com.sillykid.app.retrofit.RequestClient;
 
 import java.io.File;

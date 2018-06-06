@@ -5,14 +5,16 @@ import android.util.SparseArray;
 
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
-import com.sillykid.app.entity.IndexCityBean;
+import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
+import com.sillykid.app.entity.homepage.goodslist.goodsdetails.comments.CommentsBean.DataBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
-public class CommentsViewAdapter extends BGAAdapterViewAdapter<IndexCityBean.ResultBean> {
+public class CommentsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
@@ -33,27 +35,27 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<IndexCityBean.Res
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, IndexCityBean.ResultBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
 
         /**
          * 头像
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getArea_code(), helper.getImageView(R.id.img_head), R.mipmap.placeholderfigure);
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.getFace(), helper.getImageView(R.id.img_head), R.mipmap.placeholderfigure);
 
         /**
          * 名字
          */
-        helper.setText(R.id.tv_name, model.getId());
+        helper.setText(R.id.tv_name, model.getUname());
 
         /**
          * 时间
          */
-        helper.setText(R.id.tv_time, model.getId());
+        helper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(model.getDateline()),"yyyy-MM-dd"));
 
         /**
          * 评论内容
          */
-        helper.setText(R.id.tv_commentscContent, model.getId());
+        helper.setText(R.id.tv_commentscContent, model.getContent());
 
         /**
          * 图片
@@ -88,7 +90,7 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<IndexCityBean.Res
         /**
          * 追评
          */
-        helper.setText(R.id.tv_additionalReviewContent, model.getId());
+       // helper.setText(R.id.tv_additionalReviewContent, model.getId());
 
         /**
          * 图片

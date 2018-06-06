@@ -577,7 +577,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     @Override
     public void errorMsg(String msg, int flag) {
-        GlideCatchUtil.getInstance().cleanCatchDisk();
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(this, LoginActivity.class);

@@ -17,12 +17,12 @@ public interface ApplyAfterSalesContract {
         /**
          * 获取售后信息
          */
-        void getOrderRefund(String order_id);
+        void getOrderRefundList();
 
         /**
          * 提交售后信息
          */
-        void postOrderRefund(int orderid, String typeCode, String reasonCode, String apply_alltotal);
+        void postOrderRefund(String orderid, String typeCode, String reasonCode, String apply_alltotal);
 
     }
 

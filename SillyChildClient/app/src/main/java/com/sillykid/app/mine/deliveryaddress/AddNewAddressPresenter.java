@@ -22,10 +22,10 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
     }
 
     @Override
-    public void getAddress(int addr_id) {
+    public void getAddress(int parentid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("addr_id", addr_id);
-        RequestClient.getAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("parentid", parentid);
+        RequestClient.getAddressRegionList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

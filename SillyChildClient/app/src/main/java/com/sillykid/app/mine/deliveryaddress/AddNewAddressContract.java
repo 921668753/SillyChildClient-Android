@@ -10,9 +10,9 @@ import com.common.cklibrary.common.BaseView;
 public interface AddNewAddressContract {
     interface Presenter extends BasePresenter {
         /**
-         * 收货地址信息
+         * 根据parentid获取所有地区列表
          */
-        void getAddress(int addr_id);
+        void getAddress(int parentid);
 
         /**
          * 编辑收货地址

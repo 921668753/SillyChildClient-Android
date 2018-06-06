@@ -21,7 +21,7 @@ interface BindingPhoneContract {
         /**
          * 绑定手机号
          */
-        void postBindingPhone(String openid, String from, String phone, String code, String recommendcode);
+        void postBindingPhone(String openid, String face, String from, String phone, String code, String recommendcode);
 
         /**
          * 登录融云

@@ -148,6 +148,11 @@
             android:name=".homepage.goodslist.goodsdetails.GoodsDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--首页   评论-->
+        <activity
+            android:name=".homepage.goodslist.goodsdetails.comments.CommentsActivity"
+            android:screenOrientation="portrait" />
+
         <!--首页   搜索界面-->
         <activity
             android:name=".homepage.search.SearchGoodsActivity"

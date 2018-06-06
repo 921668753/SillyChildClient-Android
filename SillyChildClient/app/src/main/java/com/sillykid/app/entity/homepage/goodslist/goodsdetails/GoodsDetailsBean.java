@@ -29,6 +29,7 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         private String brief;
         private String small;
         private int store_id;
+        private boolean favorited;
         private int comment_count;
         private String big;
         private int goods_id;
@@ -67,6 +68,14 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
 
         public void setStore_id(int store_id) {
             this.store_id = store_id;
+        }
+
+        public boolean isFavorited() {
+            return favorited;
+        }
+
+        public void setFavorited(boolean favorited) {
+            this.favorited = favorited;
         }
 
         public int getComment_count() {

@@ -1,6 +1,8 @@
 package com.sillykid.app.homepage.goodslist.goodsdetails;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,6 +14,10 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
+import com.sillykid.app.mine.sharingceremony.dialog.ShareBouncedDialog;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.homepage.goodslist.goodsdetails.GoodsDetailsBean;
@@ -19,9 +25,10 @@ import com.sillykid.app.homepage.goodslist.goodsdetails.comments.CommentsActivit
 import com.sillykid.app.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedDialog;
 import com.sillykid.app.homepage.goodslist.shop.ShopActivity;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 import com.sillykid.app.utils.SoftKeyboardUtils;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -70,7 +77,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private SpecificationsBouncedDialog specificationsBouncedDialog = null;
 
     private boolean favorited = false;
+
     private int isRefresh = 0;
+
+    private ShareBouncedDialog shareBouncedDialog = null;
+
+    private String smallImg = "";
+
+    private String brief = "";
 
     @Override
     public void setRootView() {
@@ -89,10 +103,11 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         isRefresh = getIntent().getIntExtra("isRefresh", 0);
         ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(goodsid);
         initDialog();
+        initShareBouncedDialog();
     }
 
     private void initDialog() {
-        specificationsBouncedDialog = new SpecificationsBouncedDialog(this,goodsid) {
+        specificationsBouncedDialog = new SpecificationsBouncedDialog(this, goodsid) {
             @Override
             public void share(String platform) {
 
@@ -100,6 +115,17 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         };
     }
 
+    /**
+     * 分享
+     */
+    private void initShareBouncedDialog() {
+        shareBouncedDialog = new ShareBouncedDialog(this) {
+            @Override
+            public void share(SHARE_MEDIA platform) {
+                umShare(platform);
+            }
+        };
+    }
 
     /**
      * 初始化控件
@@ -135,7 +161,12 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 //分享
-
+                if (shareBouncedDialog == null) {
+                    initShareBouncedDialog();
+                }
+                if (shareBouncedDialog != null & !shareBouncedDialog.isShowing()) {
+                    shareBouncedDialog.show();
+                }
             }
         };
         titlebar.setDelegate(simpleDelegate);
@@ -161,7 +192,9 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 showActivity(aty, shopIntent);
                 break;
             case R.id.ll_customerService:
-
+                Intent intent = new Intent(aty, CommentsActivity.class);
+                intent.putExtra("goodsid", goodsid);
+                showActivity(aty, intent);
                 break;
             case R.id.ll_follow:
                 showLoadingDialog(getString(R.string.dataLoad));
@@ -198,8 +231,16 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             if (goodsDetailsBean != null && goodsDetailsBean.getData() != null && goodsDetailsBean.getData().getGoods_id() > 0) {
                 goodsid = goodsDetailsBean.getData().getGoods_id();
                 store_id = goodsDetailsBean.getData().getStore_id();
-             //   favorited = goodsDetailsBean.getData().isFavorited();
-               // price = goodsDetailsBean.getData().get();
+                favorited = goodsDetailsBean.getData().isFavorited();
+                // price = goodsDetailsBean.getData().get();
+                goodName = goodsDetailsBean.getData().getName();
+                smallImg = goodsDetailsBean.getData().getSmall();
+                brief = goodsDetailsBean.getData().getBrief();
+                if (favorited) {
+                    ll_follow.setBackgroundResource(R.mipmap.mall_collect);
+                } else {
+                    ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
+                }
             }
         } else if (flag == 1) {
             favorited = true;
@@ -229,7 +270,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     public void backOnclick(String id) {
         if (StringUtils.isEmpty(id)) {
             Intent intent = new Intent(aty, CommentsActivity.class);
-            intent.putExtra("", "");
+            intent.putExtra("good_id", goodsid);
             showActivity(aty, intent);
         } else {
             Intent intent = new Intent(aty, GoodsDetailsActivity.class);
@@ -262,5 +303,76 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         return super.onKeyUp(keyCode, event);
     }
 
+
+    /**
+     * 直接分享
+     * SHARE_MEDIA.QQ
+     */
+    public void umShare(SHARE_MEDIA platform) {
+        UMImage thumb = new UMImage(this, smallImg);
+        UMWeb web = new UMWeb("" + "?code=" + "");
+        web.setTitle(goodName);//标题
+        web.setThumb(thumb);  //缩略图
+        web.setDescription(brief);//描述
+        new ShareAction(aty).setPlatform(platform)
+//                .withText("hello")
+//                .withMedia(thumb)
+                .withMedia(web)
+                .setCallback(umShareListener)
+                .share();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+            showLoadingDialog(getString(R.string.shareJumpLoad));
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            dismissLoadingDialog();
+            Log.d("throw", "platform" + platform);
+            ViewInject.toast(getString(R.string.shareSuccess));
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            dismissLoadingDialog();
+            if (t.getMessage().contains(getString(R.string.authoriseErr3))) {
+                ViewInject.toast(getString(R.string.authoriseErr2));
+                return;
+            }
+            ViewInject.toast(getString(R.string.shareError));
+            //   ViewInject.toast(t.getMessage());
+            Log.d("throw", "throw:" + t.getMessage());
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+            Log.d("throw", "throw:" + "onCancel");
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
 
 }

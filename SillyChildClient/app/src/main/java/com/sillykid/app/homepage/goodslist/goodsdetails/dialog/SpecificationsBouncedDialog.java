@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseDialog;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.homepage.goodslist.goodsdetails.dialog.SpecificationsBean;
 
 /**
  * 商品详情--------规格弹框
@@ -47,7 +49,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
         TextView tv_inventoryEnough = (TextView) findViewById(R.id.tv_inventoryEnough);
 
-        ListView lv_specifications = (ListView) findViewById(R.id.lv_specifications);
+      //  ListView lv_specifications = (ListView) findViewById(R.id.lv_specifications);
         // lv_specifications.setAdapter();
         TextView tv_determine = (TextView) findViewById(R.id.tv_determine);
         tv_determine.setOnClickListener(this);
@@ -64,7 +66,6 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                 break;
 
 
-
         }
     }
 
@@ -79,6 +80,18 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
+        SpecificationsBean specificationsBean = (SpecificationsBean) JsonUtil.getInstance().json2Obj(success, SpecificationsBean.class);
+        if (specificationsBean.getData().getProductSpecs() == null || specificationsBean.getData().getProductSpecs().size() <= 0) {
+            errorMsg("", 0);
+            return;
+        }
+
+
+
+
+
+
+
     }
 
     @Override

@@ -72,6 +72,9 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
     private int cityOptions2 = 0;
     private int provinceOptions1 = 0;
 
+
+    private OptionsPickerView pvLinkOptions = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_newaddress);
@@ -106,6 +109,7 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
             tv_addAddress.setText(getString(R.string.save));
             getSuccess("", 0);
         }
+        ((AddNewAddressContract.Presenter) mPresenter).getAddress(0);
         ((AddNewAddressContract.Presenter) mPresenter).getRegionList(0, 3);
     }
 
@@ -124,7 +128,6 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
             }
         })
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-
                     @Override
                     public void onOptionsSelectChanged(int options1, int options2, int options3) {
                         if (provinceOptions1 == options1 && cityOptions2 == options2) {
@@ -144,6 +147,23 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
                     }
                 })
                 .build();
+    }
+
+    /**
+     * 联动地区选择
+     */
+    private void initLinkOptionsPicker() {
+        pvLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                province_id = provinceList.get(options1).getRegion_id();
+                city_id = cityList.get(options2).getRegion_id();
+                region_id = areaList.get(options3).getRegion_id();
+                ((TextView) v).setText(provinceList.get(options1).getLocal_name() + cityList.get(options2).getLocal_name() + areaList.get(options3).getLocal_name());
+            }
+        }).build();
+      //  pvLinkOptions.setPicker()
+
     }
 
 

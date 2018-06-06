@@ -212,7 +212,7 @@ public class RequestClient {
     /**
      * 绑定手机
      */
-    public static void postBindingPhone(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postBindingPhone(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestPostFORMHttp(context, URLConstants.REGISTER, httpParams, listener);
     }
 
@@ -358,6 +358,14 @@ public class RequestClient {
         httpParams.putHeaders("Cookie", cookies);
         HttpRequest.requestGetHttp(context, URLConstants.GOODDETAIL, httpParams, false, listener);
     }
+
+    /**
+     * 首页---更多分类----商品列表----商品详情---获取评论列表
+     */
+    public static void getCommentList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.COMMENTLIST, httpParams, false, listener);
+    }
+
 
     /**
      * 首页---更多分类----商品列表----商品详情----收藏商品
@@ -1355,6 +1363,14 @@ public class RequestClient {
     }
 
     /**
+     * 根据父id获取地址列表
+     */
+    public static void getAddressRegionList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getAddressRegionList");
+        HttpRequest.requestGetHttp(context, URLConstants.ADDRESSREGIONLIST, httpParams, listener);
+    }
+
+    /**
      * 编辑收货地址
      */
     public static void postEditAddress(Context context, HttpParams httpParams, ResponseListener<String> listener) {
@@ -1762,6 +1778,15 @@ public class RequestClient {
             }
         }, listener);
     }
+
+    /**
+     * 退货类型,退货原因
+     */
+    public static void getOrderRefundList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOrderRefundList");
+        HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUNDLIST, httpParams, listener);
+    }
+
 
     /**
      * 包车订单确认结束

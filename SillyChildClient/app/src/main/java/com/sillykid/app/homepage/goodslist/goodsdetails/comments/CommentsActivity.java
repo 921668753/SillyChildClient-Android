@@ -6,10 +6,8 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.sillykid.app.R;
-import com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.AddCommentsFragment;
-import com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.AllCommentsFragment;
-import com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.HavePicturesCommentsFragment;
 
 /**
  * 评论
@@ -50,6 +48,7 @@ public class CommentsActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.comment), true, R.id.titlebar);
         if (chageIcon == 0) {
             cleanColors(0);
             changeFragment(contentFragment);
@@ -105,15 +104,32 @@ public class CommentsActivity extends BaseActivity {
         tv_havePictures.setBackground(getResources().getDrawable(R.drawable.shape_comments1));
         tv_additionalReview.setTextColor(getResources().getColor(R.color.titletextcolors));
         tv_additionalReview.setBackground(getResources().getDrawable(R.drawable.shape_comments1));
-
         if (chageIcon == 0) {
-            tv_all.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+            tv_all.setTextColor(getResources().getColor(R.color.whiteColors));
+            tv_all.setBackground(getResources().getDrawable(R.drawable.shape_comments));
         } else if (chageIcon == 1) {
-            tv_havePictures.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+            tv_havePictures.setTextColor(getResources().getColor(R.color.whiteColors));
+            tv_havePictures.setBackground(getResources().getDrawable(R.drawable.shape_comments));
         } else if (chageIcon == 2) {
-            tv_additionalReview.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+            tv_additionalReview.setTextColor(getResources().getColor(R.color.whiteColors));
+            tv_additionalReview.setBackground(getResources().getDrawable(R.drawable.shape_comments));
         } else {
-            tv_all.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
+            tv_all.setTextColor(getResources().getColor(R.color.whiteColors));
+            tv_all.setBackground(getResources().getDrawable(R.drawable.shape_comments));
         }
     }
+
+    public void setAll(String text) {
+        tv_all.setText(getString(R.string.allAeservationNumber) + text);
+    }
+
+    public void setHavePictures(String text) {
+        tv_havePictures.setText(getString(R.string.figure) + text);
+    }
+
+    public void setAdditionalReview(String text) {
+        tv_additionalReview.setText(getString(R.string.afterReview) + text);
+    }
+
+
 }

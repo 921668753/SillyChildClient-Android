@@ -1,4 +1,4 @@
-package com.sillykid.app.homepage.goodslist.goodsdetails.comments.evaluation.postcomments;
+package com.sillykid.app.homepage.goodslist.goodsdetails.comments.postcomments;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
