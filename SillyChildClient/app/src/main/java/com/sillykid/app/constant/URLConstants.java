@@ -341,6 +341,11 @@ public class URLConstants {
     public static String ORDERDETAIL = APIURL + "order/detail.do";
 
     /**
+     * 获取售后信息
+     */
+    public static String ORDERREFUND = APIURL + "order/refund.do";
+
+    /**
      * 提交意见反馈
      */
     public static String ADVICEPOST = SERVERURL + "api/member/advice/post.do";

@@ -426,8 +426,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         } else if (flag == 2) {
-            ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
-            dismissLoadingDialog();
+//            ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
+//            dismissLoadingDialog();
+            Intent intent = new Intent(aty, ApplyAfterSalesActivity.class);
+            showActivity(aty, intent);
         } else if (flag == 3) {
             dismissLoadingDialog();
             String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");

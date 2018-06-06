@@ -122,6 +122,7 @@
         android:paddingTop="@dimen/dimen15"
         android:text="@string/searchFound"
         android:textColor="@color/titletextcolors"
+        android:visibility="gone"
         android:textSize="@dimen/textsize14" />
 
     <com.zhy.view.flowlayout.TagFlowLayout

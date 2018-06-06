@@ -15,29 +15,14 @@ public interface ApplyAfterSalesContract {
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取订单信息
+         * 获取售后信息
          */
-        void getOrderList(Context context, String status, int page);
+        void getOrderRefund(String order_id);
 
         /**
-         * 取消订单
+         * 提交售后信息
          */
-        void postOrderCancel(Context context, int orderid);
-
-        /**
-         * 提醒发货
-         */
-        void postOrderRemind(Context context, int orderid);
-
-        /**
-         * 获取钱包余额
-         */
-        void getMyWallet(Context context, ResultBean resultBean);
-
-        /**
-         * 确认收货
-         */
-        void postOrderConfirm(Context context, int orderid);
+        void postOrderRefund(int orderid, String typeCode, String reasonCode, String apply_alltotal);
 
     }
 

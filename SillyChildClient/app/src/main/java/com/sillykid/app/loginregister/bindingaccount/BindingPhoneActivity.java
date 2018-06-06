@@ -42,6 +42,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     @BindView(id = R.id.img_back, click = true)
     private ImageView img_back;
 
+
     /**
      * 注册协议
      */
@@ -58,6 +59,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
      */
     @BindView(id = R.id.et_code)
     private EditText et_code;
+
     /**
      * 获取验证码
      */
@@ -131,7 +133,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
         public void onFinish() {// 计时完毕时触发
             tv_code.setText(getString(R.string.revalidation));
             tv_code.setClickable(true);
-            tv_code.setTextColor(getResources().getColor(R.color.greenColors));
+            tv_code.setTextColor(getResources().getColor(R.color.whiteColors));
             tv_code.setBackgroundResource(R.drawable.shape_code);
         }
 

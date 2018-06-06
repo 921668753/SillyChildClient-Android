@@ -47,11 +47,11 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
 
     @Override
     public void getSuccess(String success, int flag) {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-
+        dismissLoadingDialog();
     }
 }

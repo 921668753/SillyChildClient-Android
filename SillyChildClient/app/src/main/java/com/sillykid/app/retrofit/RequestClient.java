@@ -205,7 +205,7 @@ public class RequestClient {
     /**
      * 第三方登录
      */
-    public static void postThirdLogin(Context context, HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postThirdLogin(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestPostFORMHttp(context, URLConstants.USERTHIRDLOGIN, httpParams, listener);
     }
 
@@ -1720,6 +1720,45 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("Cookie", cookies);
                 HttpRequest.requestGetHttp(context, URLConstants.ORDERDETAIL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取售后信息
+     */
+    public static void getOrderRefund(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOrderRefund");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUND, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 提交售后信息
+     */
+    public static void postOrderRefund(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postOrderRefund");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUND, httpParams, listener);
             }
         }, listener);
     }

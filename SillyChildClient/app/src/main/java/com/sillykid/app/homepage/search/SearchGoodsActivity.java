@@ -171,9 +171,16 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
     @Override
     public boolean onTagClick(View view, int position, FlowLayout parent) {
         if (parent.getId() == R.id.tfl_recentSearch) {
-            Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
-            beautyCareIntent.putExtra("keyword", recentSearchTagAdapter.getItem(position).getName());
-            skipActivity(aty, beautyCareIntent);
+            Intent beautyCareIntent = new Intent();
+            if (getIntent().getIntExtra("tag", 0) == 1) {
+                beautyCareIntent.putExtra("keyword", recentSearchTagAdapter.getItem(position).getName());
+                setResult(RESULT_OK, beautyCareIntent);
+            } else {
+                beautyCareIntent.setClass(aty, GoodsListActivity.class);
+                beautyCareIntent.putExtra("keyword", recentSearchTagAdapter.getItem(position).getName());
+                showActivity(aty, beautyCareIntent);
+            }
+            finish();
         } else if (parent.getId() == R.id.tfl_searchFound) {
 
         }

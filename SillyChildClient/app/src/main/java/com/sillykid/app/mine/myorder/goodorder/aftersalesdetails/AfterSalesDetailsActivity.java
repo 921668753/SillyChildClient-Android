@@ -9,7 +9,6 @@ import com.sillykid.app.R;
  */
 public class AfterSalesDetailsActivity extends BaseActivity implements AfterSalesDetailsContract.View {
 
-
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_aftersalesdetails);
@@ -46,11 +45,11 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
 
     @Override
     public void getSuccess(String success, int flag) {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-
+        dismissLoadingDialog();
     }
 }

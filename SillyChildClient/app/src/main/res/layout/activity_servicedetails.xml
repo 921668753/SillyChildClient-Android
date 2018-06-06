@@ -7,6 +7,268 @@
 
     <include layout="@layout/common_title" />
 
+    <TextView style="@style/DividerWidth" />
 
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_margin="@dimen/dimen10"
+        android:background="@drawable/shape_vippermissions"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen35"
+                android:layout_height="@dimen/dimen25"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen15"
+                android:src="@mipmap/no_data" />
+
+            <LinearLayout
+                style="@style/MatchMatch"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/refundSuccess"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize12" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="2018-06-05 10:50:10"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize10" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/DividerWidth"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10" />
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/remark"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="退款成功"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:background="@drawable/shape_vippermissions"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen35"
+                android:layout_height="@dimen/dimen25"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen15"
+                android:src="@mipmap/no_data" />
+
+            <LinearLayout
+                style="@style/MatchMatch"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/merchantsApplyRefund"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize12" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="2018-06-05 10:50:10"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize10" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/DividerWidth"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10" />
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/remark"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/merchantsApplyRefund"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_vippermissions"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen35"
+                android:layout_height="@dimen/dimen25"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen15"
+                android:src="@mipmap/no_data" />
+
+
+            <LinearLayout
+                style="@style/MatchMatch"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/merchantsApplyRefund"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize12" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="2018-06-05 10:50:10"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize10" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/DividerWidth"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10" />
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen15"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/refundAmount1"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/renminbi"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:text="520"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen10"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/refundReason"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:text="不喜欢/不合适"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginBottom="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen10"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/problemDescription"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/MatchWrap"
+                android:text="不喜欢/不合适"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

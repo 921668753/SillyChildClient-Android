@@ -23,10 +23,11 @@ public class GoodsListPresenter implements GoodsListContract.Presenter {
     public void getGoodsList(int page, int cat, String sort, String keyword, String tag) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
-        if (StringUtils.isEmpty(tag)) {
-            httpParams.put("cat", cat);
-        } else {
+        if (!StringUtils.isEmpty(tag)) {
             httpParams.put("mark", tag);
+        }
+        if (cat > 0) {
+            httpParams.put("cat", cat);
         }
         httpParams.put("sort", sort);
         if (!StringUtils.isEmpty(keyword)) {

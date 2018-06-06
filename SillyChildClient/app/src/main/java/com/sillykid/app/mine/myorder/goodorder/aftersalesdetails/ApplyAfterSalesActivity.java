@@ -62,7 +62,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         order_id = getIntent().getStringExtra("order_id");
         good_id = getIntent().getStringExtra("good_id");
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((ApplyAfterSalesContract.Presenter)mPresenter).getMyWallet();
+        ((ApplyAfterSalesContract.Presenter) mPresenter).getOrderRefund("207");
     }
 
     @Override
@@ -70,7 +70,6 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         super.initWidget();
         initTitle();
     }
-
 
     /**
      * 设置标题
@@ -86,11 +85,11 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     @Override
     public void getSuccess(String success, int flag) {
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-
+        dismissLoadingDialog();
     }
 }
