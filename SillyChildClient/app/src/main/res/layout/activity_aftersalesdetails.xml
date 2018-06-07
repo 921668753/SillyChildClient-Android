@@ -34,6 +34,7 @@
 
 
     <TextView
+        android:id="@+id/tv_refundSuccess"
         style="@style/MatchWrap"
         android:background="@color/whiteColors"
         android:paddingBottom="@dimen/dimen15"
@@ -45,6 +46,7 @@
         android:textSize="@dimen/textsize13" />
 
     <LinearLayout
+        android:id="@+id/ll_serviceDetails"
         style="@style/Match45"
         android:layout_marginTop="@dimen/dimen10"
         android:background="@color/whiteColors"
@@ -67,6 +69,7 @@
 
 
     <TextView
+        android:id="@+id/tv_shopName"
         style="@style/Match45"
         android:layout_marginTop="@dimen/dimen10"
         android:background="@color/whiteColors"
@@ -78,6 +81,7 @@
 
 
     <TextView
+        android:id="@+id/tv_afterSalesType"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:layout_marginTop="@dimen/dimen10"
@@ -92,6 +96,7 @@
 
 
     <TextView
+        android:id="@+id/tv_refundAmount"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:background="@color/whiteColors"
@@ -104,6 +109,7 @@
     <TextView style="@style/DividerWidth" />
 
     <TextView
+        android:id="@+id/tv_refundReason"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:background="@color/whiteColors"
@@ -116,6 +122,7 @@
     <TextView style="@style/DividerWidth" />
 
     <TextView
+        android:id="@+id/tv_goodName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:background="@color/whiteColors"
@@ -128,6 +135,7 @@
     <TextView style="@style/DividerWidth" />
 
     <TextView
+        android:id="@+id/tv_orderNumber"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:background="@color/whiteColors"
@@ -140,6 +148,7 @@
     <TextView style="@style/DividerWidth" />
 
     <TextView
+        android:id="@+id/tv_orderTime"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen41"
         android:background="@color/whiteColors"

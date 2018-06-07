@@ -63,7 +63,6 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     private OptionsPickerView pvOptions1 = null;
 
-
     private List<RefundTypeBean> refundTypeList = null;
 
     private List<RefundReasonBean> refundReasonList = null;
@@ -91,7 +90,6 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         showLoadingDialog(getString(R.string.dataLoad));
         ((ApplyAfterSalesContract.Presenter) mPresenter).getOrderRefundList();
     }
-
 
     /**
      * 选择退货类型
@@ -190,4 +188,5 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         pvOptions = null;
         pvOptions1 = null;
     }
+
 }
