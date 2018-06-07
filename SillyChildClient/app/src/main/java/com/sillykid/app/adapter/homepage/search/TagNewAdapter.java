@@ -6,7 +6,6 @@ import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterUtil;
 
-
 public abstract class TagNewAdapter<T> extends TagAdapter<T> {
 
     public List<T> mTagDatas;

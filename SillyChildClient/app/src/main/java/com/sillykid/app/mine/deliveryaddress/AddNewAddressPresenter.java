@@ -28,7 +28,7 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
         RequestClient.getAddressRegionList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, -1);
             }
 
             @Override
@@ -57,7 +57,7 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.contactWayHint1), 0);
             return;
         }
-        if (province_id == 0 || city_id == 0 || region_id == 0) {
+        if (province_id == 0 || city_id == 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.region1), 0);
             return;
         }

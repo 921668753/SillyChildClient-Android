@@ -94,6 +94,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_color"
                     style="@style/MatchWrap"
                     android:background="@color/whiteColors"
                     android:padding="@dimen/dimen15"
@@ -101,18 +102,14 @@
                     android:textColor="@color/hintColors"
                     android:textSize="@dimen/textsize13" />
 
-                <com.common.cklibrary.utils.myview.NoScrollGridView
-                    android:id="@+id/gv_specifications"
+                <com.common.cklibrary.utils.myview.ChildListView
+                    android:id="@+id/clv_specifications"
                     style="@style/MatchWrap"
-                    android:background="@android:color/white"
-                    android:horizontalSpacing="15dp"
-                    android:numColumns="4"
                     android:overScrollMode="never"
                     android:paddingLeft="@dimen/dimen15"
                     android:paddingRight="@dimen/dimen15"
                     android:scrollbars="none"
-                    android:verticalSpacing="@dimen/dimen15"
-                    tools:listitem="@layout/item_specifications" />
+                    tools:listitem="@layout/dialog_item_specificationsbounced" />
 
                 <TextView style="@style/DividerWidth" />
 

@@ -7,7 +7,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.retrofit.RequestClient;
 
 /**
- * Created by ruitu on 2016/9/24.
+ * Created by ruitu on 2017/9/24.
  */
 
 public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
@@ -68,5 +68,42 @@ public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void postOrderBuyNow(int productid, int num) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("productid", productid);
+        httpParams.put("num", num);
+        RequestClient.postOrderBuyNow(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 3);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 3);
+            }
+        });
+    }
+
+    @Override
+    public void postAddCartGood(int goodsid, int num) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("productid", goodsid);
+        httpParams.put("num", num);
+        RequestClient.postAddCartGood(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 4);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 4);
+            }
+        });
+    }
+
 
 }

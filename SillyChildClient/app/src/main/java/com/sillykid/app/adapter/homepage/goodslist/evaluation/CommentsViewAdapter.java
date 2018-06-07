@@ -9,12 +9,12 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
-import com.sillykid.app.entity.homepage.goodslist.goodsdetails.comments.CommentsBean.DataBean;
+import com.sillykid.app.entity.homepage.goodslist.goodsdetails.comments.CommentsBean.DataBean.CommentListBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
-public class CommentsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
+public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
@@ -35,7 +35,7 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, CommentListBean model) {
 
         /**
          * 头像
@@ -60,7 +60,6 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 图片
          */
-
         NoScrollGridView gv_imgComments = (NoScrollGridView) helper.getView(R.id.gv_imgComments);
         CommentsGridViewAdapter commentsGridViewAdapter = new CommentsGridViewAdapter(mContext);
         gv_imgComments.setAdapter(commentsGridViewAdapter);

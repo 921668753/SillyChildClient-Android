@@ -30,7 +30,6 @@ import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
 import com.sillykid.app.mine.deliveryaddress.DeliveryAddressActivity;
 import com.sillykid.app.mine.mycollection.MyCollectionActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
-import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity;
 import com.sillykid.app.mine.myshoppingcart.MyShoppingCartActivity;
 import com.sillykid.app.mine.mywallet.MyWalletActivity;
 import com.sillykid.app.mine.personaldata.PersonalDataActivity;
@@ -168,9 +167,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 7);
                 break;
             case R.id.ll_minesetup:
-                Intent intent = new Intent(aty, ApplyAfterSalesActivity.class);
-                aty.showActivity(aty, intent);
-                //     aty.showActivity(aty, SetUpActivity.class);
+                aty.showActivity(aty, SetUpActivity.class);
                 break;
             case R.id.tv_vipEmergencyCall:
 //                if (userInfoBean == null) {

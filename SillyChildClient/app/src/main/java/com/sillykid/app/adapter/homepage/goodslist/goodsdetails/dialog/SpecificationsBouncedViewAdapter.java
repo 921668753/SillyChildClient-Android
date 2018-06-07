@@ -14,7 +14,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  */
 public class SpecificationsBouncedViewAdapter extends BGAAdapterViewAdapter<HomePageBean.ResultBean.ActionBean.HotBean> {
 
-
     public SpecificationsBouncedViewAdapter(Context context) {
         super(context, R.layout.dialog_item_specificationsbounced);
     }

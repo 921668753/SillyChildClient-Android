@@ -96,6 +96,11 @@ public class URLConstants {
     public static String UNFAVORIT = APIURL + "favorite/unfavorite.do";
 
     /**
+     * 首页---更多分类----商品列表----商品详情----立即购买
+     */
+    public static String ORDERBUYNOW = APIURL + "order/buyNow.do";
+
+    /**
      * 首页---更多分类----商品列表----商品详情----商品规格
      */
     public static String GOODSSPEC = APIURL + "goods/specs.do";

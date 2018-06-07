@@ -24,6 +24,17 @@ public interface GoodsDetailsContract {
          * 取消商品
          */
         void postUnfavorite(int goodsid);
+
+        /**
+         * 立即购买
+         */
+        void postOrderBuyNow(int productid, int num);
+
+        /**
+         * 加入购物车
+         */
+        void postAddCartGood(int goodsid, int num);
+
     }
 
     interface View extends BaseView<Presenter, String> {

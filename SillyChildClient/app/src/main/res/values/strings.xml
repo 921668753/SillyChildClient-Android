@@ -578,7 +578,7 @@
     <string name="message_type_video">[视频]</string>
     <string name="message_type_location">[位置]</string>
     <string name="message_type_file">[文件]</string>
-    <string name="noSession">您暂时没有会话</string>
+    <string name="noSession">亲，您还没有聊天信息哟~</string>
     <string name="noSystemMessage">亲，您还没有系统消息哟~</string>
     <string name="orderMessage">订单消息</string>
     <string name="deliveryMessage">物流消息</string>

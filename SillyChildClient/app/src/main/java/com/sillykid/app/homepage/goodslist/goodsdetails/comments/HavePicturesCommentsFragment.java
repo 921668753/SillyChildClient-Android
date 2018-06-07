@@ -166,12 +166,12 @@ public class HavePicturesCommentsFragment extends BaseFragment implements Commen
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         CommentsBean commentsBean = (CommentsBean) JsonUtil.getInstance().json2Obj(success, CommentsBean.class);
-        if (commentsBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER || commentsBean.getData().size() <= 0 &&
+        if (commentsBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER || commentsBean.getData().getCommentList().size() <= 0 &&
                 mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             errorMsg(getString(R.string.goodsNotCommented), 1);
             return;
         } else if (commentsBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                commentsBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                commentsBean.getData().getCommentList().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             ViewInject.toast(getString(R.string.noMoreData));
             isShowLoadingMore = false;
             dismissLoadingDialog();
@@ -181,10 +181,10 @@ public class HavePicturesCommentsFragment extends BaseFragment implements Commen
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(commentsBean.getData());
+            mAdapter.addNewData(commentsBean.getData().getCommentList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(commentsBean.getData());
+            mAdapter.addMoreData(commentsBean.getData().getCommentList());
         }
         dismissLoadingDialog();
     }

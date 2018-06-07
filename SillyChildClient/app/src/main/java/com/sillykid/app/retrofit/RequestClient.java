@@ -403,6 +403,26 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 首页---更多分类----商品列表----商品详情----取消收藏商品
+     */
+    public static void postOrderBuyNow(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ORDERBUYNOW, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
     /**
      * 首页---更多分类----商品列表----商品详情----商品规格
      */

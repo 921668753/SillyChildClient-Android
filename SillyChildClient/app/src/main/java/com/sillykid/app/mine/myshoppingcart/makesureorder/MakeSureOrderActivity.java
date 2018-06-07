@@ -121,7 +121,11 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
         totalPrice = getIntent().getStringExtra("totalPrice");
         makeSureOrderViewAdaper = new MakeSureOrderViewAdaper(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MakeSureOrderContract.Presenter) mPresenter).getCartBalance(cartIds);
+        if (getIntent().getIntExtra("type", 0) == 1) {
+            getSuccess(cartIds, 0);
+        } else {
+            ((MakeSureOrderContract.Presenter) mPresenter).getCartBalance(cartIds);
+        }
     }
 
     @Override
@@ -183,7 +187,7 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
                 ViewInject.toast(getString(R.string.serverReturnsDataNull1));
                 return;
             }
-            if (makeSureOrderBean.getData().getAddress() != null && makeSureOrderBean.getData().getAddress().getAddr_id() > 0 && StringUtils.isEmpty(makeSureOrderBean.getData().getAddress().getProvince())) {
+            if (makeSureOrderBean.getData().getAddress() != null && makeSureOrderBean.getData().getAddress().getAddr_id() <= 0 && StringUtils.isEmpty(makeSureOrderBean.getData().getAddress().getProvince())) {
                 tv_name.setText(getString(R.string.noAddress1));
                 tv_phone.setVisibility(View.GONE);
                 ll_address.setVisibility(View.GONE);

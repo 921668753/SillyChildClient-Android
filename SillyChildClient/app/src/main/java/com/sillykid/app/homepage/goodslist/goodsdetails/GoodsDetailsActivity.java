@@ -12,6 +12,7 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.mine.sharingceremony.dialog.ShareBouncedDialog;
@@ -85,6 +86,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private String smallImg = "";
 
     private String brief = "";
+    private String price = "";
+    private int num = 0;
+
+    private String have_spec = "0";
 
     @Override
     public void setRootView() {
@@ -109,8 +114,13 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private void initDialog() {
         specificationsBouncedDialog = new SpecificationsBouncedDialog(this, goodsid) {
             @Override
-            public void share(String platform) {
-
+            public void toDo(int goodId, int flag, int num1) {
+                num = num1;
+                if (flag == 0) {
+                    ((GoodsDetailsContract.Presenter) mPresenter).postAddCartGood(goodId, num1);
+                } else if (flag == 1) {
+                    ((GoodsDetailsContract.Presenter) mPresenter).postOrderBuyNow(goodId, num1);
+                }
             }
         };
     }
@@ -209,12 +219,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
+                specificationsBouncedDialog.setFlag(0, StringUtils.toInt(have_spec));
                 break;
             case R.id.tv_buyNow:
-                Intent buyNowIntent = new Intent(aty, MakeSureOrderActivity.class);
-                buyNowIntent.putExtra("goodslistBean", "");
-                buyNowIntent.putExtra("totalPrice", "");
-                showActivity(aty, buyNowIntent);
+                if (specificationsBouncedDialog == null) {
+                    initDialog();
+                }
+                specificationsBouncedDialog.show();
+                specificationsBouncedDialog.setFlag(1, StringUtils.toInt(have_spec));
                 break;
         }
     }
@@ -226,13 +238,15 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
         if (flag == 0) {
             GoodsDetailsBean goodsDetailsBean = (GoodsDetailsBean) JsonUtil.json2Obj(success, GoodsDetailsBean.class);
             if (goodsDetailsBean != null && goodsDetailsBean.getData() != null && goodsDetailsBean.getData().getGoods_id() > 0) {
                 goodsid = goodsDetailsBean.getData().getGoods_id();
                 store_id = goodsDetailsBean.getData().getStore_id();
                 favorited = goodsDetailsBean.getData().isFavorited();
-                // price = goodsDetailsBean.getData().get();
+                have_spec = goodsDetailsBean.getData().getHave_spec();
+                price = goodsDetailsBean.getData().getPrice();
                 goodName = goodsDetailsBean.getData().getName();
                 smallImg = goodsDetailsBean.getData().getSmall();
                 brief = goodsDetailsBean.getData().getBrief();
@@ -252,8 +266,15 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             isRefresh = 1;
             ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
             ViewInject.toast(getString(R.string.uncollectible));
+        } else if (flag == 3) {
+            Intent buyNowIntent = new Intent(aty, MakeSureOrderActivity.class);
+            buyNowIntent.putExtra("goodslistBean", success);
+            buyNowIntent.putExtra("totalPrice", MathUtil.keepTwo(StringUtils.toDouble(price) * num));
+            buyNowIntent.putExtra("type", 1);
+            showActivity(aty, buyNowIntent);
+        } else if (flag == 4) {
+            ViewInject.toast(getString(R.string.addCartSuccess));
         }
-        dismissLoadingDialog();
     }
 
     @Override
