@@ -21,7 +21,7 @@ import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
 import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationAdapter;
 import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
-import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationViewAdapter;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
@@ -117,6 +117,18 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
         ActivityTitleUtils.initToolbar(aty, getString(R.string.publishedeEvaluation), true, R.id.titlebar);
     }
 
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_release:
+                showLoadingDialog(getString(R.string.submissionLoad));
+                CommentVoBean commentVoBean = new CommentVoBean();
+                commentVoBean.setMemberCommentExts(mAdapter.getData());
+                ((PublishedeEvaluationContract.Presenter) mPresenter).postCommentCreate(commentVoBean, rb_descriptionConsistent.getStar(), rb_logisticsService.getStar(), rb_serviceAttitude.getStar());
+                break;
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -139,9 +151,9 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                     mAdapter.getData().get(selectePosition).getCommentImgs().add(images.get(i).path);
                 }
                 mAdapter.notifyItemChanged(selectePosition);
-//                selImageList.clear();
-//                selImageList.addAll(images);
-//                adapter.setImages(selImageList);
+            } else if (images != null && images.size() == 0) {
+                mAdapter.getData().get(selectePosition).getCommentImgs().clear();
+                mAdapter.notifyItemChanged(selectePosition);
             }
         } else {
             ViewInject.toast(getString(R.string.noData));
@@ -171,6 +183,8 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                     memberCommentExtsBean.setName(itemListBean.getName());
                     memberCommentExtsBean.setPrice(itemListBean.getPrice());
                     memberCommentExtsBean.setSpecs(itemListBean.getSpecs());
+                    List<String> list = new ArrayList<String>();
+                    memberCommentExtsBean.setCommentImgs(list);
                     memberCommentExtsBeanList.add(memberCommentExtsBean);
                 }
                 mAdapter.addMoreData(memberCommentExtsBeanList);
@@ -178,7 +192,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
         } else if (flag == 1) {
             if (mAdapter.getData().get(selectePosition).getCommentImgs() == null) {
                 ArrayList<String> list = new ArrayList<>();
-                mAdapter.getData().get(selectePosition).getCommentImgs().addAll(list);
+                mAdapter.getData().get(selectePosition).setCommentImgs(list);
             }
             mAdapter.getData().get(selectePosition).getCommentImgs().add(success);
             mAdapter.notifyItemChanged(selectePosition);
@@ -220,10 +234,16 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                         mAdapter.notifyItemChanged(position);
                     }
                 } else {
+//                    ArrayList<ImageItem> images = new ArrayList<ImageItem>();
+//                    for (int i = 0; i < mAdapter.getItem(position).getCommentImgs().size(); i++) {
+//                        ImageItem imageItem = new ImageItem();
+//                        imageItem.path = mAdapter.getItem(position).getCommentImgs().get(i);
+//                        images.add(imageItem);
+//                    }
                     //打开预览
                     Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                     intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
-                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position1);
+                    //    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position1);
                     intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                     startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
                 }

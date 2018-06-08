@@ -611,7 +611,8 @@
         <!--我的   设置  意见反馈-->
         <activity
             android:name=".mine.setup.feedback.FeedbackActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+
 
         <!--我的   设置  关于我们-->
         <activity

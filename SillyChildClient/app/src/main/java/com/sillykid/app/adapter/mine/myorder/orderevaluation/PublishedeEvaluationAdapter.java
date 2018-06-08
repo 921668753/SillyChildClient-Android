@@ -96,8 +96,6 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
             recyclerView.setAdapter(adapter);
             imagePickerAdapterCounters.put(recyclerView.hashCode(), adapter);
         }
-
-
     }
 
 

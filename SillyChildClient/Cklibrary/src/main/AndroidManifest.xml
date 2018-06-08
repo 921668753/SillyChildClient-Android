@@ -7,6 +7,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <!--我的   设置  意见反馈-->
+        <activity
+            android:name=".common.ImagePreviewNoDelActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
