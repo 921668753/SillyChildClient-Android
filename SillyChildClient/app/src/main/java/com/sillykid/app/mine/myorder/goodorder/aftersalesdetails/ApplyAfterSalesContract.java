@@ -22,7 +22,7 @@ public interface ApplyAfterSalesContract {
         /**
          * 提交售后信息
          */
-        void postOrderRefund(String orderid, String typeCode, String reasonCode, String apply_alltotal);
+        void postOrderRefund(String orderid, String typeCode, String reasonCode, String reasonDetail, String apply_alltotal);
 
     }
 

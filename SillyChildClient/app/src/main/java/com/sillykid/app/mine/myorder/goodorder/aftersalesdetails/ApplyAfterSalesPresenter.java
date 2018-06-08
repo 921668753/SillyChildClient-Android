@@ -38,7 +38,7 @@ public class ApplyAfterSalesPresenter implements ApplyAfterSalesContract.Present
     }
 
     @Override
-    public void postOrderRefund(String orderid, String typeCode, String reasonCode, String apply_alltotal) {
+    public void postOrderRefund(String orderid, String typeCode, String reasonCode, String reasonDetail, String apply_alltotal) {
 
         if (StringUtils.isEmpty(typeCode)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + KJActivityStack.create().topActivity().getString(R.string.afterType), 1);
@@ -53,7 +53,8 @@ public class ApplyAfterSalesPresenter implements ApplyAfterSalesContract.Present
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("order_id", orderid);
         httpParams.put("typeCode", typeCode);
-        httpParams.put("reasonCode", reasonCode);
+        httpParams.put("reason", reasonCode);
+        httpParams.put("reasonDetail", reasonDetail);
         httpParams.put("apply_alltotal", apply_alltotal);
         RequestClient.postOrderRefund(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

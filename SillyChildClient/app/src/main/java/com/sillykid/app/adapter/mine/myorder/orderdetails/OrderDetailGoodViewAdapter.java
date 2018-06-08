@@ -23,6 +23,8 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBean> {
 
+    private String paymoney = "";
+
     private int status = 0;
 
     public OrderDetailGoodViewAdapter(Context context) {
@@ -45,6 +47,7 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
+                    intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
                     intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
                     mContext.startActivity(intent);
@@ -72,8 +75,9 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
 
     }
 
-    public void setStatus(int status) {
+    public void setStatus(int status, String paymoney) {
         this.status = status;
+        this.paymoney = paymoney;
         notifyDataSetChanged();
     }
 }

@@ -17,7 +17,6 @@
             style="@style/MatchWrap"
             android:orientation="vertical">
 
-
             <LinearLayout
                 style="@style/Match50"
                 android:layout_marginTop="@dimen/dimen10"

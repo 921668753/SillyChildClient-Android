@@ -1,6 +1,7 @@
 package com.sillykid.app.mine.myorder.goodorder.aftersalesdetails;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,9 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     @BindView(id = R.id.tv_afterWhy)
     private TextView tv_afterWhy;
+
+    @BindView(id = R.id.et_accountAfterSalesService)
+    private EditText et_accountAfterSalesService;
 
     /**
      * 提交
@@ -147,7 +151,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
                 break;
             case R.id.tv_submit:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(order_id, refundTypeId, refundReasonId, apply_alltotal);
+                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(order_id, refundTypeId, refundReasonId, et_accountAfterSalesService.getText().toString(), "0.01");
                 break;
         }
     }
