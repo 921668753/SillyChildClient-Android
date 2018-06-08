@@ -76,7 +76,7 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
                 private String specs;
                 private String price;
                 private String image;
-                private String imageList;
+                public List<String> CommentImgs;
 
 
                 public int getGoods_id() {
@@ -127,12 +127,12 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
                     this.image = image;
                 }
 
-                public String getImageList() {
-                    return imageList;
+                public List<String> getCommentImgs() {
+                    return CommentImgs;
                 }
 
-                public void setImageList(String imageList) {
-                    this.imageList = imageList;
+                public void setCommentImgs(List<String> commentImgs) {
+                    CommentImgs = commentImgs;
                 }
             }
         }

@@ -31,13 +31,18 @@
 
             <TextView style="@style/DividerWidth" />
 
-            <com.common.cklibrary.utils.myview.ChildListView
-                android:id="@+id/clv_publishedeEvaluation"
+            <!--<com.common.cklibrary.utils.myview.ChildListView-->
+            <!--android:id="@+id/clv_publishedeEvaluation"-->
+            <!--style="@style/MatchWrap"-->
+            <!--android:divider="@color/background"-->
+            <!--android:dividerHeight="@dimen/dimen10"-->
+            <!--android:overScrollMode="never"-->
+            <!--android:scrollbars="none"-->
+            <!--tools:listitem="@layout/item_publishedeevaluation" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_publishedeEvaluation"
                 style="@style/MatchWrap"
-                android:divider="@color/background"
-                android:dividerHeight="@dimen/dimen10"
-                android:overScrollMode="never"
-                android:scrollbars="none"
                 tools:listitem="@layout/item_publishedeevaluation" />
 
             <TextView

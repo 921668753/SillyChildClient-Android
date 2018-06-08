@@ -18,6 +18,12 @@ public interface PublishedeEvaluationContract {
         void getOrderDetails(String orderId);
 
         /**
+         * 上传图片
+         * @param imgPath
+         */
+        void upPictures(String imgPath);
+
+        /**
          * 发表评论
          */
         void postCommentCreate(CommentVoBean commentVoBean, int store_desccredit, int store_servicecredit, int store_deliverycredit);

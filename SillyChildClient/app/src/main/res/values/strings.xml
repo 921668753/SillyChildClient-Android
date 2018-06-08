@@ -798,7 +798,7 @@
     <string name="accountNotClarified">亲，您的账户还没有明细哟~</string>
     <string name="consumption">消费</string>
     <string name="refund">退款</string>
-
+    <string name="ongoing">进行中</string>
 
 
 
@@ -1148,7 +1148,6 @@
     <string name="review">审核中</string>
 
     <!-- 个人中心 我的订单  包车订单-->
-    <string name="ongoing">进行中</string>
     <string name="waitConfing">待司导确认</string>
     <string name="evaluate">待评价</string>
     <string name="guideEvaluate">待司导评价</string>

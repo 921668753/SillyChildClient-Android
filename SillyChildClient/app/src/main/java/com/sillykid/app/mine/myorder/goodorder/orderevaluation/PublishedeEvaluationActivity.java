@@ -1,6 +1,9 @@
 package com.sillykid.app.mine.myorder.goodorder.orderevaluation;
 
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.azhong.ratingbar.RatingBar;
@@ -9,16 +12,22 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildListView;
 import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
+import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean;
+import com.sillykid.app.adapter.ImagePickerAdapter;
+import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationAdapter;
 import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
 import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
+import com.sillykid.app.utils.GlideImageLoader;
+import com.sillykid.app.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +35,10 @@ import java.util.List;
 /**
  * 发表评价
  */
-public class PublishedeEvaluationActivity extends BaseActivity implements PublishedeEvaluationContract.View {
+public class PublishedeEvaluationActivity extends BaseActivity implements PublishedeEvaluationContract.View, PublishedeEvaluationAdapter.OnStatusListener {
 
-    @BindView(id = R.id.clv_publishedeEvaluation)
-    private ChildListView clv_publishedeEvaluation;
+    @BindView(id = R.id.rl_publishedeEvaluation)
+    private RecyclerView recyclerview;
 
     @BindView(id = R.id.rb_descriptionConsistent)
     private RatingBar rb_descriptionConsistent;
@@ -46,7 +55,9 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
 
     private String order_id = "";
 
-    private PublishedeEvaluationViewAdapter mAdapter = null;
+    private PublishedeEvaluationAdapter mAdapter = null;
+
+    private int selectePosition = 0;
 
     @Override
     public void setRootView() {
@@ -57,17 +68,46 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     public void initData() {
         super.initData();
         mPresenter = new PublishedeEvaluationPresenter(this);
-        mAdapter = new PublishedeEvaluationViewAdapter(this);
+        mAdapter = new PublishedeEvaluationAdapter(recyclerview);
         order_id = getIntent().getStringExtra("order_id");
         showLoadingDialog(getString(R.string.dataLoad));
         ((PublishedeEvaluationContract.Presenter) mPresenter).getOrderDetails(order_id);
+        initImagePicker();
+    }
+
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
+        imagePicker.setShowCamera(true);                      //显示拍照按钮
+        imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
+        imagePicker.setSelectLimit(5);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);                         //保存文件的高度。单位像素
+        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         initTitle();
-        clv_publishedeEvaluation.setAdapter(mAdapter);
+        LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        layoutmanager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerview.setLayoutManager(layoutmanager);
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setNestedScrollingEnabled(false);
+        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        //设置item之间的间隔
+        recyclerview.addItemDecoration(spacesItemDecoration);
+        recyclerview.setAdapter(mAdapter);
+        // rl_publishedeEvaluation.setAdapter(mAdapter);
+        mAdapter.setOnStatusListener(this);
     }
 
     /**
@@ -81,29 +121,33 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+        if (data != null && resultCode == ImagePicker.RESULT_CODE_ITEMS && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
             //添加图片返回
-            if (data != null && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
-//                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-//                if (images != null) {
-//                    imagefile = new File(images.get(0).path);
-//                    imagefile = BitmapCoreUtil.customCompression(imagefile);
-//                    showLoadingDialog(getString(R.string.crossLoad));
-//                    ((FeedbackPresenter) mPresenter).upPictures("file");
-//                }
-
+            ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            if (images == null || images.size() == 0) {
+                ViewInject.toast(getString(R.string.noData));
+                return;
             }
-        } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+            showLoadingDialog(getString(R.string.crossLoad));
+            ((PublishedeEvaluationContract.Presenter) mPresenter).upPictures(images.get(0).path);
+        } else if (data != null && resultCode == ImagePicker.RESULT_CODE_BACK && requestCode == NumericConstants.REQUEST_CODE_PREVIEW) {
             //预览图片返回
-            if (data != null && requestCode == NumericConstants.REQUEST_CODE_PREVIEW) {
-//                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
-//                if (images != null) {
-//                    selImageList.clear();
-//                    selImageList.addAll(images);
-//                    adapter.setImages(selImageList);
-//                }
+            ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+            if (images != null && images.size() > 0) {
+                mAdapter.getData().get(selectePosition).getCommentImgs().clear();
+                for (int i = 0; i < images.size(); i++) {
+                    mAdapter.getData().get(selectePosition).getCommentImgs().add(images.get(i).path);
+                }
+                mAdapter.notifyItemChanged(selectePosition);
+//                selImageList.clear();
+//                selImageList.addAll(images);
+//                adapter.setImages(selImageList);
             }
+        } else {
+            ViewInject.toast(getString(R.string.noData));
         }
+
+
     }
 
     @Override
@@ -131,6 +175,16 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                 }
                 mAdapter.addMoreData(memberCommentExtsBeanList);
             }
+        } else if (flag == 1) {
+            if (mAdapter.getData().get(selectePosition).getCommentImgs() == null) {
+                ArrayList<String> list = new ArrayList<>();
+                mAdapter.getData().get(selectePosition).getCommentImgs().addAll(list);
+            }
+            mAdapter.getData().get(selectePosition).getCommentImgs().add(success);
+            mAdapter.notifyItemChanged(selectePosition);
+        } else if (flag == 2) {
+
+
         }
     }
 
@@ -143,5 +197,37 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
             return;
         }
         ViewInject.toast(msg);
+    }
+
+
+    @Override
+    public void onSetStatusListener(View view, ImagePickerAdapter adapter, int position, int position1) {
+        selectePosition = position;
+        switch (position1) {
+            case NumericConstants.IMAGE_ITEM_ADD:
+                //打开选择,本次允许选择的数量
+                Intent intent1 = new Intent(this, ImageGridActivity.class);
+                /* 如果需要进入选择的时候显示已经选中的图片，
+                 * 详情请查看ImagePickerActivity
+                 * */
+//                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
+                startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
+                break;
+            default:
+                if (view.getId() == R.id.iv_delete) {
+                    if (mAdapter.getData() != null && mAdapter.getData().size() > position1) {
+                        mAdapter.getData().get(position).getCommentImgs().remove(position1);
+                        mAdapter.notifyItemChanged(position);
+                    }
+                } else {
+                    //打开预览
+                    Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
+                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position1);
+                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+                    startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
+                }
+                break;
+        }
     }
 }

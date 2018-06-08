@@ -1,8 +1,6 @@
 package com.sillykid.app.adapter.mine.myorder.orderevaluation;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,10 +13,7 @@ import android.widget.ImageView;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
-import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
-import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -37,12 +32,14 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<MemberCommentExtsBean> implements ImagePickerAdapter.OnRecyclerViewItemClickListener {
+public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<MemberCommentExtsBean> {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
     private SparseArray<ImagePickerAdapter> imagePickerAdapterCounters;
     private SparseArray<List<ImageItem>> selImageListCounters;
+
+    private OnStatusListener onStatusListener;
 
     public PublishedeEvaluationViewAdapter(Context context) {
         super(context, R.layout.item_publishedeevaluation);
@@ -81,7 +78,12 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
         RecyclerView recyclerView = (RecyclerView) viewHolderHelper.getView(R.id.recyclerView);
         List<ImageItem> selImageList = new ArrayList<>();
         ImagePickerAdapter adapter = new ImagePickerAdapter(mContext, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
-        adapter.setOnItemClickListener(this);
+        adapter.setOnItemClickListener(new ImagePickerAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onStatusListener.onSetStatusListener(view, position);
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 5);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -90,42 +92,52 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
         imagePickerAdapterCounters.put(recyclerView.hashCode(), adapter);
     }
 
-
-    @Override
-    public void onItemClick(View view, int position) {
-        switch (position) {
-            case NumericConstants.IMAGE_ITEM_ADD:
-                //打开选择,本次允许选择的数量
-                Intent intent1 = new Intent(mContext, ImageGridActivity.class);
-                /* 如果需要进入选择的时候显示已经选中的图片，
-                 * 详情请查看ImagePickerActivity
-                 * */
-//                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
-                ((Activity) mContext).startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
-                break;
-            default:
-                ImagePickerAdapter adapter = imagePickerAdapterCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
-                List<ImageItem> selImageList = selImageListCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
-                if (view.getId() == R.id.iv_delete) {
-                    if (selImageList != null && selImageList.size() > position) {
-                        selImageList.remove(position);
-                        adapter.setImages(selImageList);
-                    }
-                } else {
-                    //打开预览
-                    Intent intentPreview = new Intent(mContext, ImagePreviewDelActivity.class);
-                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
-                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-                    ((Activity) mContext).startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
-                }
-                break;
-        }
+    public void setOnStatusListener(OnStatusListener onStatusListener) {
+        this.onStatusListener = onStatusListener;
     }
+
+    public interface OnStatusListener {
+        void onSetStatusListener(View view, int position);
+        //  void onDeleteListener(int pos, int tagPos);
+    }
+
+
+//    @Override
+//    public void onItemClick(View view, int position) {
+//        switch (position) {
+//            case NumericConstants.IMAGE_ITEM_ADD:
+//                //打开选择,本次允许选择的数量
+//                Intent intent1 = new Intent(mContext, ImageGridActivity.class);
+//                /* 如果需要进入选择的时候显示已经选中的图片，
+//                 * 详情请查看ImagePickerActivity
+//                 * */
+////                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
+//                ((Activity) mContext).startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
+//                break;
+//            default:
+//                ImagePickerAdapter adapter = imagePickerAdapterCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
+//                List<ImageItem> selImageList = selImageListCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
+//                if (view.getId() == R.id.iv_delete) {
+//                    if (selImageList != null && selImageList.size() > position) {
+//                        selImageList.remove(position);
+//                        adapter.setImages(selImageList);
+//                    }
+//                } else {
+//                    //打开预览
+//                    Intent intentPreview = new Intent(mContext, ImagePreviewDelActivity.class);
+//                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+//                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+//                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+//                    ((Activity) mContext).startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
+//                }
+//                break;
+//        }
+//    }
 
 
     @Override
     public void clear() {
+        super.clear();
         if (imagePickerAdapterCounters != null && selImageListCounters == null) {
             Log.e("TAG", "size :  " + imagePickerAdapterCounters.size());
             for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
@@ -163,7 +175,7 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
                 }
             }
         }
-        super.clear();
+
     }
 
 
