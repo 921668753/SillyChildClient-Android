@@ -385,7 +385,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 tradingClosedGood();
             }
             status = orderDetailBean.getData().getStatus();
-            mAdapter.setStatus(status, orderDetailBean.getData().getPaymoney());
+            mAdapter.setStatus(status, orderDetailBean.getData().getPaymoney(),orderDetailBean.getData().getCreate_time());
             tv_name.setText(orderDetailBean.getData().getShip_name());
             tv_phone.setText(orderDetailBean.getData().getShip_mobile());
             tv_address.setText(orderDetailBean.getData().getShipping_area());

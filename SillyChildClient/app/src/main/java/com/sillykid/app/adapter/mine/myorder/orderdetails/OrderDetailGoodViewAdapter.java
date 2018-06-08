@@ -11,6 +11,7 @@ import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsActivity;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity;
+import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
@@ -24,6 +25,8 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBean> {
 
     private String paymoney = "";
+
+    private String create_time = "";
 
     private int status = 0;
 
@@ -47,6 +50,8 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
+                    intent.putExtra("orderCode", model.getSn());
+                    intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
                     intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
                     intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
@@ -75,9 +80,10 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
 
     }
 
-    public void setStatus(int status, String paymoney) {
+    public void setStatus(int status, String paymoney, String create_time) {
         this.status = status;
         this.paymoney = paymoney;
+        this.create_time = create_time;
         notifyDataSetChanged();
     }
 }

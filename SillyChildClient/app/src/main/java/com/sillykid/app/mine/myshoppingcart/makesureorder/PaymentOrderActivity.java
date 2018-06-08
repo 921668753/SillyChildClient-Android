@@ -99,7 +99,7 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
         String money = getIntent().getStringExtra("money");
         tv_money.setText(money);
         String last_time = getIntent().getStringExtra("last_time");
-        time = new TimeCount(StringUtils.toLong(last_time) * 1000 - System.currentTimeMillis(), 1000);
+        time = new TimeCount(StringUtils.toLong(last_time) * 1000, 1000);
         time.setTimeCountCallBack(this);
         time.start();
         String balance = getIntent().getStringExtra("balance");

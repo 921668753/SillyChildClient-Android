@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.mine.myorder.GoodOrderBean.DataBean.ResultBean;
 import com.sillykid.app.entity.mine.myorder.GoodOrderBean.DataBean.ResultBean.OrderItemsBean;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsActivity;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity;
+import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
@@ -24,13 +26,11 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> {
 
 
-    private String paymoney = "";
-    private int status = 0;
+    private ResultBean model;
 
-    public GoodOrderViewAdapter(Context context, int status, String paymoney) {
+    public GoodOrderViewAdapter(Context context, ResultBean model) {
         super(context, R.layout.item_shopgoodsup);
-        this.status = status;
-        this.paymoney = paymoney;
+        this.model = model;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
         viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getSn());
         viewHolderHelper.setText(R.id.tv_number, String.valueOf(listBean.getNum()));
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
-        if (status == 4 || status == 5) {
+        if (model.getStatus() == 4 || model.getStatus() == 5) {
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.GONE);
             viewHolderHelper.getTextView(R.id.tv_checkAfterSale).setOnClickListener(null);
@@ -48,13 +48,15 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
-                    intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
+                    intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
+                    intent.putExtra("orderCode", model.getSn());
+                    intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()),"yyyy-MM-dd HH:mm:ss"));
                     intent.putExtra("order_id", String.valueOf(listBean.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(listBean.getGoods_id()));
                     mContext.startActivity(intent);
                 }
             });
-        } else if (status == 7) {
+        } else if (model.getStatus() == 7) {
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);
             viewHolderHelper.getTextView(R.id.tv_applyAfterSales).setOnClickListener(null);

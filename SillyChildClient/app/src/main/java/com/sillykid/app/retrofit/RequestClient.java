@@ -1837,7 +1837,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUND, httpParams, listener);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.ORDERREFUND, httpParams, listener);
             }
         }, listener);
     }

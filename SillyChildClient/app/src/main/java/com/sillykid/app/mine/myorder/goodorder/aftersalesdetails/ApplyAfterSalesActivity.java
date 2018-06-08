@@ -13,6 +13,8 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean.DataBean.RefundTypeBean;
@@ -26,6 +28,12 @@ import java.util.List;
  */
 public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterSalesContract.View {
 
+    @BindView(id = R.id.tv_orderCode)
+    private TextView tv_orderCode;
+
+    @BindView(id = R.id.tv_submitTime)
+    private TextView tv_submitTime;
+
     /**
      * 售后类型
      */
@@ -38,7 +46,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
     /**
      * 退款金额
      */
-    @BindView(id = R.id.tv_refundAmount, click = true)
+    @BindView(id = R.id.tv_refundAmount)
     private TextView tv_refundAmount;
 
     /**
@@ -77,6 +85,10 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     private String apply_alltotal = null;
 
+    private String orderCode;
+
+    private String submitTime;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_applyaftersales);
@@ -88,6 +100,8 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         mPresenter = new ApplyAfterSalesPresenter(this);
         order_id = getIntent().getStringExtra("order_id");
         good_id = getIntent().getStringExtra("good_id");
+        orderCode = getIntent().getStringExtra("orderCode");
+        submitTime = getIntent().getStringExtra("submitTime");
         apply_alltotal = getIntent().getStringExtra("apply_alltotal");
         selectRefundType();
         selectRefundReason();
@@ -130,6 +144,9 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
     public void initWidget() {
         super.initWidget();
         initTitle();
+        tv_orderCode.setText(orderCode);
+        tv_submitTime.setText(submitTime);
+        tv_refundAmount.setText(MathUtil.keepTwo(StringUtils.toDouble(apply_alltotal)));
     }
 
     /**
@@ -164,14 +181,18 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        ApplyAfterSalesBean applyAfterSalesBean = (ApplyAfterSalesBean) JsonUtil.getInstance().json2Obj(success, ApplyAfterSalesBean.class);
-        refundTypeList = applyAfterSalesBean.getData().getRefund_type();
-        refundReasonList = applyAfterSalesBean.getData().getRefund_reason();
-        if (refundTypeList != null && refundTypeList.size() > 0) {
-            pvOptions.setPicker(refundTypeList);
-        }
-        if (refundReasonList != null && refundReasonList.size() > 0) {
-            pvOptions1.setPicker(refundReasonList);
+        if (flag == 0) {
+            ApplyAfterSalesBean applyAfterSalesBean = (ApplyAfterSalesBean) JsonUtil.getInstance().json2Obj(success, ApplyAfterSalesBean.class);
+            refundTypeList = applyAfterSalesBean.getData().getRefund_type();
+            refundReasonList = applyAfterSalesBean.getData().getRefund_reason();
+            if (refundTypeList != null && refundTypeList.size() > 0) {
+                pvOptions.setPicker(refundTypeList);
+            }
+            if (refundReasonList != null && refundReasonList.size() > 0) {
+                pvOptions1.setPicker(refundReasonList);
+            }
+        } else if (flag == 1) {
+            ViewInject.toast(getString(R.string.customerServiceStaffReview));
         }
     }
 

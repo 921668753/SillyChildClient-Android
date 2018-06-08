@@ -111,7 +111,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + model.getItemsCount() + mContext.getString(R.string.goods));
         viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
-        GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext, model.getStatus(),model.getPaymoney());
+        GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext, model);
         clv_shopgoods.setAdapter(adapter);
         clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

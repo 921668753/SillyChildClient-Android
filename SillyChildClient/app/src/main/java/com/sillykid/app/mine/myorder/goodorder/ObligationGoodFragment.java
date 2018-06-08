@@ -217,7 +217,7 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
             String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
             intent.putExtra("order_id", String.valueOf(resultBean.getOrderId()));
-            intent.putExtra("last_time", resultBean.getLast_time());
+            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(resultBean.getLast_time()) - StringUtils.toLong(resultBean.getSystem_time())));
             intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
             intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
             aty.showActivity(aty, intent);

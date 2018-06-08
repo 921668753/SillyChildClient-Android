@@ -87,9 +87,28 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
             private int orderId;
             private String paymoney;
             private String sn;
+            private String create_time;
+            private String system_time;
             private String last_time;
             private int itemsCount;
             private int status;
+
+            public String getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public String getSystem_time() {
+                return system_time;
+            }
+
+            public void setSystem_time(String system_time) {
+                this.system_time = system_time;
+            }
+
             private List<OrderItemsBean> orderItems;
 
             public int getOrderId() {
