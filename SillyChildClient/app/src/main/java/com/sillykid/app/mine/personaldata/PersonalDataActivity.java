@@ -109,9 +109,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     public static final int REQUEST_CODE_SELECT = 100;
 
-    private String touxiangpath;//所更换的头像的路径
-
     private long birthday = 0;//生日
+
     private Calendar birthdaycalendar = null;//生日
 
     private int updatanum = 0;
@@ -339,7 +338,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                             ViewInject.toast(getString(R.string.noData));
                             return;
                         }
-                        touxiangpath = images.get(0).path;
+                      String  touxiangpath = images.get(0).path;
                         showLoadingDialog(getString(R.string.saveLoad));
                         ((PersonalDataContract.Presenter) mPresenter).upPictures(touxiangpath);
                     } else {

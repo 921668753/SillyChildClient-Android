@@ -15,11 +15,19 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsBean;
 import com.sillykid.app.loginregister.LoginActivity;
+import com.sillykid.app.utils.DataUtil;
 
 /**
  * 售后详情
  */
 public class AfterSalesDetailsActivity extends BaseActivity implements AfterSalesDetailsContract.View {
+
+    /**
+     * 状态
+     */
+    @BindView(id = R.id.tv_type)
+    private TextView tv_type;
+
 
     /**
      * 退款金额：
@@ -128,21 +136,38 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         AfterSalesDetailsBean afterSalesDetailsBean = (AfterSalesDetailsBean) JsonUtil.getInstance().json2Obj(success, AfterSalesDetailsBean.class);
+        if (afterSalesDetailsBean.getData().getTradestatus() == 0) {
+            tv_type.setText(getString(R.string.toAudit));
+        } else if (afterSalesDetailsBean.getData().getTradestatus() == 1) {
+            tv_type.setText(getString(R.string.pendingDelivery));
+        } else if (afterSalesDetailsBean.getData().getTradestatus() == 3) {
+            tv_type.setText(getString(R.string.merchantRefund));
+        } else if (afterSalesDetailsBean.getData().getTradestatus() == 6) {
+            tv_type.setText(getString(R.string.platformRefundCompleted));
+        }
+
         tv_refundSuccess.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getAlltotal_pay())));
 
-        tv_shopName.setText(getString(R.string.refundAmount1) + afterSalesDetailsBean.getData().getStore_name());
+        tv_shopName.setText(getString(R.string.shopName) + afterSalesDetailsBean.getData().getStore_name());
 
         tv_afterSalesType.setText(getString(R.string.afterType1) + afterSalesDetailsBean.getData().getRemark());
 
         tv_refundAmount.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getAlltotal_pay())));
 
         tv_refundReason.setText(getString(R.string.refundReason) + afterSalesDetailsBean.getData().getReason());
-
-        tv_goodName.setText(getString(R.string.productName) + afterSalesDetailsBean.getData().getGoodsNames());
+        String goodName = "";
+        if (afterSalesDetailsBean.getData().getGoodsNames() != null && afterSalesDetailsBean.getData().getGoodsNames().size() > 0) {
+            for (int i = 0; i < afterSalesDetailsBean.getData().getGoodsNames().size(); i++) {
+                goodName = goodName + "，" + afterSalesDetailsBean.getData().getGoodsNames().get(i);
+            }
+        } else {
+            goodName = ",";
+        }
+        tv_goodName.setText(goodName.substring(1));
 
         tv_orderNumber.setText(getString(R.string.orderNumber) + afterSalesDetailsBean.getData().getOrdersn());
 
-        tv_orderTime.setText(getString(R.string.refundAmount1) + afterSalesDetailsBean.getData().getOrder_create_time());
+        tv_orderTime.setText(getString(R.string.refundAmount1) + DataUtil.formatData(StringUtils.toLong(afterSalesDetailsBean.getData().getOrder_create_time()), "yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override

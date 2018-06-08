@@ -1470,6 +1470,27 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 获取账户钱包明细
+     */
+    public static void getAccountDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getAccountDetail");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.PURSEDETAIL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
     /**
      * 获取收藏商品列表
      */
@@ -1759,6 +1780,28 @@ public class RequestClient {
             }
         }, listener);
     }
+
+
+
+    /**
+     * 发表评论
+     */
+    public static void postCommentCreate(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postCommentCreate");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.COMMENTCREATE, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 获取售后信息

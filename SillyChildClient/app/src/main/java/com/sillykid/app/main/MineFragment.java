@@ -274,15 +274,14 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     public void errorMsg(String msg, int flag) {
         mRefreshLayout.setPullDownRefreshEnable(false);
         dismissLoadingDialog();
-        if (isLogin(msg)) {
+        if (isLogin(msg) && flag == 0) {
             initDefaultInfo();
             return;
-        }
-        if (flag == 0) {
-            ViewInject.toast(msg);
-        } else {
+        } else if (isLogin(msg)) {
             aty.showActivity(aty, LoginActivity.class);
+            return;
         }
+        ViewInject.toast(msg);
     }
 
     /**

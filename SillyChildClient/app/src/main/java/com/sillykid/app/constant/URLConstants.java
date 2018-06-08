@@ -239,6 +239,11 @@ public class URLConstants {
     public static String PURSEGET = APIURL + "purse/get.do";
 
     /**
+     * 获取账户钱包明细
+     */
+    public static String PURSEDETAIL = APIURL + "purse/detail.do";
+
+    /**
      * 优惠券列表
      */
     public static String COUPONS = APIURL + "member/bonus-main.do";
@@ -354,6 +359,11 @@ public class URLConstants {
      * 获取订单详情
      */
     public static String ORDERDETAIL = APIURL + "order/detail.do";
+
+    /**
+     * 发表评论
+     */
+    public static String COMMENTCREATE = APIURL + "comment/comment-create.do";
 
     /**
      * 获取售后信息

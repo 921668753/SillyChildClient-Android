@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -20,7 +22,7 @@ import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
 import com.sillykid.app.constant.NumericConstants;
-import com.sillykid.app.entity.MyOrderPicturesBean.ResultBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
 import com.sillykid.app.utils.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<ResultBean> implements ImagePickerAdapter.OnRecyclerViewItemClickListener {
+public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<MemberCommentExtsBean> implements ImagePickerAdapter.OnRecyclerViewItemClickListener {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
@@ -54,11 +56,11 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Resul
     }
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ResultBean listBean) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getOrderString(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
-        viewHolderHelper.setText(R.id.tv_goodName, listBean.getOrderString());
-        viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getOrderString());
-        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + listBean.getOrderString());
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, MemberCommentExtsBean listBean) {
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        viewHolderHelper.setText(R.id.tv_goodName, listBean.getName());
+        viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getSpecs());
+        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
         et_goodsSatisfactory.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,7 +75,7 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Resul
 
             @Override
             public void afterTextChanged(Editable editable) {
-                listBean.setOrderString(editable + "");
+                listBean.setContent(editable + "");
             }
         });
         RecyclerView recyclerView = (RecyclerView) viewHolderHelper.getView(R.id.recyclerView);

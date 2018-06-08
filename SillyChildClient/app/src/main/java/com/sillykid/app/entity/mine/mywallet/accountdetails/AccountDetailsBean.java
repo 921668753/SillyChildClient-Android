@@ -1,6 +1,7 @@
 package com.sillykid.app.entity.mine.mywallet.accountdetails;
 
 import com.common.cklibrary.entity.BaseResult;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -8,74 +9,95 @@ import java.util.List;
  * Created by Admin on 2017/7/27.
  */
 
-public class AccountDetailsBean extends BaseResult<AccountDetailsBean.ResultBean > {
+public class AccountDetailsBean extends BaseResult<AccountDetailsBean.DataBean> {
 
 
-    public static class ResultBean {
+    public class DataBean {
         /**
-         * p : 1
-         * totalPages : 5
-         * list : [{"changeMoney":"+0.01","id":299,"orderSn":"RC632017091618575865858","remark":"充值","timeFmt":"2017.09.16","timeStamp":1505559504,"type":1,"typeName":"充值","userBalance":"6.05"},{"changeMoney":"+0.01","id":298,"orderSn":"RC632017091616350873728","remark":"充值","timeFmt":"2017.09.16","timeStamp":1505555947,"type":1,"typeName":"充值","userBalance":"0.00"}]
+         * pageSize : 20
+         * totalCount : 5
+         * currentPageNo : 1
+         * draw : 0
+         * totalPageCount : 1
+         * result : [{"id":16,"member_id":52,"type":"3","amount":180.99,"create_time":1528437600000,"status":0,"fee_amount":0,"real_amount":0},{"id":19,"member_id":52,"type":"2","amount":0.01,"create_time":1528444800000,"status":0,"fee_amount":0,"real_amount":0.01},{"id":20,"member_id":52,"type":"2","amount":0.01,"create_time":1528444800000,"status":0,"fee_amount":0,"real_amount":0.01},{"id":21,"member_id":52,"type":"2","amount":0.01,"create_time":1528444800000,"status":0,"fee_amount":0,"real_amount":0.01},{"id":22,"member_id":52,"type":"1","amount":100,"create_time":1528444800000,"status":0,"fee_amount":0,"real_amount":0.01}]
          */
 
-        private int p;
-        private int totalPages;
-        private List<ListBean> list;
+        private int pageSize;
+        private int totalCount;
+        private int currentPageNo;
+        private int draw;
+        private int totalPageCount;
+        @SerializedName("result")
+        private List<ResultBean> resultX;
 
-        public int getP() {
-            return p;
+        public int getPageSize() {
+            return pageSize;
         }
 
-        public void setP(int p) {
-            this.p = p;
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
         }
 
-        public int getTotalPages() {
-            return totalPages;
+        public int getTotalCount() {
+            return totalCount;
         }
 
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
         }
 
-        public List<ListBean> getList() {
-            return list;
+        public int getCurrentPageNo() {
+            return currentPageNo;
         }
 
-        public void setList(List<ListBean> list) {
-            this.list = list;
+        public void setCurrentPageNo(int currentPageNo) {
+            this.currentPageNo = currentPageNo;
         }
 
-        public static class ListBean {
+        public int getDraw() {
+            return draw;
+        }
+
+        public void setDraw(int draw) {
+            this.draw = draw;
+        }
+
+        public int getTotalPageCount() {
+            return totalPageCount;
+        }
+
+        public void setTotalPageCount(int totalPageCount) {
+            this.totalPageCount = totalPageCount;
+        }
+
+        public List<ResultBean> getResultX() {
+            return resultX;
+        }
+
+        public void setResultX(List<ResultBean> resultX) {
+            this.resultX = resultX;
+        }
+
+        public class ResultBean {
             /**
-             * changeMoney : +0.01
-             * id : 299
-             * orderSn : RC632017091618575865858
-             * remark : 充值
-             * timeFmt : 2017.09.16
-             * timeStamp : 1505559504
-             * type : 1
-             * typeName : 充值
-             * userBalance : 6.05
+             * id : 16
+             * member_id : 52
+             * type : 3
+             * amount : 180.99
+             * create_time : 1528437600000
+             * status : 0
+             * fee_amount : 0
+             * real_amount : 0
              */
 
-            private String changeMoney;
             private int id;
-            private String orderSn;
-            private String remark;
-            private String timeFmt;
-            private int timeStamp;
+            private int member_id;
             private int type;
-            private String typeName;
-            private String userBalance;
-
-            public String getChangeMoney() {
-                return changeMoney;
-            }
-
-            public void setChangeMoney(String changeMoney) {
-                this.changeMoney = changeMoney;
-            }
+            private String amount;
+            private String create_time;
+            private int status;
+            private String fee_amount;
+            private String real_amount;
 
             public int getId() {
                 return id;
@@ -85,36 +107,12 @@ public class AccountDetailsBean extends BaseResult<AccountDetailsBean.ResultBean
                 this.id = id;
             }
 
-            public String getOrderSn() {
-                return orderSn;
+            public int getMember_id() {
+                return member_id;
             }
 
-            public void setOrderSn(String orderSn) {
-                this.orderSn = orderSn;
-            }
-
-            public String getRemark() {
-                return remark;
-            }
-
-            public void setRemark(String remark) {
-                this.remark = remark;
-            }
-
-            public String getTimeFmt() {
-                return timeFmt;
-            }
-
-            public void setTimeFmt(String timeFmt) {
-                this.timeFmt = timeFmt;
-            }
-
-            public int getTimeStamp() {
-                return timeStamp;
-            }
-
-            public void setTimeStamp(int timeStamp) {
-                this.timeStamp = timeStamp;
+            public void setMember_id(int member_id) {
+                this.member_id = member_id;
             }
 
             public int getType() {
@@ -125,20 +123,44 @@ public class AccountDetailsBean extends BaseResult<AccountDetailsBean.ResultBean
                 this.type = type;
             }
 
-            public String getTypeName() {
-                return typeName;
+            public String getAmount() {
+                return amount;
             }
 
-            public void setTypeName(String typeName) {
-                this.typeName = typeName;
+            public void setAmount(String amount) {
+                this.amount = amount;
             }
 
-            public String getUserBalance() {
-                return userBalance;
+            public String getCreate_time() {
+                return create_time;
             }
 
-            public void setUserBalance(String userBalance) {
-                this.userBalance = userBalance;
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public String getFee_amount() {
+                return fee_amount;
+            }
+
+            public void setFee_amount(String fee_amount) {
+                this.fee_amount = fee_amount;
+            }
+
+            public String getReal_amount() {
+                return real_amount;
+            }
+
+            public void setReal_amount(String real_amount) {
+                this.real_amount = real_amount;
             }
         }
     }

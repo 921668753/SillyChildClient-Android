@@ -1,6 +1,7 @@
 package com.sillykid.app.mine.setup;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
@@ -90,6 +91,22 @@ public class SetUpPresenter implements SetUpContract.Presenter {
         //清除本app所有用户信息
         UserUtil.clearUserInfo(activity);
         mView.getSuccess("", 1);
+    }
+
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
     }
 
 

@@ -89,6 +89,7 @@
         android:paddingTop="@dimen/dimen10"
         android:textColor="@color/textColor"
         android:textColorHint="@color/dividercolors2"
+        android:textCursorDrawable="@drawable/shape_cursor"
         android:textSize="@dimen/textsize13" />
 
     <android.support.v7.widget.RecyclerView

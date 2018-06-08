@@ -40,6 +40,7 @@ import com.sillykid.app.entity.main.MallHomePageBean.DataBean.ApiCatTreeBean;
 import com.sillykid.app.entity.main.MallHomePageBean.DataBean.HomePageBean;
 import com.sillykid.app.homepage.BannerDetailsActivity;
 import com.sillykid.app.homepage.goodslist.GoodsListActivity;
+import com.sillykid.app.homepage.moreclassification.MoreClassificationActivity;
 import com.sillykid.app.homepage.search.SearchGoodsActivity;
 import com.sillykid.app.utils.SpacesItemDecoration;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
@@ -352,6 +353,11 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (homePageClassificationViewAdapter.getItem(i).getCat_id() == -1) {
+            Intent moreClassificationIntent = new Intent(aty, MoreClassificationActivity.class);
+            aty.showActivity(aty, moreClassificationIntent);
+            return;
+        }
         Intent beautyCareIntent = new Intent(aty, GoodsListActivity.class);
         beautyCareIntent.putExtra("cat", homePageClassificationViewAdapter.getItem(i).getCat_id());
         aty.showActivity(aty, beautyCareIntent);

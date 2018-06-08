@@ -10,55 +10,22 @@
 
     <View style="@style/DividerWidth" />
 
-    <RelativeLayout
-        style="@style/MatchMatch">
-        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-            android:id="@+id/mRefreshLayout"
-            style="@style/MatchMatch"
-            android:background="@color/background">
-            <!-- item_companyguidemassage -->
-            <ListView
-                android:id="@+id/lv_detail"
-                style="@style/MatchWrap"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:divider="@android:color/transparent"
-                tools:listitem="@layout/item_accountdetails" />
-
-        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
-
-        <LinearLayout android:id="@+id/ll_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="40dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:src="@mipmap/nocontentxxx" />
-
-            <TextView
-                android:id="@+id/tv_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:text="您还没有明细记录"
-                android:textSize="16sp" />
-        </LinearLayout>
-
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch"
+        android:background="@color/background">
+        <!-- item_companyguidemassage -->
         <ListView
-            android:id="@+id/lv_selecttime"
-            style="@style/WrapWrap"
-            android:layout_alignParentRight="true"
-            android:background="@color/whiteColors"
-            android:visibility="gone"></ListView>
+            android:id="@+id/lv_detail"
+            style="@style/MatchMatch"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen1"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_accountdetails" />
 
-        <include layout="@layout/common_error"/>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-    </RelativeLayout>
+    <include layout="@layout/common_error" />
+
 </LinearLayout>

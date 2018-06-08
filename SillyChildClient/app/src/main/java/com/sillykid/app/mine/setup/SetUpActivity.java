@@ -86,6 +86,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         } else {
             tv_versionname.setText("V" + SystemTool.getAppVersionName(this));
         }
+        ((SetUpContract.Presenter) mPresenter).getIsLogin(aty, 2);
     }
 
     @Override
@@ -137,8 +138,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 ((SetUpContract.Presenter) mPresenter).logOutAPP(aty);
                 break;
             case R.id.ll_feedback:
-//                showActivity(this, FeedbackCacheActivity.class);
-                showActivity(this, FeedbackActivity.class);
+                ((SetUpContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
         }
     }
@@ -254,6 +254,10 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             skipActivity(aty, LoginActivity.class);
+        } else if (flag == 2) {
+            tv_logOut.setVisibility(View.VISIBLE);
+        } else if (flag == 3) {
+            showActivity(this, FeedbackActivity.class);
         }
         dismissLoadingDialog();
     }
@@ -261,7 +265,10 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (isLogin(msg)) {
+        if (isLogin(msg) && flag == 2) {
+            tv_logOut.setVisibility(View.GONE);
+            return;
+        } else if (isLogin(msg) && flag != 2) {
             showActivity(aty, LoginActivity.class);
             return;
         }

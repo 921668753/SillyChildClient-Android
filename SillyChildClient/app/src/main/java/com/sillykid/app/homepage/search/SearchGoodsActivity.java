@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
@@ -19,6 +21,7 @@ import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.search.RecentSearchTagAdapter;
 import com.sillykid.app.entity.homepage.search.RecentSearchBean;
 import com.sillykid.app.homepage.goodslist.GoodsListActivity;
+import com.sillykid.app.homepage.search.dialog.ClearSearchDialog;
 import com.sillykid.app.utils.SoftKeyboardUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -49,11 +52,18 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
     /**
      * 最近搜索
      */
+    @BindView(id = R.id.ll_recentSearch)
+    private LinearLayout ll_recentSearch;
+
     @BindView(id = R.id.tv_recentSearch)
     private TextView tv_recentSearch;
 
     @BindView(id = R.id.tfl_recentSearch)
     private TagFlowLayout tfl_recentSearch;
+
+
+    @BindView(id = R.id.img_delete, click = true)
+    private ImageView img_delete;
 
     private List<RecentSearchBean.DataBean> recentSearchList = null;
 
@@ -65,6 +75,8 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
     @BindView(id = R.id.tfl_searchFound)
     private TagFlowLayout tfl_searchFound;
 
+    private ClearSearchDialog clearSearchDialog = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_searchgoods);
@@ -75,8 +87,22 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
         super.initData();
         recentSearchList = new ArrayList<RecentSearchBean.DataBean>();
         recentSearchTagAdapter = new RecentSearchTagAdapter(this, recentSearchList);
+        initClearSearchDialog();
     }
 
+    /**
+     * 弹框
+     */
+    public void initClearSearchDialog() {
+        clearSearchDialog = new ClearSearchDialog(this, getString(R.string.clearSearch)) {
+            @Override
+            public void deleteCollectionDo(int addressId) {
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "recentSearchHistory", null);
+                ll_recentSearch.setVisibility(View.GONE);
+                tfl_recentSearch.setVisibility(View.GONE);
+            }
+        };
+    }
 
     @Override
     public void initWidget() {
@@ -88,6 +114,11 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (StringUtils.isEmpty(textView.getText().toString().trim())) {
+                        ViewInject.toast(getString(R.string.enterSearching));
+                        handled = true;
+                        return handled;
+                    }
                     SoftKeyboardUtils.packUpKeyboard(aty);
                     saveRecentSearchHistory(textView.getText().toString().trim());
                     Intent beautyCareIntent = new Intent();
@@ -137,15 +168,15 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
     private void readRecentSearchHistory() {
         String recentSearch = PreferenceHelper.readString(aty, StringConstants.FILENAME, "recentSearchHistory", "");
         if (StringUtils.isEmpty(recentSearch)) {
-            tv_recentSearch.setVisibility(View.GONE);
+            ll_recentSearch.setVisibility(View.GONE);
             tfl_recentSearch.setVisibility(View.GONE);
             return;
         }
-        tv_recentSearch.setVisibility(View.VISIBLE);
+        ll_recentSearch.setVisibility(View.VISIBLE);
         tfl_recentSearch.setVisibility(View.VISIBLE);
         RecentSearchBean recentSearchBean = (RecentSearchBean) JsonUtil.json2Obj(recentSearch, RecentSearchBean.class);
         if (recentSearchBean == null || recentSearchBean.getData() == null || recentSearchBean.getData().size() <= 0) {
-            tv_recentSearch.setVisibility(View.GONE);
+            ll_recentSearch.setVisibility(View.GONE);
             tfl_recentSearch.setVisibility(View.GONE);
             return;
         }
@@ -161,9 +192,30 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
             case R.id.img_back:
                 finish();
                 break;
+            case R.id.img_delete:
+                if (clearSearchDialog == null) {
+                    initClearSearchDialog();
+                }
+                if (clearSearchDialog != null && !clearSearchDialog.isShowing()) {
+                    clearSearchDialog.show();
+                }
+                break;
             case R.id.tv_search:
-
-
+                if (StringUtils.isEmpty(et_search.getText().toString().trim())) {
+                    ViewInject.toast(getString(R.string.enterSearching));
+                    return;
+                }
+                saveRecentSearchHistory(et_search.getText().toString().trim());
+                Intent beautyCareIntent = new Intent();
+                if (getIntent().getIntExtra("tag", 0) == 1) {
+                    beautyCareIntent.putExtra("keyword", et_search.getText().toString().trim());
+                    setResult(RESULT_OK, beautyCareIntent);
+                } else {
+                    beautyCareIntent.setClass(aty, GoodsListActivity.class);
+                    beautyCareIntent.putExtra("keyword", et_search.getText().toString().trim());
+                    showActivity(aty, beautyCareIntent);
+                }
+                finish();
                 break;
         }
     }
@@ -187,5 +239,14 @@ public class SearchGoodsActivity extends BaseActivity implements TagFlowLayout.O
         return true;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clearSearchDialog != null) {
+            clearSearchDialog.cancel();
+        }
+        clearSearchDialog = null;
+        recentSearchTagAdapter.clear();
+        recentSearchTagAdapter = null;
+    }
 }

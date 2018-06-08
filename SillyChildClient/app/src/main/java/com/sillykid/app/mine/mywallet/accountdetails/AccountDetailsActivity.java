@@ -1,10 +1,7 @@
 package com.sillykid.app.mine.mywallet.accountdetails;
 
-import android.content.Intent;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -12,75 +9,61 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
-import com.kymjs.common.PreferenceHelper;
 import com.sillykid.app.R;
-import com.sillykid.app.adapter.mine.mywallet.AccountDetailsAdapter;
+import com.sillykid.app.adapter.mine.mywallet.accountdetails.AccountDetailsAdapter;
+import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.mywallet.accountdetails.AccountDetailsBean;
-import com.sillykid.app.entity.mine.mywallet.accountdetails.AccountDetailsBean.ResultBean.ListBean;
 import com.sillykid.app.loginregister.LoginActivity;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
  * 个人中心中的账户明细
  * Created by Administrator on 2017/9/2.
  */
 
-public class AccountDetailsActivity extends BaseActivity implements AdapterView.OnItemClickListener,AccountDetailsContract.View,BGARefreshLayout.BGARefreshLayoutDelegate{
+public class AccountDetailsActivity extends BaseActivity implements AdapterView.OnItemClickListener, AccountDetailsContract.View, BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    private AccountDetailsContract.Presenter mPresenter;
-
-    @BindView(id = R.id.titlebar)
-    private BGATitleBar titlebar;
-
-    @BindView(id = R.id.lv_selecttime)
-    private ListView lv_selecttime;
-    private String[] chooses;//查询日期的数组
-    private int chooseid=0;//查询日期的编号
-
-    @BindView(id=R.id.mRefreshLayout)
+    @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
-    @BindView(id=R.id.lv_detail)
+
+
+    @BindView(id = R.id.lv_detail)
     private ListView lv_detail;
+
 
     /**
      * 错误提示页
      */
-    @BindView(id = R.id.ll_commonError, click = true)
+    @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
+
     @BindView(id = R.id.img_err)
     private ImageView img_err;
+
     @BindView(id = R.id.tv_hintText)
     private TextView tv_hintText;
 
-    @BindView(id = R.id.ll_empty)
-    private LinearLayout ll_empty;
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
 
-    private String starttime;//明细起始时间
-    private String endtime;//明细结束时间
-    private Calendar currentcalendar;//当前时间
-    private Date choosedate;//选择的设定日期，时间为零点
-    private int yint;//年
-    private int mint;//月
-    private int dint;//日
-    private int dayofweek;//一周的第几天，一周的第一天是星期日
-    private int type;//明细类型：0全部 1充值 2提现 3消费 4退款
-    private int pnumber=1;//页码，从1开始
-    private int pagesize=60;//每页数据量
-    private int totalpages=1;//总页数
-    private boolean isloadmore;
-    private AccountDetailsAdapter adadapter;
-    private AccountDetailsBean adBean;
-    private List<ListBean> datalist;
+    /**
+     * 当前页码
+     */
+    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
+
+    /**
+     * 是否加载更多
+     */
+    private boolean isShowLoadingMore = false;
+
+    private AccountDetailsAdapter mAdapter = null;
+
 
     @Override
     public void setRootView() {
@@ -90,12 +73,8 @@ public class AccountDetailsActivity extends BaseActivity implements AdapterView.
     @Override
     public void initData() {
         super.initData();
-        mPresenter=new AccountDetailsPresenter(this);
-        chooses=getResources().getStringArray(R.array.chooseDetail);
-        chooseid=1;
-        ArrayAdapter arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,chooses);
-        lv_selecttime.setAdapter(arrayAdapter);
-        lv_selecttime.setOnItemClickListener(this);
+        mPresenter = new AccountDetailsPresenter(this);
+        mAdapter = new AccountDetailsAdapter(this);
     }
 
     @Override
@@ -103,8 +82,8 @@ public class AccountDetailsActivity extends BaseActivity implements AdapterView.
         super.initWidget();
         initTitle();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
-        adadapter=new AccountDetailsAdapter(this);
-        lv_detail.setAdapter(adadapter);
+        lv_detail.setAdapter(mAdapter);
+        lv_detail.setOnItemClickListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -112,223 +91,124 @@ public class AccountDetailsActivity extends BaseActivity implements AdapterView.
      * 设置标题
      */
     public void initTitle() {
-
-        titlebar.setTitleText(R.string.accountDetails);
-        titlebar.setRightDrawable(R.mipmap.mine_downxxx);
-        titlebar.setRightSecondaryText(chooses[chooseid]);
-        titlebar.getRightSecondaryCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-        titlebar.getRightSecondaryCtv().getPaint().setFakeBoldText(true);
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                aty.finish();
-            }
-
-            @Override
-            public void onClickRightCtv() {
-                super.onClickRightCtv();
-                if (lv_selecttime.getVisibility()==View.GONE){
-                    lv_selecttime.setVisibility(View.VISIBLE);
-                }else{
-                    lv_selecttime.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onClickRightSecondaryCtv() {
-                super.onClickRightSecondaryCtv();
-                if (lv_selecttime.getVisibility()==View.GONE){
-                    lv_selecttime.setVisibility(View.VISIBLE);
-                }else{
-                    lv_selecttime.setVisibility(View.GONE);
-                }
-            }
-        };
-        titlebar.setDelegate(simpleDelegate);
-
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.accountDetails), true, R.id.titlebar);
     }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-        switch (v.getId()){
-            case R.id.ll_commonError:
-                if (tv_hintText.getText().toString().equals(getString(R.string.login1))) {
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "id", 0);
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", "");
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-                    //   PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshName", "getCompanyGuideMessageFragment");
-                    Intent intent = new Intent(aty, LoginActivity.class);
-                    showActivity(aty, intent);
-                    break;
+        switch (v.getId()) {
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    mRefreshLayout.beginRefreshing();
+                    return;
                 }
-                //  ViewInject.toast("onBGARefreshLayoutBeginRefreshing");
-                mRefreshLayout.beginRefreshing();
+                showActivity(aty, LoginActivity.class);
                 break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        lv_selecttime.setVisibility(View.GONE);
-        if (chooseid!=i){
-            chooseid=i;
-            titlebar.setRightSecondaryText(chooses[i]);
-            mRefreshLayout.beginRefreshing();
-        }
-
+//        lv_selecttime.setVisibility(View.GONE);
+//        if (chooseid!=i){
+//            chooseid=i;
+//            titlebar.setRightSecondaryText(chooses[i]);
+//            mRefreshLayout.beginRefreshing();
+//        }
     }
 
     @Override
     public void setPresenter(AccountDetailsContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
+        isShowLoadingMore = true;
+        mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        adBean=(AccountDetailsBean) JsonUtil.json2Obj(success, AccountDetailsBean.class);
-        if (adBean==null){
-            if (!isloadmore){
-                adadapter.clear();
-            }
-            controlRefresh();
-            ViewInject.toast(getString(R.string.otherError));
+        AccountDetailsBean accountDetailsBean = (AccountDetailsBean) JsonUtil.getInstance().json2Obj(success, AccountDetailsBean.class);
+        if (accountDetailsBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                accountDetailsBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            errorMsg(getString(R.string.accountNotClarified), 1);
+            return;
+        } else if (accountDetailsBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                accountDetailsBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            isShowLoadingMore = false;
+            dismissLoadingDialog();
+            mRefreshLayout.endLoadingMore();
             return;
         }
-        if (adBean.getData()==null||adBean.getData().getList()==null||adBean.getData().getList().size()==0){
-            if (isloadmore){
-                ViewInject.toast(getString(R.string.noMoreData));
-            }else{
-                adadapter.clear();
-                ll_empty.setVisibility(View.VISIBLE);
-//                ViewInject.toast(getString(R.string.serverReturnsDataNull));
-            }
-            controlRefresh();
-            return;
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            mAdapter.clear();
+            mAdapter.addNewData(accountDetailsBean.getData().getResultX());
+        } else {
+            mRefreshLayout.endLoadingMore();
+            mAdapter.addMoreData(accountDetailsBean.getData().getResultX());
         }
-        ll_empty.setVisibility(View.GONE);
-        datalist=adBean.getData().getList();
-        pnumber=adBean.getData().getP();
-        totalpages=adBean.getData().getTotalPages();
-        if (isloadmore){
-            adadapter.addMoreData(datalist);
-        }else{
-            adadapter.clear();
-            adadapter.addNewData(datalist);
-        }
-        controlRefresh();
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        controlRefresh();
-        if (isLogin(msg)){
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            showActivity(this,LoginActivity.class);
-            return;
+        dismissLoadingDialog();
+        //  if (flag == 0) {
+        isShowLoadingMore = false;
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+        } else {
+            mRefreshLayout.endLoadingMore();
         }
+        mRefreshLayout.setPullDownRefreshEnable(false);
         mRefreshLayout.setVisibility(View.GONE);
         ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setText(msg+getString(R.string.clickRefresh));
-//        ViewInject.toast(msg);
+        tv_hintText.setVisibility(View.VISIBLE);
+        tv_button.setVisibility(View.VISIBLE);
+        if (isLogin(msg)) {
+            img_err.setImageResource(R.mipmap.no_login);
+            tv_hintText.setVisibility(View.GONE);
+            tv_button.setText(getString(R.string.login));
+            // ViewInject.toast(getString(R.string.reloginPrompting));
+            showActivity(aty, LoginActivity.class);
+            return;
+        } else if (msg.contains(getString(R.string.checkNetwork))) {
+            img_err.setImageResource(R.mipmap.no_network);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        } else if (msg.contains(getString(R.string.accountNotClarified))) {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setVisibility(View.GONE);
+        } else {
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+        }
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        isloadmore=false;
-        computationTime();
-        pnumber=1;
-        mPresenter.getAccountDetail(starttime,endtime,0,pnumber,pagesize);
+        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+        mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetail(mMorePageNumber);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        isloadmore=true;
-        if (!(pnumber>totalpages)){
-            pnumber++;
+        mRefreshLayout.endLoadingMore();
+        if (!isShowLoadingMore) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            return false;
         }
-        mPresenter.getAccountDetail(starttime,endtime,0,pnumber,pagesize);
-        return false;
-    }
-
-    /**
-     *     根据时间段，获取起止时间戳
-     */
-    private void computationTime(){
-        currentcalendar=Calendar.getInstance();
-        endtime=currentcalendar.getTimeInMillis()/1000+"";
-        switch (chooses[chooseid]){
-            case "今天":
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "本周":
-                dayofweek=currentcalendar.get(Calendar.DAY_OF_WEEK)-1;//Calendar.DAY_OF_WEEK是表示一周中的第几天，一周中的第1天是星期日。
-                if (dayofweek==0)dayofweek=7;
-                currentcalendar.add(Calendar.DATE,-dayofweek+1);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "本月":
-                currentcalendar.set(Calendar.DAY_OF_MONTH,1);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "近一个月":
-                currentcalendar.add(Calendar.MONTH,-1);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "近两个月":
-                currentcalendar.add(Calendar.MONTH,-2);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "近三个月":
-                currentcalendar.add(Calendar.MONTH,-3);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "近一年":
-                currentcalendar.add(Calendar.YEAR,-1);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-            case "近两年":
-                currentcalendar.add(Calendar.YEAR,-2);
-                yint=currentcalendar.get(Calendar.YEAR);
-                mint=currentcalendar.get(Calendar.MONTH);
-                dint=currentcalendar.get(Calendar.DATE);
-                break;
-        }
-        choosedate=new Date(yint-1900,mint,dint);
-        starttime=choosedate.getTime()/1000+"";
-    }
-
-    /**
-     * 控制刷新和加载控件显示与否
-     */
-    private void controlRefresh(){
-        if (isloadmore){
-            mRefreshLayout.endLoadingMore();
-        }else{
-            mRefreshLayout.endRefreshing();
-        }
-        isloadmore=false;
+        mMorePageNumber++;
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetail(mMorePageNumber);
+        return true;
     }
 
 }

@@ -170,7 +170,8 @@
     <string name="recentSearch">最近搜索</string>
     <string name="searchFound">搜索发现</string>
     <string name="commonlyClassification">常用分类</string>
-
+    <string name="enterSearching">请输入您要搜索的商品</string>
+    <string name="clearSearch">确定清空搜索</string>
 
     <!--国外城市列表-->
     <string name="currentState">当前国家</string>
@@ -792,6 +793,16 @@
     <string name="withdrawalRuleDescription">提现规则说明</string>
     <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
 
+    <!--账户明细 -->
+    <string name="transactionAmount">交易金额</string>
+    <string name="accountNotClarified">亲，您的账户还没有明细哟~</string>
+    <string name="consumption">消费</string>
+    <string name="refund">退款</string>
+
+
+
+
+
 
     <!--优惠券 -->
     <string name="unused">未使用</string>
@@ -1095,6 +1106,14 @@
     <string name="confirmReminderDelivery">确定提醒发货</string>
     <string name="confirmReceiptGoods">确定已收到货物</string>
 
+    <!-- 个人中心 我的订单  发表评价-->
+    <string name="publishedeEvaluation">发表评价</string>
+    <string name="selectDescriptionMatchingScore">请选择描述相符评分</string>
+    <string name="selectLogisticsServiceRating">请选择物流服务评分</string>
+    <string name="selectServiceAttitudeScore">请选择服务态度评分</string>
+
+
+
 
     <!-- 个人中心 我的订单  申请售后-->
     <string name="accountAfterSalesService">请详细描述您的售后原因</string>
@@ -1109,6 +1128,11 @@
     <string name="productName">商品名称：</string>
     <string name="applicationSuccessful">申请成功</string>
     <string name="applyFailure">申请失败</string>
+    <string name="toAudit">待审核</string>
+    <string name="pendingDelivery">审核成功待用户发货</string>
+    <string name="merchantRefund">商家已退款，待平台退款</string>
+    <string name="platformRefundCompleted">平台退款完成,拒绝再次申请</string>
+
 
 
     <!-- 个人中心 我的订单  服务详情-->
@@ -1120,6 +1144,8 @@
     <string name="refundAmount1">退款金额：</string>
     <string name="usersApplyRefundGoods">用户申请退货退款</string>
     <string name="apply">申请</string>
+    <string name="userApplication">用户申请</string>
+    <string name="review">审核中</string>
 
     <!-- 个人中心 我的订单  包车订单-->
     <string name="ongoing">进行中</string>
@@ -1203,6 +1229,11 @@
     <string name="afterType1">售后类型：</string>
     <string name="refundAmount">退款金额</string>
     <string name="afterWhy">售后原因</string>
+
+    <!-- 个人中心 我的订单  订单跟踪-->
+    <string name="orderTracking">订单跟踪</string>
+
+
 
     <!-- 个人中心 我的订单  订单详情   发表评价-->
     <string name="storeRatings">店铺评分</string>

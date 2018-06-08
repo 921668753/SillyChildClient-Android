@@ -22,13 +22,12 @@ import com.sillykid.app.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAda
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsActivity;
-import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity;
-import com.sillykid.app.mine.myorder.goodorder.checkLogistics.CheckLogisticsActivity;
+import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -340,7 +339,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 }
                 break;
             case R.id.tv_checkLogistics:
-                Intent checkLogisticsIntent = new Intent(aty, CheckLogisticsActivity.class);
+                Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
                 checkLogisticsIntent.putExtra("order_id", String.valueOf(orderId));
                 showActivity(aty, checkLogisticsIntent);
                 break;
@@ -381,7 +380,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
                 completedGood();
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
-                afterSaleGood(orderDetailBean);
+                afterSaleGood();
             } else {
                 tradingClosedGood();
             }
@@ -426,10 +425,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         } else if (flag == 2) {
-//            ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
-//            dismissLoadingDialog();
-            Intent intent = new Intent(aty, ApplyAfterSalesActivity.class);
-            showActivity(aty, intent);
+            ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
+            dismissLoadingDialog();
         } else if (flag == 3) {
             dismissLoadingDialog();
             String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
@@ -475,6 +472,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             time = new TimeCount(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000 - System.currentTimeMillis(), 1000);
             time.setTimeCountCallBack(this);
             time.start();
+        } else {
+            tv_waitingPayment.setText(getString(R.string.tradingClosed));
+            tv_lateCancelled.setVisibility(View.GONE);
         }
         ll_bottom.setVisibility(View.VISIBLE);
         tv_cancelOrder.setVisibility(View.VISIBLE);
@@ -569,28 +569,21 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 售后
      */
-    private void afterSaleGood(OrderDetailBean orderDetailBean) {
+    private void afterSaleGood() {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
         tv_waitSending.setText(getString(R.string.applyAfterSales));
-        tv_orderCourierInformation.setVisibility(View.GONE);
-        tv_orderCourierTime.setVisibility(View.GONE);
-        ll_name.setVisibility(View.GONE);
-        ll_address.setVisibility(View.GONE);
-        ll_modePayment.setVisibility(View.GONE);
-        ll_amountRealPay.setVisibility(View.GONE);
-        ll_paymentTime.setVisibility(View.GONE);
-        ll_deliveryTime.setVisibility(View.GONE);
-        ll_bottom.setVisibility(View.VISIBLE);
-        ll_bottom.setVisibility(View.VISIBLE);
-        tv_cancelOrder.setVisibility(View.GONE);
-        tv_payment.setVisibility(View.GONE);
-        tv_remindDelivery.setVisibility(View.GONE);
-        tv_checkLogistics.setVisibility(View.GONE);
-        tv_confirmReceipt.setVisibility(View.GONE);
-        tv_appraiseOrder.setVisibility(View.GONE);
+        tv_orderCourierInformation.setVisibility(View.VISIBLE);
+        tv_orderCourierTime.setVisibility(View.VISIBLE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.VISIBLE);
+        ll_amountRealPay.setVisibility(View.VISIBLE);
+        ll_paymentTime.setVisibility(View.VISIBLE);
+        ll_deliveryTime.setVisibility(View.VISIBLE);
+        ll_bottom.setVisibility(View.GONE);
     }
 
 

@@ -2,17 +2,22 @@ package com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails;
 
 import com.common.cklibrary.entity.BaseResult;
 
+import java.util.List;
+
 public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.DataBean> {
 
 
     public class DataBean {
         /**
-         * result : [{"orderId":205,"paymoney":0,"sn":"DD152812329579-1","orderItems":[{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/1/goods/2017/6/14/14//59186456_thumbnail.jpg","item_id":80,"snapshot_id":21,"num":1,"goods_id":157,"gainedpoint":0,"ship_num":0,"unit":"","price":2250,"product_id":157,"cat_id":164,"name":"正品女表时尚手表真皮镶钻石英表","goods_type":0,"sn":"00051","state":0,"fields":{},"order_id":205}],"itemsCount":1,"status":1},{"orderId":203,"paymoney":0,"sn":"DD152812321571-1","orderItems":[{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/1/goods/2017/6/14/14//59186456_thumbnail.jpg","item_id":79,"snapshot_id":21,"num":1,"goods_id":157,"gainedpoint":0,"ship_num":0,"unit":"","price":2250,"product_id":157,"cat_id":164,"name":"正品女表时尚手表真皮镶钻石英表","goods_type":0,"sn":"00051","state":0,"fields":{},"order_id":203}],"itemsCount":1,"status":1}]
-         * pageSize : 20
-         * totalPageCount : 1
-         * draw : 0
-         * totalCount : 2
-         * currentPageNo : 1
+         * tradestatus : 6
+         * alltotal_pay : 100
+         * store_name : 时尚女装/搭配
+         * remark : 退货
+         * apply_alltotal : 1346
+         * reason :
+         * ordersn : DD152811678692-1
+         * order_create_time : 1528116786
+         * goodsNames : ["Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿",""]
          */
 
         private int tradestatus;
@@ -23,7 +28,7 @@ public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.Data
         private String reason;
         private String ordersn;
         private String order_create_time;
-        private String goodsNames;
+        private List<String> goodsNames;
 
         public int getTradestatus() {
             return tradestatus;
@@ -89,13 +94,12 @@ public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.Data
             this.order_create_time = order_create_time;
         }
 
-        public String getGoodsNames() {
+        public List<String> getGoodsNames() {
             return goodsNames;
         }
 
-        public void setGoodsNames(String goodsNames) {
+        public void setGoodsNames(List<String> goodsNames) {
             this.goodsNames = goodsNames;
         }
     }
-
 }

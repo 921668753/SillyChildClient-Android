@@ -2,6 +2,7 @@ package com.sillykid.app.entity.mine.myorder;
 
 import com.common.cklibrary.entity.BaseResult;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -256,7 +257,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.itemList = itemList;
         }
 
-        public class ItemListBean {
+        public class ItemListBean implements Serializable {
             /**
              * item_id : 79
              * order_id : 203

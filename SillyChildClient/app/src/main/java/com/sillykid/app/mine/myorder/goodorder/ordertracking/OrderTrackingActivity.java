@@ -1,4 +1,4 @@
-package com.sillykid.app.mine.myorder.goodorder.checkLogistics;
+package com.sillykid.app.mine.myorder.goodorder.ordertracking;
 
 import android.view.View;
 
@@ -9,11 +9,11 @@ import com.common.cklibrary.utils.myview.WebViewLayout;
 import com.sillykid.app.R;
 
 /**
- * 查看物流
+ * 订单跟踪
  * Created by Administrator on 2017/9/28.
  */
 
-public class CheckLogisticsActivity extends BaseActivity {
+public class OrderTrackingActivity extends BaseActivity {
 
     @BindView(id = R.id.web_viewlayout)
     private WebViewLayout webViewLayout;
@@ -31,8 +31,8 @@ public class CheckLogisticsActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        webViewLayout.setTitleVisibility(false);
+       // initTitle();
+        webViewLayout.setTitleText(getString(R.string.orderTracking));
         //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
 
     }
@@ -53,7 +53,7 @@ public class CheckLogisticsActivity extends BaseActivity {
      * 设置标题
      */
     public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.aboutUs), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderTracking), true, R.id.titlebar);
     }
 
 }

@@ -24,6 +24,7 @@
             android:src="@mipmap/order_complete_icon" />
 
         <TextView
+            android:id="@+id/tv_type"
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen10"
             android:text="@string/refundSuccess"
@@ -121,16 +122,32 @@
 
     <TextView style="@style/DividerWidth" />
 
-    <TextView
-        android:id="@+id/tv_goodName"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen41"
+    <LinearLayout
+        style="@style/MatchWrap"
         android:background="@color/whiteColors"
-        android:gravity="center_vertical"
+        android:minHeight="@dimen/dimen41"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/dimen15"
-        android:text="商品名称：xxxxxx"
-        android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize13" />
+        android:paddingRight="@dimen/dimen15">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/productName"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_goodName"
+            style="@style/MatchWrap"
+            android:background="@color/whiteColors"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen10"
+            android:text="niahnnjjjsjsjhdujdjidcxijdcjincdjindcjidcjincdjinjincjicedjicjcjijicjicjicjicjijicjicjicjiijicjcjcjjcjcj"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize13" />
+
+    </LinearLayout>
 
     <TextView style="@style/DividerWidth" />
 

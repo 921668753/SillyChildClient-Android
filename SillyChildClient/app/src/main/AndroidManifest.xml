@@ -411,6 +411,16 @@
             android:name=".mine.myorder.goodorder.orderdetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的   我的订单   订单跟踪-->
+        <activity
+            android:name=".mine.myorder.goodorder.ordertracking.OrderTrackingActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的   我的订单   发表评价-->
+        <activity
+            android:name=".mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的   我的订单   申请售后-->
         <activity
             android:name=".mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity"

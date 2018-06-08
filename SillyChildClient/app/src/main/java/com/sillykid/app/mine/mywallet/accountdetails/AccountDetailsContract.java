@@ -12,7 +12,7 @@ public interface AccountDetailsContract {
         /**
          * 获取账户明细
          */
-        void getAccountDetail(String startTime, String endTime, int type, int p, int pageSize);
+        void getAccountDetail(int page);
 
     }
 

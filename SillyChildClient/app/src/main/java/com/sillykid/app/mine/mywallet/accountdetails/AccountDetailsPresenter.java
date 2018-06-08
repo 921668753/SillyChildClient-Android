@@ -1,5 +1,6 @@
 package com.sillykid.app.mine.mywallet.accountdetails;
 
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -19,17 +20,11 @@ public class AccountDetailsPresenter implements AccountDetailsContract.Presenter
 
 
     @Override
-    public void getAccountDetail(String startTime,String endTime,int type,int p,int pageSize) {
+    public void getAccountDetail(int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("m","Api");
-        httpParams.put("c","User");
-        httpParams.put("a","accountLog");
-        httpParams.put("startTime",startTime);
-        httpParams.put("endTime",endTime);
-        httpParams.put("type",type);
-        httpParams.put("p",p);
-        httpParams.put("pageSize",pageSize);
-        RequestClient.getPayRecord(httpParams, new ResponseListener<String>() {
+        httpParams.put("pageNo", page);
+        httpParams.put("pageSize", 10);
+        RequestClient.getAccountDetail(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -41,5 +36,4 @@ public class AccountDetailsPresenter implements AccountDetailsContract.Presenter
             }
         });
     }
-
 }

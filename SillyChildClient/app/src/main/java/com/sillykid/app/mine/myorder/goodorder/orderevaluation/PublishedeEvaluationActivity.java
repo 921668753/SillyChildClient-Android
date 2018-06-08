@@ -6,22 +6,27 @@ import android.widget.TextView;
 import com.azhong.ratingbar.RatingBar;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.BitmapCoreUtil;
+import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.bean.ImageItem;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
+import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
-import com.sillykid.app.mine.setup.feedback.FeedbackPresenter;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
+import com.sillykid.app.loginregister.LoginActivity;
 
-import java.io.File;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * 发表评价
  */
-public class PublishedeEvaluationActivity extends BaseActivity {
+public class PublishedeEvaluationActivity extends BaseActivity implements PublishedeEvaluationContract.View {
 
     @BindView(id = R.id.clv_publishedeEvaluation)
     private ChildListView clv_publishedeEvaluation;
@@ -38,19 +43,38 @@ public class PublishedeEvaluationActivity extends BaseActivity {
     @BindView(id = R.id.tv_release, click = true)
     private TextView tv_release;
 
+
+    private String order_id = "";
+
+    private PublishedeEvaluationViewAdapter mAdapter = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_publishedeevaluation);
     }
 
     @Override
-    public void initWidget() {
-        super.initWidget();
+    public void initData() {
+        super.initData();
+        mPresenter = new PublishedeEvaluationPresenter(this);
+        mAdapter = new PublishedeEvaluationViewAdapter(this);
+        order_id = getIntent().getStringExtra("order_id");
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((PublishedeEvaluationContract.Presenter) mPresenter).getOrderDetails(order_id);
     }
 
     @Override
-    public void initData() {
-        super.initData();
+    public void initWidget() {
+        super.initWidget();
+        initTitle();
+        clv_publishedeEvaluation.setAdapter(mAdapter);
+    }
+
+    /**
+     * 设置标题
+     */
+    public void initTitle() {
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.publishedeEvaluation), true, R.id.titlebar);
     }
 
 
@@ -82,4 +106,42 @@ public class PublishedeEvaluationActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void setPresenter(PublishedeEvaluationContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
+        if (flag == 0) {
+            OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
+            if (orderDetailBean.getData().getItemList() != null && orderDetailBean.getData().getItemList().size() > 0) {
+                mAdapter.clear();
+                List<MemberCommentExtsBean> memberCommentExtsBeanList = new ArrayList<MemberCommentExtsBean>();
+                for (int i = 0; i < orderDetailBean.getData().getItemList().size(); i++) {
+                    ItemListBean itemListBean = orderDetailBean.getData().getItemList().get(i);
+                    MemberCommentExtsBean memberCommentExtsBean = new MemberCommentExtsBean();
+                    memberCommentExtsBean.setImage(itemListBean.getImage());
+                    memberCommentExtsBean.setGoods_id(itemListBean.getGoods_id());
+                    memberCommentExtsBean.setName(itemListBean.getName());
+                    memberCommentExtsBean.setPrice(itemListBean.getPrice());
+                    memberCommentExtsBean.setSpecs(itemListBean.getSpecs());
+                    memberCommentExtsBeanList.add(memberCommentExtsBean);
+                }
+                mAdapter.addMoreData(memberCommentExtsBeanList);
+            }
+        }
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        if (isLogin(msg)) {
+            //  ViewInject.toast(getString(R.string.reloginPrompting));
+            showActivity(this, LoginActivity.class);
+            return;
+        }
+        ViewInject.toast(msg);
+    }
 }

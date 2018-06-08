@@ -27,7 +27,7 @@ import com.sillykid.app.entity.mine.myorder.GoodOrderBean;
 import com.sillykid.app.entity.mine.myorder.GoodOrderBean.DataBean.ResultBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
-import com.sillykid.app.mine.myorder.goodorder.checkLogistics.CheckLogisticsActivity;
+import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.sillykid.app.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity;
@@ -213,6 +213,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
             String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
             intent.putExtra("order_id", String.valueOf(resultBean.getOrderId()));
+            intent.putExtra("last_time", resultBean.getLast_time());
             intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
             intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
             aty.showActivity(aty, intent);
@@ -285,7 +286,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
                 orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmReminderDelivery), 1);
             }
         } else if (childView.getId() == R.id.tv_checkLogistics) {
-            Intent checkLogisticsIntent = new Intent(aty, CheckLogisticsActivity.class);
+            Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
             checkLogisticsIntent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, checkLogisticsIntent);
         } else if (childView.getId() == R.id.tv_confirmReceipt) {

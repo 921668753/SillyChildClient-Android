@@ -1,6 +1,7 @@
 package com.sillykid.app.mine.setup;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
@@ -23,9 +24,14 @@ public interface SetUpContract {
         void downloadApp(String updateAppUrl);
 
         /**
-         * 退出环信登录
+         * 退出登录
          */
         void logOutAPP(Activity activity);
+
+        /**
+         * 获取会员登录状态
+         */
+        void getIsLogin(Context context, int flag);
     }
 
     interface View extends BaseView<Presenter, String> {
