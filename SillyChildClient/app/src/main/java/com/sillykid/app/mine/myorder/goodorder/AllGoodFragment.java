@@ -87,7 +87,6 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
     private OrderBouncedDialog orderBouncedDialog = null;
 
     @Override
-
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
         return View.inflate(aty, R.layout.fragment_allgood, null);
