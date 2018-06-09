@@ -160,9 +160,7 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
      * 联动地区选择
      */
     private void initLinkOptionsPicker() {
-
         pvLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 province_id = options1Items.get(options1).getRegion_id();
