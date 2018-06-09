@@ -250,4 +250,12 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recyclerview.removeAllViews();
+        mAdapter.clear();
+        mAdapter = null;
+    }
 }

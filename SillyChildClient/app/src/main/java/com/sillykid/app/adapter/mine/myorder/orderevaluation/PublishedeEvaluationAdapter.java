@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.common.cklibrary.utils.MathUtil;
+import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.sillykid.app.R;
@@ -108,5 +109,45 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
         //  void onDeleteListener(int pos, int tagPos);
     }
 
-
+    @Override
+    public void clear() {
+        if (imagePickerAdapterCounters != null && selImageListCounters == null) {
+            Log.e("TAG", "size :  " + imagePickerAdapterCounters.size());
+            for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
+                ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
+                if (cdt != null) {
+                    cdt.setImages(null);
+                    cdt = null;
+                }
+            }
+        }
+        if (imagePickerAdapterCounters == null && selImageListCounters != null) {
+            Log.e("TAG", "size :  " + selImageListCounters.size());
+            for (int i = 0, length = selImageListCounters.size(); i < length; i++) {
+                List<ImageItem> cdt = selImageListCounters.get(selImageListCounters.keyAt(i));
+                if (cdt != null) {
+                    cdt.clear();
+                    cdt = null;
+                }
+            }
+        }
+        if (imagePickerAdapterCounters != null && selImageListCounters != null) {
+            Log.e("TAG", "size :  " + imagePickerAdapterCounters.size());
+            for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
+                ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
+                if (cdt != null) {
+                    cdt.setImages(null);
+                    cdt = null;
+                }
+            }
+            for (int i = 0, length = selImageListCounters.size(); i < length; i++) {
+                List<ImageItem> cdt = selImageListCounters.get(selImageListCounters.keyAt(i));
+                if (cdt != null) {
+                    cdt.clear();
+                    cdt = null;
+                }
+            }
+        }
+        super.clear();
+    }
 }
