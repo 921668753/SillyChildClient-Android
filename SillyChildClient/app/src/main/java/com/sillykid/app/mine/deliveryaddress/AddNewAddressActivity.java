@@ -295,7 +295,8 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
             region_id = intent.getIntExtra("region_id", 0);
             // town_id = addressBean.getData().getTown_id();
             et_detailedAddress.setText(intent.getStringExtra("addr"));
-            if (intent.getIntExtra("def_addr", 0) == 1) {
+            def_addr = intent.getIntExtra("def_addr", 0);
+            if (def_addr == 1) {
                 iv_defaultAddress.setImageResource(R.mipmap.address_set_as_default_selected);
             } else {
                 iv_defaultAddress.setImageResource(R.mipmap.address_set_as_default_unselected);

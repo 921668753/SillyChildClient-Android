@@ -13,7 +13,7 @@ import com.sillykid.app.R;
  * Created by Administrator on 2017/9/28.
  */
 
-public class OrderTrackingActivity extends BaseActivity {
+public class OrderTrackingActivity extends BaseActivity implements WebViewLayout.WebViewCallBack {
 
     @BindView(id = R.id.web_viewlayout)
     private WebViewLayout webViewLayout;
@@ -24,15 +24,12 @@ public class OrderTrackingActivity extends BaseActivity {
     }
 
     @Override
-    public void initData() {
-        super.initData();
-    }
-
-    @Override
     public void initWidget() {
         super.initWidget();
-       // initTitle();
+        // initTitle();
         webViewLayout.setTitleText(getString(R.string.orderTracking));
+        webViewLayout.setBackImgResource(R.mipmap.back);
+        webViewLayout.setWebViewCallBack(this);
         //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
 
     }
@@ -42,6 +39,23 @@ public class OrderTrackingActivity extends BaseActivity {
         super.widgetClick(v);
     }
 
+    /**
+     * 设置标题
+     */
+    public void initTitle() {
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderTracking), true, R.id.titlebar);
+    }
+
+    @Override
+    public void backOnclick() {
+        finish();
+    }
+
+    @Override
+    public void loadFailedError() {
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -49,11 +63,5 @@ public class OrderTrackingActivity extends BaseActivity {
         webViewLayout = null;
     }
 
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderTracking), true, R.id.titlebar);
-    }
 
 }

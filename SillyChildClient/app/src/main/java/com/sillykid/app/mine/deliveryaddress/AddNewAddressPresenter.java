@@ -74,7 +74,7 @@ public class AddNewAddressPresenter implements AddNewAddressContract.Presenter {
         httpParams.put("region_id", region_id);
         httpParams.put("town_id", town_id);
         httpParams.put("addr", addr);
-        httpParams.put("def_addr", def_addr);
+        httpParams.put("def", def_addr);
         RequestClient.postEditAddress(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

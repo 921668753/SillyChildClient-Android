@@ -116,7 +116,6 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
             for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
                 ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
                 if (cdt != null) {
-                    cdt.setImages(null);
                     cdt = null;
                 }
             }
@@ -136,7 +135,6 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
             for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
                 ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
                 if (cdt != null) {
-                    cdt.setImages(null);
                     cdt = null;
                 }
             }

@@ -28,6 +28,7 @@ import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
@@ -171,8 +172,9 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_checkLogistics) {
-
-
+            Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
+            checkLogisticsIntent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            aty.showActivity(aty, checkLogisticsIntent);
         } else if (childView.getId() == R.id.tv_confirmReceipt) {
             if (orderBouncedDialog == null) {
                 initDialog();
