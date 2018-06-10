@@ -91,7 +91,7 @@ public class PayUtils {
                     if (!StringUtils.isEmpty(result)) {
                         if (TextUtils.equals(resultStatus, "9000")) {// 操作成功
                             if (context.getClass().getName().contains("RechargeActivity")) {
-                                ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_succeed));
+                                ((RechargeActivity) context).jumpPayComplete(1);
                             } else if (context.getClass().getName().contains("PaymentOrderActivity")) {
                                 ((PaymentOrderActivity) context).jumpPayComplete(1);
                             }
@@ -113,9 +113,9 @@ public class PayUtils {
 //                        } else if (TextUtils.equals(resultStatus, "6000")) {// 支付服务正在进行升级操作
 //                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
 //                        }
-                        else if (TextUtils.equals(resultStatus, "6001")) {// 用户中途取消支付操作
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_cancel));
-                        }
+//                        else if (TextUtils.equals(resultStatus, "6001")) {// 用户中途取消支付操作
+//                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_order_cancel));
+//                        }
 //                        else if (TextUtils.equals(resultStatus, "6002")) {// 网络连接异常
 //                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_network));
 //                        } else if (TextUtils.equals(resultStatus, "7001")) {// 网页支付失败
@@ -124,13 +124,12 @@ public class PayUtils {
 //                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));
 //                        }
                         else {
-                            ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_error));
+                          //  ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.pay_error));
                             if (context.getClass().getName().contains("RechargeActivity")) {
-
+                                ((RechargeActivity) context).jumpPayComplete(0);
                             } else if (context.getClass().getName().contains("PaymentOrderActivity")) {
                                 ((PaymentOrderActivity) context).jumpPayComplete(0);
                             }
-
                         }
                     } else {
                         ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.alipay_system_exception));

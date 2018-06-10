@@ -522,6 +522,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <!--我的   我的钱包  充值  充值成功-->
+        <activity
+            android:name=".mine.mywallet.recharge.rechargeresult.RechargeCompleteActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的   我的钱包  提现-->
         <activity
             android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
@@ -611,7 +616,7 @@
         <!--我的   设置  意见反馈-->
         <activity
             android:name=".mine.setup.feedback.FeedbackActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <!--我的   设置  关于我们-->

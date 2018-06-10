@@ -203,7 +203,7 @@ dependencies {
     //    compile project(':CallKit')
 
     //    compile project(':CallLib')
-    compile project(':RedPacket')
+   // compile project(':RedPacket')
 
     //融云-----end-----
 
@@ -230,4 +230,5 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/UPPayAssistEx.jar')
     implementation files('libs/UPPayPluginExPro.jar')
+    implementation files('libs/alipaySdk-20180316.jar')
 }

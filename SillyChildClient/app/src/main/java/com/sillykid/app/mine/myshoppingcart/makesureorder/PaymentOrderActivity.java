@@ -18,7 +18,6 @@ import com.sillykid.app.entity.mine.mywallet.recharge.AlipayBean;
 import com.sillykid.app.entity.mine.mywallet.recharge.WeChatPayBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.payresult.PayCompleteActivity;
-import com.sillykid.app.mine.mywallet.recharge.RechargeActivity;
 import com.sillykid.app.utils.PayUtils;
 
 /**

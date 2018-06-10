@@ -28,6 +28,7 @@ import com.sillykid.app.R;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.payresult.PayCompleteActivity;
 import com.sillykid.app.mine.mywallet.recharge.RechargeActivity;
+import com.sillykid.app.mine.mywallet.recharge.rechargeresult.RechargeCompleteActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -64,19 +65,19 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         Log.d("pay", "toString=" + resp.toString());
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
-                if (KJActivityStack.create().findActivity(RechargeActivity.class) != null) {
-                    ViewInject.toast(getString(R.string.alipay_succeed));
-                } else if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
-                    jumpPayComplete(1);
-                }
-            } else if (resp.errCode == BaseResp.ErrCode.ERR_USER_CANCEL) {
-                ViewInject.toast(getString(R.string.alipay_order_cancel));
+//                if (KJActivityStack.create().findActivity(RechargeActivity.class) != null) {
+//                    ViewInject.toast(getString(R.string.alipay_succeed));
+//                } else if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
+                jumpPayComplete(1);
+                //   }
+//            } else if (resp.errCode == BaseResp.ErrCode.ERR_USER_CANCEL) {
+//                ViewInject.toast(getString(R.string.alipay_order_cancel));
             } else {
-                if (KJActivityStack.create().findActivity(RechargeActivity.class) != null) {
-                    ViewInject.toast(getString(R.string.alipay_order_error));
-                } else if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
-                    jumpPayComplete(0);
-                }
+//                if (KJActivityStack.create().findActivity(RechargeActivity.class) != null) {
+//                    ViewInject.toast(getString(R.string.alipay_order_error));
+//                } else if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
+                jumpPayComplete(0);
+                //   }
             }
             finish();
         }
@@ -88,12 +89,19 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
      * @param order_status 1成功 0失败
      */
     private void jumpPayComplete(int order_status) {
-        if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
+        if (KJActivityStack.create().findActivity(RechargeActivity.class) != null) {
+            Intent jumpintent = new Intent(this, RechargeCompleteActivity.class);
+            Activity context = KJActivityStack.create().findActivity(RechargeActivity.class);
+            //    Intent intent = new Intent(aty, PayCompleteActivity.class);
+            jumpintent.putExtra("recharge_status", order_status);
+            jumpintent.putExtra("recharge_money", ((RechargeActivity) context).getRechargeMoney());
+            showActivity(this, jumpintent);
+        } else if (KJActivityStack.create().findActivity(PaymentOrderActivity.class) != null) {
             Intent jumpintent = new Intent(this, PayCompleteActivity.class);
             Activity context = KJActivityStack.create().findActivity(PaymentOrderActivity.class);
-            Intent intent = new Intent(aty, PayCompleteActivity.class);
-            intent.putExtra("order_status", order_status);
-            intent.putExtra("order_id", ((PaymentOrderActivity) context).getOrderId());
+            //   Intent intent = new Intent(aty, PayCompleteActivity.class);
+            jumpintent.putExtra("order_status", order_status);
+            jumpintent.putExtra("order_id", ((PaymentOrderActivity) context).getOrderId());
             showActivity(this, jumpintent);
         }
     }

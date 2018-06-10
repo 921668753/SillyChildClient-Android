@@ -11,7 +11,9 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
+import com.sillykid.app.mine.mywallet.recharge.rechargeresult.RechargeCompleteActivity;
 import com.unionpay.UPPayAssistEx;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.mywallet.recharge.AlipayBean;
@@ -224,6 +226,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
         if (payWay == 2) {
             WeChatPayBean weChatPayBean = (WeChatPayBean) JsonUtil.getInstance().json2Obj(success, WeChatPayBean.class);
             if (weChatPayBean.getData() == null || StringUtils.isEmpty(weChatPayBean.getData().getAppid())) {
@@ -234,19 +237,17 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
             if (payUtils == null) {
                 payUtils = new PayUtils(this);
             }
-            dismissLoadingDialog();
             payUtils.doPayment(weChatPayBean.getData().getAppid(), weChatPayBean.getData().getPartnerid(), weChatPayBean.getData().getPrepayid(), weChatPayBean.getData().getPackageX(), weChatPayBean.getData().getNoncestr(), weChatPayBean.getData().getTimestamp(), weChatPayBean.getData().getSign());
         } else if (payWay == 1) {
             AlipayBean alipayBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
             if (alipayBean.getData() == null || StringUtils.isEmpty(alipayBean.getData().getOrderString())) {
-                dismissLoadingDialog();
                 ViewInject.toast(getString(R.string.payParseError));
                 return;
             }
             if (payUtils == null) {
                 payUtils = new PayUtils(this);
             }
-            dismissLoadingDialog();
+
             payUtils.doPay(alipayBean.getData().getOrderString());
         } else {
             //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
@@ -277,13 +278,33 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
          */
         String str = data.getExtras().getString("pay_result");
         if (str.equalsIgnoreCase("success")) {
-            ViewInject.toast(getString(R.string.alipay_succeed));
+            jumpPayComplete(1);
         } else if (str.equalsIgnoreCase("fail")) {
-            ViewInject.toast(getString(R.string.alipay_order_error));
+            jumpPayComplete(0);
         } else if (str.equalsIgnoreCase("cancel")) {
-            ViewInject.toast(getString(R.string.alipay_order_cancel));
+          //  ViewInject.toast(getString(R.string.alipay_order_cancel));
+            jumpPayComplete(0);
         }
 
+    }
+
+    /**
+     * 跳转支付完成页面
+     *
+     * @param recharge_status 1成功 0失败
+     */
+    public void jumpPayComplete(int recharge_status) {
+        Intent intent = new Intent(aty, RechargeCompleteActivity.class);
+        intent.putExtra("recharge_status", recharge_status);
+        intent.putExtra("recharge_money", getRechargeMoney());
+        showActivity(aty, intent);
+    }
+
+    /**
+     * 充值金额
+     */
+    public String getRechargeMoney() {
+        return MathUtil.keepTwo(StringUtils.toDouble(String.valueOf(rechargeMoney)));
     }
 
 
