@@ -132,7 +132,9 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         SpecificationsBean specificationsBean = (SpecificationsBean) JsonUtil.getInstance().json2Obj(success, SpecificationsBean.class);
-        if (specificationsBean.getData() == null || specificationsBean.getData().getProductSpecs() == null || specificationsBean.getData().getProductSpecs().size() <= 0) {
+        if (specificationsBean.getData() == null || specificationsBean.getData().size() <= 0) {
+            tv_color.setVisibility(View.GONE);
+            clv_specifications.setVisibility(View.GONE);
             errorMsg("", 0);
             return;
         }

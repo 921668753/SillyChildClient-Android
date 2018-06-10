@@ -10,27 +10,27 @@ public class CommentsBean extends BaseResult<CommentsBean.DataBean> {
     public class DataBean {
         /**
          * imageCount : 0
-         * commentList : [{"uname":"toys","face":"","comment_id":6,"goods_id":133,"member_id":11,"content":"测试啊测试","dateline":1527854586,"product_id":null,"store_id":18,"gallery":[]}]
+         * commentList : [{"uname":"toys","face":"http://ovwiqces1.bkt.clouddn.com/SHZS_M52_IMG_20180608_095231.jpg","comment_id":6,"goods_id":133,"member_id":11,"content":"测试啊测试","dateline":1527854586,"product_id":null,"store_id":18,"gallery":[]}]
          * commentCount : 1
          */
 
-        private int imageCount;
-        private int commentCount;
+        private String imageCount;
+        private String commentCount;
         private List<CommentListBean> commentList;
 
-        public int getImageCount() {
+        public String getImageCount() {
             return imageCount;
         }
 
-        public void setImageCount(int imageCount) {
+        public void setImageCount(String imageCount) {
             this.imageCount = imageCount;
         }
 
-        public int getCommentCount() {
+        public String getCommentCount() {
             return commentCount;
         }
 
-        public void setCommentCount(int commentCount) {
+        public void setCommentCount(String commentCount) {
             this.commentCount = commentCount;
         }
 
@@ -45,7 +45,7 @@ public class CommentsBean extends BaseResult<CommentsBean.DataBean> {
         public class CommentListBean {
             /**
              * uname : toys
-             * face :
+             * face : http://ovwiqces1.bkt.clouddn.com/SHZS_M52_IMG_20180608_095231.jpg
              * comment_id : 6
              * goods_id : 133
              * member_id : 11
@@ -65,7 +65,7 @@ public class CommentsBean extends BaseResult<CommentsBean.DataBean> {
             private String dateline;
             private String product_id;
             private int store_id;
-            private List<?> gallery;
+            private List<GalleryBean> gallery;
 
             public String getUname() {
                 return uname;
@@ -139,13 +139,56 @@ public class CommentsBean extends BaseResult<CommentsBean.DataBean> {
                 this.store_id = store_id;
             }
 
-            public List<?> getGallery() {
+            public List<GalleryBean> getGallery() {
                 return gallery;
             }
 
-            public void setGallery(List<?> gallery) {
+            public void setGallery(List<GalleryBean> gallery) {
                 this.gallery = gallery;
             }
+
+
+            public class GalleryBean {
+
+                private int img_id;
+                private int comment_id;
+                private String original;
+                private int sort;
+
+                public int getImg_id() {
+                    return img_id;
+                }
+
+                public void setImg_id(int img_id) {
+                    this.img_id = img_id;
+                }
+
+                public int getComment_id() {
+                    return comment_id;
+                }
+
+                public void setComment_id(int comment_id) {
+                    this.comment_id = comment_id;
+                }
+
+                public String getOriginal() {
+                    return original;
+                }
+
+                public void setOriginal(String original) {
+                    this.original = original;
+                }
+
+                public int getSort() {
+                    return sort;
+                }
+
+                public void setSort(int sort) {
+                    this.sort = sort;
+                }
+            }
+
+
         }
     }
 }

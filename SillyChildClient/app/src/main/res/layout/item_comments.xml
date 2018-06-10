@@ -52,7 +52,6 @@
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize15" />
 
-
     <com.common.cklibrary.utils.myview.NoScrollGridView
         android:id="@+id/gv_imgComments"
         style="@style/MatchWrap"
@@ -60,13 +59,13 @@
         android:horizontalSpacing="15dp"
         android:numColumns="3"
         android:overScrollMode="never"
-        android:paddingTop="@dimen/dimen15"
         android:scrollbars="none"
-        android:verticalSpacing="0dp"
-        android:visibility="gone"
+        android:verticalSpacing="10dp"
         tools:listitem="@layout/item_imgcomment" />
 
-    <TextView style="@style/DividerWidth" />
+    <TextView
+        style="@style/DividerWidth"
+        android:visibility="gone" />
 
     <TextView
         style="@style/WrapWrap"
@@ -74,7 +73,8 @@
         android:layout_marginTop="@dimen/dimen10"
         android:text="@string/additionalReview"
         android:textColor="@color/loginBackgroundColors"
-        android:textSize="@dimen/textsize13" />
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_additionalReviewContent"
@@ -82,7 +82,8 @@
         android:paddingRight="@dimen/dimen15"
         android:text="很喜欢很喜欢很喜欢很喜欢很喜欢"
         android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize15" />
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
 
 
     <com.common.cklibrary.utils.myview.NoScrollGridView
@@ -104,7 +105,8 @@
         android:layout_gravity="right"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen10">
+        android:paddingTop="@dimen/dimen10"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="@dimen/dimen15"

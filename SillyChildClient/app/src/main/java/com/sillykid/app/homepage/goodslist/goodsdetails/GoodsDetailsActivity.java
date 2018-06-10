@@ -33,6 +33,8 @@ import com.umeng.socialize.media.UMWeb;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
+import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
+
 /**
  * 商品详情
  * Created by Admin on 2017/8/24.
@@ -111,6 +113,9 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         initShareBouncedDialog();
     }
 
+    /**
+     * 商品规格
+     */
     private void initDialog() {
         specificationsBouncedDialog = new SpecificationsBouncedDialog(this, goodsid) {
             @Override
@@ -204,7 +209,11 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             case R.id.ll_customerService:
                 Intent intent = new Intent(aty, CommentsActivity.class);
                 intent.putExtra("goodsid", goodsid);
-                showActivity(aty, intent);
+                intent.putExtra("favorited", favorited);
+                intent.putExtra("price", price);
+                intent.putExtra("have_spec", have_spec);
+                intent.putExtra("store_id", store_id);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.ll_follow:
                 showLoadingDialog(getString(R.string.dataLoad));
@@ -306,7 +315,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     }
 
     /**
-     * 退出应用
+     * 返回
      *
      * @param keyCode
      * @param event
@@ -381,7 +390,18 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            favorited = data.getBooleanExtra("favorited", false);
+            if (favorited) {
+                ll_follow.setBackgroundResource(R.mipmap.mall_collect);
+            } else {
+                ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
+            }
+            isRefresh = 1;
+        } else {
+            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     @Override
@@ -394,6 +414,16 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        if (specificationsBouncedDialog != null) {
+            specificationsBouncedDialog.cancel();
+        }
+        specificationsBouncedDialog = null;
+        if (shareBouncedDialog != null) {
+            shareBouncedDialog.cancel();
+        }
+        shareBouncedDialog = null;
+        webViewLayout.removeAllViews();
+        webViewLayout = null;
     }
 
 }

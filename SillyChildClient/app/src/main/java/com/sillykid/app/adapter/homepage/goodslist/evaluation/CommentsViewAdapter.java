@@ -2,6 +2,7 @@ package com.sillykid.app.adapter.homepage.goodslist.evaluation;
 
 import android.content.Context;
 import android.util.SparseArray;
+import android.view.View;
 
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.kymjs.common.Log;
@@ -16,11 +17,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> {
 
-
     //用于退出 Activity,避免 Countdown，造成资源浪费。
     private SparseArray<CommentsGridViewAdapter> commentsCounters;
     private SparseArray<AddCommentsGridViewAdapter> addCommentsCounters;
-
 
     public CommentsViewAdapter(Context context) {
         super(context, R.layout.item_comments);
@@ -40,7 +39,7 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> 
         /**
          * 头像
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getFace(), helper.getImageView(R.id.img_head), R.mipmap.placeholderfigure);
+        GlideImageLoader.glideLoader(mContext, model.getFace(), helper.getImageView(R.id.img_head), 0, R.mipmap.placeholderfigure);
 
         /**
          * 名字
@@ -50,7 +49,7 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> 
         /**
          * 时间
          */
-        helper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(model.getDateline()),"yyyy-MM-dd"));
+        helper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(model.getDateline()), "yyyy-MM-dd"));
 
         /**
          * 评论内容
@@ -61,10 +60,13 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> 
          * 图片
          */
         NoScrollGridView gv_imgComments = (NoScrollGridView) helper.getView(R.id.gv_imgComments);
-        CommentsGridViewAdapter commentsGridViewAdapter = new CommentsGridViewAdapter(mContext);
-        gv_imgComments.setAdapter(commentsGridViewAdapter);
-        commentsCounters.put(gv_imgComments.hashCode(), commentsGridViewAdapter);
-        // commentsGridViewAdapter.addNewData(model.getImgs());
+        CommentsGridViewAdapter commentsGridViewAdapter = null;
+        if (commentsCounters.get(gv_imgComments.hashCode()) != null && model.getGallery() != null && model.getGallery().size() > 0) {
+            commentsGridViewAdapter = commentsCounters.get(gv_imgComments.hashCode());
+        } else if (model.getGallery() != null && model.getGallery().size() > 0) {
+            commentsGridViewAdapter = new CommentsGridViewAdapter(mContext);
+            gv_imgComments.setAdapter(commentsGridViewAdapter);
+            commentsCounters.put(gv_imgComments.hashCode(), commentsGridViewAdapter);
 //        gv_imgComments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -84,20 +86,26 @@ public class CommentsViewAdapter extends BGAAdapterViewAdapter<CommentListBean> 
 //                return false;
 //            }
 //        });
-
+        }
+        if (commentsGridViewAdapter != null && model.getGallery() != null && model.getGallery().size() > 0) {
+            helper.setVisibility(R.id.gv_imgComments, View.VISIBLE);
+            commentsGridViewAdapter.addNewData(model.getGallery());
+        } else {
+            helper.setVisibility(R.id.gv_imgComments, View.GONE);
+        }
 
         /**
          * 追评
          */
-       // helper.setText(R.id.tv_additionalReviewContent, model.getId());
+        // helper.setText(R.id.tv_additionalReviewContent, model.getId());
 
         /**
          * 图片
          */
-        NoScrollGridView gv_imgAddComments = (NoScrollGridView) helper.getView(R.id.gv_imgAddComments);
-        AddCommentsGridViewAdapter addCommentsGridViewAdapter = new AddCommentsGridViewAdapter(mContext);
-        gv_imgAddComments.setAdapter(addCommentsGridViewAdapter);
-        addCommentsCounters.put(gv_imgAddComments.hashCode(), addCommentsGridViewAdapter);
+//        NoScrollGridView gv_imgAddComments = (NoScrollGridView) helper.getView(R.id.gv_imgAddComments);
+//        AddCommentsGridViewAdapter addCommentsGridViewAdapter = new AddCommentsGridViewAdapter(mContext);
+//        gv_imgAddComments.setAdapter(addCommentsGridViewAdapter);
+//        addCommentsCounters.put(gv_imgAddComments.hashCode(), addCommentsGridViewAdapter);
         // addCommentsGridViewAdapter.addNewData(model.getImgs());
 //        gv_imgComments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override

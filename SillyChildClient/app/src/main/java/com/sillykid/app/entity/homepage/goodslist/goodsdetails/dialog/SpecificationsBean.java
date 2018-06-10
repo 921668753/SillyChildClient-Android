@@ -4,93 +4,61 @@ import com.common.cklibrary.entity.BaseResult;
 
 import java.util.List;
 
-public class SpecificationsBean extends BaseResult<SpecificationsBean.DataBean> {
+public class SpecificationsBean extends BaseResult<List<SpecificationsBean.DataBean>> {
 
 
     public class DataBean {
-        private List<ProductSpecsBean> productSpecs;
 
-        public List<ProductSpecsBean> getProductSpecs() {
-            return productSpecs;
+        private int spec_id;
+
+        private SpecValueIdsBean specValueIds;
+
+        public int getSpec_id() {
+            return spec_id;
         }
 
-        public void setProductSpecs(List<ProductSpecsBean> productSpecs) {
-            this.productSpecs = productSpecs;
+        public void setSpec_id(int spec_id) {
+            this.spec_id = spec_id;
         }
 
-        public class ProductSpecsBean {
+        public SpecValueIdsBean getSpecValueIds() {
+            return specValueIds;
+        }
+
+        public void setSpecValueIds(SpecValueIdsBean specValueIds) {
+            this.specValueIds = specValueIds;
+        }
+
+        public class SpecValueIdsBean {
             /**
-             * goods_id : 133
-             * product_id : 391
-             * sn : 00029-4
-             * enable_store : 100
-             * price : 100
-             * specs : 黄色、XL
-             * name : ML2017夏季新款时尚优雅荷叶边捆绑系带细高跟女凉鞋
+             * seller_id : 1
+             * head_pic : http://img.shahaizi.cn/seller_avatar.png
+             * nickname : 18796020192
+             * drv_code : 20171020-1
+             * province : 江苏省
+             * city : 苏州市
+             * plat_start : 4
+             * star : 5
+             * line :
              */
 
-            private int goods_id;
-            private int product_id;
-            private String sn;
-            private int enable_store;
-            private int price;
-            private String specs;
-            private String name;
+            private int spec_value_id;
+            private String spec_value;
 
-            public int getGoods_id() {
-                return goods_id;
+            public int getSpec_value_id() {
+                return spec_value_id;
             }
 
-            public void setGoods_id(int goods_id) {
-                this.goods_id = goods_id;
+            public void setSpec_value_id(int spec_value_id) {
+                this.spec_value_id = spec_value_id;
             }
 
-            public int getProduct_id() {
-                return product_id;
+            public String getSpec_value() {
+                return spec_value;
             }
 
-            public void setProduct_id(int product_id) {
-                this.product_id = product_id;
-            }
-
-            public String getSn() {
-                return sn;
-            }
-
-            public void setSn(String sn) {
-                this.sn = sn;
-            }
-
-            public int getEnable_store() {
-                return enable_store;
-            }
-
-            public void setEnable_store(int enable_store) {
-                this.enable_store = enable_store;
-            }
-
-            public int getPrice() {
-                return price;
-            }
-
-            public void setPrice(int price) {
-                this.price = price;
-            }
-
-            public String getSpecs() {
-                return specs;
-            }
-
-            public void setSpecs(String specs) {
-                this.specs = specs;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
+            public void setSpec_value(String spec_value) {
+                this.spec_value = spec_value;
             }
         }
     }

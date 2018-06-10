@@ -15,6 +15,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.goodslist.evaluation.CommentsViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -185,6 +186,21 @@ public class HavePicturesCommentsFragment extends BaseFragment implements Commen
         } else {
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(commentsBean.getData().getCommentList());
+        }
+        if (StringUtils.isEmpty(commentsBean.getData().getCommentCount())) {
+            //   aty.setAll("(0)");
+        } else {
+            aty.setAll("(" + commentsBean.getData().getCommentCount() + ")");
+        }
+        if (StringUtils.isEmpty(commentsBean.getData().getImageCount())) {
+            // aty.setHavePictures("0");
+        } else {
+            aty.setHavePictures("(" + commentsBean.getData().getImageCount() + ")");
+        }
+        if (StringUtils.isEmpty(commentsBean.getData().getImageCount())) {
+            // aty.setAdditionalReview("0");
+        } else {
+            aty.setAdditionalReview("(" + commentsBean.getData().getImageCount() + ")");
         }
         dismissLoadingDialog();
     }
