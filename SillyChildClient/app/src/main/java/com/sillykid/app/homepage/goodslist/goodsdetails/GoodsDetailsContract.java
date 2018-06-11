@@ -28,12 +28,12 @@ public interface GoodsDetailsContract {
         /**
          * 立即购买
          */
-        void postOrderBuyNow(int productid, int num);
+        void postOrderBuyNow(int productid, int num, int product_id);
 
         /**
          * 加入购物车
          */
-        void postAddCartGood(int goodsid, int num);
+        void postAddCartGood(int goodsid, int num, int product_id);
 
     }
 

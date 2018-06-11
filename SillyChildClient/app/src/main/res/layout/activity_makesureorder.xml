@@ -220,6 +220,7 @@
                     android:textSize="@dimen/textsize12" />
 
                 <ImageView
+                    android:id="@+id/img_right"
                     android:layout_width="@dimen/dimen5"
                     android:layout_height="@dimen/dimen10"
                     android:layout_marginBottom="@dimen/dimen10"

@@ -37,4 +37,22 @@ public class SpecificationsBouncedPresenter implements SpecificationsBouncedCont
         });
     }
 
+    @Override
+    public void getGoodsProductSpec(Context context, int goodsid, String specs) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("goodsid", goodsid);
+        httpParams.put("specs", specs);
+        RequestClient.getGoodsProductSpec(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
 }

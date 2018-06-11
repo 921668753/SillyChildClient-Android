@@ -70,7 +70,7 @@ public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
     }
 
     @Override
-    public void postOrderBuyNow(int productid, int num) {
+    public void postOrderBuyNow(int productid, int num, int product_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("productid", productid);
         httpParams.put("num", num);
@@ -88,7 +88,7 @@ public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
     }
 
     @Override
-    public void postAddCartGood(int goodsid, int num) {
+    public void postAddCartGood(int goodsid, int num, int product_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("productid", goodsid);
         httpParams.put("num", num);

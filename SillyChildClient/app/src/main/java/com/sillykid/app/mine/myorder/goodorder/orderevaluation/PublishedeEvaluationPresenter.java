@@ -11,10 +11,13 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.nanchen.compresshelper.FileUtil;
 import com.sillykid.app.R;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
 import com.sillykid.app.retrofit.RequestClient;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -80,9 +83,8 @@ public class PublishedeEvaluationPresenter implements PublishedeEvaluationContra
     }
 
 
-
     @Override
-    public void postCommentCreate(CommentVoBean commentVoBean, int store_desccredit, int store_servicecredit, int store_deliverycredit) {
+    public void postCommentCreate(List<MemberCommentExtsBean> listBean, int store_desccredit, int store_servicecredit, int store_deliverycredit) {
         if (store_desccredit <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectDescriptionMatchingScore), 0);
             return;
@@ -96,10 +98,12 @@ public class PublishedeEvaluationPresenter implements PublishedeEvaluationContra
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("commentVo", JsonUtil.obj2JsonString(commentVoBean));
-        httpParams.put("store_desccredit", store_desccredit);
-        httpParams.put("store_servicecredit", store_servicecredit);
-        httpParams.put("store_deliverycredit", store_deliverycredit);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("memberCommentExts", listBean);
+        map.put("store_desccredit", store_desccredit);
+        map.put("store_servicecredit", store_servicecredit);
+        map.put("store_deliverycredit", store_deliverycredit);
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postCommentCreate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -20,8 +20,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
 import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationAdapter;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
@@ -75,7 +74,6 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
         initImagePicker();
     }
 
-
     private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
         GlideImageLoader glideImageLoader = new GlideImageLoader();
@@ -123,9 +121,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
         switch (v.getId()) {
             case R.id.tv_release:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                CommentVoBean commentVoBean = new CommentVoBean();
-                commentVoBean.setMemberCommentExts(mAdapter.getData());
-                ((PublishedeEvaluationContract.Presenter) mPresenter).postCommentCreate(commentVoBean, rb_descriptionConsistent.getStar(), rb_logisticsService.getStar(), rb_serviceAttitude.getStar());
+                ((PublishedeEvaluationContract.Presenter) mPresenter).postCommentCreate(mAdapter.getData(), rb_descriptionConsistent.getStar(), rb_logisticsService.getStar(), rb_serviceAttitude.getStar());
                 break;
         }
     }
@@ -146,20 +142,18 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
             //预览图片返回
             ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
             if (images != null && images.size() > 0) {
-                mAdapter.getData().get(selectePosition).getCommentImgs().clear();
+                mAdapter.getData().get(selectePosition).getImageList().clear();
                 for (int i = 0; i < images.size(); i++) {
-                    mAdapter.getData().get(selectePosition).getCommentImgs().add(images.get(i).path);
+                    mAdapter.getData().get(selectePosition).getImageList().add(images.get(i).path);
                 }
                 mAdapter.notifyItemChanged(selectePosition);
             } else if (images != null && images.size() == 0) {
-                mAdapter.getData().get(selectePosition).getCommentImgs().clear();
+                mAdapter.getData().get(selectePosition).getImageList().clear();
                 mAdapter.notifyItemChanged(selectePosition);
             }
         } else {
             ViewInject.toast(getString(R.string.noData));
         }
-
-
     }
 
     @Override
@@ -184,17 +178,17 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                     memberCommentExtsBean.setPrice(itemListBean.getPrice());
                     memberCommentExtsBean.setSpecs(itemListBean.getSpecs());
                     List<String> list = new ArrayList<String>();
-                    memberCommentExtsBean.setCommentImgs(list);
+                    memberCommentExtsBean.setImageList(list);
                     memberCommentExtsBeanList.add(memberCommentExtsBean);
                 }
                 mAdapter.addMoreData(memberCommentExtsBeanList);
             }
         } else if (flag == 1) {
-            if (mAdapter.getData().get(selectePosition).getCommentImgs() == null) {
+            if (mAdapter.getData().get(selectePosition).getImageList() == null) {
                 ArrayList<String> list = new ArrayList<>();
-                mAdapter.getData().get(selectePosition).setCommentImgs(list);
+                mAdapter.getData().get(selectePosition).setImageList(list);
             }
-            mAdapter.getData().get(selectePosition).getCommentImgs().add(success);
+            mAdapter.getData().get(selectePosition).getImageList().add(success);
             mAdapter.notifyItemChanged(selectePosition);
         } else if (flag == 2) {
 
@@ -230,7 +224,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
             default:
                 if (view.getId() == R.id.iv_delete) {
                     if (mAdapter.getData() != null && mAdapter.getData().size() > position1) {
-                        mAdapter.getData().get(position).getCommentImgs().remove(position1);
+                        mAdapter.getData().get(position).getImageList().remove(position1);
                         mAdapter.notifyItemChanged(position);
                     }
                 } else {

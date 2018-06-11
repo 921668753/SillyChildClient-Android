@@ -16,7 +16,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/9/7.
  */
 
-public abstract class BaseDialog extends Dialog implements LoadingDialogView {
+public abstract class BaseDialog extends Dialog {
 
 
     public Context mContext;
@@ -36,7 +36,6 @@ public abstract class BaseDialog extends Dialog implements LoadingDialogView {
         super(context, cancelable, cancelListener);
         this.mContext = context;
     }
-
 
 
     @Override

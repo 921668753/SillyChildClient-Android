@@ -618,7 +618,12 @@
     <string name="inventoryEnough">库存充足</string>
     <string name="buyNow">立即购买</string>
     <string name="purchaseQuantity">购买数量</string>
-
+    <string name="size">尺码</string>
+    <string name="capacity">容量</string>
+    <string name="specifications">规格</string>
+    <string name="jian">件</string>
+    <string name="inventory">库存</string>
+    <string name="insufficient">不足</string>
 
     <!--商城  店铺首页  全部商品 评论-->
     <string name="figure">有图</string>
@@ -814,6 +819,10 @@
     <string name="usedCoupons">亲，您还没有已使用的优惠券哟~</string>
     <string name="expiredCoupons">亲，您还没有已过期的优惠券哟~</string>
     <string name="notConformUsageRules">该优惠券不符合使用规则</string>
+    <string name="selectCoupons">选择优惠券</string>
+
+
+
 
     <!-- 个人中心 充值-->
     <string name="accountRecharge">账户充值</string>
@@ -1204,7 +1213,7 @@
     <string name="goodsTogether">商品合计：</string>
     <string name="freight1">运费：</string>
     <string name="coupons1">优惠券：</string>
-    <string name="usable1">张可用</string>
+    <string name="usable1">张优惠券</string>
     <string name="preferentialActivities">活动优惠：</string>
     <string name="submitTime">提交时间：</string>
     <string name="amountRealPay">实付金额：</string>

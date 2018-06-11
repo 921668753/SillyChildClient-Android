@@ -84,7 +84,7 @@ public class UnusedFragment extends BaseFragment implements CouponsContract.View
     protected void initData() {
         super.initData();
         mPresenter = new CouponsPresenter(this);
-        couponsAdapter = new CouponsViewAdapter(aty, type);
+        couponsAdapter = new CouponsViewAdapter(aty, type, money);
         money = aty.getIntent().getStringExtra("money");
     }
 

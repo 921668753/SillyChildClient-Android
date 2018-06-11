@@ -21,7 +21,7 @@
                 android:paddingBottom="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen15"
-                android:text="@string/color"
+                android:text="@string/specifications"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textsize16" />
 
@@ -66,6 +66,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_specifications"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen5"
                     android:text="@string/selectColor"
@@ -93,25 +94,21 @@
                 style="@style/MatchWrap"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_color"
-                    style="@style/MatchWrap"
-                    android:background="@color/whiteColors"
-                    android:padding="@dimen/dimen15"
-                    android:text="@string/color"
-                    android:textColor="@color/hintColors"
-                    android:textSize="@dimen/textsize13" />
-
                 <com.common.cklibrary.utils.myview.ChildListView
                     android:id="@+id/clv_specifications"
                     style="@style/MatchWrap"
+                    android:divider="@android:color/transparent"
+                    android:listSelector="@android:color/transparent"
                     android:overScrollMode="never"
                     android:paddingLeft="@dimen/dimen15"
                     android:paddingRight="@dimen/dimen15"
                     android:scrollbars="none"
                     tools:listitem="@layout/dialog_item_specificationsbounced" />
 
-                <TextView style="@style/DividerWidth" />
+                <TextView
+                    android:id="@+id/tv_divider"
+                    style="@style/DividerWidth"
+                    android:layout_marginTop="@dimen/dimen10" />
 
                 <LinearLayout
                     style="@style/MatchWrap"

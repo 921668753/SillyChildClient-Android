@@ -17,6 +17,12 @@ public interface SpecificationsBouncedContract {
          * 获取商品规格
          */
         void getGoodsSpec(Context context, int id);
+
+        /**
+         * 由规格数组获取货品的参数
+         */
+        void getGoodsProductSpec(Context context, int goodsid, String specs);
+
     }
 
     interface View extends BaseView<Presenter, String> {

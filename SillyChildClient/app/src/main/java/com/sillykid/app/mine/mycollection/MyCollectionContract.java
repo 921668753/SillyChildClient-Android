@@ -24,7 +24,7 @@ public interface MyCollectionContract {
         /**
          * 加入购物车
          */
-        void postAddCartGood(int goodsid);
+        void postAddCartGood(int goodsid, int num, int product_id);
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -419,7 +419,9 @@
         <!--我的   我的订单   发表评价-->
         <activity
             android:name=".mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--我的   我的订单   申请售后-->
         <activity

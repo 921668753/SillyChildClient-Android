@@ -109,14 +109,14 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
      * 商品规格
      */
     private void initDialog() {
-        specificationsBouncedDialog = new SpecificationsBouncedDialog(this, goodsid) {
+        specificationsBouncedDialog = new SpecificationsBouncedDialog(this) {
             @Override
-            public void toDo(int goodId, int flag, int num1) {
+            public void toDo(int goodId, int flag, int num1, int product_id) {
                 num = num1;
                 if (flag == 0) {
-                    ((GoodsDetailsContract.Presenter) mPresenter).postAddCartGood(goodId, num1);
+                    ((GoodsDetailsContract.Presenter) mPresenter).postAddCartGood(goodId, num1, product_id);
                 } else if (flag == 1) {
-                    ((GoodsDetailsContract.Presenter) mPresenter).postOrderBuyNow(goodId, num1);
+                    ((GoodsDetailsContract.Presenter) mPresenter).postOrderBuyNow(goodId, num1, product_id);
                 }
             }
         };
@@ -225,14 +225,14 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(0, goodsid, StringUtils.toInt(have_spec));
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(1, goodsid, StringUtils.toInt(have_spec));
                 break;
             default:
                 break;

@@ -16,7 +16,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
 import com.sillykid.app.constant.NumericConstants;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean.MemberCommentExtsBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
 import com.sillykid.app.utils.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -47,6 +47,10 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
         viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
         viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
+        if (!StringUtils.isEmpty(model.getContent())) {
+            et_goodsSatisfactory.setText(model.getContent());
+            et_goodsSatisfactory.setSelection(model.getContent().length());
+        }
         et_goodsSatisfactory.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -72,10 +76,10 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
             selImageList = new ArrayList<>();
             selImageListCounters.put(recyclerView.hashCode(), selImageList);
         }
-        if (model.getCommentImgs() != null && model.getCommentImgs().size() > 0) {
-            for (int i = 0; i < model.getCommentImgs().size(); i++) {
+        if (model.getImageList() != null && model.getImageList().size() > 0) {
+            for (int i = 0; i < model.getImageList().size(); i++) {
                 ImageItem imageItem = new ImageItem();
-                imageItem.path = model.getCommentImgs().get(i);
+                imageItem.path = model.getImageList().get(i);
                 selImageList.add(imageItem);
             }
         }

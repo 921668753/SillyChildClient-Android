@@ -20,6 +20,7 @@ import com.sillykid.app.adapter.mine.mycollection.MyCollectionViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.mycollection.MyCollectionBean;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
+import com.sillykid.app.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedDialog;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.mycollection.dialog.DeleteCollectionDialog;
 
@@ -71,7 +72,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
 
     private DeleteCollectionDialog deleteCollectionDialog = null;
 
-    private DeleteCollectionDialog addCartGoodDialog = null;
+    private SpecificationsBouncedDialog addCartGoodDialog = null;
 
     private int positionItem = 0;
 
@@ -104,11 +105,11 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
     }
 
     public void initAddCartGoodDialog() {
-        addCartGoodDialog = new DeleteCollectionDialog(this, getString(R.string.makeSureAddShoppingCart)) {
+        addCartGoodDialog = new SpecificationsBouncedDialog(this) {
             @Override
-            public void deleteCollectionDo(int addressId) {
+            public void toDo(int goodId, int flag, int num1, int product_id) {
                 showLoadingDialog(getString(R.string.addLoad));
-                ((MyCollectionContract.Presenter) mPresenter).postAddCartGood(addressId);
+                ((MyCollectionContract.Presenter) mPresenter).postAddCartGood(goodId, num1, product_id);
             }
         };
     }
@@ -191,7 +192,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
             }
             if (addCartGoodDialog != null && !addCartGoodDialog.isShowing()) {
                 addCartGoodDialog.show();
-                addCartGoodDialog.setCollectionId(mAdapter.getItem(position).getGoods_id());
+                addCartGoodDialog.setFlag(0, mAdapter.getItem(position).getGoods_id(), mAdapter.getItem(position).getHave_spec());
             }
         }
     }
@@ -233,6 +234,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
         } else if (flag == 1) {
             mAdapter.removeItem(positionItem);
         } else if (flag == 2) {
+            addCartGoodDialog.dismissLoadingDialog();
             ViewInject.toast(getString(R.string.addCartSuccess));
         }
         dismissLoadingDialog();

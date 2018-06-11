@@ -2,6 +2,7 @@ package com.sillykid.app.mine.myshoppingcart.makesureorder;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,6 +80,9 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
 
     @BindView(id = R.id.tv_usable, click = true)
     public TextView tv_usable;
+
+    @BindView(id = R.id.img_right)
+    public ImageView img_right;
 
 
     /**
@@ -206,7 +210,14 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
             }
             tv_goodsMoney.setText(getString(R.string.renminbi) + totalPrice);
             tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getShip_account())));
-            tv_usable.setText(makeSureOrderBean.getData().getOrderInfo().getBonus_account() + getString(R.string.usable1));
+            if (StringUtils.toInt(makeSureOrderBean.getData().getOrderInfo().getBonus_account(), 0) == 0) {
+                tv_usable.setVisibility(View.GONE);
+                img_right.setVisibility(View.GONE);
+            } else {
+                tv_usable.setVisibility(View.VISIBLE);
+                img_right.setVisibility(View.VISIBLE);
+                tv_usable.setText(makeSureOrderBean.getData().getOrderInfo().getBonus_account() + getString(R.string.usable1));
+            }
             if (StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getActivity_account()) > 0) {
                 tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(makeSureOrderBean.getData().getOrderInfo().getActivity_account())));
             }

@@ -15,18 +15,10 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
          * store_desccredit : 1
          */
 
-        private CommentVoBean commentVo;
+        private List<MemberCommentExtsBean> memberCommentExts;
         private int store_servicecredit;
         private int store_deliverycredit;
         private int store_desccredit;
-
-        public CommentVoBean getCommentVo() {
-            return commentVo;
-        }
-
-        public void setCommentVo(CommentVoBean commentVo) {
-            this.commentVo = commentVo;
-        }
 
         public int getStore_servicecredit() {
             return store_servicecredit;
@@ -52,88 +44,85 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
             this.store_desccredit = store_desccredit;
         }
 
-        public static class CommentVoBean {
-            private List<MemberCommentExtsBean> memberCommentExts;
 
-            public List<MemberCommentExtsBean> getMemberCommentExts() {
-                return memberCommentExts;
+        public List<MemberCommentExtsBean> getMemberCommentExts() {
+            return memberCommentExts;
+        }
+
+        public void setMemberCommentExts(List<MemberCommentExtsBean> memberCommentExts) {
+            this.memberCommentExts = memberCommentExts;
+        }
+
+        public static class MemberCommentExtsBean {
+            /**
+             * goods_id : 1528341338
+             * content :
+             * imageList :
+             */
+
+            private int goods_id;
+            private String content;
+            private String name;
+            private String specs;
+            private String price;
+            private String image;
+            public List<String> imageList;
+
+
+            public int getGoods_id() {
+                return goods_id;
             }
 
-            public void setMemberCommentExts(List<MemberCommentExtsBean> memberCommentExts) {
-                this.memberCommentExts = memberCommentExts;
+            public void setGoods_id(int goods_id) {
+                this.goods_id = goods_id;
             }
 
-            public static class MemberCommentExtsBean {
-                /**
-                 * goods_id : 1528341338
-                 * content :
-                 * imageList :
-                 */
+            public String getContent() {
+                return content;
+            }
 
-                private int goods_id;
-                private String content;
-                private String name;
-                private String specs;
-                private String price;
-                private String image;
-                public List<String> CommentImgs;
+            public void setContent(String content) {
+                this.content = content;
+            }
 
+            public String getName() {
+                return name;
+            }
 
-                public int getGoods_id() {
-                    return goods_id;
-                }
+            public void setName(String name) {
+                this.name = name;
+            }
 
-                public void setGoods_id(int goods_id) {
-                    this.goods_id = goods_id;
-                }
+            public String getSpecs() {
+                return specs;
+            }
 
-                public String getContent() {
-                    return content;
-                }
+            public void setSpecs(String specs) {
+                this.specs = specs;
+            }
 
-                public void setContent(String content) {
-                    this.content = content;
-                }
+            public String getPrice() {
+                return price;
+            }
 
-                public String getName() {
-                    return name;
-                }
+            public void setPrice(String price) {
+                this.price = price;
+            }
 
-                public void setName(String name) {
-                    this.name = name;
-                }
+            public String getImage() {
+                return image;
+            }
 
-                public String getSpecs() {
-                    return specs;
-                }
+            public void setImage(String image) {
+                this.image = image;
+            }
 
-                public void setSpecs(String specs) {
-                    this.specs = specs;
-                }
+            public List<String> getImageList() {
+                return imageList;
+            }
 
-                public String getPrice() {
-                    return price;
-                }
-
-                public void setPrice(String price) {
-                    this.price = price;
-                }
-
-                public String getImage() {
-                    return image;
-                }
-
-                public void setImage(String image) {
-                    this.image = image;
-                }
-
-                public List<String> getCommentImgs() {
-                    return CommentImgs;
-                }
-
-                public void setCommentImgs(List<String> commentImgs) {
-                    CommentImgs = commentImgs;
-                }
+            public void setImageList(List<String> imageList) {
+                this.imageList = imageList;
             }
         }
     }

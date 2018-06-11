@@ -1,8 +1,5 @@
 package com.sillykid.app.mine.mycollection;
 
-import android.content.Intent;
-import android.net.Uri;
-
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
@@ -58,10 +55,10 @@ public class MyCollectionPresenter implements MyCollectionContract.Presenter {
     }
 
     @Override
-    public void postAddCartGood(int goodsid) {
+    public void postAddCartGood(int goodsid, int num, int product_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("productid", goodsid);
-        httpParams.put("num", 1);
+        httpParams.put("num", num);
         RequestClient.postAddCartGood(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -2,7 +2,9 @@ package com.sillykid.app.mine.myorder.goodorder.orderevaluation;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
-import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.CommentVoBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
+
+import java.util.List;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -26,7 +28,7 @@ public interface PublishedeEvaluationContract {
         /**
          * 发表评论
          */
-        void postCommentCreate(CommentVoBean commentVoBean, int store_desccredit, int store_servicecredit, int store_deliverycredit);
+        void postCommentCreate(List<MemberCommentExtsBean> listBean, int store_desccredit, int store_servicecredit, int store_deliverycredit);
 
     }
 

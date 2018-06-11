@@ -2,64 +2,82 @@ package com.sillykid.app.entity.homepage.goodslist.goodsdetails.dialog;
 
 import com.common.cklibrary.entity.BaseResult;
 
-import java.util.List;
-
-public class SpecificationsBean extends BaseResult<List<SpecificationsBean.DataBean>> {
+public class SpecificationsBean extends BaseResult<SpecificationsBean.DataBean> {
 
 
     public class DataBean {
+        /**
+         * goods_id : 135
+         * product_id : 548
+         * sn : 00031-2
+         * enable_store : 100
+         * price : 48
+         * specs : 黄色、XL
+         * name : Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿
+         */
 
-        private int spec_id;
+        private int goods_id;
+        private int product_id;
+        private String sn;
+        private String enable_store;
+        private String price;
+        private String specs;
+        private String name;
 
-        private SpecValueIdsBean specValueIds;
-
-        public int getSpec_id() {
-            return spec_id;
+        public int getGoods_id() {
+            return goods_id;
         }
 
-        public void setSpec_id(int spec_id) {
-            this.spec_id = spec_id;
+        public void setGoods_id(int goods_id) {
+            this.goods_id = goods_id;
         }
 
-        public SpecValueIdsBean getSpecValueIds() {
-            return specValueIds;
+        public int getProduct_id() {
+            return product_id;
         }
 
-        public void setSpecValueIds(SpecValueIdsBean specValueIds) {
-            this.specValueIds = specValueIds;
+        public void setProduct_id(int product_id) {
+            this.product_id = product_id;
         }
 
-        public class SpecValueIdsBean {
-            /**
-             * seller_id : 1
-             * head_pic : http://img.shahaizi.cn/seller_avatar.png
-             * nickname : 18796020192
-             * drv_code : 20171020-1
-             * province : 江苏省
-             * city : 苏州市
-             * plat_start : 4
-             * star : 5
-             * line :
-             */
+        public String getSn() {
+            return sn;
+        }
 
-            private int spec_value_id;
-            private String spec_value;
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
-            public int getSpec_value_id() {
-                return spec_value_id;
-            }
+        public String getEnable_store() {
+            return enable_store;
+        }
 
-            public void setSpec_value_id(int spec_value_id) {
-                this.spec_value_id = spec_value_id;
-            }
+        public void setEnable_store(String enable_store) {
+            this.enable_store = enable_store;
+        }
 
-            public String getSpec_value() {
-                return spec_value;
-            }
+        public String getPrice() {
+            return price;
+        }
 
-            public void setSpec_value(String spec_value) {
-                this.spec_value = spec_value;
-            }
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getSpecs() {
+            return specs;
+        }
+
+        public void setSpecs(String specs) {
+            this.specs = specs;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

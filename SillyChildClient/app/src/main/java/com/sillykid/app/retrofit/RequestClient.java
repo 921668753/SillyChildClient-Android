@@ -430,6 +430,12 @@ public class RequestClient {
         HttpRequest.requestGetHttp(context, URLConstants.GOODSSPEC, httpParams, false, listener);
     }
 
+    /**
+     * 首页---更多分类----商品列表----商品详情----商品规格--由规格数组获取货品的参数
+     */
+    public static void getGoodsProductSpec(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSPRODUCTSPEC, httpParams, false, listener);
+    }
 
     /**
      * 得到地区的热门城市
@@ -1781,8 +1787,6 @@ public class RequestClient {
         }, listener);
     }
 
-
-
     /**
      * 发表评论
      */
@@ -1797,11 +1801,10 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestPostFORMHttp(context, URLConstants.COMMENTCREATE, httpParams, listener);
+                HttpRequest.requestPostHttp(context, URLConstants.COMMENTCREATE, httpParams, listener);
             }
         }, listener);
     }
-
 
     /**
      * 获取售后信息

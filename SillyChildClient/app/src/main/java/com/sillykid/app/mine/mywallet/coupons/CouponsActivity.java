@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.homepage.BannerDetailsActivity;
 
@@ -21,9 +22,11 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 
 public class CouponsActivity extends BaseActivity {
+
     private UnusedFragment unusedFragment;
     private UsedFragment usedFragment;
     private ExpiredFragment expiredFragment;
+
     private int chageIcon;
 
     @BindView(id = R.id.titlebar)
@@ -55,6 +58,12 @@ public class CouponsActivity extends BaseActivity {
 
     private int type = 0;
 
+    /**
+     * ll_topBar
+     */
+    @BindView(id = R.id.ll_topBar)
+    private LinearLayout ll_topBar;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_coupons);
@@ -75,35 +84,39 @@ public class CouponsActivity extends BaseActivity {
         super.initWidget();
         initTitle();
         initColors();
-
     }
 
     /**
      * 设置标题
      */
     public void initTitle() {
-        titlebar.setTitleText(R.string.coupons);
-        titlebar.setRightText(R.string.instructions);
-        titlebar.setRightDrawable(getResources().getDrawable(R.mipmap.coupon_direction_for_use));
-        titlebar.getRightCtv().setTextColor(getResources().getColor(R.color.greenColors));
-        titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                aty.finish();
-            }
+        if (type != -1) {
+            titlebar.setTitleText(R.string.coupons);
+            titlebar.setRightText(R.string.instructions);
+            titlebar.setRightDrawable(getResources().getDrawable(R.mipmap.coupon_direction_for_use));
+            titlebar.getRightCtv().setTextColor(getResources().getColor(R.color.greenColors));
+            titlebar.getRightCtv().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+                @Override
+                public void onClickLeftCtv() {
+                    super.onClickLeftCtv();
+                    aty.finish();
+                }
 
-            @Override
-            public void onClickRightCtv() {
-                super.onClickRightCtv();
-                Intent intent = new Intent(aty, BannerDetailsActivity.class);
-                intent.putExtra("title", "");
-                intent.putExtra("url", "");
-                showActivity(aty, intent);
-            }
-        };
-        titlebar.setDelegate(simpleDelegate);
+                @Override
+                public void onClickRightCtv() {
+                    super.onClickRightCtv();
+                    Intent intent = new Intent(aty, BannerDetailsActivity.class);
+                    intent.putExtra("title", "");
+                    intent.putExtra("url", "");
+                    showActivity(aty, intent);
+                }
+            };
+            titlebar.setDelegate(simpleDelegate);
+        } else {
+            ActivityTitleUtils.initToolbar(aty, getString(R.string.selectCoupons), true, R.id.titlebar);
+            ll_topBar.setVisibility(View.GONE);
+        }
     }
 
 
