@@ -185,19 +185,21 @@ public class AddCommentsFragment extends BaseFragment implements CommentsContrac
             mAdapter.addMoreData(commentsBean.getData().getCommentList());
         }
         if (StringUtils.isEmpty(commentsBean.getData().getCommentCount())) {
-         //   aty.setAll("(0)");
+            //   aty.setAll("(0)");
         } else {
             aty.setAll("(" + commentsBean.getData().getCommentCount() + ")");
         }
         if (StringUtils.isEmpty(commentsBean.getData().getImageCount())) {
-           // aty.setHavePictures("0");
+            // aty.setHavePictures("0");
         } else {
             aty.setHavePictures("(" + commentsBean.getData().getImageCount() + ")");
         }
-        if (StringUtils.isEmpty(commentsBean.getData().getImageCount())) {
-           // aty.setAdditionalReview("0");
+        int num = StringUtils.toInt(commentsBean.getData().getCommentCount(), 0) - StringUtils.toInt(commentsBean.getData().getImageCount(), 0);
+        if (num <= 0) {
+            // aty.setAdditionalReview("0");
         } else {
-            aty.setAdditionalReview("(" + commentsBean.getData().getImageCount() + ")");
+
+            aty.setAdditionalReview("(" + num + ")");
         }
         dismissLoadingDialog();
     }

@@ -627,6 +627,7 @@
 
     <!--商城  店铺首页  全部商品 评论-->
     <string name="figure">有图</string>
+    <string name="noImages">无图</string>
     <string name="afterReview">追评</string>
     <string name="goodsNotCommented">亲，该商品还没有评论哟~</string>
 
@@ -820,8 +821,6 @@
     <string name="expiredCoupons">亲，您还没有已过期的优惠券哟~</string>
     <string name="notConformUsageRules">该优惠券不符合使用规则</string>
     <string name="selectCoupons">选择优惠券</string>
-
-
 
 
     <!-- 个人中心 充值-->

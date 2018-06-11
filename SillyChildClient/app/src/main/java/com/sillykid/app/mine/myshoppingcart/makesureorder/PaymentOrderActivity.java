@@ -245,8 +245,8 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
     @Override
     public void onTick(long millisUntilFinished) {
         String millisUntilFinish = "";
-        long minute = millisUntilFinished / 60000;
-        long seconds = millisUntilFinished % 60000;
+        long minute = millisUntilFinished / 1000 / 60;
+        long seconds = millisUntilFinished / 1000 % 60;
         if (minute > 0) {
             millisUntilFinish = minute + getString(R.string.minute) + seconds + getString(R.string.seconds);
         } else {

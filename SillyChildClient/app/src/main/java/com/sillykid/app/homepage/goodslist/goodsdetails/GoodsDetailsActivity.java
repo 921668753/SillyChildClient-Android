@@ -277,6 +277,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
             ViewInject.toast(getString(R.string.uncollectible));
         } else if (flag == 3) {
+            specificationsBouncedDialog.dismissLoadingDialog();
             Intent buyNowIntent = new Intent(aty, MakeSureOrderActivity.class);
             buyNowIntent.putExtra("goodslistBean", success);
             buyNowIntent.putExtra("totalPrice", MathUtil.keepTwo(StringUtils.toDouble(price) * num));
@@ -290,6 +291,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @Override
     public void errorMsg(String msg, int flag) {
+        specificationsBouncedDialog.dismissLoadingDialog();
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);

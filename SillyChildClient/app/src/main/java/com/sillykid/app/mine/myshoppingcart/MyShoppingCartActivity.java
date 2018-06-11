@@ -17,6 +17,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myshoppingcart.MyShoppingCartViewAdapter;
@@ -476,6 +477,15 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
     }
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusMyShoppingCartEvent")) {
+            ((MyShoppingCartContract.Presenter) mPresenter).getMyShoppingCartList();
+        }
+    }
+
 
     @Override
     protected void onDestroy() {

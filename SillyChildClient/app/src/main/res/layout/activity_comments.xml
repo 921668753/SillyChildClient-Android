@@ -55,10 +55,12 @@
             android:background="@drawable/shape_comments1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/afterReview"
+            android:text="@string/noImages"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize13" />
     </LinearLayout>
+
+    <!--android:text="@string/afterReview"-->
 
     <FrameLayout
         android:id="@+id/main_content"

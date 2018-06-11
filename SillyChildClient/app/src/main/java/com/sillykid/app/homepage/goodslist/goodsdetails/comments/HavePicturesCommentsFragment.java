@@ -197,10 +197,11 @@ public class HavePicturesCommentsFragment extends BaseFragment implements Commen
         } else {
             aty.setHavePictures("(" + commentsBean.getData().getImageCount() + ")");
         }
-        if (StringUtils.isEmpty(commentsBean.getData().getImageCount())) {
+        int num = StringUtils.toInt(commentsBean.getData().getCommentCount(), 0) - StringUtils.toInt(commentsBean.getData().getImageCount(), 0);
+        if (num <= 0) {
             // aty.setAdditionalReview("0");
         } else {
-            aty.setAdditionalReview("(" + commentsBean.getData().getImageCount() + ")");
+            aty.setAdditionalReview("(" + num + ")");
         }
         dismissLoadingDialog();
     }

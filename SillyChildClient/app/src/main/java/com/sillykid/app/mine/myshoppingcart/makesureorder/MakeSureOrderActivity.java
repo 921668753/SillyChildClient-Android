@@ -13,6 +13,8 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myshoppingcart.makesureorder.MakeSureOrderViewAdaper;
@@ -223,11 +225,16 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
             }
         } else if (flag == 1) {
             CreateOrderBean createOrderBean = (CreateOrderBean) JsonUtil.getInstance().json2Obj(success, CreateOrderBean.class);
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusMyShoppingCartEvent"));
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
             intent.putExtra("order_id", createOrderBean.getData().getOrder_id());
             intent.putExtra("last_time", String.valueOf(StringUtils.toLong(createOrderBean.getData().getLast_time()) - StringUtils.toLong(createOrderBean.getData().getSystem_time())));
             intent.putExtra("balance", createOrderBean.getData().getBalance());
-            showActivity(aty, intent);
+            intent.putExtra("money", tv_money.getText().toString());
+            skipActivity(aty, intent);
         }
         dismissLoadingDialog();
     }

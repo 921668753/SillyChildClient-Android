@@ -315,7 +315,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
     }
 
     public void setAdditionalReview(String text) {
-        tv_additionalReview.setText(getString(R.string.afterReview) + text);
+        tv_additionalReview.setText(getString(R.string.noImages) + text);
     }
 
     /**
