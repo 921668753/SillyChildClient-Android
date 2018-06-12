@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.myview.WebViewLayout;
 import com.sillykid.app.R;
 import com.sillykid.app.constant.URLConstants;
@@ -29,14 +28,47 @@ public class HelpCenterActivity extends BaseActivity {
         super.initData();
     }
 
+
+    //    @Override
+//    public void initWidget() {
+//        super.initWidget();
+//        initTitle();
+//        webViewLayout.setTitleVisibility(false);
+//     //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
+//
+//    }
+
+    /**
+     * 渲染view
+     */
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        webViewLayout.setTitleVisibility(false);
-     //   webViewLayout.loadUrl(URLConstants.HELPCENTERURL);
-
+        initView();
     }
+
+
+    public void initView() {
+        //   String title = getIntent().getStringExtra("title");
+        //     String url = getIntent().getStringExtra("url");
+        //   webViewLayout.setTitleText(title);
+        webViewLayout.setBackImgResource(R.mipmap.back);
+        webViewLayout.setTitleVisibility(true);
+        webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
+            @Override
+            public void backOnclick() {
+                HelpCenterActivity.this.finish();
+            }
+
+            @Override
+            public void loadFailedError() {
+            }
+        });
+        //  if (!StringUtils.isEmpty(url)) {
+        // webViewLayout.loadUrl(APIURLFORPAY + "/web/user/regProtocol");
+        //    }
+    }
+
 
     @Override
     public void widgetClick(View v) {
@@ -47,14 +79,6 @@ public class HelpCenterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         webViewLayout.removeAllViews();
-        webViewLayout=null;
+        webViewLayout = null;
     }
-
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.helpCenter), true, R.id.titlebar);
-    }
-
 }
