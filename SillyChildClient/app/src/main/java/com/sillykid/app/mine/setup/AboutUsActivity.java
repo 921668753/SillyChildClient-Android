@@ -51,7 +51,7 @@ public class AboutUsActivity extends BaseActivity {
     public void initView() {
         //   String title = getIntent().getStringExtra("title");
         //     String url = getIntent().getStringExtra("url");
-        //   webViewLayout.setTitleText(title);
+        webViewLayout.setTitleText(getString(R.string.aboutMe));
         webViewLayout.setBackImgResource(R.mipmap.back);
         webViewLayout.setTitleVisibility(true);
         webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
