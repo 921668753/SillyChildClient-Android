@@ -216,9 +216,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 //                intent.putExtra("goodsid", goodsid);
 //                intent.putExtra("favorited", favorited);
 //                intent.putExtra("price", price);
+//                intent.putExtra("img", smallImg);
 //                intent.putExtra("have_spec", have_spec);
 //                intent.putExtra("store_id", store_id);
-                //                intent.putExtra("product_id", product_idg);
+//                intent.putExtra("product_id", product_idg);
 //                startActivityForResult(intent, REQUEST_CODE);
                 ((GoodsDetailsContract.Presenter) mPresenter).getIsLogin(this, 5);
                 break;
@@ -235,14 +236,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, MathUtil.keepTwo(StringUtils.toDouble(price)), StringUtils.toInt(have_spec), product_idg);
+                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec), product_idg);
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, MathUtil.keepTwo(StringUtils.toDouble(price)), StringUtils.toInt(have_spec), product_idg);
+                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec), product_idg);
                 break;
         }
     }
@@ -263,7 +264,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 favorited = goodsDetailsBean.getData().isFavorited();
                 have_spec = goodsDetailsBean.getData().getHave_spec();
                 product_idg = goodsDetailsBean.getData().getProduct_id();
-                price = goodsDetailsBean.getData().getPrice();
+                price = MathUtil.keepTwo(StringUtils.toDouble(goodsDetailsBean.getData().getPrice()));
                 goodName = goodsDetailsBean.getData().getName();
                 smallImg = goodsDetailsBean.getData().getSmall();
                 brief = goodsDetailsBean.getData().getBrief();

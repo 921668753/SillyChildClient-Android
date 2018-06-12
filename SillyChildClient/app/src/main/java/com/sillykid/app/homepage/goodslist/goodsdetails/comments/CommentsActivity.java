@@ -88,6 +88,8 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
 
     private int product_id = 0;
 
+    private String img = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_comments);
@@ -103,6 +105,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
         goodsid = getIntent().getIntExtra("goodsid", 0);
         price = getIntent().getStringExtra("price");
+        img = getIntent().getStringExtra("img");
         have_spec = getIntent().getStringExtra("have_spec");
         favorited = getIntent().getBooleanExtra("favorited", false);
         product_id = getIntent().getIntExtra("product_id", 0);
@@ -217,14 +220,14 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, StringUtils.toInt(have_spec), product_id);
+                specificationsBouncedDialog.setFlag(0, goodsid, img, price, StringUtils.toInt(have_spec), product_id);
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, StringUtils.toInt(have_spec), product_id);
+                specificationsBouncedDialog.setFlag(1, goodsid, img, price, StringUtils.toInt(have_spec), product_id);
                 break;
             default:
                 break;
