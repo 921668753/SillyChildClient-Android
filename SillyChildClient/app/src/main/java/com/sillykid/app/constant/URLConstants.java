@@ -111,6 +111,11 @@ public class URLConstants {
     public static String GOODSPRODUCTSPEC = APIURL + "goods/product-specs.do";
 
     /**
+     * 首页---更多分类----商品列表----商品详情----商品规格----获取商品剩余规格
+     */
+    public static String GOODSPRODUCTSPECLEFT = APIURL + "goods/specs-left.do";
+
+    /**
      * 获取系统消息首页
      */
     public static String NEWLISTBUYTITLE = APIURL + "news/listByTitle.do";

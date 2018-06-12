@@ -32,6 +32,8 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
 
@@ -92,6 +94,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private int num = 0;
 
     private String have_spec = "0";
+
+    private int product_idg = 0;
 
     @Override
     public void setRootView() {
@@ -208,13 +212,15 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 showActivity(aty, shopIntent);
                 break;
             case R.id.ll_customerService:
-                Intent intent = new Intent(aty, CommentsActivity.class);
-                intent.putExtra("goodsid", goodsid);
-                intent.putExtra("favorited", favorited);
-                intent.putExtra("price", price);
-                intent.putExtra("have_spec", have_spec);
-                intent.putExtra("store_id", store_id);
-                startActivityForResult(intent, REQUEST_CODE);
+//                Intent intent = new Intent(aty, CommentsActivity.class);
+//                intent.putExtra("goodsid", goodsid);
+//                intent.putExtra("favorited", favorited);
+//                intent.putExtra("price", price);
+//                intent.putExtra("have_spec", have_spec);
+//                intent.putExtra("store_id", store_id);
+                //                intent.putExtra("product_id", product_idg);
+//                startActivityForResult(intent, REQUEST_CODE);
+                ((GoodsDetailsContract.Presenter) mPresenter).getIsLogin(this, 5);
                 break;
             case R.id.ll_follow:
                 showLoadingDialog(getString(R.string.dataLoad));
@@ -229,14 +235,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, MathUtil.keepTwo(StringUtils.toDouble(price)), StringUtils.toInt(have_spec), product_idg);
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, MathUtil.keepTwo(StringUtils.toDouble(price)), StringUtils.toInt(have_spec), product_idg);
                 break;
         }
     }
@@ -256,6 +262,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 store_id = goodsDetailsBean.getData().getStore_id();
                 favorited = goodsDetailsBean.getData().isFavorited();
                 have_spec = goodsDetailsBean.getData().getHave_spec();
+                product_idg = goodsDetailsBean.getData().getProduct_id();
                 price = goodsDetailsBean.getData().getPrice();
                 goodName = goodsDetailsBean.getData().getName();
                 smallImg = goodsDetailsBean.getData().getSmall();
@@ -286,6 +293,19 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         } else if (flag == 4) {
             specificationsBouncedDialog.dismissLoadingDialog();
             ViewInject.toast(getString(R.string.addCartSuccess));
+        } else if (flag == 5) {
+//首先需要构造使用客服者的用户信息
+            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+/**
+ * 启动客户服聊天界面。
+ *
+ * @param context           应用上下文。
+ * @param customerServiceId 要与之聊天的客服 Id。
+ * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+ * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+ */
+            RongIM.getInstance().startCustomerServiceChat(this, "KEFU152876757817634", "在线客服", null);
         }
     }
 

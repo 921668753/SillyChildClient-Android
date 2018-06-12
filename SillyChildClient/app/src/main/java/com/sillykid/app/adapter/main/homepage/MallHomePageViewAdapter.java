@@ -43,7 +43,11 @@ public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<HomePageBean
     protected void fillData(BGAViewHolderHelper helper, int position, HomePageBean model) {
         GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), (ImageView) helper.getView(R.id.img_good), 5, R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
-        helper.setText(R.id.tv_goodSynopsis, model.getBrief());
+        if (StringUtils.isEmpty(model.getBrief())) {
+            helper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
+        } else {
+            helper.setText(R.id.tv_goodSynopsis, model.getBrief());
+        }
         helper.setText(R.id.tv_goodMoney, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         helper.setText(R.id.tv_brand, model.getBrand_name());
         if (StringUtils.isEmpty(model.getStore_name()) && StringUtils.isEmpty(model.getGoods_tag())) {

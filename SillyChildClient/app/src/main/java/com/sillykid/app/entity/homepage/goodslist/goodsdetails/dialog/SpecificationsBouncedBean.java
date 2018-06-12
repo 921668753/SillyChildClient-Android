@@ -14,6 +14,7 @@ public class SpecificationsBouncedBean extends BaseResult<List<SpecificationsBou
          */
 
         private int spec_id;
+        private int isSelected;
         private List<SpecValueIdsBean> specValueIds;
 
         public int getSpec_id() {
@@ -24,6 +25,14 @@ public class SpecificationsBouncedBean extends BaseResult<List<SpecificationsBou
             this.spec_id = spec_id;
         }
 
+        public int getIsSelected() {
+            return isSelected;
+        }
+
+        public void setIsSelected(int isSelected) {
+            this.isSelected = isSelected;
+        }
+
         public List<SpecValueIdsBean> getSpecValueIds() {
             return specValueIds;
         }
@@ -31,6 +40,7 @@ public class SpecificationsBouncedBean extends BaseResult<List<SpecificationsBou
         public void setSpecValueIds(List<SpecValueIdsBean> specValueIds) {
             this.specValueIds = specValueIds;
         }
+
 
         public class SpecValueIdsBean {
             /**
@@ -40,6 +50,7 @@ public class SpecificationsBouncedBean extends BaseResult<List<SpecificationsBou
             private int isSelected;
             private int spec_value_id;
             private String spec_value;
+            private int isNoClick;
 
             public int getIsSelected() {
                 return isSelected;
@@ -63,6 +74,14 @@ public class SpecificationsBouncedBean extends BaseResult<List<SpecificationsBou
 
             public void setSpec_value(String spec_value) {
                 this.spec_value = spec_value;
+            }
+
+            public int getIsNoClick() {
+                return isNoClick;
+            }
+
+            public void setIsNoClick(int isNoClick) {
+                this.isNoClick = isNoClick;
             }
         }
     }

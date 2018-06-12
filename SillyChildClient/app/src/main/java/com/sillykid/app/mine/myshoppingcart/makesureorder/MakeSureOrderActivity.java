@@ -231,7 +231,7 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
             RxBus.getInstance().post(new MsgEvent<String>("RxBusMyShoppingCartEvent"));
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
             intent.putExtra("order_id", createOrderBean.getData().getOrder_id());
-            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(createOrderBean.getData().getLast_time()) - StringUtils.toLong(createOrderBean.getData().getSystem_time())));
+            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(createOrderBean.getData().getLast_time()) - StringUtils.toLong(createOrderBean.getData().getNow_time())));
             intent.putExtra("balance", createOrderBean.getData().getBalance());
             intent.putExtra("money", tv_money.getText().toString());
             skipActivity(aty, intent);

@@ -46,7 +46,12 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          *商品简介
          */
-        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
+        if (StringUtils.isEmpty(listBean.getBrief())) {
+            viewHolderHelper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
+        } else {
+            viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getBrief());
+        }
+      //  viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
 
         /**
          *商品价格

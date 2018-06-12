@@ -24,6 +24,7 @@ import com.sillykid.app.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * 评论
@@ -85,6 +86,8 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
 
     private int chageIcon = 0;
 
+    private int product_id = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_comments);
@@ -102,6 +105,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
         price = getIntent().getStringExtra("price");
         have_spec = getIntent().getStringExtra("have_spec");
         favorited = getIntent().getBooleanExtra("favorited", false);
+        product_id = getIntent().getIntExtra("product_id", 0);
         initDialog();
     }
 
@@ -198,19 +202,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
                 showActivity(aty, shopIntent);
                 break;
             case R.id.ll_customerService:
-/**
- * <p>启动会话界面。</p>
- * <p>使用时，可以传入多种会话类型 {@link io.rong.imlib.model.Conversation.ConversationType} 对应不同的会话类型，开启不同的会话界面。
- * 如果传入的是 {@link io.rong.imlib.model.Conversation.ConversationType#CHATROOM}，sdk 会默认调用
- * {@link RongIMClient#joinChatRoom(String, int, RongIMClient.OperationCallback)} 加入聊天室。
- * 如果你的逻辑是，只允许加入已存在的聊天室，请使用接口 {@link #startChatRoomChat(Context, String, boolean)} 并且第三个参数为 true</p>
- *
- * @param context          应用上下文。
- * @param conversationType 会话类型。
- * @param targetId         根据不同的 conversationType，可能是用户 Id、群组 Id 或聊天室 Id。
- * @param title            聊天的标题，开发者可以在聊天界面通过 intent.getData().getQueryParameter("title") 获取该值, 再手动设置为标题。
- */
-                //    RongIM.getInstance().startConversation(Context context, Conversation.ConversationType conversationType, String targetId, String title);
+                ((GoodsDetailsContract.Presenter) mPresenter).getIsLogin(this, 5);
                 break;
             case R.id.ll_follow:
                 showLoadingDialog(getString(R.string.dataLoad));
@@ -225,14 +217,14 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(0, goodsid, StringUtils.toInt(have_spec), product_id);
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, StringUtils.toInt(have_spec));
+                specificationsBouncedDialog.setFlag(1, goodsid, StringUtils.toInt(have_spec), product_id);
                 break;
             default:
                 break;
@@ -292,6 +284,19 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
             showActivity(aty, buyNowIntent);
         } else if (flag == 4) {
             ViewInject.toast(getString(R.string.addCartSuccess));
+        } else if (flag == 5) {
+            //首先需要构造使用客服者的用户信息
+            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+/**
+ * 启动客户服聊天界面。
+ *
+ * @param context           应用上下文。
+ * @param customerServiceId 要与之聊天的客服 Id。
+ * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+ * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+ */
+            RongIM.getInstance().startCustomerServiceChat(this, "KEFU152876757817634", "在线客服", null);
         }
     }
 

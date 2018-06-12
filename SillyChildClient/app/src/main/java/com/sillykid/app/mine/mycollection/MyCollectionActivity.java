@@ -14,7 +14,9 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.mycollection.MyCollectionViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -192,7 +194,9 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
             }
             if (addCartGoodDialog != null && !addCartGoodDialog.isShowing()) {
                 addCartGoodDialog.show();
-                addCartGoodDialog.setFlag(0, mAdapter.getItem(position).getGoods_id(), mAdapter.getItem(position).getHave_spec());
+                addCartGoodDialog.setFlag(0, mAdapter.getItem(position).getGoods_id(), mAdapter.getItem(position).getSmall(),
+                        MathUtil.keepTwo(StringUtils.toDouble(mAdapter.getItem(position).getPrice())), mAdapter.getItem(position).getHave_spec(),
+                        mAdapter.getItem(position).getProduct_id());
             }
         }
     }

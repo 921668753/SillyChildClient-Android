@@ -19,7 +19,11 @@ import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedViewAdapter;
 import com.sillykid.app.adapter.homepage.goodslist.goodsdetails.dialog.SpecificationsCvBouncedViewAdapter;
 import com.sillykid.app.entity.homepage.goodslist.goodsdetails.dialog.SpecificationsBean;
+import com.sillykid.app.entity.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedBean.DataBean.SpecValueIdsBean;
 import com.sillykid.app.entity.homepage.goodslist.goodsdetails.dialog.SpecificationsBouncedBean;
+import com.sillykid.app.utils.GlideImageLoader;
+
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -46,6 +50,8 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
     private TextView tv_divider;
 
+    private ImageView img_good;
+
     private TextView tv_inventoryEnough;
 
     private TextView tv_specifications;
@@ -55,6 +61,13 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
     private int product_id = 0;
 
     private int specificationsSize = 0;
+
+    private int selectePosition = 0;
+    private int selectePosition1 = 0;
+
+    private int enable_store = 0;
+
+    private int have_spec = 0;
 
 
     public SpecificationsBouncedDialog(@NonNull Context context) {
@@ -75,7 +88,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
     private void initView() {
         ImageView img_cancel = (ImageView) findViewById(R.id.img_cancel);
         img_cancel.setOnClickListener(this);
-        ImageView img_good = (ImageView) findViewById(R.id.img_good);
+        img_good = (ImageView) findViewById(R.id.img_good);
         tv_specifications = (TextView) findViewById(R.id.tv_specifications);
         tv_money = (TextView) findViewById(R.id.tv_money);
         tv_inventoryEnough = (TextView) findViewById(R.id.tv_inventoryEnough);
@@ -111,6 +124,10 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                 tv_goodNumber.setText(String.valueOf(StringUtils.toInt(tv_goodNumber.getText().toString()) + 1));
                 break;
             case R.id.tv_determine:
+                if (enable_store <= 0 && have_spec == 1) {
+                    ViewInject.toast(mContext.getString(R.string.selectProductAttribute));
+                    return;
+                }
                 dismiss();
                 mPresenter = null;
                 toDo(goodsid, flag, StringUtils.toInt(tv_goodNumber.getText().toString()), product_id);
@@ -120,11 +137,15 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
     public abstract void toDo(int goodId, int flag, int num, int product_id);
 
-    public void setFlag(int flag, int goodId, int have_spec) {
+    public void setFlag(int flag, int goodId, String img, String price, int have_spec, int product_id) {
         this.flag = flag;
         this.goodsid = goodId;
+        this.product_id = product_id;
+        this.have_spec = have_spec;
         tv_goodNumber.setText("1");
-        if (have_spec != 0) {
+        GlideImageLoader.glideOrdinaryLoader(mContext, img, img_good, R.mipmap.placeholderfigure1);
+        tv_money.setText(price);
+        if (have_spec == 1) {
             clv_specifications.setVisibility(View.VISIBLE);
             tv_divider.setVisibility(View.VISIBLE);
             tv_specifications.setVisibility(View.VISIBLE);
@@ -162,21 +183,66 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         } else if (flag == 1) {
             SpecificationsBean specificationsBean = (SpecificationsBean) JsonUtil.getInstance().json2Obj(success, SpecificationsBean.class);
             if (specificationsBean.getData() != null && StringUtils.toInt(specificationsBean.getData().getEnable_store(), 0) > 0 && specificationsBouncedViewAdapter.getData().size() == specificationsSize) {
-                tv_specifications.setText(specificationsBean.getData().getSpecs());
-                tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(specificationsBean.getData().getPrice())));
-                tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + specificationsBean.getData().getEnable_store() + mContext.getString(R.string.jian));
-            } else if (specificationsBean.getData() != null && StringUtils.toInt(specificationsBean.getData().getEnable_store(), 0) > 0) {
-                tv_specifications.setText(specificationsBean.getData().getSpecs());
+                tv_specifications.setText(mContext.getString(R.string.selecte) + specificationsBean.getData().getSpecs());
                 tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(specificationsBean.getData().getPrice())));
                 tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + specificationsBean.getData().getEnable_store() + mContext.getString(R.string.jian));
             } else {
                 tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(specificationsBean.getData().getPrice())));
-                tv_specifications.setText("");
                 tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+                specificationsBouncedViewAdapter.getData().get(selectePosition).setIsSelected(0);
+                specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsSelected(0);
+                specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsNoClick(1);
+                specificationsBouncedViewAdapter.notifyDataSetChanged();
+                tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
+            }
+            enable_store = StringUtils.toInt(specificationsBean.getData().getEnable_store(), 0);
+            if (enable_store <= 0) {
+                return;
             }
             product_id = specificationsBean.getData().getProduct_id();
+        } else if (flag == 2) {
+            SpecificationsBouncedBean specificationsBean = (SpecificationsBouncedBean) JsonUtil.getInstance().json2Obj(success, SpecificationsBouncedBean.class);
+            setIsClick(specificationsBean);
         }
     }
+
+    private void setIsClick(SpecificationsBouncedBean specificationsBean) {
+        if (specificationsBean.getData() == null || specificationsBean.getData().size() <= 0) {
+            specificationsBouncedViewAdapter.getData().get(selectePosition).setIsSelected(0);
+            specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsSelected(0);
+            specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsNoClick(1);
+            specificationsBouncedViewAdapter.notifyDataSetChanged();
+            return;
+        }
+        for (int i = 0; i < specificationsBouncedViewAdapter.getData().size(); i++) {
+            if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 1) {
+                continue;
+            }
+            for (int j = 0; j < specificationsBean.getData().size(); j++) {
+                if (specificationsBean.getData().get(j).getSpec_id() == specificationsBouncedViewAdapter.getData().get(i).getSpec_id() && specificationsBean.getData().get(j).getSpecValueIds().size() > 0) {
+                    List<SpecValueIdsBean> list = specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds();
+                    List<SpecValueIdsBean> list1 = specificationsBean.getData().get(j).getSpecValueIds();
+                    for (int k = 0; k < list.size(); k++) {
+                        list.get(k).setIsNoClick(1);
+                        list.get(k).setIsSelected(0);
+                        for (int l = 0; l < list1.size(); l++) {
+                            if (list.get(k).getSpec_value_id() == list1.get(l).getSpec_value_id()) {
+                                list.get(k).setIsNoClick(0);
+                            }
+                        }
+                    }
+                } else if (specificationsBean.getData().get(j).getSpec_id() == specificationsBouncedViewAdapter.getData().get(i).getSpec_id() && specificationsBean.getData().get(j).getSpecValueIds().size() <= 0) {
+                    for (int k = 0; k < specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().size(); k++) {
+                        specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().get(k).setIsNoClick(1);
+                        specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().get(k).setIsSelected(0);
+                    }
+                }
+            }
+        }
+        specificationsBouncedViewAdapter.notifyDataSetChanged();
+        tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
+    }
+
 
     @Override
     public void errorMsg(String msg, int flag) {
@@ -186,21 +252,25 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
     @Override
     public void onSetStatusListener(View view, SpecificationsCvBouncedViewAdapter adapter, int position, int position1) {
+        if (adapter.getData().get(position1).getIsNoClick() == 1) {
+            return;
+        }
         int specifications = -1;
         for (int i = 0; i < adapter.getData().size(); i++) {
             if (position1 == i && adapter.getData().get(i).getIsSelected() == 0) {
                 adapter.getData().get(i).setIsSelected(1);
+                specificationsBouncedViewAdapter.getData().get(position).setIsSelected(1);
                 specifications = adapter.getData().get(position1).getSpec_value_id();
             } else if (position1 == i && adapter.getData().get(i).getIsSelected() == 1) {
                 adapter.getData().get(i).setIsSelected(0);
-
+                specificationsBouncedViewAdapter.getData().get(position).setIsSelected(0);
             } else {
                 adapter.getData().get(i).setIsSelected(0);
             }
         }
         adapter.notifyDataSetChanged();
         if (specifications <= 0) {
-
+            tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
             return;
         }
         String specifications1 = "";
@@ -214,9 +284,16 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
             }
         }
         if (StringUtils.isEmpty(specifications1) || StringUtils.isEmpty(specifications1.substring(1)) || specifications1.substring(1).length() <= 0) {
+            tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
             return;
         }
-        ((SpecificationsBouncedContract.Presenter) mPresenter).getGoodsProductSpec(mContext, goodsid, specifications1.substring(1));
+        selectePosition = position;
+        selectePosition1 = position1;
+        if (specificationsSize == specificationsBouncedViewAdapter.getData().size()) {
+            ((SpecificationsBouncedContract.Presenter) mPresenter).getGoodsProductSpec(mContext, goodsid, specifications1.substring(1));
+        } else {
+            ((SpecificationsBouncedContract.Presenter) mPresenter).getGoodsProductSpecLeft(mContext, goodsid, specifications1.substring(1));
+        }
     }
 
     /**
@@ -224,21 +301,13 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
      */
     private String unselectedSpecification() {
         String specifications = "";
-        int color = 0;
-        int size = 0;
-        int capacity = 0;
         for (int i = 0; i < specificationsBouncedViewAdapter.getData().size(); i++) {
-            for (int j = 0; j < specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().size(); j++) {
-                if (specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().get(j).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 1 && color == 0) {
-                    color = 1;
-                    specifications = specifications + "、" + mContext.getString(R.string.color);
-                } else if (specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().get(j).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 2 && size == 0) {
-                    size = 1;
-                    specifications = specifications + "、" + mContext.getString(R.string.size);
-                } else if (specificationsBouncedViewAdapter.getData().get(i).getSpecValueIds().get(j).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 3 && capacity == 0) {
-                    capacity = 1;
-                    specifications = specifications + "、" + mContext.getString(R.string.capacity);
-                }
+            if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 1) {
+                specifications = specifications + "、" + mContext.getString(R.string.color);
+            } else if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 2) {
+                specifications = specifications + "、" + mContext.getString(R.string.size);
+            } else if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 3) {
+                specifications = specifications + "、" + mContext.getString(R.string.capacity);
             }
         }
         if (StringUtils.isEmpty(specifications) || StringUtils.isEmpty(specifications.substring(1))) {

@@ -14,7 +14,7 @@ public class CreateOrderBean extends BaseResult<CreateOrderBean.DataBean> {
 
         private String balance;
         private String last_time;
-        private String system_time;
+        private String now_time;
         private String order_id;
 
         public String getBalance() {
@@ -33,12 +33,12 @@ public class CreateOrderBean extends BaseResult<CreateOrderBean.DataBean> {
             this.last_time = last_time;
         }
 
-        public String getSystem_time() {
-            return system_time;
+        public String getNow_time() {
+            return now_time;
         }
 
-        public void setSystem_time(String system_time) {
-            this.system_time = system_time;
+        public void setNow_time(String now_time) {
+            this.now_time = now_time;
         }
 
         public String getOrder_id() {

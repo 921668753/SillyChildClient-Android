@@ -248,6 +248,7 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
             private String ship_account;
             private String activity_account;
             private String bonus_account;
+            private String total_account;
 
             public String getShip_account() {
                 return ship_account;
@@ -271,6 +272,14 @@ public class MakeSureOrderBean extends BaseResult<MakeSureOrderBean.DataBean> {
 
             public void setBonus_account(String bonus_account) {
                 this.bonus_account = bonus_account;
+            }
+
+            public String getTotal_account() {
+                return total_account;
+            }
+
+            public void setTotal_account(String total_account) {
+                this.total_account = total_account;
             }
         }
 

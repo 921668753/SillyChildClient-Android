@@ -23,6 +23,12 @@ public interface SpecificationsBouncedContract {
          */
         void getGoodsProductSpec(Context context, int goodsid, String specs);
 
+
+        /**
+         * 获取商品剩余规格
+         */
+        void getGoodsProductSpecLeft(Context context, int goodsid, String specs);
+
     }
 
     interface View extends BaseView<Presenter, String> {

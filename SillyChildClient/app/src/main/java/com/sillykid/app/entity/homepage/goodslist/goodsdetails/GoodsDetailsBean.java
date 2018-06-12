@@ -30,6 +30,7 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         private String small;
         private int store_id;
         private boolean favorited;
+        private int product_id;
         private int comment_count;
         private String big;
         private int goods_id;
@@ -45,6 +46,14 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         @SerializedName("class")
         private String classX;
         private String mktprice;
+
+        public int getProduct_id() {
+            return product_id;
+        }
+
+        public void setProduct_id(int product_id) {
+            this.product_id = product_id;
+        }
 
         public String getBrief() {
             return brief;

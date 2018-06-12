@@ -438,6 +438,13 @@ public class RequestClient {
     }
 
     /**
+     * 首页---更多分类----商品列表----商品详情----商品规格--获取商品剩余规格
+     */
+    public static void getGoodsProductSpecLeft(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(context, URLConstants.GOODSPRODUCTSPECLEFT, httpParams, false, listener);
+    }
+
+    /**
      * 得到地区的热门城市
      */
     public static void getChildHotCity(HttpParams httpParams, int id, ResponseListener<String> listener) {

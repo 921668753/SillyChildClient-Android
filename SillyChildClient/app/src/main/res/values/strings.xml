@@ -624,6 +624,9 @@
     <string name="jian">件</string>
     <string name="inventory">库存</string>
     <string name="insufficient">不足</string>
+    <string name="selectProductAttribute">请选择商品属性</string>
+
+
 
     <!--商城  店铺首页  全部商品 评论-->
     <string name="figure">有图</string>
@@ -893,6 +896,7 @@
     <string name="hintName1">请输入正确的姓名</string>
     <string name="openingBank">开户银行</string>
     <string name="pleaseSelect">请选择</string>
+    <string name="selecte">已选</string>
     <string name="phone1">手机号</string>
     <string name="accountText">请填写预留手机号</string>
     <string name="enterVerifyCode">请输入验证码</string>

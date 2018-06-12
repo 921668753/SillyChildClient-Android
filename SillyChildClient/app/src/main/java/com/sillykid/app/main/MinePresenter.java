@@ -57,8 +57,6 @@ public class MinePresenter implements MineContract.Presenter {
                 mView.errorMsg(msg, 1);
             }
         });
-
-
     }
 
 
