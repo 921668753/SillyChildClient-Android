@@ -230,6 +230,21 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
                     provinceOptions1 = i;
                     Log.d("tag1", provinceOptions1 + "=province");
                 }
+                if (options1Items.get(i).getChildren() == null || options1Items.get(i).getChildren().size() <= 0) {
+                    AddressRegionBean.DataBean.ChildrenBeanX childrenBeanX = new AddressRegionBean.DataBean.ChildrenBeanX();
+                    childrenBeanX.setRegion_id(0);
+                    childrenBeanX.setLocal_name("");
+                    CityList.add(childrenBeanX);//添加城市
+                    ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
+                    AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
+                    childrenBean.setRegion_id(0);
+                    childrenBean.setLocal_name("");
+                    childrenBeanList1.add(childrenBean);
+                    Province_AreaList.add(childrenBeanList1);
+                    options2Items.add(CityList);
+                    options3Items.add(Province_AreaList);
+                    continue;
+                }
                 for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
                     AddressRegionBean.DataBean.ChildrenBeanX CityName = options1Items.get(i).getChildren().get(c);
                     if (StringUtils.isEmpty(CityName.getLocal_name())) {
@@ -385,6 +400,14 @@ public class AddNewAddressActivity extends BaseActivity implements AddNewAddress
         if (pvNoLinkOptions != null && pvNoLinkOptions.isShowing()) {
             pvNoLinkOptions.dismiss();
         }
+
+        options1Items.clear();
+        options1Items = null;
+        options2Items.clear();
+        options2Items = null;
+        options3Items.clear();
+        options3Items = null;
+
         pvNoLinkOptions = null;
         provinceList.clear();
         provinceList = null;
