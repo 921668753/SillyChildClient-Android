@@ -481,7 +481,7 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusMyShoppingCartEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusMyShoppingCartEvent") && mPresenter != null) {
             ((MyShoppingCartContract.Presenter) mPresenter).getMyShoppingCartList();
         }
     }

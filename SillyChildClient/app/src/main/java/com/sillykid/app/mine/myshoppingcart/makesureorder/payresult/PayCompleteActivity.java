@@ -17,6 +17,7 @@ import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myshoppingcart.makesureorder.payresult.PayCompleteBean;
 import com.sillykid.app.main.MainActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
+import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.sillykid.app.mine.myshoppingcart.MyShoppingCartActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
@@ -87,6 +88,7 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
         if (getIntent().getIntExtra("order_status", 0) == 1) {
             img_pay.setImageResource(R.mipmap.pay_success_icon);
             tv_payStatus.setText(getString(R.string.alipay_succeed));
+            KJActivityStack.create().finishActivity(PaymentOrderActivity.class);
         } else {
             img_pay.setImageResource(R.mipmap.pay_failure_icon);
             tv_payStatus.setText(getString(R.string.pay_error));
@@ -107,11 +109,9 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_checkOrder:
-                KJActivityStack.create().finishActivity(MyShoppingCartActivity.class);
                 KJActivityStack.create().finishActivity(MakeSureOrderActivity.class);
-                KJActivityStack.create().finishActivity(PaymentOrderActivity.class);
-                Intent intent = new Intent(aty, MyOrderActivity.class);
-                intent.putExtra("chageIcon", 0);
+                Intent intent = new Intent(aty, OrderDetailsActivity.class);
+                intent.putExtra("order_id", StringUtils.toInt(order_id));
                 skipActivity(aty, intent);
                 break;
             case R.id.tv_returnHomePage:

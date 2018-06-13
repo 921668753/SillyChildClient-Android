@@ -144,7 +144,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         this.have_spec = have_spec;
         tv_goodNumber.setText("1");
         GlideImageLoader.glideOrdinaryLoader(mContext, img, img_good, R.mipmap.placeholderfigure1);
-        tv_money.setText(price);
+        tv_money.setText(mContext.getString(R.string.renminbi) + price);
         if (have_spec == 1) {
             clv_specifications.setVisibility(View.VISIBLE);
             tv_divider.setVisibility(View.VISIBLE);
