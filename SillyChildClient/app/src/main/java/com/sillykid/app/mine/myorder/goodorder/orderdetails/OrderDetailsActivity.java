@@ -20,7 +20,7 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAdapter;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
-import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
@@ -374,11 +374,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
                 sendGoodsGood();
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
-                waitGoodsGood();
+                waitGoodsGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
-                completedGood();
+                completedGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
-                completedGood();
+                completedGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
                 afterSaleGood();
             } else {
@@ -515,8 +515,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 待收货
      */
-    private void waitGoodsGood() {
-        tv_courierName.setVisibility(View.VISIBLE);
+    private void waitGoodsGood(OrderDetailBean orderDetailBean) {
+      //  tv_courierName.setVisibility(View.VISIBLE);
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
@@ -537,15 +537,24 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_checkLogistics.setVisibility(View.VISIBLE);
         tv_confirmReceipt.setVisibility(View.VISIBLE);
         tv_appraiseOrder.setVisibility(View.GONE);
+        if (orderDetailBean.getData().getShipInfo() == null ||
+                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+            tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
+            tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
+        } else {
+            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
+            tv_orderCourierInformation.setText(list.get(0).getContext());
+            tv_orderCourierTime.setText(list.get(0).getTime());
+        }
     }
 
     /**
      * 已完成---0 未平价 1 已评价
      */
-    private void completedGood() {
+    private void completedGood(OrderDetailBean orderDetailBean) {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
-        tv_courierName.setVisibility(View.VISIBLE);
+      //  tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_complete_icon);
         tv_waitSending.setText(getString(R.string.transactionCompleted));
         tv_orderCourierInformation.setVisibility(View.VISIBLE);
@@ -564,6 +573,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_checkLogistics.setVisibility(View.GONE);
         tv_confirmReceipt.setVisibility(View.GONE);
         tv_appraiseOrder.setVisibility(View.VISIBLE);
+        if (orderDetailBean.getData().getShipInfo() == null ||
+                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+            tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
+            tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
+        } else {
+            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
+            tv_orderCourierInformation.setText(list.get(0).getContext());
+            tv_orderCourierTime.setText(list.get(0).getTime());
+        }
     }
 
     /**
@@ -572,7 +590,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private void afterSaleGood() {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
-        tv_courierName.setVisibility(View.VISIBLE);
+    //    tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
         tv_waitSending.setText(getString(R.string.applyAfterSales));
         tv_orderCourierInformation.setVisibility(View.VISIBLE);

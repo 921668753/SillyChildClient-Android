@@ -53,7 +53,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_waitSending"
@@ -76,7 +77,8 @@
                     android:paddingLeft="@dimen/dimen10"
                     android:text="顺丰快递"
                     android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize13" />
+                    android:textSize="@dimen/textsize13"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -92,7 +94,8 @@
                 android:paddingTop="@dimen/dimen10"
                 android:text="您的订单已进入库房，准备出库"
                 android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize13" />
+                android:textSize="@dimen/textsize13"
+                android:visibility="gone" />
 
 
             <TextView
@@ -100,12 +103,14 @@
                 style="@style/MatchWrap"
                 android:layout_marginBottom="@dimen/dimen10"
                 android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen10"
                 android:singleLine="true"
                 android:text="2018-04-30  13:32"
                 android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize13" />
+                android:textSize="@dimen/textsize13"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_name"

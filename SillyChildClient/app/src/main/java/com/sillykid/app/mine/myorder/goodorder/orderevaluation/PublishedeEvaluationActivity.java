@@ -23,7 +23,7 @@ import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluatio
 import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
-import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SpacesItemDecoration;

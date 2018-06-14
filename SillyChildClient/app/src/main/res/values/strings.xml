@@ -1211,6 +1211,7 @@
     <string name="noExplanation">暂无相关说明，敬请期待！</string>
     <string name="scheduleDetails">行程详情</string>
 
+    <string name="orderEnteredWarehouse">您的订单已交付快递公司，请耐心等待</string>
     <string name="orderInformation">订单信息</string>
     <string name="commodityInformation">商品信息</string>
     <string name="goodsTogether">商品合计：</string>

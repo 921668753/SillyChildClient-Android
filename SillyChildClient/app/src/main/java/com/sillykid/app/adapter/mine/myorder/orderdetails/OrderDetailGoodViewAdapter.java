@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
-import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBean.ItemListBean;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.AfterSalesDetailsActivity;
 import com.sillykid.app.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesActivity;
 import com.sillykid.app.utils.DataUtil;
@@ -51,7 +51,8 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
                     intent.putExtra("orderCode", model.getSn());
-                    intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
+                    intent.putExtra("submitTime", create_time);
+                   // intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
                     intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
                     intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
