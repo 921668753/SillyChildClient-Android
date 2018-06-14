@@ -125,6 +125,7 @@
     <string name="sdPermission">您拒绝了「SD卡读写权限」所需要的相关权限!请到「设置」开启权限</string>
 
     <!--引导页-->
+    <string name="skip">跳过 ></string>
     <string name="experienceImmediately">立即体验</string>
     <string name="notOpenPositionSwitchClose">本应用需要结合定位功能使用，请点击按钮关闭应用，去打开定位开关后，重启应用即可正常使用</string>
 
