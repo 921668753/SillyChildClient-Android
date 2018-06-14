@@ -16,9 +16,7 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myshoppingcart.makesureorder.payresult.PayCompleteBean;
 import com.sillykid.app.main.MainActivity;
-import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
-import com.sillykid.app.mine.myshoppingcart.MyShoppingCartActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
@@ -84,12 +82,13 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
         if (getIntent().getIntExtra("order_status", 0) == 1) {
             img_pay.setImageResource(R.mipmap.pay_success_icon);
+            initTitle(getString(R.string.paySuccess));
             tv_payStatus.setText(getString(R.string.alipay_succeed));
             KJActivityStack.create().finishActivity(PaymentOrderActivity.class);
         } else {
+            initTitle(getString(R.string.pay_error));
             img_pay.setImageResource(R.mipmap.pay_failure_icon);
             tv_payStatus.setText(getString(R.string.pay_error));
             tv_returnHomePage.setText(getString(R.string.payAgain));
@@ -99,8 +98,8 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
     /**
      * 设置标题
      */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.paySuccess), true, R.id.titlebar);
+    public void initTitle(String title) {
+        ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
     }
 
 

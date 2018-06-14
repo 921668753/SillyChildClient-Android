@@ -240,6 +240,7 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
     public void onFinishTime() {
         tv_waitingPayment.setText(getString(R.string.tradingClosed));
         tv_lateCancelled.setVisibility(View.GONE);
+        tv_confirmPayment.setVisibility(View.GONE);
     }
 
     @Override
