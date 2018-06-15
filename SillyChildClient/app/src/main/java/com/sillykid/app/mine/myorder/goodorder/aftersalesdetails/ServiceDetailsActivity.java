@@ -1,6 +1,8 @@
 package com.sillykid.app.mine.myorder.goodorder.aftersalesdetails;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -24,6 +26,9 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
     /**
      * 平台
      */
+    @BindView(id = R.id.ll_shz)
+    private LinearLayout ll_shz;
+
     @BindView(id = R.id.img_platform)
     private ImageView img_platform;
 
@@ -39,6 +44,9 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
     /**
      * 商家端
      */
+    @BindView(id = R.id.ll_merchants)
+    private LinearLayout ll_merchants;
+
     @BindView(id = R.id.img_merchants)
     private ImageView img_merchants;
 
@@ -65,6 +73,9 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
 
     @BindView(id = R.id.tv_refundAmount)
     private TextView tv_refundAmount;
+
+    @BindView(id = R.id.tv_afterType)
+    private TextView tv_afterType;
 
     @BindView(id = R.id.tv_refundReason)
     private TextView tv_refundReason;
@@ -115,33 +126,36 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
         dismissLoadingDialog();
         ServiceDetailsBean serviceDetailsBean = (ServiceDetailsBean) JsonUtil.getInstance().json2Obj(success, ServiceDetailsBean.class);
 
-        GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getSHZ().getStore_logo(), img_platform, R.mipmap.placeholderfigure1);
 
-        if (StringUtils.isEmpty(serviceDetailsBean.getData().getSHZ().getRefund_status())) {
-            tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
-        }
-        if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 0) {
-            tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applicationSuccessful));
-        } else if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 1) {
-            tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applyFailure));
-        }
-
-        tv_refundSuccessTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getSHZ().getRefund_time()), "yyyy-MM-dd HH:mm:ss"));
-
-        tv_remark.setText(serviceDetailsBean.getData().getSHZ().getRefund_remark());
-
-        GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getStore().getStore_logo(), img_merchants, R.mipmap.placeholderfigure1);
-        if (StringUtils.isEmpty(serviceDetailsBean.getData().getStore().getCreate_status())) {
-            tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
-        } else if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 0) {
-            tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
-        } else if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 1) {
-            tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund1) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
+        if (!StringUtils.isEmpty(serviceDetailsBean.getData().getSHZ().getRefund_status())) {
+            GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getSHZ().getStore_logo(), img_platform, R.mipmap.placeholderfigure1);
+            //   tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
+            if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 0) {
+                tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applicationSuccessful));
+            } else if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 1) {
+                tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applyFailure));
+            }
+            tv_refundSuccessTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getSHZ().getRefund_time()), "yyyy-MM-dd HH:mm:ss"));
+            tv_remark.setText(serviceDetailsBean.getData().getSHZ().getRefund_remark());
+        } else {
+            ll_shz.setVisibility(View.GONE);
         }
 
-        tv_merchantsApplyRefundTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getStore().getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+        if (!StringUtils.isEmpty(serviceDetailsBean.getData().getStore().getCreate_status())) {
+            GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getStore().getStore_logo(), img_merchants, R.mipmap.placeholderfigure1);
+            // tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
+            if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 0) {
+                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
+            } else if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 1) {
+                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund1) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
+            }
+            tv_merchantsApplyRefundTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getStore().getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
 
-        tv_merchantsRemark.setText(serviceDetailsBean.getData().getStore().getCreate_remark());
+            tv_merchantsRemark.setText(serviceDetailsBean.getData().getStore().getCreate_remark());
+        } else {
+            ll_merchants.setVisibility(View.GONE);
+        }
+
 
         GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getMember().getFace(), img_users, R.mipmap.placeholderfigure1);
 
@@ -151,9 +165,11 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
 
         tv_refundAmount.setText(MathUtil.keepTwo(StringUtils.toDouble(serviceDetailsBean.getData().getMember().getApply_alltotal())));
 
+        tv_afterType.setText(serviceDetailsBean.getData().getMember().getRemark());
+
         tv_refundReason.setText(serviceDetailsBean.getData().getMember().getReason());
 
-        tv_problemDescription.setText(serviceDetailsBean.getData().getMember().getRemark());
+        tv_problemDescription.setText(serviceDetailsBean.getData().getMember().getReason_detail());
 
     }
 

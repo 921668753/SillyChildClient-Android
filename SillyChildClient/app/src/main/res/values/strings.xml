@@ -628,7 +628,6 @@
     <string name="selectProductAttribute">请选择商品属性</string>
 
 
-
     <!--商城  店铺首页  全部商品 评论-->
     <string name="figure">有图</string>
     <string name="noImages">无图</string>
@@ -1121,6 +1120,7 @@
     <string name="selectDescriptionMatchingScore">请选择描述相符评分</string>
     <string name="selectLogisticsServiceRating">请选择物流服务评分</string>
     <string name="selectServiceAttitudeScore">请选择服务态度评分</string>
+    <string name="successfulEvaluation">发表评价成功</string>
 
 
     <!-- 个人中心 我的订单  申请售后-->

@@ -194,8 +194,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
-            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean);
         } else if (flag == 1) {
             if (StringUtils.isEmpty(openid)) {
                 MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
@@ -216,8 +215,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             }
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
-            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean);
         }
     }
 

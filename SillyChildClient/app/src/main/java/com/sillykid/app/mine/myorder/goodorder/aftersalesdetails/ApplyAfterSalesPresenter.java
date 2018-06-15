@@ -53,7 +53,7 @@ public class ApplyAfterSalesPresenter implements ApplyAfterSalesContract.Present
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("order_id", orderid);
         httpParams.put("typeCode", typeCode);
-        httpParams.put("reason", reasonCode);
+        httpParams.put("reasonCode", reasonCode);
         httpParams.put("reasonDetail", reasonDetail);
         httpParams.put("apply_alltotal", apply_alltotal);
         RequestClient.postOrderRefund(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {

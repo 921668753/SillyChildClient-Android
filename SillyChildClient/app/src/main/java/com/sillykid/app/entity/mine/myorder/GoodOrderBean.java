@@ -85,6 +85,7 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
              */
 
             private int orderId;
+            private int commented;
             private String paymoney;
             private String sn;
             private String create_time;
@@ -92,6 +93,14 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
             private String last_time;
             private int itemsCount;
             private int status;
+
+            public int getCommented() {
+                return commented;
+            }
+
+            public void setCommented(int commented) {
+                this.commented = commented;
+            }
 
             public String getCreate_time() {
                 return create_time;
@@ -205,6 +214,15 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
                 private int state;
                 private FieldsBean fields;
                 private int order_id;
+                private String specs;
+
+                public String getSpecs() {
+                    return specs;
+                }
+
+                public void setSpecs(String specs) {
+                    this.specs = specs;
+                }
 
                 public String getImage() {
                     return image;

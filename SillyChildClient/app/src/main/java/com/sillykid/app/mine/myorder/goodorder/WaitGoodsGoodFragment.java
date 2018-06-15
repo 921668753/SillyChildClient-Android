@@ -18,6 +18,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
@@ -264,4 +265,17 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
             ViewInject.toast(msg);
         }
     }
+
+    /**
+     * 在接收消息的时候，选择接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
+        }
+    }
+
 }

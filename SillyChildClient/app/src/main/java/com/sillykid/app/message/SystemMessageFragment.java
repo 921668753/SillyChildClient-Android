@@ -1,10 +1,7 @@
 package com.sillykid.app.message;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +17,6 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
-import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.message.SystemMessageViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -34,9 +30,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
-import static com.sillykid.app.main.MainActivity.KEY_EXTRAS;
-import static com.sillykid.app.main.MainActivity.KEY_MESSAGE;
-import static com.sillykid.app.main.MainActivity.MESSAGE_RECEIVED_ACTION;
 
 /**
  * 系统消息
@@ -232,25 +225,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     }
 
 
-    public static class MessageReceiver extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d("JPush", "JPush1");
-            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-                String messge = intent.getStringExtra(KEY_MESSAGE);
-                String extras = intent.getStringExtra(KEY_EXTRAS);
-                StringBuilder showMsg = new StringBuilder();
-                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-                if (!StringUtils.isEmpty(extras)) {
-                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-                }
-                Log.d("JPush", "JPush");
-                //   mRefreshLayout.beginRefreshing();
-                //  setCostomMsg(showMsg.toString());
-            }
-        }
-    }
 
 
     /**

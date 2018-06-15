@@ -106,32 +106,6 @@ public class MessageFragment extends BaseFragment {
     }
 
 
-//    private void setTabSelection(int index) {
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        hideFragment(fragmentTransaction);
-//        switch (index) {
-//            case 0:
-//                chageIcon = 20;
-//                cleanColors(20);
-//                Fragment conversationListFragment = initConversationList(fragmentTransaction);
-//                fragmentTransaction.show(conversationListFragment);
-//                break;
-//            case 1:
-//                chageIcon = 21;
-//                cleanColors(21);
-//                SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
-//                if (systemMsgFragment == null) {
-//                    fragmentTransaction.add(ID, new SystemMessageFragment(), TAB_SYSTEM_MSG);
-//                } else {
-//                    fragmentTransaction.show(systemMsgFragment);
-//                }
-//                break;
-//
-//        }
-//        fragmentTransaction.commit();
-//    }
-
-
     /**
      * 清除颜色，并添加颜色
      */
@@ -147,63 +121,4 @@ public class MessageFragment extends BaseFragment {
             tv_interactiveMessage.setTextColor(getResources().getColor(R.color.loginBackgroundColors));
         }
     }
-
-//    private void hideFragment(FragmentTransaction fragmentTransaction) {
-//        SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
-//        if (systemMsgFragment != null) {
-//            fragmentTransaction.hide(systemMsgFragment);
-//        }
-//
-//        ConversationListFragment conversationListFragment = (ConversationListFragment) fragmentManager.findFragmentByTag(TAB_CUSTOM_MSG);
-//        if (conversationListFragment != null) {
-//            fragmentTransaction.hide(conversationListFragment);
-//        }
-//    }
-
-    /**
-     * 刷新会话消息
-     */
-    public void refreshRedDot(int count) {
-//        if (count > 0) {
-//            tvCustomNotice.setVisibility(View.VISIBLE);
-//        } else {
-//            tvCustomNotice.setVisibility(View.INVISIBLE);
-//        }
-    }
-
-    /**
-     * 登陆成功后 刷新系统消息
-     */
-    public void refreshSystemMsg() {
-        //   SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
-//        if (systemMsgFragment != null) {
-//            //  systemMsgFragment.refreshAutoData();
-//        }
-    }
-
-//    private Fragment initConversationList(FragmentTransaction fragmentTransaction) {
-//        if (mConversationListFragment == null) {
-//            ConversationListFragment listFragment = new ConversationListFragment();
-//            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-//                    .appendPath("conversationlist")
-//                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
-//                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
-//                    .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
-//                    .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
-//                    .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
-//                    .build();
-////            mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
-////                    Conversation.ConversationType.GROUP,
-////                    Conversation.ConversationType.PUBLIC_SERVICE,
-////                    Conversation.ConversationType.APP_PUBLIC_SERVICE,
-////                    Conversation.ConversationType.SYSTEM
-////            };
-//            listFragment.setUri(uri);
-//            mConversationListFragment = listFragment;
-//            fragmentTransaction.add(ID, mConversationListFragment, TAB_CUSTOM_MSG);
-//            return listFragment;
-//        } else {
-//            return mConversationListFragment;
-//        }
-//    }
 }

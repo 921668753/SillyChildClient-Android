@@ -25,7 +25,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> {
 
-
     private ResultBean model;
 
     public GoodOrderViewAdapter(Context context, ResultBean model) {
@@ -37,7 +36,7 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, OrderItemsBean listBean) {
         GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
         viewHolderHelper.setText(R.id.tv_goodtitle, listBean.getName());
-        viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getSn());
+        viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getSpecs());
         viewHolderHelper.setText(R.id.tv_number, String.valueOf(listBean.getNum()));
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
         if (model.getStatus() == 4 || model.getStatus() == 5) {
@@ -50,7 +49,7 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
                     intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
                     intent.putExtra("orderCode", model.getSn());
-                    intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()),"yyyy-MM-dd HH:mm:ss"));
+                    intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
                     intent.putExtra("order_id", String.valueOf(listBean.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(listBean.getGoods_id()));
                     mContext.startActivity(intent);
@@ -76,4 +75,10 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
             viewHolderHelper.getTextView(R.id.tv_checkAfterSale).setOnClickListener(null);
         }
     }
+
+    public void setResultBeanModel(ResultBean model) {
+        this.model = model;
+    }
+
+
 }

@@ -157,8 +157,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_phone.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
-            ((BindingPhoneContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+            ((BindingPhoneContract.Presenter) mPresenter).loginRongYun(bean);
         } else if (flag == 2) {
             /**
              * 发送消息

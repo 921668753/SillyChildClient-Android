@@ -14,6 +14,8 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean;
@@ -168,7 +170,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
                 break;
             case R.id.tv_submit:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(order_id, refundTypeId, refundReasonId, et_accountAfterSalesService.getText().toString(), "0.01");
+                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(order_id, refundTypeId, refundReasonId, et_accountAfterSalesService.getText().toString(), apply_alltotal);
                 break;
         }
     }
@@ -192,7 +194,15 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
                 pvOptions1.setPicker(refundReasonList);
             }
         } else if (flag == 1) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusApplyAfterSalesEvent"));   /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusApplyAfterSalesEvent"));
             ViewInject.toast(getString(R.string.customerServiceStaffReview));
+            finish();
         }
     }
 

@@ -52,7 +52,7 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
                     intent.putExtra("orderCode", model.getSn());
                     intent.putExtra("submitTime", create_time);
-                   // intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
+                    // intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
                     intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
                     intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));

@@ -26,7 +26,7 @@ interface BindingPhoneContract {
         /**
          * 登录融云
          */
-        void loginRongYun(String rongYunToken, LoginBean bean);
+        void loginRongYun(LoginBean bean);
 
     }
 

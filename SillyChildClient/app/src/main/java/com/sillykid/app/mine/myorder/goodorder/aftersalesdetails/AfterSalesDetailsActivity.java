@@ -152,7 +152,7 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
 
         tv_afterSalesType.setText(getString(R.string.afterType1) + afterSalesDetailsBean.getData().getRemark());
 
-        tv_refundAmount.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getAlltotal_pay())));
+        tv_refundAmount.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getApply_alltotal())));
 
         tv_refundReason.setText(getString(R.string.refundReason) + afterSalesDetailsBean.getData().getReason());
         String goodName = "";
@@ -167,7 +167,7 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
 
         tv_orderNumber.setText(getString(R.string.orderNumber) + afterSalesDetailsBean.getData().getOrdersn());
 
-        tv_orderTime.setText(getString(R.string.refundAmount1) + DataUtil.formatData(StringUtils.toLong(afterSalesDetailsBean.getData().getOrder_create_time()), "yyyy-MM-dd HH:mm:ss"));
+        tv_orderTime.setText(getString(R.string.orderTime1) + DataUtil.formatData(StringUtils.toLong(afterSalesDetailsBean.getData().getOrder_create_time()), "yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override

@@ -10,6 +10,7 @@
     <TextView style="@style/DividerWidth" />
 
     <LinearLayout
+        android:id="@+id/ll_shz"
         style="@style/MatchWrap"
         android:layout_margin="@dimen/dimen10"
         android:background="@drawable/shape_vippermissions"
@@ -81,8 +82,8 @@
 
     </LinearLayout>
 
-
     <LinearLayout
+        android:id="@+id/ll_merchants"
         style="@style/MatchWrap"
         android:layout_marginLeft="@dimen/dimen10"
         android:layout_marginRight="@dimen/dimen10"
@@ -245,6 +246,28 @@
 
             <TextView
                 style="@style/WrapWrap"
+                android:text="@string/afterType1"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                android:id="@+id/tv_afterType"
+                style="@style/MatchWrap"
+                android:text="不喜欢/不合适"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen10"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10">
+
+            <TextView
+                style="@style/WrapWrap"
                 android:text="@string/refundReason"
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize13" />
@@ -257,7 +280,6 @@
                 android:textSize="@dimen/textsize13" />
 
         </LinearLayout>
-
 
         <LinearLayout
             style="@style/MatchWrap"

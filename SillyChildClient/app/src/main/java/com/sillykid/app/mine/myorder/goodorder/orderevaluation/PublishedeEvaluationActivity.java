@@ -12,6 +12,8 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -52,7 +54,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     private TextView tv_release;
 
 
-    private String order_id = "";
+    private int order_id = 0;
 
     private PublishedeEvaluationAdapter mAdapter = null;
 
@@ -68,7 +70,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
         super.initData();
         mPresenter = new PublishedeEvaluationPresenter(this);
         mAdapter = new PublishedeEvaluationAdapter(recyclerview);
-        order_id = getIntent().getStringExtra("order_id");
+        order_id = getIntent().getIntExtra("order_id", 0);
         showLoadingDialog(getString(R.string.dataLoad));
         ((PublishedeEvaluationContract.Presenter) mPresenter).getOrderDetails(order_id);
         initImagePicker();
@@ -191,8 +193,12 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
             mAdapter.getData().get(selectePosition).getImageList().add(success);
             mAdapter.notifyItemChanged(selectePosition);
         } else if (flag == 2) {
-
-
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusPublishedeEvaluationEvent"));
+            ViewInject.toast(getString(R.string.successfulEvaluation));
+            finish();
         }
     }
 
@@ -200,8 +206,10 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            //  ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
         ViewInject.toast(msg);

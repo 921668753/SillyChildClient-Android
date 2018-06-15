@@ -16,6 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -75,6 +76,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
      */
     private String status = "5";
 
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
@@ -120,6 +122,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         showLoadingDialog(getString(R.string.dataLoad));
         ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
     }
+
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
@@ -217,8 +220,23 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_appraiseOrder) {
             Intent publishedeEvaluationIntent = new Intent(aty, PublishedeEvaluationActivity.class);
-            publishedeEvaluationIntent.putExtra("order_id", String.valueOf(mAdapter.getItem(position).getOrderId()));
+            publishedeEvaluationIntent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, publishedeEvaluationIntent);
         }
     }
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusPublishedeEvaluationEvent") && mPresenter != null
+                || ((String) msgEvent.getData()).equals("RxBusApplyAfterSalesEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
+        }
+    }
+
+
 }

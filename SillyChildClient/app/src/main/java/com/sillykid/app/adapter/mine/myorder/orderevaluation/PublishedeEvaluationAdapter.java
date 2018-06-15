@@ -47,6 +47,7 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
         viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
         viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
+        et_goodsSatisfactory.setTag(position);
         if (!StringUtils.isEmpty(model.getContent())) {
             et_goodsSatisfactory.setText(model.getContent());
             et_goodsSatisfactory.setSelection(model.getContent().length());
@@ -64,7 +65,9 @@ public class PublishedeEvaluationAdapter extends BGARecyclerViewAdapter<MemberCo
 
             @Override
             public void afterTextChanged(Editable editable) {
-                model.setContent(editable + "");
+                if ((int) et_goodsSatisfactory.getTag() == position) {
+                    model.setContent(editable + "");
+                }
             }
         });
         List<ImageItem> selImageList;

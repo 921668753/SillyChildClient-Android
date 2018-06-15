@@ -15,13 +15,16 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.TimeCount;
 import com.common.cklibrary.utils.myview.ChildListView;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAdapter;
+import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
+import com.sillykid.app.mine.myorder.goodorder.GoodOrderContract;
 import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity;
@@ -354,7 +357,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 break;
             case R.id.tv_appraiseOrder:
                 Intent publishedeEvaluationIntent = new Intent(aty, PublishedeEvaluationActivity.class);
-                publishedeEvaluationIntent.putExtra("order_id", String.valueOf(orderId));
+                publishedeEvaluationIntent.putExtra("order_id", orderId);
                 showActivity(aty, publishedeEvaluationIntent);
                 break;
         }
@@ -376,16 +379,16 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
                 waitGoodsGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
-                completedGood(orderDetailBean);
+                completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
-                completedGood(orderDetailBean);
+                completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
                 afterSaleGood();
             } else {
                 tradingClosedGood();
             }
             status = orderDetailBean.getData().getStatus();
-            mAdapter.setStatus(status, orderDetailBean.getData().getPaymoney(),orderDetailBean.getData().getCreate_time());
+            mAdapter.setStatus(status, orderDetailBean.getData().getPaymoney(), orderDetailBean.getData().getCreate_time());
             tv_name.setText(orderDetailBean.getData().getShip_name());
             tv_phone.setText(orderDetailBean.getData().getShip_mobile());
             tv_address.setText(orderDetailBean.getData().getShipping_area());
@@ -516,7 +519,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
      * 待收货
      */
     private void waitGoodsGood(OrderDetailBean orderDetailBean) {
-      //  tv_courierName.setVisibility(View.VISIBLE);
+        //  tv_courierName.setVisibility(View.VISIBLE);
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
@@ -551,10 +554,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 已完成---0 未平价 1 已评价
      */
-    private void completedGood(OrderDetailBean orderDetailBean) {
+    private void completedGood(OrderDetailBean orderDetailBean, int flag) {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
-      //  tv_courierName.setVisibility(View.VISIBLE);
+        //  tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_complete_icon);
         tv_waitSending.setText(getString(R.string.transactionCompleted));
         tv_orderCourierInformation.setVisibility(View.VISIBLE);
@@ -565,14 +568,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_amountRealPay.setVisibility(View.VISIBLE);
         ll_paymentTime.setVisibility(View.VISIBLE);
         ll_deliveryTime.setVisibility(View.VISIBLE);
-
-        ll_bottom.setVisibility(View.VISIBLE);
-        tv_cancelOrder.setVisibility(View.GONE);
-        tv_payment.setVisibility(View.GONE);
-        tv_remindDelivery.setVisibility(View.GONE);
-        tv_checkLogistics.setVisibility(View.GONE);
-        tv_confirmReceipt.setVisibility(View.GONE);
-        tv_appraiseOrder.setVisibility(View.VISIBLE);
+        if (flag == 0) {
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_cancelOrder.setVisibility(View.GONE);
+            tv_payment.setVisibility(View.GONE);
+            tv_remindDelivery.setVisibility(View.GONE);
+            tv_checkLogistics.setVisibility(View.GONE);
+            tv_confirmReceipt.setVisibility(View.GONE);
+            tv_appraiseOrder.setVisibility(View.VISIBLE);
+        } else {
+            ll_bottom.setVisibility(View.GONE);
+        }
         if (orderDetailBean.getData().getShipInfo() == null ||
                 orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
             tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
@@ -590,7 +596,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private void afterSaleGood() {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
-    //    tv_courierName.setVisibility(View.VISIBLE);
+        //    tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
         tv_waitSending.setText(getString(R.string.applyAfterSales));
         tv_orderCourierInformation.setVisibility(View.VISIBLE);
@@ -652,6 +658,21 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         }
         time = null;
     }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusPublishedeEvaluationEvent") && mPresenter != null) {
+            ll_bottom.setVisibility(View.GONE);
+        } else if (((String) msgEvent.getData()).equals("RxBusApplyAfterSalesEvent") && mPresenter != null) {
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+        }
+    }
+
 
     @Override
     public void onFinishTime() {

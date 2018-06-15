@@ -184,8 +184,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
-            ((RegisterContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+            ((RegisterContract.Presenter) mPresenter).loginRongYun(bean);
         } else if (flag == 2) {
             /**
              * 发送消息

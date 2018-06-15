@@ -100,6 +100,7 @@ public class ServiceDetailsBean extends BaseResult<ServiceDetailsBean.DataBean> 
             private String remark;
             private String reason;
             private String regtime;
+            private String reason_detail;
             private String apply_alltotal;
             private String face;
 
@@ -150,9 +151,17 @@ public class ServiceDetailsBean extends BaseResult<ServiceDetailsBean.DataBean> 
             public void setFace(String face) {
                 this.face = face;
             }
+
+            public String getReason_detail() {
+                return reason_detail;
+            }
+
+            public void setReason_detail(String reason_detail) {
+                this.reason_detail = reason_detail;
+            }
         }
 
-        public  class StoreBean {
+        public class StoreBean {
             /**
              * create_time : 1528341314
              * create_status : null

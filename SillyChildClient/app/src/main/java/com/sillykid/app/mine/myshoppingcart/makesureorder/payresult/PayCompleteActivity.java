@@ -16,7 +16,7 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myshoppingcart.makesureorder.payresult.PayCompleteBean;
 import com.sillykid.app.main.MainActivity;
-import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
+import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
@@ -109,12 +109,14 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
         switch (v.getId()) {
             case R.id.tv_checkOrder:
                 KJActivityStack.create().finishActivity(MakeSureOrderActivity.class);
-                Intent intent = new Intent(aty, OrderDetailsActivity.class);
-                intent.putExtra("order_id", StringUtils.toInt(order_id));
+                Intent intent = new Intent(aty, MyOrderActivity.class);
+                if (getIntent().getIntExtra("order_status", 0) == 1) {
+                    intent.putExtra("chageIcon", 1);
+                }
                 skipActivity(aty, intent);
                 break;
             case R.id.tv_returnHomePage:
-                if (tv_returnHomePage.getText().toString().trim().contains(getString(R.string.payAgain))) {
+                if (getIntent().getIntExtra("order_status", 0) != 1) {
                     finish();
                     return;
                 }

@@ -24,7 +24,7 @@ public interface LoginContract {
         /**
          * 登录融云
          */
-        void loginRongYun(String rongYunToken, LoginBean bean);
+        void loginRongYun(LoginBean bean);
 
         /**
          * 第三方账号登录

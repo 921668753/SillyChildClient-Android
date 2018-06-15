@@ -63,6 +63,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         private String total;
         private String backTime;
         private String lastTime;
+        private int commented;
         private List<ItemListBean> itemList;
 
         public int getOrder_id() {
@@ -247,6 +248,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
         public void setLastTime(String lastTime) {
             this.lastTime = lastTime;
+        }
+
+        public int getCommented() {
+            return commented;
+        }
+
+        public void setCommented(int commented) {
+            this.commented = commented;
         }
 
         public List<ItemListBean> getItemList() {

@@ -32,7 +32,7 @@ public class PublishedeEvaluationPresenter implements PublishedeEvaluationContra
     }
 
     @Override
-    public void getOrderDetails(String orderId) {
+    public void getOrderDetails(int orderId) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("orderid", orderId);
         RequestClient.getOrderDetail(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {

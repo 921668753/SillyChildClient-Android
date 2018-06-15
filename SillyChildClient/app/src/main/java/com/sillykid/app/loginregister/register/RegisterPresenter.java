@@ -12,6 +12,7 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.loginregister.LoginBean;
+import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
 import com.sillykid.app.retrofit.RequestClient;
 import com.sillykid.app.utils.AccountValidatorUtil;
 
@@ -147,10 +148,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void loginRongYun(String rongYunToken, LoginBean bean) {
+    public void loginRongYun(LoginBean bean) {
         RongIM.getInstance().logout();
-        if (!StringUtils.isEmpty(rongYunToken)) {
-            RongIM.connect(rongYunToken, new RongIMClient.ConnectCallback() {
+        if (!StringUtils.isEmpty(bean.getData().getRong_cloud())) {
+            RongIM.connect(bean.getData().getRong_cloud(), new RongIMClient.ConnectCallback() {
                 /**
                  * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
                  * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
@@ -171,7 +172,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     /**
                      * 获取用户信息
                      */
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
+                    UserUtil.saveRcTokenId(KJActivityStack.create().topActivity(), bean.getData().getRong_cloud(), userid);
                     if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
                         UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);

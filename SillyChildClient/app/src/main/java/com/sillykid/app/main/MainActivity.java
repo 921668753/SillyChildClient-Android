@@ -1,6 +1,8 @@
 package com.sillykid.app.main;
 
 import android.app.Notification;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.SystemClock;
@@ -18,11 +20,11 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.constant.StringNewConstants;
 import com.sillykid.app.custominterfaces.MainCallBack;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.message.SystemMessageFragment.MessageReceiver;
 import com.sillykid.app.receivers.MainReceiver;
 import com.sillykid.app.services.MainService;
 
@@ -82,6 +84,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
 
     private MessageReceiver mMessageReceiver;
+
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
@@ -92,7 +95,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
      */
     private int chageIcon;
     public static boolean isForeground = true;
-    private Thread thread = null;
     private Intent intentservice;
     private MainReceiver mainReceiver;
 
@@ -260,6 +262,27 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 | Notification.DEFAULT_VIBRATE
                 | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
         JPushInterface.setPushNotificationBuilder(1, builder);
+    }
+
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("JPush", "JPush1");
+            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                String messge = intent.getStringExtra(KEY_MESSAGE);
+                String extras = intent.getStringExtra(KEY_EXTRAS);
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                if (!StringUtils.isEmpty(extras)) {
+                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                }
+                Log.d("JPush", "JPush");
+                //   mRefreshLayout.beginRefreshing();
+                //  setCostomMsg(showMsg.toString());
+            }
+        }
     }
 
     /**

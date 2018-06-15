@@ -32,7 +32,7 @@ interface RegisterContract {
         /**
          * 登录融云
          */
-        void loginRongYun(String rongYunToken, LoginBean bean);
+        void loginRongYun(LoginBean bean);
     }
 
     interface View extends BaseView<Presenter, String> {

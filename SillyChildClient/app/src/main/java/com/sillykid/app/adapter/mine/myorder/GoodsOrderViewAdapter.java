@@ -76,7 +76,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
-        } else if (model.getStatus() == 4) {
+        } else if (model.getStatus() == 5 && model.getCommented() == 0) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
@@ -85,7 +85,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.VISIBLE);
-        } else if (model.getStatus() == 5) {
+        } else if (model.getStatus() == 5 && model.getCommented() == 1) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
@@ -93,7 +93,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_remindDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
         } else if (model.getStatus() == 7) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
@@ -107,29 +107,37 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.tradingClosed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
         }
-
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + model.getItemsCount() + mContext.getString(R.string.goods));
         viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
-        GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext, model);
-        clv_shopgoods.setAdapter(adapter);
-        clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-                intent.putExtra("order_id", model.getOrderId());
-                mContext.startActivity(intent);
-            }
-        });
-        adapter.clear();
-        adapter.addNewData(model.getOrderItems());
-        //将此 countDownTimer 放入list.
-        countDownCounters.put(clv_shopgoods.hashCode(), adapter);
+        GoodOrderViewAdapter adapter;
+//        if (countDownCounters.get(clv_shopgoods.hashCode()) != null) {
+//            adapter = countDownCounters.get(clv_shopgoods.hashCode());
+//            adapter.clear();
+//            adapter.setResultBeanModel(model);
+//            adapter.addNewData(model.getOrderItems());
+//        } else {
+            adapter = new GoodOrderViewAdapter(mContext, model);
+            clv_shopgoods.setAdapter(adapter);
+            clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(mContext, OrderDetailsActivity.class);
+                    intent.putExtra("order_id", model.getOrderId());
+                    mContext.startActivity(intent);
+                }
+            });
+            adapter.clear();
+            adapter.addNewData(model.getOrderItems());
+            //将此 countDownTimer 放入list.
+            countDownCounters.put(clv_shopgoods.hashCode(), adapter);
+     //   }
     }
 
 
     @Override
     public void clear() {
+        super.clear();
         if (countDownCounters == null) {
             return;
         }
@@ -141,6 +149,5 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
                 cdt = null;
             }
         }
-        super.clear();
     }
 }

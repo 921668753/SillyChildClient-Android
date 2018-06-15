@@ -17,7 +17,7 @@ public interface PublishedeEvaluationContract {
         /**
          * 获取订单详情
          */
-        void getOrderDetails(String orderId);
+        void getOrderDetails(int orderId);
 
         /**
          * 上传图片

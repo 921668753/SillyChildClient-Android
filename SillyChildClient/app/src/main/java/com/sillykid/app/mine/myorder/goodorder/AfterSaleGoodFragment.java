@@ -16,6 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -210,4 +211,18 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
             tv_button.setText(getString(R.string.retry));
         }
     }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
+        }
+    }
+
 }

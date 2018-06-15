@@ -75,9 +75,36 @@ public class MyOrderActivity extends BaseActivity {
     public void initWidget() {
         super.initWidget();
         initTitle();
-        cleanColors(0);
-        changeFragment(obligationGoodFragment);
-        chageIcon = 0;
+        if (chageIcon == 0) {
+            cleanColors(0);
+            changeFragment(obligationGoodFragment);
+            chageIcon = 0;
+        } else  if (chageIcon == 1) {
+            cleanColors(1);
+            changeFragment(sendGoodsGoodFragment);
+            chageIcon = 1;
+        }else  if (chageIcon == 2) {
+            cleanColors(2);
+            changeFragment(waitGoodsGoodFragment);
+            chageIcon = 2;
+        }else  if (chageIcon == 3) {
+            cleanColors(3);
+            changeFragment(completedGoodFragment);
+            chageIcon = 3;
+        }else  if (chageIcon == 4) {
+            cleanColors(4);
+            changeFragment(afterSaleGoodFragment);
+            chageIcon = 4;
+        }else  if (chageIcon == 5) {
+            cleanColors(5);
+            changeFragment(allGoodFragment);
+            chageIcon = 5;
+        }else  if (chageIcon == 0) {
+            cleanColors(0);
+            changeFragment(obligationGoodFragment);
+            chageIcon = 0;
+        }
+
     }
 
     /**
