@@ -46,12 +46,12 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          *商品简介
          */
-        if (StringUtils.isEmpty(listBean.getBrief())) {
-            viewHolderHelper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
-        } else {
-            viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getBrief());
-        }
-      //  viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
+//        if (StringUtils.isEmpty(listBean.getBrief())) {
+//            viewHolderHelper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
+//        } else {
+        viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getBrief());
+        //    }
+        //  viewHolderHelper.setText(R.id.tv_goodSynopsis, listBean.getSpecs());
 
         /**
          *商品价格
@@ -61,7 +61,11 @@ public class MyCollectionViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          *是否自营
          */
-        viewHolderHelper.setVisibility(R.id.tv_proprietary, View.GONE);
+        if (listBean.getStore_name().contains(mContext.getString(R.string.platformProprietary))) {
+            viewHolderHelper.setVisibility(R.id.tv_proprietary, View.VISIBLE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.tv_proprietary, View.GONE);
+        }
     }
 
 }

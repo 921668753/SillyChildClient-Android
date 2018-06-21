@@ -253,7 +253,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
      */
     private TimeCount time;
 
-    private long lastTime = 0;
+//    private long lastTime = 0;
 
 //    private OptionsPickerView<LogisBean.DataBean> pvOptions = null;
 //
@@ -383,10 +383,12 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
                 completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
-            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
-                afterSaleGood();
-            } else {
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 6) {
                 tradingClosedGood();
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
+                afterSaleGood(0);
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 8) {
+                afterSaleGood(1);
             }
             status = orderDetailBean.getData().getStatus();
             mAdapter.setStatus(status, orderDetailBean.getData().getPaymoney(), orderDetailBean.getData().getCreate_time());
@@ -601,14 +603,18 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 售后
      */
-    private void afterSaleGood() {
+    private void afterSaleGood(int flag) {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         //    tv_courierName.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
-        tv_waitSending.setText(getString(R.string.applyAfterSales));
-        tv_orderCourierInformation.setVisibility(View.VISIBLE);
-        tv_orderCourierTime.setVisibility(View.VISIBLE);
+        if (flag == 0) {
+            tv_waitSending.setText(getString(R.string.applyAfterSales));
+        } else {
+            tv_waitSending.setText(getString(R.string.afterComplete));
+        }
+        tv_orderCourierInformation.setVisibility(View.GONE);
+        tv_orderCourierTime.setVisibility(View.GONE);
         ll_name.setVisibility(View.VISIBLE);
         ll_address.setVisibility(View.VISIBLE);
         ll_modePayment.setVisibility(View.VISIBLE);
@@ -684,14 +690,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void onFinishTime() {
-        lastTime = 0;
+        // lastTime = 0;
         tv_waitingPayment.setText(getString(R.string.tradingClosed));
         tv_lateCancelled.setVisibility(View.GONE);
     }
 
     @Override
     public void onTick(long millisUntilFinished) {
-        lastTime = millisUntilFinished;
+        //     lastTime = millisUntilFinished;
         String millisUntilFinish = "";
         long minute = millisUntilFinished / 60000;
         long seconds = millisUntilFinished % 60000;

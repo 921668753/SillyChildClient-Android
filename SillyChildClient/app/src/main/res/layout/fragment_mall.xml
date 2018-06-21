@@ -288,10 +288,10 @@
                     android:id="@+id/rv"
                     style="@style/MatchWrap"
                     android:layout_below="@id/gv_classification"
-                    android:layout_marginTop="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen5"
                     android:background="@android:color/transparent"
-                    android:paddingLeft="@dimen/dimen5"
-                    android:paddingRight="@dimen/dimen5"
+                    android:paddingLeft="@dimen/dimen2"
+                    android:paddingRight="@dimen/dimen2"
                     tools:listitem="@layout/item_mallhomepage" />
 
                 <!--<com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView-->

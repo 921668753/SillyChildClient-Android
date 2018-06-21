@@ -34,6 +34,7 @@ import com.umeng.socialize.media.UMWeb;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.model.Conversation.ConversationType;
 
 import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
 
@@ -96,6 +97,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private String have_spec = "0";
 
     private int product_idg = 0;
+
+    private String store_name = "";
 
     @Override
     public void setRootView() {
@@ -268,6 +271,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 goodName = goodsDetailsBean.getData().getName();
                 smallImg = goodsDetailsBean.getData().getSmall();
                 brief = goodsDetailsBean.getData().getBrief();
+                store_name = goodsDetailsBean.getData().getStore_name();
                 if (favorited) {
                     ll_follow.setBackgroundResource(R.mipmap.mall_collect);
                 } else {
@@ -295,18 +299,31 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             specificationsBouncedDialog.dismissLoadingDialog();
             ViewInject.toast(getString(R.string.addCartSuccess));
         } else if (flag == 5) {
-//首先需要构造使用客服者的用户信息
-            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
-/**
- * 启动客户服聊天界面。
- *
- * @param context           应用上下文。
- * @param customerServiceId 要与之聊天的客服 Id。
- * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
- * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
- */
-            RongIM.getInstance().startCustomerServiceChat(this, "KEFU152876757817634", "在线客服", null);
+            if (!StringUtils.isEmpty(store_name) && store_name.contains(getString(R.string.platformProprietary))) {
+                //首先需要构造使用客服者的用户信息
+                //            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                //            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+                /**
+                 * 启动客户服聊天界面。
+                 *
+                 * @param context           应用上下文。
+                 * @param customerServiceId 要与之聊天的客服 Id。
+                 * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+                 * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                 */
+                //   RongIM.getInstance().startCustomerServiceChat(this, "KEFU152876757817634", "在线客服", null);
+                RongIM.getInstance().startConversation(this, ConversationType.CUSTOMER_SERVICE, "KEFU152876757817634", "在线客服");
+            } else {
+                /**
+                 * 启动单聊界面。
+                 * @param context      应用上下文。
+                 * @param targetUserId 要与之聊天的用户 Id。
+                 * @param title        聊天的标题，开发者需要在聊天界面通过 intent.getData().getQueryParameter("title")
+                 *                     获取该值, 再手动设置为聊天界面的标题。
+                 */
+                // RongIM.getInstance().startPrivateChat(this, "9527", "标题");
+                RongIM.getInstance().startConversation(this, ConversationType.PRIVATE, "9527", "标题");
+            }
         }
     }
 

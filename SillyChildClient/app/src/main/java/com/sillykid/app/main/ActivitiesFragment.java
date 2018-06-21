@@ -101,7 +101,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         super.initData();
         mPresenter = new ActivitiesPresenter(this);
         bargainViewAdapter = new BargainViewAdapter(aty, hlv_bargain);
-        spacesItemDecoration = new SpacesItemDecoration(10, 15);
+        spacesItemDecoration = new SpacesItemDecoration(7, 14);
         productlViewAdapter = new ProductlViewAdapter(recyclerview);
     }
 

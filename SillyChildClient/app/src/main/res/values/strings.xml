@@ -775,6 +775,8 @@
     <string name="moneySign1">-￥</string>
     <string name="oneNight">/晚</string>
     <string name="noCollectedGoods">亲，您还没有收藏商品哟~</string>
+    <string name="platformProprietary">平台自营</string>
+
 
 
     <!-- 个人中心 我的钱包-->
@@ -1105,6 +1107,7 @@
     <string name="delivered">已发货</string>
     <string name="confirmReceipt">确认收货</string>
     <string name="applyAfterSales">申请售后</string>
+    <string name="afterComplete">售后完成</string>
     <string name="checkAfterSale">查看售后</string>
     <string name="appraise">评价</string>
     <string name="confirmCompleted">确认完成</string>
@@ -1121,7 +1124,6 @@
     <string name="selectLogisticsServiceRating">请选择物流服务评分</string>
     <string name="selectServiceAttitudeScore">请选择服务态度评分</string>
     <string name="successfulEvaluation">发表评价成功</string>
-
 
     <!-- 个人中心 我的订单  申请售后-->
     <string name="accountAfterSalesService">请详细描述您的售后原因</string>

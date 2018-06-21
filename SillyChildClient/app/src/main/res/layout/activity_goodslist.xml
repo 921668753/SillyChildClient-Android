@@ -124,10 +124,10 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             style="@style/MatchAuto"
-            android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen5"
             android:overScrollMode="never"
-            android:paddingLeft="@dimen/dimen5"
-            android:paddingRight="@dimen/dimen5"
+            android:paddingLeft="@dimen/dimen2"
+            android:paddingRight="@dimen/dimen2"
             android:scrollbars="none"
             tools:listitem="@layout/item_mallhomepage" />
 

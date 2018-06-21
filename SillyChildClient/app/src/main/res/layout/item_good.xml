@@ -55,7 +55,6 @@
             android:textColor="@color/hintColors"
             android:textSize="@dimen/textsize12" />
 
-
         <TextView
             android:id="@+id/tv_money"
             style="@style/WrapWrap"
@@ -88,7 +87,7 @@
                 android:gravity="center"
                 android:text="@string/proprietary"
                 android:textColor="@color/whiteColors"
-                android:textSize="@dimen/textsize9" />
+                android:textSize="@dimen/textsize8" />
 
             <TextView style="@style/AutoWrap" />
 

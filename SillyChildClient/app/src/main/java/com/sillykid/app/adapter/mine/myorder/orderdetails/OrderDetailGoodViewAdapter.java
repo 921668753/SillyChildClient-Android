@@ -59,7 +59,7 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                     mContext.startActivity(intent);
                 }
             });
-        } else if (status == 7) {
+        } else if (status == 7 || status == 8) {
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);
             viewHolderHelper.getTextView(R.id.tv_applyAfterSales).setOnClickListener(null);
