@@ -179,7 +179,8 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
                 orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmCancellationOrder), 0);
             }
         } else if (childView.getId() == R.id.tv_payment) {
-            ((GoodOrderContract.Presenter) mPresenter).getMyWallet(aty, mAdapter.getItem(position));
+            getSuccess(String.valueOf(mAdapter.getItem(position).getOrderId()), 3);
+            // ((GoodOrderContract.Presenter) mPresenter).getMyWallet(aty, mAdapter.getItem(position));
         }
     }
 
@@ -214,13 +215,13 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
         } else if (flag == 1) {
             mRefreshLayout.beginRefreshing();
         } else if (flag == 3) {
-            ResultBean resultBean = (ResultBean) JsonUtil.getInstance().json2Obj(success, ResultBean.class);
-            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
+//            ResultBean resultBean = (ResultBean) JsonUtil.getInstance().json2Obj(success, ResultBean.class);
+//            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
-            intent.putExtra("order_id", String.valueOf(resultBean.getOrderId()));
-            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(resultBean.getLast_time()) - StringUtils.toLong(resultBean.getSystem_time())));
-            intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
-            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
+            intent.putExtra("order_id", success);
+//            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(resultBean.getLast_time()) - StringUtils.toLong(resultBean.getSystem_time())));
+//            intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
+//            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
             aty.showActivity(aty, intent);
         }
         dismissLoadingDialog();

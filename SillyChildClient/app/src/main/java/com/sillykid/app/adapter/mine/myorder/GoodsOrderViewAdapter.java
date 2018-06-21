@@ -34,7 +34,6 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
         this.countDownCounters = new SparseArray<>();
     }
 
-
     @Override
     protected void setItemChildListener(BGAViewHolderHelper helper) {
         super.setItemChildListener(helper);
@@ -108,7 +107,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
         }
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + model.getItemsCount() + mContext.getString(R.string.goods));
-        viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
+        viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(model.getNeed_pay_money())));
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
         GoodOrderViewAdapter adapter;
 //        if (countDownCounters.get(clv_shopgoods.hashCode()) != null) {
@@ -117,21 +116,21 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
 //            adapter.setResultBeanModel(model);
 //            adapter.addNewData(model.getOrderItems());
 //        } else {
-            adapter = new GoodOrderViewAdapter(mContext, model);
-            clv_shopgoods.setAdapter(adapter);
-            clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-                    intent.putExtra("order_id", model.getOrderId());
-                    mContext.startActivity(intent);
-                }
-            });
-            adapter.clear();
-            adapter.addNewData(model.getOrderItems());
-            //将此 countDownTimer 放入list.
-            countDownCounters.put(clv_shopgoods.hashCode(), adapter);
-     //   }
+        adapter = new GoodOrderViewAdapter(mContext, model);
+        clv_shopgoods.setAdapter(adapter);
+        clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(mContext, OrderDetailsActivity.class);
+                intent.putExtra("order_id", model.getOrderId());
+                mContext.startActivity(intent);
+            }
+        });
+        adapter.clear();
+        adapter.addNewData(model.getOrderItems());
+        //将此 countDownTimer 放入list.
+        countDownCounters.put(clv_shopgoods.hashCode(), adapter);
+        //   }
     }
 
 

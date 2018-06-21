@@ -236,14 +236,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec), product_idg);
+                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg);
                 break;
             case R.id.tv_buyNow:
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec), product_idg);
+                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg);
                 break;
         }
     }

@@ -197,9 +197,6 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
             /**
              * 发送消息
              */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusApplyAfterSalesEvent"));   /**
-             * 发送消息
-             */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusApplyAfterSalesEvent"));
             ViewInject.toast(getString(R.string.customerServiceStaffReview));
             finish();

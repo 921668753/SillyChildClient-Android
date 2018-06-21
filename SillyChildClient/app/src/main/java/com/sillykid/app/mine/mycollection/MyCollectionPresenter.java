@@ -57,7 +57,7 @@ public class MyCollectionPresenter implements MyCollectionContract.Presenter {
     @Override
     public void postAddCartGood(int goodsid, int num, int product_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("productid", goodsid);
+        httpParams.put("productid", product_id);
         httpParams.put("num", num);
         RequestClient.postAddCartGood(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
@@ -71,6 +71,5 @@ public class MyCollectionPresenter implements MyCollectionContract.Presenter {
             }
         });
     }
-
 
 }

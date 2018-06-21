@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.TimeCount;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
@@ -264,7 +265,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     private OrderBouncedDialog orderBouncedDialog = null;
 
-    private String payMoney = "";
 
     @Override
     public void setRootView() {
@@ -330,7 +330,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 }
                 break;
             case R.id.tv_payment:
-                ((OrderDetailsContract.Presenter) mPresenter).getMyWallet(aty);
+                //  ((OrderDetailsContract.Presenter) mPresenter).getMyWallet(aty);
+                getSuccess("", 3);
                 break;
             case R.id.tv_remindDelivery:
                 if (orderBouncedDialog == null) {
@@ -398,7 +399,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 mAdapter.addMoreData(orderDetailBean.getData().getItemList());
                 tv_goodsMoney.setText(getString(R.string.renminbi) + calculatePrice(orderDetailBean.getData().getItemList()));
             }
-            payMoney = MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getOrder_amount()));
+            //   payMoney = MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getOrder_amount()));
             tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getShip_money())));
             if (StringUtils.toDouble(orderDetailBean.getData().getBouns_money()) <= 0) {
                 tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
@@ -420,7 +421,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 tv_modePayment.setText(getString(R.string.alipayToPay));
             } else if (orderDetailBean.getData().getPayment_type().contains("yinlian")) {
                 tv_modePayment.setText(getString(R.string.unionpayPay));
+            } else {
+                tv_modePayment.setText("");
             }
+            tv_amountRealPay.setText(MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getNeed_pay_money())));
             tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
             tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
             dismissLoadingDialog();
@@ -428,16 +432,20 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         } else if (flag == 2) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusWaitGoodsGoodEvent"));
             ViewInject.toast(getString(R.string.remindSuccessfulDelivery));
             dismissLoadingDialog();
         } else if (flag == 3) {
             dismissLoadingDialog();
-            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
+            //  String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
             intent.putExtra("order_id", String.valueOf(orderId));
-            intent.putExtra("last_time", lastTime / 1000);
-            intent.putExtra("money", payMoney);
-            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
+//            intent.putExtra("last_time", lastTime / 1000);
+//            intent.putExtra("money", payMoney);
+//            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
             showActivity(aty, intent);
         }
     }

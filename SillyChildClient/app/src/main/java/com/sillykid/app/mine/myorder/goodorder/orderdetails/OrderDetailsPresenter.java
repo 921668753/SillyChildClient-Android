@@ -3,15 +3,9 @@ package com.sillykid.app.mine.myorder.goodorder.orderdetails;
 import android.content.Context;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
-import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.sillykid.app.entity.mine.mywallet.MyWalletBean;
 import com.sillykid.app.retrofit.RequestClient;
 
 /**
@@ -58,7 +52,6 @@ public class OrderDetailsPresenter implements OrderDetailsContract.Presenter {
                 mView.errorMsg(msg, 1);
             }
         });
-
     }
 
     @Override
@@ -79,25 +72,25 @@ public class OrderDetailsPresenter implements OrderDetailsContract.Presenter {
 
     }
 
-    @Override
-    public void getMyWallet(Context context) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getMyWallet(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(response, MyWalletBean.class);
-                if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
-                    PreferenceHelper.write(context, StringConstants.FILENAME, "balance", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
-                    mView.getSuccess("", 3);
-                }
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 3);
-            }
-        });
-    }
+//    @Override
+//    public void getMyWallet(Context context) {
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        RequestClient.getMyWallet(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(response, MyWalletBean.class);
+//                if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
+//                    PreferenceHelper.write(context, StringConstants.FILENAME, "balance", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+//                    mView.getSuccess("", 3);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 3);
+//            }
+//        });
+//    }
 
     @Override
     public void postOrderConfirm(Context context, int orderid) {

@@ -102,7 +102,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     public void initData() {
         super.initData();
         mPresenter = new GoodsListPresenter(this);
-        spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        spacesItemDecoration = new SpacesItemDecoration(10, 15);
         goodsListAdapter = new GoodsListViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。

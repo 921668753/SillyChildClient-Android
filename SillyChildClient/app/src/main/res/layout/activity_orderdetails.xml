@@ -416,11 +416,18 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
-                    android:id="@+id/tv_amountRealPay"
-                    style="@style/AutoWrap"
+                    style="@style/WrapWrap"
                     android:paddingLeft="@dimen/dimen20"
                     android:singleLine="true"
-                    android:text="¥0.00"
+                    android:text="@string/renminbi"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_amountRealPay"
+                    style="@style/AutoWrap"
+                    android:singleLine="true"
+                    android:text="0.00"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
             </LinearLayout>

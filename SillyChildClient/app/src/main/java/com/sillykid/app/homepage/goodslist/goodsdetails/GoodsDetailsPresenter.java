@@ -72,9 +72,9 @@ public class GoodsDetailsPresenter implements GoodsDetailsContract.Presenter {
     }
 
     @Override
-    public void postOrderBuyNow(int productid, int num, int product_id) {
+    public void postOrderBuyNow(int goodId, int num, int product_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("productid", productid);
+        httpParams.put("productid", product_id);
         httpParams.put("num", num);
         RequestClient.postOrderBuyNow(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

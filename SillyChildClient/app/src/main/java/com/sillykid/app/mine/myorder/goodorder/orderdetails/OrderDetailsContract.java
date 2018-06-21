@@ -27,10 +27,10 @@ public interface OrderDetailsContract {
          */
         void postOrderRemind(Context context, int orderid);
 
-        /**
-         * 获取钱包余额
-         */
-        void getMyWallet(Context context);
+//        /**
+//         * 获取钱包余额
+//         */
+//        void getMyWallet(Context context);
 
         /**
          * 确认收货

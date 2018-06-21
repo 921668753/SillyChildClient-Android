@@ -209,13 +209,13 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
         } else if (flag == 1 || flag == 2 || flag == 4) {
             mRefreshLayout.beginRefreshing();
         } else if (flag == 3) {
-            ResultBean resultBean = (ResultBean) JsonUtil.getInstance().json2Obj(success, ResultBean.class);
-            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
+            //    ResultBean resultBean = (ResultBean) JsonUtil.getInstance().json2Obj(success, ResultBean.class);
+            // String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
             Intent intent = new Intent(aty, PaymentOrderActivity.class);
-            intent.putExtra("order_id", String.valueOf(resultBean.getOrderId()));
-            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(resultBean.getLast_time()) - StringUtils.toLong(resultBean.getSystem_time())));
-            intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
-            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
+            intent.putExtra("order_id", success);
+//            intent.putExtra("last_time", String.valueOf(StringUtils.toLong(resultBean.getLast_time()) - StringUtils.toLong(resultBean.getSystem_time())));
+            //      intent.putExtra("money", MathUtil.keepTwo(StringUtils.toDouble(resultBean.getPaymoney())));
+//            intent.putExtra("balance", MathUtil.keepTwo(StringUtils.toDouble(balance)));
             aty.showActivity(aty, intent);
         }
         dismissLoadingDialog();
@@ -276,7 +276,8 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
                 orderBouncedDialog.setIdContentFlag(mAdapter.getItem(position).getOrderId(), getString(R.string.confirmCancellationOrder), 0);
             }
         } else if (childView.getId() == R.id.tv_payment) {
-            ((GoodOrderContract.Presenter) mPresenter).getMyWallet(aty, mAdapter.getItem(position));
+            //  ((GoodOrderContract.Presenter) mPresenter).getMyWallet(aty, mAdapter.getItem(position).getOrderId());
+            getSuccess(String.valueOf(mAdapter.getItem(position).getOrderId()), 3);
         } else if (childView.getId() == R.id.tv_remindDelivery) {
             if (orderBouncedDialog == null) {
                 initDialog();
@@ -311,7 +312,8 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusPublishedeEvaluationEvent") && mPresenter != null
-                || ((String) msgEvent.getData()).equals("RxBusApplyAfterSalesEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
+                || ((String) msgEvent.getData()).equals("RxBusApplyAfterSalesEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null ||
+                ((String) msgEvent.getData()).equals("RxBusWaitGoodsGoodEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(aty, status, mMorePageNumber);
         }

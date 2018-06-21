@@ -63,8 +63,26 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         private String total;
         private String backTime;
         private String lastTime;
+        private String need_pay_money;
+        private String nowTime;
         private int commented;
         private List<ItemListBean> itemList;
+
+        public String getNeed_pay_money() {
+            return need_pay_money;
+        }
+
+        public void setNeed_pay_money(String need_pay_money) {
+            this.need_pay_money = need_pay_money;
+        }
+
+        public String getNowTime() {
+            return nowTime;
+        }
+
+        public void setNowTime(String nowTime) {
+            this.nowTime = nowTime;
+        }
 
         public int getOrder_id() {
             return order_id;

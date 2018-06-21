@@ -30,7 +30,7 @@ public interface GoodsDetailsContract {
         /**
          * 立即购买
          */
-        void postOrderBuyNow(int productid, int num, int product_id);
+        void postOrderBuyNow(int goodId, int num, int product_id);
 
         /**
          * 加入购物车

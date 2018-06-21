@@ -135,7 +135,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         mLocationClient = new LocationClient(aty.getApplicationContext());
         myListener = new MyLocationListener();
-        spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        spacesItemDecoration = new SpacesItemDecoration(10, 15);
         mallHomePageViewAdapter = new MallHomePageViewAdapter(recyclerview);
         sv_home.setOnScrollChangeListener(this);
     }

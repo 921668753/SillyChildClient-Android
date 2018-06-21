@@ -7,13 +7,16 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.TimeCount;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.mywallet.recharge.AlipayBean;
 import com.sillykid.app.entity.mine.mywallet.recharge.WeChatPayBean;
 import com.sillykid.app.loginregister.LoginActivity;
@@ -77,6 +80,8 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
 
     private PayUtils payUtils = null;
 
+    private int type = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_paymentorder);
@@ -87,7 +92,14 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
         super.initData();
         mPresenter = new PaymentOrderPresenter(this);
         order_id = getIntent().getStringExtra("order_id");
+        type = getIntent().getIntExtra("type", 0);
         payUtils = new PayUtils(this);
+        showLoadingDialog(getString(R.string.dataLoad));
+        if (type == 1) {
+            getSuccess("", 2);
+        } else {
+            ((PaymentOrderContract.Presenter) mPresenter).getOrderDetails(order_id);
+        }
     }
 
 
@@ -95,21 +107,6 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
     public void initWidget() {
         super.initWidget();
         initTitle();
-        String money = getIntent().getStringExtra("money");
-        tv_money.setText(money);
-        String last_time = getIntent().getStringExtra("last_time");
-        time = new TimeCount(StringUtils.toLong(last_time) * 1000, 1000);
-        time.setTimeCountCallBack(this);
-        time.start();
-        String balance = getIntent().getStringExtra("balance");
-        tv_currentBalance.setText(MathUtil.keepTwo(StringUtils.toDouble(balance)));
-        if (StringUtils.toDouble(tv_money.getText().toString().trim()) > StringUtils.toDouble(tv_currentBalance.getText().toString().trim())) {
-            clearImg(img_weChatPay);
-            pay_type = "weixin";
-        } else {
-            clearImg(img_currentBalance);
-            pay_type = "qianbao";
-        }
     }
 
     /**
@@ -169,40 +166,71 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        if (pay_type.contains("qianbao")) {
-            jumpPayComplete(1);
-        } else if (pay_type.contains("weixin")) {
-            WeChatPayBean weChatPayBean = (WeChatPayBean) JsonUtil.getInstance().json2Obj(success, WeChatPayBean.class);
-            if (weChatPayBean.getData() == null || StringUtils.isEmpty(weChatPayBean.getData().getAppid())) {
+        if (flag == 0) {
+            OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
+            long last_time = StringUtils.toLong(orderDetailBean.getData().getLastTime()) - StringUtils.toLong(orderDetailBean.getData().getNowTime());
+            time = new TimeCount(last_time * 1000, 1000);
+            time.setTimeCountCallBack(this);
+            time.start();
+            tv_money.setText(MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getNeed_pay_money())));
+            String balance = PreferenceHelper.readString(aty, StringConstants.FILENAME, "balance");
+            tv_currentBalance.setText(MathUtil.keepTwo(StringUtils.toDouble(balance)));
+            if (StringUtils.toDouble(tv_money.getText().toString().trim()) > StringUtils.toDouble(tv_currentBalance.getText().toString().trim())) {
+                clearImg(img_weChatPay);
+                pay_type = "weixin";
+            } else {
+                clearImg(img_currentBalance);
+                pay_type = "qianbao";
+            }
+        } else if (flag == 1) {
+            if (pay_type.contains("qianbao")) {
+                jumpPayComplete(1);
+            } else if (pay_type.contains("weixin")) {
+                WeChatPayBean weChatPayBean = (WeChatPayBean) JsonUtil.getInstance().json2Obj(success, WeChatPayBean.class);
+                if (weChatPayBean.getData() == null || StringUtils.isEmpty(weChatPayBean.getData().getAppid())) {
+                    dismissLoadingDialog();
+                    ViewInject.toast(getString(R.string.payParseError));
+                    return;
+                }
+                if (payUtils == null) {
+                    payUtils = new PayUtils(this);
+                }
                 dismissLoadingDialog();
-                ViewInject.toast(getString(R.string.payParseError));
-                return;
-            }
-            if (payUtils == null) {
-                payUtils = new PayUtils(this);
-            }
-            dismissLoadingDialog();
-            payUtils.doPayment(weChatPayBean.getData().getAppid(), weChatPayBean.getData().getPartnerid(), weChatPayBean.getData().getPrepayid(), weChatPayBean.getData().getPackageX(), weChatPayBean.getData().getNoncestr(), weChatPayBean.getData().getTimestamp(), weChatPayBean.getData().getSign());
-        } else if (pay_type.contains("zhifubao")) {
-            AlipayBean alipayBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
-            if (alipayBean.getData() == null || StringUtils.isEmpty(alipayBean.getData().getOrderString())) {
+                payUtils.doPayment(weChatPayBean.getData().getAppid(), weChatPayBean.getData().getPartnerid(), weChatPayBean.getData().getPrepayid(), weChatPayBean.getData().getPackageX(), weChatPayBean.getData().getNoncestr(), weChatPayBean.getData().getTimestamp(), weChatPayBean.getData().getSign());
+            } else if (pay_type.contains("zhifubao")) {
+                AlipayBean alipayBean = (AlipayBean) JsonUtil.getInstance().json2Obj(success, AlipayBean.class);
+                if (alipayBean.getData() == null || StringUtils.isEmpty(alipayBean.getData().getOrderString())) {
+                    dismissLoadingDialog();
+                    ViewInject.toast(getString(R.string.payParseError));
+                    return;
+                }
+                if (payUtils == null) {
+                    payUtils = new PayUtils(this);
+                }
                 dismissLoadingDialog();
-                ViewInject.toast(getString(R.string.payParseError));
-                return;
+                payUtils.doPay(alipayBean.getData().getOrderString());
+            } else if (pay_type.contains("yinlian")) {
+                //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
+                if (payUtils == null) {
+                    payUtils = new PayUtils(this);
+                }
+                //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
             }
-            if (payUtils == null) {
-                payUtils = new PayUtils(this);
+        } else if (flag == 2) {
+            long last_time = StringUtils.toLong(getIntent().getStringExtra("last_time"));
+            time = new TimeCount(last_time * 1000, 1000);
+            time.setTimeCountCallBack(this);
+            time.start();
+            tv_money.setText(MathUtil.keepTwo(StringUtils.toDouble(getIntent().getStringExtra("money"))));
+            tv_currentBalance.setText(MathUtil.keepTwo(StringUtils.toDouble(getIntent().getStringExtra("balance"))));
+            if (StringUtils.toDouble(tv_money.getText().toString().trim()) > StringUtils.toDouble(tv_currentBalance.getText().toString().trim())) {
+                clearImg(img_weChatPay);
+                pay_type = "weixin";
+            } else {
+                clearImg(img_currentBalance);
+                pay_type = "qianbao";
             }
-            dismissLoadingDialog();
-            payUtils.doPay(alipayBean.getData().getOrderString());
-        } else if (pay_type.contains("yinlian")) {
-            //从网络开始,获取交易流水号即TN（通过网络请求从后台获取到TN）
-            if (payUtils == null) {
-                payUtils = new PayUtils(this);
-            }
-            //   payUtils.doStartUnionPayPlugin(submitBouncedDialog, tn, MODE);
         }
-
     }
 
     /**
@@ -227,6 +255,9 @@ public class PaymentOrderActivity extends BaseActivity implements PaymentOrderCo
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
         if (pay_type.contains("qianbao")) {

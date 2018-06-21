@@ -85,26 +85,6 @@ public class GoodOrderPresenter implements GoodOrderContract.Presenter {
     }
 
     @Override
-    public void getMyWallet(Context context, ResultBean resultBean) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getMyWallet(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(response, MyWalletBean.class);
-                if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
-                    PreferenceHelper.write(context, StringConstants.FILENAME, "balance", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
-                    mView.getSuccess(JsonUtil.obj2JsonString(resultBean), 3);
-                }
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 3);
-            }
-        });
-    }
-
-    @Override
     public void postOrderConfirm(Context context, int orderid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("orderid", orderid);

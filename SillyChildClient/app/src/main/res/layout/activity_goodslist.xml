@@ -126,6 +126,8 @@
             style="@style/MatchAuto"
             android:layout_marginTop="@dimen/dimen10"
             android:overScrollMode="never"
+            android:paddingLeft="@dimen/dimen5"
+            android:paddingRight="@dimen/dimen5"
             android:scrollbars="none"
             tools:listitem="@layout/item_mallhomepage" />
 

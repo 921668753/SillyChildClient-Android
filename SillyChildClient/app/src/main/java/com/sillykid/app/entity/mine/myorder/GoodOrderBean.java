@@ -90,6 +90,7 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
             private String sn;
             private String create_time;
             private String system_time;
+            private String need_pay_money;
             private String last_time;
             private int itemsCount;
             private int status;
@@ -174,6 +175,14 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
 
             public void setOrderItems(List<OrderItemsBean> orderItems) {
                 this.orderItems = orderItems;
+            }
+
+            public String getNeed_pay_money() {
+                return need_pay_money;
+            }
+
+            public void setNeed_pay_money(String need_pay_money) {
+                this.need_pay_money = need_pay_money;
             }
 
             public class OrderItemsBean {

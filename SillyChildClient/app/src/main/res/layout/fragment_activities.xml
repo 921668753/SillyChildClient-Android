@@ -173,6 +173,8 @@
                     android:id="@+id/rv"
                     style="@style/MatchWrap"
                     android:layout_below="@id/ll_product1"
+                    android:paddingLeft="@dimen/dimen5"
+                    android:paddingRight="@dimen/dimen5"
                     android:layout_marginTop="@dimen/dimen10"
                     android:background="@android:color/transparent"
                     tools:listitem="@layout/item_mallhomepage" />
