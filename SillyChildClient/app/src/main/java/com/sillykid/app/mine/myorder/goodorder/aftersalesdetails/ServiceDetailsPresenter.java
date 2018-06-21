@@ -21,9 +21,9 @@ public class ServiceDetailsPresenter implements ServiceDetailsContract.Presenter
     }
 
     @Override
-    public void getSellBackService(String orderid) {
+    public void getSellBackService(String order_item_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("orderid", orderid);
+        httpParams.put("order_item_id", order_item_id);
         RequestClient.getSellBackService(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

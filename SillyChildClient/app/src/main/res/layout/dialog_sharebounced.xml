@@ -6,7 +6,7 @@
     <LinearLayout
         style="@style/MatchWrap"
         android:layout_alignParentBottom="true"
-        android:background="@color/shareDialogColors"
+        android:background="@color/whiteColors"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -22,14 +22,60 @@
 
         <LinearLayout
             style="@style/MatchWrap"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen18">
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/ll_weChatFriends"
+                style="@style/AutoWrap"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen18">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen50"
+                    android:layout_height="@dimen/dimen50"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/weixin" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginBottom="@dimen/dimen21"
+                    android:layout_marginTop="@dimen/dimen14"
+                    android:text="@string/weChatFriends"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_circleFriends"
+                style="@style/AutoWrap"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen18">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen50"
+                    android:layout_height="@dimen/dimen50"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/share_weixin_circle" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginBottom="@dimen/dimen21"
+                    android:layout_marginTop="@dimen/dimen14"
+                    android:text="@string/circleFriends"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_QQFriends"
                 style="@style/AutoWrap"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen18">
 
                 <ImageView
                     android:layout_width="@dimen/dimen50"
@@ -48,70 +94,27 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_weChatFriends"
+                android:id="@+id/ll_qzone"
                 style="@style/AutoWrap"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen18">
 
                 <ImageView
                     android:layout_width="@dimen/dimen50"
                     android:layout_height="@dimen/dimen50"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/weixin" />
+                    android:src="@mipmap/qzonexxx" />
 
                 <TextView
                     style="@style/WrapWrap"
                     android:layout_marginBottom="@dimen/dimen21"
                     android:layout_marginTop="@dimen/dimen14"
-                    android:text="@string/weChatFriends"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize15" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_sinaWeibo"
-                style="@style/AutoWrap"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen50"
-                    android:layout_height="@dimen/dimen50"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/weibo" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:layout_marginBottom="@dimen/dimen21"
-                    android:layout_marginTop="@dimen/dimen14"
-                    android:text="@string/SinaWeibo"
+                    android:text="@string/qzone"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize15" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_circleFriends"
-                style="@style/AutoWrap"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen50"
-                    android:layout_height="@dimen/dimen50"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/share_weixin_circle" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:layout_marginBottom="@dimen/dimen21"
-                    android:layout_marginTop="@dimen/dimen14"
-                    android:text="@string/circleFriends"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/textsize15" />
-            </LinearLayout>
-
-
         </LinearLayout>
 
         <TextView style="@style/DividerWidth" />

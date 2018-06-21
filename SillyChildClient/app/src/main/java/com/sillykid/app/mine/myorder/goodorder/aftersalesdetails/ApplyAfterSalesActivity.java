@@ -21,8 +21,10 @@ import com.sillykid.app.R;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean.DataBean.RefundTypeBean;
 import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.ApplyAfterSalesBean.DataBean.RefundReasonBean;
+import com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails.RefundMoneyBean;
 import com.sillykid.app.loginregister.LoginActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +46,17 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     @BindView(id = R.id.tv_afterType)
     private TextView tv_afterType;
+
+
+    /**
+     * 售后类型
+     */
+    @BindView(id = R.id.ll_afterNumber, click = true)
+    private LinearLayout ll_afterNumber;
+
+    @BindView(id = R.id.tv_afterNumber)
+    private TextView tv_afterNumber;
+
 
     /**
      * 退款金额
@@ -69,13 +82,15 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
 
-    private String order_id;
+    private String item_id;
 
     private String good_id;
 
     private OptionsPickerView pvOptions = null;
 
     private OptionsPickerView pvOptions1 = null;
+
+    private OptionsPickerView pvOptions2 = null;
 
     private List<RefundTypeBean> refundTypeList = null;
 
@@ -85,7 +100,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
 
     private String refundTypeId = null;
 
-    private String apply_alltotal = null;
+    private int num = 0;
 
     private String orderCode;
 
@@ -100,13 +115,15 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
     public void initData() {
         super.initData();
         mPresenter = new ApplyAfterSalesPresenter(this);
-        order_id = getIntent().getStringExtra("order_id");
+        item_id = getIntent().getStringExtra("item_id");
         good_id = getIntent().getStringExtra("good_id");
         orderCode = getIntent().getStringExtra("orderCode");
         submitTime = getIntent().getStringExtra("submitTime");
-        apply_alltotal = getIntent().getStringExtra("apply_alltotal");
+        num = getIntent().getIntExtra("num", 0);
+        // apply_alltotal = getIntent().getStringExtra("apply_alltotal");
         selectRefundType();
         selectRefundReason();
+        selectReturnsNumber();
         showLoadingDialog(getString(R.string.dataLoad));
         ((ApplyAfterSalesContract.Presenter) mPresenter).getOrderRefundList();
     }
@@ -141,6 +158,26 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         }).build();
     }
 
+    /**
+     * 选择退货数量
+     */
+    @SuppressWarnings("unchecked")
+    private void selectReturnsNumber() {
+        List<String> list = new ArrayList<String>();
+        pvOptions2 = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                ((ApplyAfterSalesContract.Presenter) mPresenter).getOrderRefundMoney(item_id, list.get(options1));
+                //  ((TextView) v).setText(list.get(options1));
+            }
+        }).build();
+        for (int i = 0; i < num; i++) {
+            list.add(String.valueOf(i + 1));
+        }
+        pvOptions2.setPicker(list);
+    }
+
 
     @Override
     public void initWidget() {
@@ -148,7 +185,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         initTitle();
         tv_orderCode.setText(orderCode);
         tv_submitTime.setText(submitTime);
-        tv_refundAmount.setText(MathUtil.keepTwo(StringUtils.toDouble(apply_alltotal)));
+        tv_refundAmount.setText("0.00");
     }
 
     /**
@@ -168,9 +205,12 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
             case R.id.ll_afterWhy:
                 pvOptions1.show(tv_afterWhy);
                 break;
+            case R.id.ll_afterNumber:
+                pvOptions2.show(tv_afterNumber);
+                break;
             case R.id.tv_submit:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(order_id, refundTypeId, refundReasonId, et_accountAfterSalesService.getText().toString(), apply_alltotal);
+                ((ApplyAfterSalesContract.Presenter) mPresenter).postOrderRefund(item_id, refundTypeId, refundReasonId, et_accountAfterSalesService.getText().toString(), num);
                 break;
         }
     }
@@ -194,6 +234,12 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
                 pvOptions1.setPicker(refundReasonList);
             }
         } else if (flag == 1) {
+            RefundMoneyBean refundMoneyBean = (RefundMoneyBean) JsonUtil.getInstance().json2Obj(success, RefundMoneyBean.class);
+            if (refundMoneyBean.getData() != null && !StringUtils.isEmpty(refundMoneyBean.getData().getAlltotal())) {
+                tv_afterNumber.setText(String.valueOf(refundMoneyBean.getData().getNum()));
+                tv_refundAmount.setText(MathUtil.keepTwo(StringUtils.toDouble(refundMoneyBean.getData().getApply_alltotal())));
+            }
+        } else if (flag == 2) {
             /**
              * 发送消息
              */
@@ -219,6 +265,7 @@ public class ApplyAfterSalesActivity extends BaseActivity implements ApplyAfterS
         super.onDestroy();
         pvOptions = null;
         pvOptions1 = null;
+        pvOptions2 = null;
     }
 
 }

@@ -14,7 +14,7 @@ public interface ServiceDetailsContract {
         /**
          * 获取服务详情
          */
-        void getSellBackService(String orderid);
+        void getSellBackService(String order_item_id);
 
     }
 

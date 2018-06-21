@@ -46,6 +46,7 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         @SerializedName("class")
         private String classX;
         private String mktprice;
+        private String rongYun;
 
         public int getProduct_id() {
             return product_id;
@@ -197,6 +198,14 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
 
         public void setMktprice(String mktprice) {
             this.mktprice = mktprice;
+        }
+
+        public String getRongYun() {
+            return rongYun;
+        }
+
+        public void setRongYun(String rongYun) {
+            this.rongYun = rongYun;
         }
     }
 }

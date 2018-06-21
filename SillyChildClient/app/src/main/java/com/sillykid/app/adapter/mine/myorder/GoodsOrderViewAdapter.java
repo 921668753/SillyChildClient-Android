@@ -93,7 +93,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmReceipt, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_appraiseOrder, View.GONE);
-        } else if (model.getStatus() == 7) {
+        } else if (model.getStatus() == 7 || model.getStatus() == 8) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);

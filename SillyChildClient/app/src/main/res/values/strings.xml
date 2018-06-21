@@ -189,7 +189,7 @@
     <string name="system_is_regist">系统正在自动为您注册用户…</string>
     <string name="is_contact_customer">正在联系客服，请稍等…</string>
     <string name="visitors">访客</string>
-    <string name="sillyChildCustomerService">傻孩子客服</string>
+    <string name="sillyChildCustomerService">傻孩志客服</string>
     <string name="toQuote">待后台输入报价</string>
     <string name="clickSeeDetails">点击查看详细信息</string>
 
@@ -697,7 +697,7 @@
     <string name="weChatFriends">微信好友</string>
     <string name="circleFriends">朋友圈</string>
     <string name="QQFriends">QQ好友</string>
-    <string name="SinaWeibo">微博</string>
+    <string name="qzone">QQ空间</string>
     <string name="cancel">取消</string>
     <string name="shareSuccess">分享成功啦</string>
     <string name="shareError">分享失败啦</string>
@@ -1107,7 +1107,9 @@
     <string name="delivered">已发货</string>
     <string name="confirmReceipt">确认收货</string>
     <string name="applyAfterSales">申请售后</string>
+    <string name="applyAfterSales1">申请售后中</string>
     <string name="afterComplete">售后完成</string>
+    <string name="afterRefusing">售后拒绝</string>
     <string name="checkAfterSale">查看售后</string>
     <string name="appraise">评价</string>
     <string name="confirmCompleted">确认完成</string>
@@ -1237,6 +1239,7 @@
     <string name="afterType">售后类型</string>
     <string name="afterType1">售后类型：</string>
     <string name="refundAmount">退款金额</string>
+    <string name="afterNumber">售后数量</string>
     <string name="afterWhy">售后原因</string>
 
     <!-- 个人中心 我的订单  订单跟踪-->

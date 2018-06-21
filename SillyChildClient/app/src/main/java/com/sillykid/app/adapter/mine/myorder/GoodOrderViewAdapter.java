@@ -47,23 +47,42 @@ public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> 
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
-                    intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(model.getPaymoney())));
+                    intent.putExtra("num", listBean.getNum());
                     intent.putExtra("orderCode", model.getSn());
                     intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-                    intent.putExtra("order_id", String.valueOf(listBean.getOrder_id()));
+                    intent.putExtra("item_id", String.valueOf(listBean.getItem_id()));
                     intent.putExtra("good_id", String.valueOf(listBean.getGoods_id()));
                     mContext.startActivity(intent);
                 }
             });
         } else if (model.getStatus() == 7) {
+            if (listBean.getSellback_state() == 0) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.applyAfterSales));
+            } else if (listBean.getSellback_state() == 1) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.applyAfterSales1));
+            } else if (listBean.getSellback_state() == 2) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterComplete));
+            } else if (listBean.getSellback_state() == 3) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterRefusing));
+            }
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);
             viewHolderHelper.getTextView(R.id.tv_applyAfterSales).setOnClickListener(null);
             viewHolderHelper.getTextView(R.id.tv_checkAfterSale).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (listBean.getSellback_state() == 0) {
+                        Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
+                        intent.putExtra("num", listBean.getNum());
+                        intent.putExtra("orderCode", model.getSn());
+                        intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+                        intent.putExtra("item_id", String.valueOf(listBean.getItem_id()));
+                        intent.putExtra("good_id", String.valueOf(listBean.getGoods_id()));
+                        mContext.startActivity(intent);
+                        return;
+                    }
                     Intent intent = new Intent(mContext, AfterSalesDetailsActivity.class);
-                    intent.putExtra("order_id", String.valueOf(listBean.getOrder_id()));
+                    intent.putExtra("item_id", String.valueOf(listBean.getItem_id()));
                     intent.putExtra("good_id", String.valueOf(listBean.getGoods_id()));
                     mContext.startActivity(intent);
                 }

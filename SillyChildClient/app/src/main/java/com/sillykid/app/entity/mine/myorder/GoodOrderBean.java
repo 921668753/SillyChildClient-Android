@@ -221,9 +221,18 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
                 private int goods_type;
                 private String sn;
                 private int state;
+                private int sellback_state;
                 private FieldsBean fields;
                 private int order_id;
                 private String specs;
+
+                public int getSellback_state() {
+                    return sellback_state;
+                }
+
+                public void setSellback_state(int sellback_state) {
+                    this.sellback_state = sellback_state;
+                }
 
                 public String getSpecs() {
                     return specs;

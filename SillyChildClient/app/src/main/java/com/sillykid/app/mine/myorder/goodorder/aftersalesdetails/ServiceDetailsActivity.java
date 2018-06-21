@@ -83,7 +83,7 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
     @BindView(id = R.id.tv_problemDescription)
     private TextView tv_problemDescription;
 
-    private String order_id = "";
+    private String item_id = "";
 
 
     @Override
@@ -95,10 +95,10 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
     public void initData() {
         super.initData();
         mPresenter = new ServiceDetailsPresenter(this);
-        order_id = getIntent().getStringExtra("order_id");
+        item_id = getIntent().getStringExtra("item_id");
 //        good_id = getIntent().getStringExtra("good_id");
         showLoadingDialog(getString(R.string.dataLoad));
-        ((ServiceDetailsContract.Presenter) mPresenter).getSellBackService(order_id);
+        ((ServiceDetailsContract.Presenter) mPresenter).getSellBackService(item_id);
     }
 
     @Override
@@ -107,14 +107,12 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
         initTitle();
     }
 
-
     /**
      * 设置标题
      */
     public void initTitle() {
         ActivityTitleUtils.initToolbar(aty, getString(R.string.serviceDetails), true, R.id.titlebar);
     }
-
 
     @Override
     public void setPresenter(ServiceDetailsContract.Presenter presenter) {
@@ -125,10 +123,8 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         ServiceDetailsBean serviceDetailsBean = (ServiceDetailsBean) JsonUtil.getInstance().json2Obj(success, ServiceDetailsBean.class);
-
-
         if (!StringUtils.isEmpty(serviceDetailsBean.getData().getSHZ().getRefund_status())) {
-            GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getSHZ().getStore_logo(), img_platform, R.mipmap.placeholderfigure1);
+            GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getSHZ().getStore_logo(), img_platform, 0, R.mipmap.placeholderfigure1);
             //   tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
             if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 0) {
                 tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applicationSuccessful));
@@ -142,7 +138,7 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
         }
 
         if (!StringUtils.isEmpty(serviceDetailsBean.getData().getStore().getCreate_status())) {
-            GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getStore().getStore_logo(), img_merchants, R.mipmap.placeholderfigure1);
+            GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getStore().getStore_logo(), img_merchants, 0, R.mipmap.placeholderfigure1);
             // tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
             if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 0) {
                 tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
@@ -157,7 +153,7 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
         }
 
 
-        GlideImageLoader.glideOrdinaryLoader(this, serviceDetailsBean.getData().getMember().getFace(), img_users, R.mipmap.placeholderfigure1);
+        GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getMember().getFace(), img_users, 0, R.mipmap.placeholderfigure1);
 
         tv_usersApplyRefundGoods.setText(getString(R.string.userApplication) + serviceDetailsBean.getData().getMember().getRemark());
 

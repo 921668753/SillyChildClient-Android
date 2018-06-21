@@ -14,7 +14,7 @@ public interface AfterSalesDetailsContract {
         /**
          * 获取售后详情
          */
-        void getSellBackDetail(String orderid);
+        void getSellBackDetail(String order_item_id);
 
     }
 

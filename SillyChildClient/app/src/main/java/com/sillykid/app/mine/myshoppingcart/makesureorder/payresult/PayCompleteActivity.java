@@ -111,7 +111,7 @@ public class PayCompleteActivity extends BaseActivity implements PayCompleteCont
                 KJActivityStack.create().finishActivity(MakeSureOrderActivity.class);
                 Intent intent = new Intent(aty, MyOrderActivity.class);
                 if (getIntent().getIntExtra("order_status", 0) == 1) {
-                    intent.putExtra("chageIcon", 1);
+                    intent.putExtra("newChageIcon", 1);
                 }
                 skipActivity(aty, intent);
                 break;

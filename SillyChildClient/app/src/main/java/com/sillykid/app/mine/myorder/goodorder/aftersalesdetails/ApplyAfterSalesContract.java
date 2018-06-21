@@ -20,10 +20,14 @@ public interface ApplyAfterSalesContract {
         void getOrderRefundList();
 
         /**
+         * 获取售后退款金额（由退货数目获取退款金额）
+         */
+        void getOrderRefundMoney(String order_item_id,String num);
+
+        /**
          * 提交售后信息
          */
-        void postOrderRefund(String orderid, String typeCode, String reasonCode, String reasonDetail, String apply_alltotal);
-
+        void postOrderRefund(String orderid, String typeCode, String reasonCode, String reasonDetail, int num);
     }
 
     interface View extends BaseView<Presenter, String> {

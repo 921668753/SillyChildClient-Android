@@ -2,22 +2,22 @@ package com.sillykid.app.entity.mine.myorder.goodorder.aftersalesdetails;
 
 import com.common.cklibrary.entity.BaseResult;
 
-import java.util.List;
-
 public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.DataBean> {
 
 
     public class DataBean {
         /**
-         * tradestatus : 6
-         * alltotal_pay : 100
-         * store_name : 时尚女装/搭配
-         * remark : 退货
-         * apply_alltotal : 1346
-         * reason :
-         * ordersn : DD152811678692-1
-         * order_create_time : 1528116786
-         * goodsNames : ["Bzbz新款平底防滑沙滩鞋厚底凉拖鞋女夏时尚韩版外穿",""]
+         * tradestatus : 0
+         * alltotal_pay :
+         * store_name : food的商城
+         * remark : 退款
+         * apply_alltotal : 29
+         * reason : 不喜欢
+         * ordersn : DD152811705476-1
+         * order_create_time : 1528117054
+         * order_item_id : 67
+         * num : 1
+         * name : [送杯勺]福事多蜂蜜柚子茶柠檬茶1kg冲饮品韩国风果味茶水果
          */
 
         private int tradestatus;
@@ -28,7 +28,9 @@ public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.Data
         private String reason;
         private String ordersn;
         private String order_create_time;
-        private List<String> goodsNames;
+        private int order_item_id;
+        private int num;
+        private String name;
 
         public int getTradestatus() {
             return tradestatus;
@@ -94,12 +96,28 @@ public class AfterSalesDetailsBean extends BaseResult<AfterSalesDetailsBean.Data
             this.order_create_time = order_create_time;
         }
 
-        public List<String> getGoodsNames() {
-            return goodsNames;
+        public int getOrder_item_id() {
+            return order_item_id;
         }
 
-        public void setGoodsNames(List<String> goodsNames) {
-            this.goodsNames = goodsNames;
+        public void setOrder_item_id(int order_item_id) {
+            this.order_item_id = order_item_id;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

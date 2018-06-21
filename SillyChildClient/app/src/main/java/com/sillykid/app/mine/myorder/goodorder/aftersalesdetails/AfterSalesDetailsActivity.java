@@ -83,7 +83,7 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
     @BindView(id = R.id.tv_orderTime)
     private TextView tv_orderTime;
 
-    private String order_id = "";
+    private String item_id = "";
 
     private String good_id = "";
 
@@ -96,10 +96,10 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
     public void initData() {
         super.initData();
         mPresenter = new AfterSalesDetailsPresenter(this);
-        order_id = getIntent().getStringExtra("order_id");
+        item_id = getIntent().getStringExtra("item_id");
         good_id = getIntent().getStringExtra("good_id");
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AfterSalesDetailsContract.Presenter) mPresenter).getSellBackDetail(order_id);
+        ((AfterSalesDetailsContract.Presenter) mPresenter).getSellBackDetail(item_id);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
         switch (v.getId()) {
             case R.id.ll_serviceDetails:
                 Intent intent = new Intent(aty, ServiceDetailsActivity.class);
-                intent.putExtra("order_id", order_id);
+                intent.putExtra("item_id", item_id);
                 showActivity(aty, intent);
                 break;
         }
@@ -146,7 +146,7 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
             tv_type.setText(getString(R.string.platformRefundCompleted));
         }
 
-        tv_refundSuccess.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getAlltotal_pay())));
+        tv_refundSuccess.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getApply_alltotal())));
 
         tv_shopName.setText(getString(R.string.shopName) + afterSalesDetailsBean.getData().getStore_name());
 
@@ -155,15 +155,8 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
         tv_refundAmount.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getApply_alltotal())));
 
         tv_refundReason.setText(getString(R.string.refundReason) + afterSalesDetailsBean.getData().getReason());
-        String goodName = "";
-        if (afterSalesDetailsBean.getData().getGoodsNames() != null && afterSalesDetailsBean.getData().getGoodsNames().size() > 0) {
-            for (int i = 0; i < afterSalesDetailsBean.getData().getGoodsNames().size(); i++) {
-                goodName = goodName + "，" + afterSalesDetailsBean.getData().getGoodsNames().get(i);
-            }
-        } else {
-            goodName = ",";
-        }
-        tv_goodName.setText(goodName.substring(1));
+
+        tv_goodName.setText(afterSalesDetailsBean.getData().getName());
 
         tv_orderNumber.setText(getString(R.string.orderNumber) + afterSalesDetailsBean.getData().getOrdersn());
 

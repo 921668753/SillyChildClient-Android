@@ -130,12 +130,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<data-->
-                    <!--android:host="@string/applicationId"-->
-                    <!--android:pathPrefix="/push_message"-->
-                    <!--android:scheme="rong" />-->
+            <!--<action android:name="android.intent.action.VIEW" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--<data-->
+            <!--android:host="@string/applicationId"-->
+            <!--android:pathPrefix="/push_message"-->
+            <!--android:scheme="rong" />-->
             <!--</intent-filter>-->
         </activity>
 
@@ -341,10 +341,10 @@
             android:name=".homepage.dynamics.AllDynamicsActivity"
             android:screenOrientation="portrait"></activity>
 
-        <!--首页   全部动态-->
+        <!--首页    店铺首页  全部商品-->
         <activity
             android:name=".homepage.goodslist.shop.ShopActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
 
         <!--消息   消息列表-->
@@ -413,6 +413,7 @@
         <!--我的   我的订单-->
         <activity
             android:name=".mine.myorder.MyOrderActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--我的   我的订单   订单详情-->
@@ -457,12 +458,12 @@
         <!--我的   我的订单 查看评论-->
         <activity
             android:name=".mine.myorder.orderevaluation.SeeEvaluationActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   我的订单 查看评论 图片浏览-->
         <activity
             android:name=".mine.myorder.orderevaluation.ImagePagerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   我的订单 订单详情-->
         <activity
@@ -612,17 +613,17 @@
         <!--我的   设置-->
         <activity
             android:name=".mine.setup.SetUpActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   设置  帮助中心-->
         <activity
             android:name=".mine.setup.HelpCenterActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   设置  意见反馈-->
         <activity
             android:name=".mine.setup.feedback.FeedbackCacheActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   设置  意见反馈-->
         <activity
@@ -633,12 +634,12 @@
         <!--我的   设置  关于我们-->
         <activity
             android:name=".mine.setup.AboutUsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   分享有礼-->
         <activity
             android:name=".mine.sharingceremony.SharingCeremonyActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!--我的   VIP紧急电话-->
         <activity

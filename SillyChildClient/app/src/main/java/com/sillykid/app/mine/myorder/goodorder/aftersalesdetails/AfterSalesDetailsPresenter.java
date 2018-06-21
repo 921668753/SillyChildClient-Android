@@ -20,9 +20,9 @@ public class AfterSalesDetailsPresenter implements AfterSalesDetailsContract.Pre
     }
 
     @Override
-    public void getSellBackDetail(String orderid) {
+    public void getSellBackDetail(String order_item_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("orderid", orderid);
+        httpParams.put("order_item_id", order_item_id);
         RequestClient.getSellBackDetail(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

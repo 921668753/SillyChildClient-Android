@@ -15,6 +15,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
+import com.sillykid.app.constant.URLConstants;
 import com.sillykid.app.mine.sharingceremony.dialog.ShareBouncedDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -33,7 +34,6 @@ import com.umeng.socialize.media.UMWeb;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation.ConversationType;
 
 import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
@@ -51,6 +51,9 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     @BindView(id = R.id.web_content)
     private WebViewLayout1 webViewLayout;
 
+
+    @BindView(id = R.id.ll_bottom)
+    private LinearLayout ll_bottom;
     /**
      * 店铺
      */
@@ -100,6 +103,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     private String store_name = "";
 
+    private String rongYun = "";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_goodsdetails);
@@ -115,6 +120,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         goodName = getIntent().getStringExtra("goodName");
         goodsid = getIntent().getIntExtra("goodsid", 0);
         isRefresh = getIntent().getIntExtra("isRefresh", 0);
+        showLoadingDialog(getString(R.string.dataLoad));
         ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(goodsid);
         initDialog();
         initShareBouncedDialog();
@@ -199,9 +205,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     public void initView() {
         webViewLayout.setTitleVisibility(false);
         webViewLayout.setWebViewCallBack(this);
-//        if (!StringUtils.isEmpty(url)) {
-//            webViewLayout.loadUrl(url);
-//        }
+        String url = URLConstants.GOODSDETAIL + goodsid;
+        if (!StringUtils.isEmpty(url)) {
+            webViewLayout.loadUrl(url);
+        }
     }
 
 
@@ -269,15 +276,20 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 product_idg = goodsDetailsBean.getData().getProduct_id();
                 price = MathUtil.keepTwo(StringUtils.toDouble(goodsDetailsBean.getData().getPrice()));
                 goodName = goodsDetailsBean.getData().getName();
+                titlebar.setTitleText(goodName);
                 smallImg = goodsDetailsBean.getData().getSmall();
                 brief = goodsDetailsBean.getData().getBrief();
                 store_name = goodsDetailsBean.getData().getStore_name();
+                rongYun = goodsDetailsBean.getData().getRongYun();
                 if (favorited) {
                     ll_follow.setBackgroundResource(R.mipmap.mall_collect);
                 } else {
                     ll_follow.setBackgroundResource(R.mipmap.mall_uncollect);
                 }
+                ll_bottom.setVisibility(View.VISIBLE);
+                return;
             }
+            ll_bottom.setVisibility(View.GONE);
         } else if (flag == 1) {
             favorited = true;
             isRefresh = 1;
@@ -312,7 +324,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                  * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
                  */
                 //   RongIM.getInstance().startCustomerServiceChat(this, "KEFU152876757817634", "在线客服", null);
-                RongIM.getInstance().startConversation(this, ConversationType.CUSTOMER_SERVICE, "KEFU152876757817634", "在线客服");
+                RongIM.getInstance().startConversation(this, ConversationType.CUSTOMER_SERVICE, "KEFU152876757817634", getString(R.string.sillyChildCustomerService));
             } else {
                 /**
                  * 启动单聊界面。
@@ -321,8 +333,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                  * @param title        聊天的标题，开发者需要在聊天界面通过 intent.getData().getQueryParameter("title")
                  *                     获取该值, 再手动设置为聊天界面的标题。
                  */
-                // RongIM.getInstance().startPrivateChat(this, "9527", "标题");
-                RongIM.getInstance().startConversation(this, ConversationType.PRIVATE, "9527", "标题");
+//                RongIM.getInstance().startPrivateChat(this, rongYun, store_name);
+                RongIM.getInstance().startConversation(this, ConversationType.PRIVATE, rongYun, store_name);
             }
         }
     }
@@ -345,9 +357,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             intent.putExtra("good_id", goodsid);
             showActivity(aty, intent);
         } else {
-            Intent intent = new Intent(aty, GoodsDetailsActivity.class);
+            ll_bottom.setVisibility(View.GONE);
             // intent.putExtra("good_id", listbean.get(postion));
-            showActivity(aty, intent);
+            showLoadingDialog(getString(R.string.dataLoad));
+            ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(StringUtils.toInt(id));
         }
     }
 

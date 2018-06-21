@@ -17,11 +17,13 @@
     <View style="@style/DividerWidth" />
 
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen49"
         android:layout_alignParentBottom="true"
         android:background="@color/whiteColors"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/ll_shop"

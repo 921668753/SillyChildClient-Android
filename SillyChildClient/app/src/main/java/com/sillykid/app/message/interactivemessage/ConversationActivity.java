@@ -136,7 +136,6 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
                     } else {
                         //当前会话没有用户正在输入，标题栏仍显示原来标题
                         mHandler.sendEmptyMessage(SET_TARGET_ID_TITLE);
-
                     }
                 }
             }

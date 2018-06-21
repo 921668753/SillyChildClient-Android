@@ -1,5 +1,8 @@
 package com.sillykid.app.mine.myorder;
 
+import android.content.Intent;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -7,6 +10,7 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.kymjs.common.Log;
 import com.sillykid.app.R;
 import com.sillykid.app.mine.myorder.goodorder.AfterSaleGoodFragment;
 import com.sillykid.app.mine.myorder.goodorder.AllGoodFragment;
@@ -68,7 +72,6 @@ public class MyOrderActivity extends BaseActivity {
         afterSaleGoodFragment = new AfterSaleGoodFragment();
         allGoodFragment = new AllGoodFragment();
         chageIcon = aty.getIntent().getIntExtra("chageIcon", 0);
-
     }
 
     @Override
@@ -79,27 +82,27 @@ public class MyOrderActivity extends BaseActivity {
             cleanColors(0);
             changeFragment(obligationGoodFragment);
             chageIcon = 0;
-        } else  if (chageIcon == 1) {
+        } else if (chageIcon == 1) {
             cleanColors(1);
             changeFragment(sendGoodsGoodFragment);
             chageIcon = 1;
-        }else  if (chageIcon == 2) {
+        } else if (chageIcon == 2) {
             cleanColors(2);
             changeFragment(waitGoodsGoodFragment);
             chageIcon = 2;
-        }else  if (chageIcon == 3) {
+        } else if (chageIcon == 3) {
             cleanColors(3);
             changeFragment(completedGoodFragment);
             chageIcon = 3;
-        }else  if (chageIcon == 4) {
+        } else if (chageIcon == 4) {
             cleanColors(4);
             changeFragment(afterSaleGoodFragment);
             chageIcon = 4;
-        }else  if (chageIcon == 5) {
+        } else if (chageIcon == 5) {
             cleanColors(5);
             changeFragment(allGoodFragment);
             chageIcon = 5;
-        }else  if (chageIcon == 0) {
+        } else {
             cleanColors(0);
             changeFragment(obligationGoodFragment);
             chageIcon = 0;
@@ -112,6 +115,54 @@ public class MyOrderActivity extends BaseActivity {
      */
     public void initTitle() {
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myOrder), true, R.id.titlebar);
+    }
+
+    /**
+     * Activity的启动模式变为singleTask
+     * 调用onNewIntent(Intent intent)方法。
+     * Fragment调用的时候，一定要在onResume方法中。
+     *
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        int newChageIcon = intent.getIntExtra("newChageIcon", 0);
+        Log.d("newChageIcon", newChageIcon + "");
+        if (newChageIcon == 0) {
+            setSimulateClick(tv_good_obligation, 160, 100);
+        } else if (newChageIcon == 1) {
+            setSimulateClick(tv_good_send, 160, 100);
+        } else if (newChageIcon == 2) {
+            setSimulateClick(tv_good_wait, 160, 100);
+        } else if (newChageIcon == 3) {
+            setSimulateClick(tv_good_completed, 160, 100);
+        } else if (newChageIcon == 4) {
+            setSimulateClick(tv_good_afterSale, 160, 100);
+        } else if (newChageIcon == 5) {
+            setSimulateClick(tv_good_all, 160, 100);
+        }
+    }
+
+    /**
+     * 模拟点击
+     *
+     * @param view
+     * @param x
+     * @param y
+     */
+    private void setSimulateClick(View view, float x, float y) {
+        long downTime = SystemClock.uptimeMillis();
+        final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_DOWN, x, y, 0);
+        downTime += 1000;
+        final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_UP, x, y, 0);
+        view.onTouchEvent(downEvent);
+        view.onTouchEvent(upEvent);
+        downEvent.recycle();
+        upEvent.recycle();
     }
 
     public void changeFragment(BaseFragment targetFragment) {

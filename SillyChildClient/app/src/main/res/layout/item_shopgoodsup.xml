@@ -94,11 +94,14 @@
 
             <TextView
                 android:id="@+id/tv_checkAfterSale"
-                android:layout_width="@dimen/dimen55"
-                android:layout_height="@dimen/dimen25"
+                style="@style/WrapWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:background="@drawable/shape_goodbtn"
                 android:gravity="center"
+                android:paddingBottom="@dimen/dimen7"
+                android:paddingLeft="@dimen/dimen5"
+                android:paddingRight="@dimen/dimen5"
+                android:paddingTop="@dimen/dimen7"
                 android:text="@string/checkAfterSale"
                 android:textColor="@color/greenColors"
                 android:textSize="@dimen/textsize12"

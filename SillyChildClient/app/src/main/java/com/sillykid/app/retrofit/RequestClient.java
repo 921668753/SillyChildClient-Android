@@ -1857,7 +1857,37 @@ public class RequestClient {
      */
     public static void getOrderRefundList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getOrderRefundList");
-        HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUNDLIST, httpParams, listener);
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUNDLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取售后退款金额（由退货数目获取退款金额）
+     */
+    public static void getOrderRefundMoney(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOrderRefundList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERREFUNDMONEY, httpParams, listener);
+            }
+        }, listener);
     }
 
 

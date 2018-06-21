@@ -39,7 +39,7 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
         GlideImageLoader.glideOrdinaryLoader(mContext, model.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
         viewHolderHelper.setText(R.id.tv_goodtitle, model.getName());
         viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
-        viewHolderHelper.setText(R.id.tv_number, model.getNum());
+        viewHolderHelper.setText(R.id.tv_number, String.valueOf(model.getNum()));
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
 
         if (status == 4 || status == 5) {
@@ -53,21 +53,41 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                     intent.putExtra("orderCode", model.getSn());
                     intent.putExtra("submitTime", create_time);
                     // intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(create_time), "yyyy-MM-dd HH:mm:ss"));
-                    intent.putExtra("apply_alltotal", MathUtil.keepTwo(StringUtils.toDouble(paymoney)));
-                    intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
+                    intent.putExtra("num", model.getNum());
+                    intent.putExtra("item_id", String.valueOf(model.getItem_id()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
                     mContext.startActivity(intent);
                 }
             });
         } else if (status == 7 || status == 8) {
+            if (model.getSellback_state() == 0) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.applyAfterSales));
+            } else if (model.getSellback_state() == 1) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.applyAfterSales1));
+            } else if (model.getSellback_state() == 2) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterComplete));
+            } else if (model.getSellback_state() == 3) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterRefusing));
+            }
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);
             viewHolderHelper.getTextView(R.id.tv_applyAfterSales).setOnClickListener(null);
             viewHolderHelper.getTextView(R.id.tv_checkAfterSale).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (model.getSellback_state() == 0) {
+                        Intent intent = new Intent(mContext, ApplyAfterSalesActivity.class);
+                        intent.putExtra("num", model.getNum());
+                        intent.putExtra("orderCode", model.getSn());
+                  //      intent.putExtra("submitTime", DataUtil.formatData(StringUtils.toLong(model.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+                        intent.putExtra("item_id", String.valueOf(model.getItem_id()));
+                        intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
+                        mContext.startActivity(intent);
+                        return;
+                    }
                     Intent intent = new Intent(mContext, AfterSalesDetailsActivity.class);
-                    intent.putExtra("order_id", String.valueOf(model.getOrder_id()));
+                    intent.putExtra("item_id", String.valueOf(model.getItem_id()));
+                    intent.putExtra("sellback_state", String.valueOf(model.getSellback_state()));
                     intent.putExtra("good_id", String.valueOf(model.getGoods_id()));
                     mContext.startActivity(intent);
                 }

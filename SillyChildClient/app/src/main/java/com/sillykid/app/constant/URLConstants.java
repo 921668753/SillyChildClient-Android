@@ -83,6 +83,8 @@ public class URLConstants {
      */
     public static String GOODDETAIL = APIURL + "goods/detail.do";
 
+    public static String GOODSDETAIL = "http://admin.shahaizi.cn/html/goods_detail.html?goodid=";
+
     /**
      * 首页---更多分类----商品列表----商品详情----获取评论列表
      */
@@ -374,6 +376,11 @@ public class URLConstants {
     public static String ORDERDETAIL = APIURL + "order/detail.do";
 
     /**
+     * 获取物流详情
+     */
+    public static String ORDERLOGISTICS = "http://admin.shahaizi.cn/html/order_logistics.html?orderid=";
+
+    /**
      * 发表评论
      */
     public static String COMMENTCREATE = APIURL + "comment/comment-create.do";
@@ -387,6 +394,11 @@ public class URLConstants {
      * 退货类型,退货原因
      */
     public static String ORDERREFUNDLIST = APIURL + "order/refund-list.do";
+
+    /**
+     * 获取售后退款金额（由退货数目获取退款金额）
+     */
+    public static String ORDERREFUNDMONEY = APIURL + "order/refund-money.do";
 
     /**
      * 售后详情

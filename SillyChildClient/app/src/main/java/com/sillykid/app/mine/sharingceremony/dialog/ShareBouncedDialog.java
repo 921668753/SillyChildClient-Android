@@ -45,8 +45,8 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
         ll_circleFriends.setOnClickListener(this);
         LinearLayout ll_QQFriends = (LinearLayout) findViewById(R.id.ll_QQFriends);
         ll_QQFriends.setOnClickListener(this);
-        LinearLayout ll_sinaWeibo = (LinearLayout) findViewById(R.id.ll_sinaWeibo);
-        ll_sinaWeibo.setOnClickListener(this);
+        LinearLayout ll_qzone = (LinearLayout) findViewById(R.id.ll_qzone);
+        ll_qzone.setOnClickListener(this);
         TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
     }
@@ -66,7 +66,7 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
                 dismiss();
                 share(SHARE_MEDIA.QQ);
                 break;
-            case R.id.ll_sinaWeibo:
+            case R.id.ll_qzone:
                 dismiss();
                 share(SHARE_MEDIA.QZONE);
                 break;
