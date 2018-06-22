@@ -1,6 +1,5 @@
 package com.sillykid.app.adapter.mine.myorder.orderevaluation;
 
-import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,16 +22,10 @@ import com.sillykid.app.utils.GlideImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
-/**
- * 发表评价 适配器
- * https://github.com/WKaKa/Assess/tree/master/Assess/app
- * Created by Admin on 2017/8/15.
- */
-
-public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<MemberCommentExtsBean> {
+public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<MemberCommentExtsBean> {
 
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
@@ -41,24 +34,24 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
 
     private OnStatusListener onStatusListener;
 
-    public PublishedeEvaluationViewAdapter(Context context) {
-        super(context, R.layout.item_publishedeevaluation);
+    public PublishedeEvaluationViewAdapter(RecyclerView recyclerView) {
+        super(recyclerView, R.layout.item_publishedeevaluation);
         this.imagePickerAdapterCounters = new SparseArray<>();
         this.selImageListCounters = new SparseArray<>();
     }
 
     @Override
-    protected void setItemChildListener(BGAViewHolderHelper helper) {
-        super.setItemChildListener(helper);
-    }
-
-    @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, MemberCommentExtsBean listBean) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
-        viewHolderHelper.setText(R.id.tv_goodName, listBean.getName());
-        viewHolderHelper.setText(R.id.tv_goodDescribe, listBean.getSpecs());
-        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
+    protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, MemberCommentExtsBean model) {
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        viewHolderHelper.setText(R.id.tv_goodName, model.getName());
+        viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
+        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
+        et_goodsSatisfactory.setTag(position);
+        if (!StringUtils.isEmpty(model.getContent())) {
+            et_goodsSatisfactory.setText(model.getContent());
+            et_goodsSatisfactory.setSelection(model.getContent().length());
+        }
         et_goodsSatisfactory.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -72,78 +65,64 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
 
             @Override
             public void afterTextChanged(Editable editable) {
-                listBean.setContent(editable + "");
+                if ((int) et_goodsSatisfactory.getTag() == position) {
+                    model.setContent(editable + "");
+                }
             }
         });
+        List<ImageItem> selImageList;
         RecyclerView recyclerView = (RecyclerView) viewHolderHelper.getView(R.id.recyclerView);
-        List<ImageItem> selImageList = new ArrayList<>();
-        ImagePickerAdapter adapter = new ImagePickerAdapter(mContext, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
-        adapter.setOnItemClickListener(new ImagePickerAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                onStatusListener.onSetStatusListener(view, position);
+        if (selImageListCounters.get(recyclerView.hashCode()) != null) {
+            selImageListCounters.get(recyclerView.hashCode()).clear();
+            selImageList = selImageListCounters.get(recyclerView.hashCode());
+        } else {
+            selImageList = new ArrayList<>();
+            selImageListCounters.put(recyclerView.hashCode(), selImageList);
+        }
+        if (model.getImageList() != null && model.getImageList().size() > 0) {
+            for (int i = 0; i < model.getImageList().size(); i++) {
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = model.getImageList().get(i);
+                selImageList.add(imageItem);
             }
-        });
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 5);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        selImageListCounters.put(recyclerView.hashCode(), selImageList);
-        imagePickerAdapterCounters.put(recyclerView.hashCode(), adapter);
+        }
+        ImagePickerAdapter adapter;
+        if (imagePickerAdapterCounters.get(recyclerView.hashCode()) != null) {
+            adapter = imagePickerAdapterCounters.get(recyclerView.hashCode());
+            adapter.setImages(selImageList);
+        } else {
+            adapter = new ImagePickerAdapter(mContext, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
+            adapter.setOnItemClickListener(new ImagePickerAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position1) {
+                    onStatusListener.onSetStatusListener(view, adapter, position, position1);
+                }
+            });
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 5);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(adapter);
+            imagePickerAdapterCounters.put(recyclerView.hashCode(), adapter);
+        }
     }
+
 
     public void setOnStatusListener(OnStatusListener onStatusListener) {
         this.onStatusListener = onStatusListener;
     }
 
     public interface OnStatusListener {
-        void onSetStatusListener(View view, int position);
+        void onSetStatusListener(View view, ImagePickerAdapter adapter, int position, int position1);
         //  void onDeleteListener(int pos, int tagPos);
     }
 
-
-//    @Override
-//    public void onItemClick(View view, int position) {
-//        switch (position) {
-//            case NumericConstants.IMAGE_ITEM_ADD:
-//                //打开选择,本次允许选择的数量
-//                Intent intent1 = new Intent(mContext, ImageGridActivity.class);
-//                /* 如果需要进入选择的时候显示已经选中的图片，
-//                 * 详情请查看ImagePickerActivity
-//                 * */
-////                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
-//                ((Activity) mContext).startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
-//                break;
-//            default:
-//                ImagePickerAdapter adapter = imagePickerAdapterCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
-//                List<ImageItem> selImageList = selImageListCounters.get(((RecyclerView) view.getParent().getParent()).getRootView().hashCode());
-//                if (view.getId() == R.id.iv_delete) {
-//                    if (selImageList != null && selImageList.size() > position) {
-//                        selImageList.remove(position);
-//                        adapter.setImages(selImageList);
-//                    }
-//                } else {
-//                    //打开预览
-//                    Intent intentPreview = new Intent(mContext, ImagePreviewDelActivity.class);
-//                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
-//                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-//                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-//                    ((Activity) mContext).startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
-//                }
-//                break;
-//        }
-//    }
-
-
     @Override
     public void clear() {
-        super.clear();
         if (imagePickerAdapterCounters != null && selImageListCounters == null) {
             Log.e("TAG", "size :  " + imagePickerAdapterCounters.size());
             for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
                 ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
                 if (cdt != null) {
-                    cdt.setImages(null);
                     cdt = null;
                 }
             }
@@ -163,7 +142,6 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
             for (int i = 0, length = imagePickerAdapterCounters.size(); i < length; i++) {
                 ImagePickerAdapter cdt = imagePickerAdapterCounters.get(imagePickerAdapterCounters.keyAt(i));
                 if (cdt != null) {
-                    cdt.setImages(null);
                     cdt = null;
                 }
             }
@@ -175,8 +153,6 @@ public class PublishedeEvaluationViewAdapter extends BGAAdapterViewAdapter<Membe
                 }
             }
         }
-
+        super.clear();
     }
-
-
 }

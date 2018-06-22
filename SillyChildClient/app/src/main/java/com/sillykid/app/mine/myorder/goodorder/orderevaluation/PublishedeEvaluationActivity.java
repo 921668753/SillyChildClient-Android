@@ -21,7 +21,7 @@ import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.ImagePickerAdapter;
-import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationAdapter;
+import com.sillykid.app.adapter.mine.myorder.orderevaluation.PublishedeEvaluationViewAdapter;
 import com.sillykid.app.entity.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationBean.DataBean.MemberCommentExtsBean;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * 发表评价
  */
-public class PublishedeEvaluationActivity extends BaseActivity implements PublishedeEvaluationContract.View, PublishedeEvaluationAdapter.OnStatusListener {
+public class PublishedeEvaluationActivity extends BaseActivity implements PublishedeEvaluationContract.View, PublishedeEvaluationViewAdapter.OnStatusListener {
 
     @BindView(id = R.id.rl_publishedeEvaluation)
     private RecyclerView recyclerview;
@@ -56,7 +56,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
 
     private int order_id = 0;
 
-    private PublishedeEvaluationAdapter mAdapter = null;
+    private PublishedeEvaluationViewAdapter mAdapter = null;
 
     private int selectePosition = 0;
 
@@ -69,7 +69,7 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     public void initData() {
         super.initData();
         mPresenter = new PublishedeEvaluationPresenter(this);
-        mAdapter = new PublishedeEvaluationAdapter(recyclerview);
+        mAdapter = new PublishedeEvaluationViewAdapter(recyclerview);
         order_id = getIntent().getIntExtra("order_id", 0);
         showLoadingDialog(getString(R.string.dataLoad));
         ((PublishedeEvaluationContract.Presenter) mPresenter).getOrderDetails(order_id);

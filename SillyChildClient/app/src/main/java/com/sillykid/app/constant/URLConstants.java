@@ -20,8 +20,8 @@ public class URLConstants {
 
     // public static String SERVERURL = "http://xiaoming.local.keiousoft.com";
 
-//    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
-    public static String SERVERURL = "http://user.api.shahaizhi.com/";
+    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
+//    public static String SERVERURL = "http://user.api.shahaizhi.com/";
 
     /**
      * 请求地址URL
