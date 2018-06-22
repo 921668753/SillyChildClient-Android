@@ -25,6 +25,10 @@ import java.util.List;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
+
+/**
+ * 发表评价  商品评价适配器
+ */
 public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<MemberCommentExtsBean> {
 
 
