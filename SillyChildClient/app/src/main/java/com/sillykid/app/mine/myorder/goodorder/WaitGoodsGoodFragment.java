@@ -13,14 +13,10 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.GoodsOrderViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
@@ -30,7 +26,6 @@ import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderdetails.OrderDetailsActivity;
 import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
-import com.sillykid.app.mine.myshoppingcart.makesureorder.PaymentOrderActivity;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -174,7 +169,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_checkLogistics) {
             Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
-            checkLogisticsIntent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            checkLogisticsIntent.putExtra("sn", mAdapter.getItem(position).getSn());
             aty.showActivity(aty, checkLogisticsIntent);
         } else if (childView.getId() == R.id.tv_confirmReceipt) {
             if (orderBouncedDialog == null) {

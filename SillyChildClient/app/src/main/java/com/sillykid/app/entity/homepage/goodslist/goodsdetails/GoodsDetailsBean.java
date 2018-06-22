@@ -47,6 +47,7 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         private String classX;
         private String mktprice;
         private String rongYun;
+        private String rongYunStore;
 
         public int getProduct_id() {
             return product_id;
@@ -206,6 +207,14 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
 
         public void setRongYun(String rongYun) {
             this.rongYun = rongYun;
+        }
+
+        public String getRongYunStore() {
+            return rongYunStore;
+        }
+
+        public void setRongYunStore(String rongYunStore) {
+            this.rongYunStore = rongYunStore;
         }
     }
 }

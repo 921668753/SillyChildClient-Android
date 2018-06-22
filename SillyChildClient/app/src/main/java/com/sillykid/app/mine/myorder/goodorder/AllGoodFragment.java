@@ -283,7 +283,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
             }
         } else if (childView.getId() == R.id.tv_checkLogistics) {
             Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
-            checkLogisticsIntent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            checkLogisticsIntent.putExtra("sn", mAdapter.getItem(position).getSn());
             aty.showActivity(aty, checkLogisticsIntent);
         } else if (childView.getId() == R.id.tv_confirmReceipt) {
             if (orderBouncedDialog == null) {

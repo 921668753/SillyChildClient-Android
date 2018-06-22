@@ -17,15 +17,12 @@ import com.common.cklibrary.utils.TimeCount;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.myorder.orderdetails.OrderDetailGoodViewAdapter;
-import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.mine.myorder.goodorder.GoodOrderContract;
 import com.sillykid.app.mine.myorder.goodorder.ordertracking.OrderTrackingActivity;
 import com.sillykid.app.mine.myorder.goodorder.dialog.OrderBouncedDialog;
 import com.sillykid.app.mine.myorder.goodorder.orderevaluation.PublishedeEvaluationActivity;
@@ -253,6 +250,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
      */
     private TimeCount time;
 
+    private String sn = "";
 //    private long lastTime = 0;
 
 //    private OptionsPickerView<LogisBean.DataBean> pvOptions = null;
@@ -344,7 +342,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 break;
             case R.id.tv_checkLogistics:
                 Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
-                checkLogisticsIntent.putExtra("order_id", orderId);
+                checkLogisticsIntent.putExtra("sn", sn);
                 showActivity(aty, checkLogisticsIntent);
                 break;
             case R.id.tv_confirmReceipt:
@@ -413,7 +411,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else {
                 tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
             }
-            tv_orderCode.setText(orderDetailBean.getData().getSn());
+            sn = orderDetailBean.getData().getSn();
+            tv_orderCode.setText(sn);
             tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
             tv_modePayment.setText(orderDetailBean.getData().getPayment_type());
 //            if (orderDetailBean.getData().getPayment_type().contains("qianbao")) {

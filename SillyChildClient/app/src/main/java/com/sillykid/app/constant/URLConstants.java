@@ -20,7 +20,8 @@ public class URLConstants {
 
     // public static String SERVERURL = "http://xiaoming.local.keiousoft.com";
 
-    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
+//    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
+    public static String SERVERURL = "http://user.api.shahaizhi.com/";
 
     /**
      * 请求地址URL
@@ -83,7 +84,7 @@ public class URLConstants {
      */
     public static String GOODDETAIL = APIURL + "goods/detail.do";
 
-    public static String GOODSDETAIL = "http://admin.shahaizi.cn/html/goods_detail.html?goodid=";
+    public static String GOODSDETAIL = "http://admin.shahaizhi.com/html/goods_detail.html?goodid=";
 
     /**
      * 首页---更多分类----商品列表----商品详情----获取评论列表
@@ -186,7 +187,6 @@ public class URLConstants {
      * 用户注册
      */
     public static String REGISTER = APIURL + "member/mobile-register.do";
-
 
     /**
      * 更改密码【手机】
@@ -378,7 +378,7 @@ public class URLConstants {
     /**
      * 获取物流详情
      */
-    public static String ORDERLOGISTICS = "http://admin.shahaizi.cn/html/order_logistics.html?orderid=";
+    public static String ORDERLOGISTICS = "http://admin.shahaizhi.com/html/order_logistics.html?orderid=";
 
     /**
      * 发表评论

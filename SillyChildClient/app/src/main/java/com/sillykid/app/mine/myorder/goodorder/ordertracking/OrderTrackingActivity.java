@@ -26,12 +26,13 @@ public class OrderTrackingActivity extends BaseActivity implements WebViewLayout
     @Override
     public void initWidget() {
         super.initWidget();
-        // initTitle();
-        webViewLayout.setTitleText(getString(R.string.orderTracking));
-        webViewLayout.setBackImgResource(R.mipmap.back);
+        initTitle();
+        webViewLayout.setTitleVisibility(false);
+//        webViewLayout.setTitleText(getString(R.string.orderTracking));
+//        webViewLayout.setBackImgResource(R.mipmap.back);
         webViewLayout.setWebViewCallBack(this);
-        int orderId = getIntent().getIntExtra("order_id", 0);
-        String url = URLConstants.ORDERLOGISTICS + orderId;
+        String sn = getIntent().getStringExtra("sn");
+        String url = URLConstants.ORDERLOGISTICS + sn;
         if (!StringUtils.isEmpty(url)) {
             webViewLayout.loadUrl(url);
         }

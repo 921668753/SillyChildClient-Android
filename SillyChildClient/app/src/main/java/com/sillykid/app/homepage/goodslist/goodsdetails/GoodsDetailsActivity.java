@@ -103,7 +103,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     private String store_name = "";
 
-    private String rongYun = "";
+    private String rongYunStore = "";
 
     @Override
     public void setRootView() {
@@ -280,7 +280,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 smallImg = goodsDetailsBean.getData().getSmall();
                 brief = goodsDetailsBean.getData().getBrief();
                 store_name = goodsDetailsBean.getData().getStore_name();
-                rongYun = goodsDetailsBean.getData().getRongYun();
+                rongYunStore = goodsDetailsBean.getData().getRongYunStore();
                 if (favorited) {
                     ll_follow.setBackgroundResource(R.mipmap.mall_collect);
                 } else {
@@ -334,7 +334,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                  *                     获取该值, 再手动设置为聊天界面的标题。
                  */
 //                RongIM.getInstance().startPrivateChat(this, rongYun, store_name);
-                RongIM.getInstance().startConversation(this, ConversationType.PRIVATE, rongYun, store_name);
+                RongIM.getInstance().startConversation(this, ConversationType.PRIVATE, rongYunStore, store_name);
             }
         }
     }
