@@ -54,6 +54,12 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
     private TextView tv_afterSalesType;
 
     /**
+     * 售后数量：123
+     */
+    @BindView(id = R.id.tv_afterNumber)
+    private TextView tv_afterNumber;
+
+    /**
      * 退款金额：￥520.00
      */
     @BindView(id = R.id.tv_refundAmount)
@@ -151,6 +157,8 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
         tv_shopName.setText(getString(R.string.shopName) + afterSalesDetailsBean.getData().getStore_name());
 
         tv_afterSalesType.setText(getString(R.string.afterType1) + afterSalesDetailsBean.getData().getRemark());
+
+        tv_afterNumber.setText(getString(R.string.afterNumber1) + afterSalesDetailsBean.getData().getNum());
 
         tv_refundAmount.setText(getString(R.string.refundAmount1) + getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(afterSalesDetailsBean.getData().getApply_alltotal())));
 

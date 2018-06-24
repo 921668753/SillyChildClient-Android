@@ -125,12 +125,16 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                  */
                 @Override
                 public void onTokenIncorrect() {
-
+                    KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+                        }
+                    });
                 }
 
                 /**
                  * 连接融云成功
-                 *
                  * @param userid 当前 token 对应的用户 id
                  */
                 @Override

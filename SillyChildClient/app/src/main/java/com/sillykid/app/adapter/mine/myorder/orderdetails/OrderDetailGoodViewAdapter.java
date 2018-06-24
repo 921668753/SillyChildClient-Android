@@ -68,6 +68,8 @@ public class OrderDetailGoodViewAdapter extends BGAAdapterViewAdapter<ItemListBe
                 viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterComplete));
             } else if (model.getSellback_state() == 3) {
                 viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.afterRefusing));
+            }else if (model.getSellback_state() == 4) {
+                viewHolderHelper.setText(R.id.tv_checkAfterSale, mContext.getString(R.string.merchantPassed));
             }
             viewHolderHelper.setVisibility(R.id.tv_applyAfterSales, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkAfterSale, View.VISIBLE);

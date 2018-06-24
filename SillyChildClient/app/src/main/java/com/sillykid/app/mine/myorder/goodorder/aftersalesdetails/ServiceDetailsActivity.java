@@ -127,9 +127,9 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
             GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getSHZ().getStore_logo(), img_platform, 0, R.mipmap.placeholderfigure1);
             //   tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
             if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 0) {
-                tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applicationSuccessful));
+                tv_refundSuccess.setText(getString(R.string.platformThrough) + getString(R.string.applicationSuccessful));
             } else if (StringUtils.toInt(serviceDetailsBean.getData().getSHZ().getRefund_status()) == 1) {
-                tv_refundSuccess.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.applyFailure));
+                tv_refundSuccess.setText(getString(R.string.platformRefuse) + getString(R.string.applyFailure));
             }
             tv_refundSuccessTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getSHZ().getRefund_time()), "yyyy-MM-dd HH:mm:ss"));
             tv_remark.setText(serviceDetailsBean.getData().getSHZ().getRefund_remark());
@@ -141,9 +141,9 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
             GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getStore().getStore_logo(), img_merchants, 0, R.mipmap.placeholderfigure1);
             // tv_merchantsApplyRefund.setText(serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.review));
             if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 0) {
-                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
+                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund) + getString(R.string.user) + getString(R.string.apply));
             } else if (StringUtils.toInt(serviceDetailsBean.getData().getStore().getCreate_status()) == 1) {
-                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund1) + serviceDetailsBean.getData().getMember().getRemark() + getString(R.string.apply));
+                tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund1) + getString(R.string.user) + getString(R.string.apply));
             }
             tv_merchantsApplyRefundTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getStore().getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
 

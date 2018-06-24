@@ -172,14 +172,17 @@
 
             </LinearLayout>
 
-            <TextView style="@style/DividerWidth" />
+            <TextView
+                style="@style/DividerWidth"
+                android:visibility="gone" />
 
             <LinearLayout
                 style="@style/MatchWrap"
                 android:layout_marginBottom="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/dimen34"

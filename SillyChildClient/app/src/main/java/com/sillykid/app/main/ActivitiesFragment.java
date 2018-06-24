@@ -208,6 +208,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
                 bargainViewAdapter.addNewData(activitiesBean.getData().getSpecial());
             }
             if (activitiesBean.getData().getMonthHot() == null || activitiesBean.getData().getMonthHot().size() <= 0) {
+                dismissLoadingDialog();
                 return;
             }
             productlViewAdapter.clear();
@@ -263,7 +264,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
 
     @Override
     public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getHttpAttUrl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override

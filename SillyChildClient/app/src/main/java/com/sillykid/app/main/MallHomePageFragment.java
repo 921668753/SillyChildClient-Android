@@ -203,6 +203,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
                 gv_classification.setVisibility(View.GONE);
             }
             if (mallHomePageBean.getData().getHomePage() == null || mallHomePageBean.getData().getHomePage().size() <= 0) {
+                dismissLoadingDialog();
                 return;
             }
             mallHomePageViewAdapter.clear();

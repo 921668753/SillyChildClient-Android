@@ -8,6 +8,9 @@
     <ImageView
         android:id="@+id/img_good"
         style="@style/MatchWrap"
+        android:paddingLeft="@dimen/dimen1"
+        android:paddingRight="@dimen/dimen1"
+        android:paddingTop="@dimen/dimen1"
         android:scaleType="fitXY"
         android:src="@mipmap/placeholderfigure" />
 

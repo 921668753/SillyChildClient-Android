@@ -139,7 +139,8 @@
         android:layout_marginTop="@dimen/dimen10"
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/WrapWrap"
@@ -167,13 +168,16 @@
     </LinearLayout>
 
 
-    <include layout="@layout/common_dividerwidth1" />
+    <include
+        layout="@layout/common_dividerwidth1"
+        android:visibility="gone" />
 
     <LinearLayout
         style="@style/Match44"
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/WrapWrap"
@@ -212,7 +216,6 @@
 
     </LinearLayout>
 
-
     <TextView
         style="@style/MatchWrap"
         android:paddingLeft="@dimen/dimen15"
@@ -220,7 +223,6 @@
         android:text="@string/ensureSamePerson"
         android:textColor="@color/fF4E00Colors"
         android:textSize="@dimen/textsize12" />
-
 
     <TextView
         android:id="@+id/tv_prepaidImmediately"
@@ -234,6 +236,5 @@
         android:text="@string/confirmAdd"
         android:textColor="@color/whiteColors"
         android:textSize="@dimen/textsize16" />
-
 
 </LinearLayout>

@@ -10,7 +10,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.sillykid.app"
         versionCode 37
-        versionName "1.0.0.1806071610"
+        versionName "1.0.0.1806241053"
         multiDexEnabled true
 
         aaptOptions.cruncherEnabled = false
@@ -30,7 +30,7 @@ android {
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                 UMENG_APPKEY  : "5b21fb46b27b0a67a00000af",//友盟分享上注册的包名对应的appkey.
                 BAIDU_APPKEY  : "lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM",//百度定位上注册的包名对应的appkey.
-                RONGYUN_APPKEY: "bmdehs6pbrfqs"//融云即时通讯上注册的包名对应的appkey.
+                RONGYUN_APPKEY: "pkfcgjstpo5w8"//融云即时通讯上注册的包名对应的appkey.
         ]
         //   useLibrary 'org.apache.http.legacy'
     }
@@ -89,7 +89,7 @@ android {
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
             buildConfigField "String", "QQ_APPID", "\"1106946302\""
             buildConfigField "String", "QQ_APPKEY", "\"EZIbOeT93qhl7Nw3\""
-            buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
 //            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
 //            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
 //            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
@@ -112,7 +112,7 @@ android {
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
             buildConfigField "String", "QQ_APPID", "\"1106946302\""
             buildConfigField "String", "QQ_APPKEY", "\"EZIbOeT93qhl7Nw3\""
-            buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
 //            buildConfigField "String", "HUANXIN_TENANTID", "\"46895\""
 //            buildConfigField "String", "HUANXIN_PROJECTID", "\"2169000\""
 //            buildConfigField "String", "HUANXIN_IM", "\"shahaizi_kefu_001\""
