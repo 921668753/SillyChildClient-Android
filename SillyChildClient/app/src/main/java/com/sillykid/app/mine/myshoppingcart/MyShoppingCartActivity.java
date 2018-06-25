@@ -273,7 +273,6 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
-        ViewInject.toast(msg);
     }
 
     @Override
