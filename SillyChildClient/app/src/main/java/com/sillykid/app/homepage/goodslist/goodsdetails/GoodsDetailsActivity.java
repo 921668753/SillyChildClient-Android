@@ -42,7 +42,6 @@ import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
  * 商品详情
  * Created by Admin on 2017/8/24.
  */
-
 public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsContract.View, WebViewLayout1.WebViewCallBack {
 
     @BindView(id = R.id.titlebar)
@@ -50,7 +49,6 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @BindView(id = R.id.web_content)
     private WebViewLayout1 webViewLayout;
-
 
     @BindView(id = R.id.ll_bottom)
     private LinearLayout ll_bottom;
@@ -160,7 +158,6 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
      * 初始化控件
      */
     @Override
-
     public void initWidget() {
         super.initWidget();
         initTitle();
@@ -354,7 +351,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     public void backOnclick(String id) {
         if (StringUtils.isEmpty(id)) {
             Intent intent = new Intent(aty, CommentsActivity.class);
-            intent.putExtra("good_id", goodsid);
+            intent.putExtra("goodsid", goodsid);
             showActivity(aty, intent);
         } else {
             goodsid = StringUtils.toInt(goodsid);
@@ -461,7 +458,6 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         } else {
             UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         }
-
     }
 
     @Override
