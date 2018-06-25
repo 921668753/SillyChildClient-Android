@@ -329,7 +329,7 @@ public class RequestClient {
      * 首页---更多分类----商品列表
      */
     public static void getGoodsList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(context, URLConstants.GOODSLIST, httpParams, false, listener);
+        HttpRequest.requestPostHttp(context, URLConstants.GOODSLIST, httpParams, listener);
     }
 
     /**
