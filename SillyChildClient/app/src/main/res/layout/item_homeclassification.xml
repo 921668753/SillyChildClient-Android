@@ -15,11 +15,9 @@
         android:id="@+id/tv_classificationName"
         style="@style/WrapWrap"
         android:gravity="center"
-        android:maxWidth="@dimen/dimen55"
         android:paddingTop="@dimen/dimen10"
-        android:text="美妆111美妆"
+        android:text="美妆11111111美妆"
         android:textColor="@color/textColor"
-        android:textSize="@dimen/textsize13" />
-
+        android:textSize="@dimen/textsize12" />
 
 </LinearLayout>

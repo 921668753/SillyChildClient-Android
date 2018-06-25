@@ -26,7 +26,7 @@ public class HomePageClassificationViewAdapter extends BGAAdapterViewAdapter<Api
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ApiCatTreeBean listBean) {
         Log.d("position", position + "");
 
-        /**
+        /**0000000000
          * 图片
          */
         GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_icon), R.mipmap.placeholderfigure);

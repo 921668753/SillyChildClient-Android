@@ -257,6 +257,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         }
         int specifications = -1;
         for (int i = 0; i < adapter.getData().size(); i++) {
+
             if (position1 == i && adapter.getData().get(i).getIsSelected() == 0) {
                 adapter.getData().get(i).setIsSelected(1);
                 specificationsBouncedViewAdapter.getData().get(position).setIsSelected(1);
@@ -264,9 +265,15 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
             } else if (position1 == i && adapter.getData().get(i).getIsSelected() == 1) {
                 adapter.getData().get(i).setIsSelected(0);
                 specificationsBouncedViewAdapter.getData().get(position).setIsSelected(0);
+                for (int j = 0; j < adapter.getData().size(); j++) {
+                    if (adapter.getData().get(j).getIsNoClick() == 1) {
+                        adapter.getData().get(j).setIsNoClick(0);
+                    }
+                }
             } else {
                 adapter.getData().get(i).setIsSelected(0);
             }
+
         }
         adapter.notifyDataSetChanged();
         if (specifications <= 0) {
