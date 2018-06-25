@@ -170,7 +170,7 @@ public class WebViewLayout1 extends LinearLayout {
                 Log.d("tag+good_id", good_id);
                 callBack.backOnclick(good_id);
                 return true;
-            } else if (url.contains("indtent://share") || url.contains("intent://comment")) {
+            } else if (url.contains("intent://share") || url.contains("intent://comment")) {
                 callBack.backOnclick("");
                 return true;
             }
