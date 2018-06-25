@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.common.cklibrary.R;
@@ -197,7 +199,9 @@ public class GlideImageLoader implements ImageLoader {
                 .error(defaultimage)
                 .fallback(defaultimage)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .bitmapTransform(new RoundedCornersTransformation(context, raudio, 2))
+//                .transform(new FitCenter(context)
+//                ,new GlideRoundTransform(context, 5))
+                .bitmapTransform(new GlideRoundTransform(context, raudio))
                 //   .skipMemoryCache(true)//设置跳过内存缓存
                 .dontAnimate()//没有任何淡入淡出效果
                 //   .transition(withCrossFade().crossFade())//应用在淡入淡出
