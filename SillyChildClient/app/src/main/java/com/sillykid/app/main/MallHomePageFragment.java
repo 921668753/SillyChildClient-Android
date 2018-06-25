@@ -281,7 +281,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     @Override
     public void fillBannerItem(BGABanner banner, ImageView itemView, AdvcatBean model, int position) {
         //   GlideImageLoader.glideOrdinaryLoader(aty, model.getAd_code(), itemView);
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getHttpAttUrl(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override

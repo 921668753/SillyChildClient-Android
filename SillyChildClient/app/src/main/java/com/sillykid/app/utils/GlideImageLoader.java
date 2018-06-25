@@ -2,13 +2,17 @@ package com.sillykid.app.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.common.cklibrary.R;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.GlideCircleTransform;
@@ -193,11 +197,34 @@ public class GlideImageLoader implements ImageLoader {
                 .error(defaultimage)
                 .fallback(defaultimage)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .bitmapTransform(new RoundedCornersTransformation(context, raudio, 0, RoundedCornersTransformation.CornerType.ALL))
+                .bitmapTransform(new RoundedCornersTransformation(context, raudio, 2))
                 //   .skipMemoryCache(true)//设置跳过内存缓存
                 .dontAnimate()//没有任何淡入淡出效果
                 //   .transition(withCrossFade().crossFade())//应用在淡入淡出
                 .into(imageView);
+
+
+//        Glide.with(context)
+//                .load(url)
+//                .asBitmap()
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .error(defaultimage)
+//                .fallback(defaultimage)
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(Bitmap bitmap,
+//                                                GlideAnimation<? super Bitmap> glideAnimation) {
+//                        int width = bitmap.getWidth();
+//                        int height = bitmap.getHeight();
+//                        ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+//                        lp.width = imageView.getWidth();
+//                        float tempHeight = height * ((float) lp.width / width);
+//                        lp.height = (int) tempHeight;
+//                        imageView.setLayoutParams(lp);
+//                        imageView.setImageBitmap(bitmap);
+//                    }
+//                });
+
     }
 
     /**
