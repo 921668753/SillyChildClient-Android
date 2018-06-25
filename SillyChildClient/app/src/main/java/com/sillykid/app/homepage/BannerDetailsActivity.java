@@ -27,7 +27,6 @@ public class BannerDetailsActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-//        initTitle();
         initView();
     }
 
@@ -58,5 +57,12 @@ public class BannerDetailsActivity extends BaseActivity {
         if (!StringUtils.isEmpty(url)) {
             webViewLayout.loadUrl(url);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webViewLayout.removeAllViews();
+        webViewLayout = null;
     }
 }

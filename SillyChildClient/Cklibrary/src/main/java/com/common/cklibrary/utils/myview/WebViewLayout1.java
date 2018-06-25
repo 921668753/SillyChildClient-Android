@@ -119,7 +119,7 @@ public class WebViewLayout1 extends LinearLayout {
 //        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
 
         //其他细节操作
-       // webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
+        // webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
@@ -164,13 +164,15 @@ public class WebViewLayout1 extends LinearLayout {
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("intent:/linedetails/")) {
+            if (url.contains("intent://gooddetail/")) {
                 view.canGoBack();
-                String line_id = url.substring(url.indexOf("intent:/linedetails/") + 20);
-                Log.d("tag+line_id", line_id);
-                callBack.backOnclick(line_id);
+                String good_id = url.substring(url.indexOf("intent://gooddetail/") + 20);
+                Log.d("tag+good_id", good_id);
+                callBack.backOnclick(good_id);
                 return true;
-            } else if (url.contains("intent:/linedetails/")) {
+            } else if (url.contains("indtent://share") || url.contains("intent://comment")) {
+                callBack.backOnclick("");
+                return true;
             }
             Log.d("tag", url);
             return super.shouldOverrideUrlLoading(view, url);

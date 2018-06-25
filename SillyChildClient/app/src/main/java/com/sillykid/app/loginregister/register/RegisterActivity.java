@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.sillykid.app.homepage.BannerDetailsActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.loginregister.LoginBean;
@@ -25,6 +26,7 @@ import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+import static com.sillykid.app.constant.URLConstants.REGISTPROTOOL;
 
 /**
  * 手机号注册
@@ -139,13 +141,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 break;
             case R.id.tv_agreement:
                 // 注册协议
-                showActivity(aty, RegistrationAgreementActivity.class);
+                Intent intent = new Intent(aty, BannerDetailsActivity.class);
+                intent.putExtra("title", getString(R.string.agreement1));
+                intent.putExtra("url", REGISTPROTOOL);
+                showActivity(aty, intent);
                 break;
             default:
                 break;
         }
-
-
     }
 
     /* 定义一个倒计时的内部类 */

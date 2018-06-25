@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_title"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
+    android:layout_height="@dimen/dimen46"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -38,7 +38,11 @@
         android:id="@+id/progress"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="@dimen/dimen4"
         android:layout_alignParentBottom="true"
         android:progressDrawable="@drawable/webviewlayout_progressbar" />
+
+    <TextView
+        style="@style/DividerWidth"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

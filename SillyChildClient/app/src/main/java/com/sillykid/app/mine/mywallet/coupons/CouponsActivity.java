@@ -16,6 +16,8 @@ import com.sillykid.app.homepage.BannerDetailsActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
+import static com.sillykid.app.constant.URLConstants.INSTUCTIONS;
+
 /**
  * 优惠券
  * Created by Administrator on 2017/9/2.
@@ -107,8 +109,8 @@ public class CouponsActivity extends BaseActivity {
                 public void onClickRightCtv() {
                     super.onClickRightCtv();
                     Intent intent = new Intent(aty, BannerDetailsActivity.class);
-                    intent.putExtra("title", "");
-                    intent.putExtra("url", "");
+                    intent.putExtra("title", getString(R.string.instructions1));
+                    intent.putExtra("url", INSTUCTIONS);
                     showActivity(aty, intent);
                 }
             };

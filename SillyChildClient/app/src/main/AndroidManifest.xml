@@ -616,9 +616,6 @@
             android:screenOrientation="portrait"/>
 
         <!--我的   设置  帮助中心-->
-        <activity
-            android:name=".mine.setup.HelpCenterActivity"
-            android:screenOrientation="portrait"/>
 
         <!--我的   设置  意见反馈-->
         <activity
@@ -632,9 +629,6 @@
 
 
         <!--我的   设置  关于我们-->
-        <activity
-            android:name=".mine.setup.AboutUsActivity"
-            android:screenOrientation="portrait"/>
 
         <!--我的   分享有礼-->
         <activity

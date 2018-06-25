@@ -357,10 +357,15 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             intent.putExtra("good_id", goodsid);
             showActivity(aty, intent);
         } else {
+            goodsid = StringUtils.toInt(goodsid);
             ll_bottom.setVisibility(View.GONE);
             // intent.putExtra("good_id", listbean.get(postion));
             showLoadingDialog(getString(R.string.dataLoad));
-            ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(StringUtils.toInt(id));
+            ((GoodsDetailsContract.Presenter) mPresenter).getGoodDetail(goodsid);
+            String url = URLConstants.GOODSDETAIL + goodsid;
+            if (!StringUtils.isEmpty(url)) {
+                webViewLayout.loadUrl(url);
+            }
         }
     }
 
@@ -395,10 +400,10 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
      */
     public void umShare(SHARE_MEDIA platform) {
         UMImage thumb = new UMImage(this, smallImg);
-        UMWeb web = new UMWeb("" + "?code=" + "");
+        String url = URLConstants.REGISTERHTML;
+        UMWeb web = new UMWeb(url);
         web.setTitle(goodName);//标题
         web.setThumb(thumb);  //缩略图
-        web.setDescription(brief);//描述
         new ShareAction(aty).setPlatform(platform)
 //                .withText("hello")
 //                .withMedia(thumb)

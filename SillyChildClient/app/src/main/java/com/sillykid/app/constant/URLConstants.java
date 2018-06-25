@@ -21,6 +21,7 @@ public class URLConstants {
 
 //     public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
     public static String SERVERURL = "http://user.api.shahaizhi.com/";
+    public static String SERVERURL1 = "http://www.shahaizhi.com/";
 
     /**
      * 请求地址URL
@@ -83,7 +84,7 @@ public class URLConstants {
      */
     public static String GOODDETAIL = APIURL + "goods/detail.do";
 
-    public static String GOODSDETAIL = "http://admin.shahaizhi.com/html/goods_detail.html?goodid=";
+    public static String GOODSDETAIL = SERVERURL1 + "html/goods_detail.html?goodid=";
 
     /**
      * 首页---更多分类----商品列表----商品详情----获取评论列表
@@ -188,6 +189,11 @@ public class URLConstants {
     public static String REGISTER = APIURL + "member/mobile-register.do";
 
     /**
+     * 用户注册协议
+     */
+    public static String REGISTPROTOOL = SERVERURL1 + "dist/pages/registProtocol.html";
+
+    /**
      * 更改密码【手机】
      */
     public static String USERRESTPWD = APIURL + "member/mobile-change-pass.do";
@@ -261,6 +267,11 @@ public class URLConstants {
      * 优惠券列表
      */
     public static String COUPONS = APIURL + "member/bonus-main.do";
+
+    /**
+     * 优惠券使用说明
+     */
+    public static String INSTUCTIONS = SERVERURL1 + "dist/pages/instructions.html";
 
     /**
      * 提现
@@ -377,7 +388,7 @@ public class URLConstants {
     /**
      * 获取物流详情
      */
-    public static String ORDERLOGISTICS = "http://admin.shahaizhi.com/html/order_logistics.html?orderid=";
+    public static String ORDERLOGISTICS = SERVERURL1 + "html/order_logistics.html?orderid=";
 
     /**
      * 发表评论
@@ -413,4 +424,30 @@ public class URLConstants {
      * 提交意见反馈
      */
     public static String ADVICEPOST = SERVERURL + "api/member/advice/post.do";
+
+    /**
+     * 关于我们
+     */
+    public static String ABOUTUS = SERVERURL1 + "dist/pages/about_us.html";
+
+    /**
+     * 帮助中心
+     */
+    public static String HELP = SERVERURL1 + "dist/pages/help.html";
+
+    /**
+     * 帮助中心详情
+     */
+    public static String HELPDETAIL = SERVERURL1 + "dist/pages/helpDetal.html";
+
+    /**
+     * 分享有礼
+     */
+    public static String SHARE = SERVERURL1 + "html/share.html?icode=";
+
+    /**
+     * 分享有礼分享网址
+     */
+    public static String REGISTERHTML = SERVERURL1 + "html/login.html?icode=";
+
 }

@@ -90,8 +90,8 @@
     <string name="testGetCode">获取验证码</string>
     <string name="clickFinish">点击完成代表您同意</string>
     <string name="myagreement">点击注册即表示您同意</string>
-    <string name="agreement">《傻孩子注册协议》</string>
-    <string name="agreement1">同意《物载天下服务协议》才能注册使用</string>
+    <string name="agreement">《傻孩志注册协议》</string>
+    <string name="agreement1">傻孩志注册协议</string>
     <string name="determine">确定</string>
 
     <!--忘加密码-->
@@ -139,7 +139,7 @@
     <string name="noDevelopment">功能开发中，敬请期待……</string>
 
     <!--首页-->
-    <string name="sillyChild">傻孩子</string>
+    <string name="sillyChild">傻孩志</string>
     <string name="airportPickup">接机</string>
     <string name="boutiqueLine">精品线路</string>
     <string name="privateOrdering">私人订制</string>
@@ -417,7 +417,6 @@
     <string name="notInstalled1">您还没有安装应用，请安装应用</string>
     <string name="thumbSuccess">点赞成功</string>
     <string name="unThumbSuccess">取消赞成功</string>
-
 
     <!--首页   按天包车游-->
     <string name="submit">提交</string>
@@ -778,7 +777,6 @@
     <string name="platformProprietary">平台自营</string>
 
 
-
     <!-- 个人中心 我的钱包-->
     <string name="instructions">使用说明</string>
     <string name="accountBalance">账户余额</string>
@@ -813,6 +811,7 @@
 
 
     <!--优惠券 -->
+    <string name="instructions1">优惠券使用说明</string>
     <string name="unused">未使用</string>
     <string name="used">已使用</string>
     <string name="expired">已过期</string>
@@ -1058,7 +1057,9 @@
     <string name="invitationCode">邀请码</string>
     <string name="activityRules">活动规则</string>
     <string name="noHaveApplyCode">缺少邀请码，无法分享，您可移步至客服</string>
-    <string name="welcomSilly">欢迎使用傻孩子</string>
+    <string name="welcomSilly">你的朋友邀请你使用傻孩志并给你发了一个大红包  </string>
+    <string name="sillyChildMyHands">傻孩志在手天下我有</string>
+
 
     <!-- 我的  VIP紧急电话-->
     <string name="noHavePhone">没有获取到电话信息，无法为您提供服务，请您移步至客服！此页面将关闭。</string>
