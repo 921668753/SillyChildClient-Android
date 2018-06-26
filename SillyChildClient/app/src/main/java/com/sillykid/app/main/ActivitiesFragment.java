@@ -1,6 +1,7 @@
 package com.sillykid.app.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -32,6 +33,7 @@ import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -88,6 +90,8 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     private ProductlViewAdapter productlViewAdapter;
 
     private BargainViewAdapter bargainViewAdapter;
+
+    private Thread thread = null;
 
 
     @Override
@@ -159,6 +163,13 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(false);
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments();
+            }
+        });
         //设置item之间的间隔
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(productlViewAdapter);
@@ -211,8 +222,33 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
                 dismissLoadingDialog();
                 return;
             }
-            productlViewAdapter.clear();
-            productlViewAdapter.addNewData(activitiesBean.getData().getMonthHot());
+            if (thread != null && !thread.isAlive()) {
+                thread.run();
+                return;
+            }
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List<ActivitiesBean.DataBean.MonthHotBean> list = new ArrayList<>();
+                    for (int i = 0; i < activitiesBean.getData().getMonthHot().size(); i++) {
+                        Bitmap bitmap = GlideImageLoader.load(aty, activitiesBean.getData().getMonthHot().get(i).getThumbnail());
+                        if (bitmap != null) {
+                            activitiesBean.getData().getMonthHot().get(i).setHeight(bitmap.getHeight());
+                            activitiesBean.getData().getMonthHot().get(i).setWidth(bitmap.getWidth());
+                        }
+                        list.add(activitiesBean.getData().getMonthHot().get(i));
+                    }
+                    aty.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            productlViewAdapter.clear();
+                            productlViewAdapter.addNewData(list);
+                            dismissLoadingDialog();
+                        }
+                    });
+                }
+            });
+            thread.start();
             dismissLoadingDialog();
         }
     }
@@ -295,6 +331,10 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         super.onDestroy();
         bargainViewAdapter.clear();
         bargainViewAdapter = null;
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
         productlViewAdapter.clear();
         productlViewAdapter = null;
     }

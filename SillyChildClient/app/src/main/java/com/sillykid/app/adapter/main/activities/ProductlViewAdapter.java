@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.myview.ScaleImageView;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.main.ActivitiesBean.DataBean.MonthHotBean;

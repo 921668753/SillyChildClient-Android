@@ -121,6 +121,10 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                 tv_goodNumber.setText(String.valueOf(num - 1));
                 break;
             case R.id.tv_add:
+                if (StringUtils.toInt(tv_goodNumber.getText().toString()) > enable_store) {
+                    ViewInject.toast(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+                    return;
+                }
                 tv_goodNumber.setText(String.valueOf(StringUtils.toInt(tv_goodNumber.getText().toString()) + 1));
                 break;
             case R.id.tv_determine:
@@ -146,11 +150,11 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         this.goodsid = goodId;
         this.product_id = product_id;
         this.have_spec = have_spec;
-        if (store != -1) {
-            this.enable_store = store;
-            if (store <= 0) {
-                tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
-            }
+        this.enable_store = store;
+        if (store <= 0) {
+            tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+        } else {
+            tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + store + mContext.getString(R.string.jian));
         }
         tv_goodNumber.setText("1");
         GlideImageLoader.glideOrdinaryLoader(mContext, img, img_good, R.mipmap.placeholderfigure1);

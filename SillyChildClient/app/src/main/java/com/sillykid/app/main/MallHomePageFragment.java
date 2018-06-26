@@ -2,6 +2,7 @@ package com.sillykid.app.main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,7 @@ import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.utils.GlideImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -119,6 +121,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     private HomePageClassificationViewAdapter homePageClassificationViewAdapter = null;
 
+    private Thread thread = null;
+
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -150,6 +154,13 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setAutoMeasureEnabled(true);
         recyclerview.setLayoutManager(layoutManager);
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments();
+            }
+        });
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(false);
         //设置item之间的间隔
@@ -206,9 +217,33 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
                 dismissLoadingDialog();
                 return;
             }
-            mallHomePageViewAdapter.clear();
-            mallHomePageViewAdapter.addNewData(mallHomePageBean.getData().getHomePage());
-            dismissLoadingDialog();
+            if (thread != null && !thread.isAlive()) {
+                thread.run();
+                return;
+            }
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List<HomePageBean> list = new ArrayList<>();
+                    for (int i = 0; i < mallHomePageBean.getData().getHomePage().size(); i++) {
+                        Bitmap bitmap = GlideImageLoader.load(aty, mallHomePageBean.getData().getHomePage().get(i).getThumbnail());
+                        if (bitmap != null) {
+                            mallHomePageBean.getData().getHomePage().get(i).setHeight(bitmap.getHeight());
+                            mallHomePageBean.getData().getHomePage().get(i).setWidth(bitmap.getWidth());
+                        }
+                        list.add(mallHomePageBean.getData().getHomePage().get(i));
+                    }
+                    aty.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mallHomePageViewAdapter.clear();
+                            mallHomePageViewAdapter.addNewData(list);
+                            dismissLoadingDialog();
+                        }
+                    });
+                }
+            });
+            thread.start();
         }
     }
 
@@ -446,6 +481,10 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         super.onDestroy();
         mallHomePageViewAdapter.clear();
         mallHomePageViewAdapter = null;
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
         mLocationClient.unRegisterLocationListener(myListener); //注销掉监听
         mLocationClient.stop(); //停止定位服务
     }

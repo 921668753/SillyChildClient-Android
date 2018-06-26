@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.common.cklibrary.R;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.GlideCircleTransform;
@@ -230,6 +231,75 @@ public class GlideImageLoader implements ImageLoader {
 //                });
 
     }
+
+
+    /**
+     * @param context
+     * @param url
+     * @param imageView raudio   圆角大小
+     */
+    public static void glideLoaderRaudio(Context context, Object url, ImageView imageView, int raudio, int width, int height, int defaultimage) {
+
+        Glide.with(context)
+                .load(url)
+                //  .placeholder(R.mipmap.loading)
+                .error(defaultimage)
+                .fallback(defaultimage)
+                .override(width, height)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .transform(new FitCenter(context)
+//                ,new GlideRoundTransform(context, 5))
+                .bitmapTransform(new GlideRoundTransform(context, raudio))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+
+    /**
+     * 需要在子线程执行
+     *
+     * @param context
+     * @param url
+     * @return
+     */
+    public static Bitmap load(Context context, String url) {
+        try {
+            return Glide.with(context)
+                    .load(url)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 需要在子线程执行
+     *
+     * @param context
+     * @param url
+     * @return
+     */
+    public static Bitmap load(Context context, int url) {
+        try {
+            return Glide.with(context)
+                    .load(url)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * 图片上边圆角，下边直角

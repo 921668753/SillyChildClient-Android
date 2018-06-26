@@ -1,15 +1,31 @@
 package com.sillykid.app.adapter.main.homepage;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.myview.ScaleImageView;
+import com.kymjs.common.DensityUtils;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.main.MallHomePageBean.DataBean.HomePageBean;
 import com.sillykid.app.utils.GlideImageLoader;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -41,7 +57,21 @@ public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<HomePageBean
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, HomePageBean model) {
-        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), (ImageView) helper.getView(R.id.img_good), 5, R.mipmap.placeholderfigure);
+        ImageView imageView = (ImageView) helper.getView(R.id.img_good);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+        float width1 = (DensityUtils.getScreenW() - 7 * 3 - 10 * 2) / 2;
+        lp.width = (int) width1;
+        float scale = 0;
+        float tempHeight = 0;
+        if (model.getWidth() <= 0 || model.getHeight() <= 0) {
+            tempHeight = width1;
+        } else {
+            scale = (width1 + 0f) / model.getWidth();
+            tempHeight = model.getHeight() * scale;
+        }
+        lp.height = (int) tempHeight;
+        imageView.setLayoutParams(lp);
+        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), imageView, 5, (int) lp.width, (int) lp.height, R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
         if (StringUtils.isEmpty(model.getBrief())) {
             helper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
@@ -70,6 +100,72 @@ public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<HomePageBean
             helper.setVisibility(R.id.ll_bottomLabel, View.GONE);
         }
     }
+
+    public static void getImageWidthHeight(String path) {
+        try {
+            URL url = new URL(path);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 10;
+            Bitmap originalImage = BitmapFactory.decodeStream(is, null, options);
+            // imageView.setImageBitmap(originalImage);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 动态设置imageView的大小(可以设置到父级如:ViewGroup)  根据下载的图片大小 计算高度(宽度是全屏宽)
+     *
+     * @param context
+     * @param url
+     * @param imageView
+     * @param srceenWidth
+     * @param topMargin
+     * @param layoutParamsType 0 LinearLayout.LayoutParams   1 FrameLayout$LayoutParams
+     */
+    public static void getPicByGlideAndScale(@NonNull final Context context, @NonNull final String url, @NonNull final ImageView imageView,
+                                             final float srceenWidth, final int topMargin, final View parentView, final int layoutParamsType) {
+//        getPicBitMapByGlide(context, url, imageView, new IUICallBackInterface() {
+//            @Override
+//            public void uiCallBack(Object supportResponse, int caseKey) {
+//                Bitmap source = (Bitmap) supportResponse;
+//                // Do something with bitmap here.
+//                int height = source.getHeight();
+//                int width = source.getWidth();
+//                float height_temp_1 = srceenWidth / width;
+//                if (layoutParamsType == 0) {
+//                    final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) srceenWidth, (int) (height_temp_1 * height));
+//                    layoutParams.topMargin = topMargin;
+//                    imageView.setLayoutParams(layoutParams);
+////                    if (YunbaoConfig.isDebug())
+////                        Log.e(YunbaoConfig.Debug_flage, "==========view.width= " + layoutParams.width + " height= " + layoutParams.height + " height_temp_1= " + height_temp_1 + " url= " + url);
+//                } else if (layoutParamsType == 1) {
+//                    final FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams((int) srceenWidth, (int) (height_temp_1 * height));
+//                    layoutParams.topMargin = topMargin;
+//                    imageView.setLayoutParams(layoutParams);
+//                }
+//                Glide.with(context)
+//                        .load(url)
+////                                .override(layoutParams.width, layoutParams.height)
+//                        .into(imageView);
+//                imageView.invalidate();
+//                if (parentView != null) {
+//                    ViewGroup.LayoutParams groupParams = parentView.getLayoutParams();
+//                    groupParams.height = (int) (height_temp_1 * height);
+//                    groupParams.width = (int) srceenWidth;
+//                    parentView.invalidate();
+//                }
+//            }
+//        });
+    }
+
 
 //    @Override
 //    public void onBindViewHolder(GoodsListView goodsListView, int position) {

@@ -1,6 +1,9 @@
 package com.sillykid.app.homepage.goodslist;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -21,7 +24,11 @@ import com.sillykid.app.entity.homepage.goodslist.GoodsListBean;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.homepage.search.SearchGoodsActivity;
 import com.sillykid.app.loginregister.LoginActivity;
+import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SpacesItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -92,6 +99,8 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
 
     private String keyword = "";
 
+    private Thread thread = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_goodslist);
@@ -128,6 +137,13 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(goodsListAdapter);
         goodsListAdapter.setOnRVItemClickListener(this);
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments();
+            }
+        });
     }
 
 
@@ -201,16 +217,41 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
             mRefreshLayout.endLoadingMore();
             return;
         }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            goodsListAdapter.clear();
-            goodsListAdapter.addNewData(goodsListBean.getData());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            goodsListAdapter.addMoreData(goodsListBean.getData());
+        if (thread != null && !thread.isAlive()) {
+            thread.run();
+            return;
         }
-        dismissLoadingDialog();
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<GoodsListBean.DataBean> list = new ArrayList<>();
+                for (int i = 0; i < goodsListBean.getData().size(); i++) {
+                    Bitmap bitmap = GlideImageLoader.load(aty, goodsListBean.getData().get(i).getThumbnail());
+                    if (bitmap != null) {
+                        goodsListBean.getData().get(i).setHeight(bitmap.getHeight());
+                        goodsListBean.getData().get(i).setWidth(bitmap.getWidth());
+                    }
+                    list.add(goodsListBean.getData().get(i));
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                            mRefreshLayout.endRefreshing();
+                            goodsListAdapter.clear();
+                            goodsListAdapter.addNewData(list);
+                        } else {
+                            mRefreshLayout.endLoadingMore();
+                            goodsListAdapter.addMoreData(list);
+                        }
+                        dismissLoadingDialog();
+                    }
+                });
+            }
+        });
+        thread.start();
     }
+
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
@@ -283,6 +324,10 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
         goodsListAdapter.clear();
         goodsListAdapter = null;
     }
