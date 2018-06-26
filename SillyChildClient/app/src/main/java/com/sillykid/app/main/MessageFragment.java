@@ -47,7 +47,7 @@ public class MessageFragment extends BaseFragment {
         super.initData();
         contentFragment = new InteractiveMessageFragment();
         contentFragment1 = new SystemMessageFragment();
-        chageIcon = aty.getIntent().getIntExtra("chageIcon", 20);
+        chageIcon = aty.getIntent().getIntExtra("chageMessageIcon", 20);
     }
 
 
