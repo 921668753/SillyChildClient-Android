@@ -31,8 +31,10 @@
                 android:id="@+id/rv"
                 style="@style/MatchWrap"
                 android:layout_below="@id/banner_ad"
-                android:layout_marginTop="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen8"
                 android:background="@android:color/transparent"
+                android:paddingLeft="@dimen/dimen2"
+                android:paddingRight="@dimen/dimen2"
                 tools:listitem="@layout/item_mallhomepage" />
 
             <include layout="@layout/common_error" />

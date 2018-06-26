@@ -100,7 +100,7 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         super.initData();
         mPresenter = new AllGoodsPresenter(this);
         mAdapter = new AllGoodsViewAdapter(recyclerView);
-        spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        spacesItemDecoration = new SpacesItemDecoration(7, 14);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         storeid = aty.getIntent().getIntExtra("storeid", 0);
     }

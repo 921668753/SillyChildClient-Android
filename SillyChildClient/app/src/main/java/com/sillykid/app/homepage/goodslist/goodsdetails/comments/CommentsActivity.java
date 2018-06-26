@@ -90,6 +90,8 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
 
     private String img = null;
 
+    private int store = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_comments);
@@ -109,6 +111,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
         have_spec = getIntent().getStringExtra("have_spec");
         favorited = getIntent().getBooleanExtra("favorited", false);
         product_id = getIntent().getIntExtra("product_id", 0);
+        store = getIntent().getIntExtra("store", 0);
         initDialog();
     }
 
@@ -216,18 +219,26 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
                 }
                 break;
             case R.id.tv_addShoppingCart:
+                if (store <= 0) {
+                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                    return;
+                }
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, img, price, StringUtils.toInt(have_spec), product_id);
+                specificationsBouncedDialog.setFlag(0, goodsid, img, price, StringUtils.toInt(have_spec), product_id, store);
                 break;
             case R.id.tv_buyNow:
+                if (store <= 0) {
+                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                    return;
+                }
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, img, price, StringUtils.toInt(have_spec), product_id);
+                specificationsBouncedDialog.setFlag(1, goodsid, img, price, StringUtils.toInt(have_spec), product_id, store);
                 break;
             default:
                 break;
@@ -312,7 +323,6 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
             ViewInject.toast(msg);
         }
     }
-
 
     public void setAll(String text) {
         tv_all.setText(getString(R.string.allAeservationNumber) + text);

@@ -189,6 +189,11 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
                 deleteCollectionDialog.setCollectionId(mAdapter.getItem(position).getGoods_id());
             }
         } else if (childView.getId() == R.id.img_shoppingCart) {
+            int store = StringUtils.toInt(mAdapter.getItem(position).getStore(), 0);
+            if (store <= 0) {
+                ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                return;
+            }
             if (addCartGoodDialog == null) {
                 initAddCartGoodDialog();
             }
@@ -196,7 +201,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
                 addCartGoodDialog.show();
                 addCartGoodDialog.setFlag(0, mAdapter.getItem(position).getGoods_id(), mAdapter.getItem(position).getSmall(),
                         MathUtil.keepTwo(StringUtils.toDouble(mAdapter.getItem(position).getPrice())), mAdapter.getItem(position).getHave_spec(),
-                        mAdapter.getItem(position).getProduct_id());
+                        mAdapter.getItem(position).getProduct_id(), store);
             }
         }
     }

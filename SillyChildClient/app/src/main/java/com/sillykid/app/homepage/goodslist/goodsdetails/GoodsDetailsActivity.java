@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.WebViewLayout1;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.constant.URLConstants;
+import com.sillykid.app.message.interactivemessage.imuitl.RongIMUtil;
 import com.sillykid.app.mine.sharingceremony.dialog.ShareBouncedDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -102,6 +103,8 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
     private String store_name = "";
 
     private String rongYunStore = "";
+
+    private int store = 0;
 
     @Override
     public void setRootView() {
@@ -219,15 +222,6 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 showActivity(aty, shopIntent);
                 break;
             case R.id.ll_customerService:
-//                Intent intent = new Intent(aty, CommentsActivity.class);
-//                intent.putExtra("goodsid", goodsid);
-//                intent.putExtra("favorited", favorited);
-//                intent.putExtra("price", price);
-//                intent.putExtra("img", smallImg);
-//                intent.putExtra("have_spec", have_spec);
-//                intent.putExtra("store_id", store_id);
-//                intent.putExtra("product_id", product_idg);
-//                startActivityForResult(intent, REQUEST_CODE);
                 ((GoodsDetailsContract.Presenter) mPresenter).getIsLogin(this, 5);
                 break;
             case R.id.ll_follow:
@@ -239,18 +233,26 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 }
                 break;
             case R.id.tv_addShoppingCart:
+                if (store <= 0) {
+                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                    return;
+                }
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg);
+                specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg, store);
                 break;
             case R.id.tv_buyNow:
+                if (store <= 0) {
+                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                    return;
+                }
                 if (specificationsBouncedDialog == null) {
                     initDialog();
                 }
                 specificationsBouncedDialog.show();
-                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg);
+                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg, store);
                 break;
         }
     }
@@ -278,6 +280,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 brief = goodsDetailsBean.getData().getBrief();
                 store_name = goodsDetailsBean.getData().getStore_name();
                 rongYunStore = goodsDetailsBean.getData().getRongYunStore();
+                store = StringUtils.toInt(goodsDetailsBean.getData().getStore(), 0);
                 if (favorited) {
                     ll_follow.setBackgroundResource(R.mipmap.mall_collect);
                 } else {
@@ -352,7 +355,14 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
         if (StringUtils.isEmpty(id)) {
             Intent intent = new Intent(aty, CommentsActivity.class);
             intent.putExtra("goodsid", goodsid);
-            showActivity(aty, intent);
+            intent.putExtra("favorited", favorited);
+            intent.putExtra("price", price);
+            intent.putExtra("img", smallImg);
+            intent.putExtra("have_spec", have_spec);
+            intent.putExtra("store", store);
+            intent.putExtra("store_id", store_id);
+            intent.putExtra("product_id", product_idg);
+            startActivityForResult(intent, REQUEST_CODE);
         } else {
             goodsid = StringUtils.toInt(goodsid);
             ll_bottom.setVisibility(View.GONE);

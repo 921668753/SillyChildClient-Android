@@ -3,14 +3,14 @@ package com.sillykid.app.homepage.moreclassification;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ListView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildListView;
-import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.moreclassification.ClassificationViewAdapter;
 import com.sillykid.app.adapter.homepage.moreclassification.MoreClassificationViewAdapter;
@@ -31,13 +31,13 @@ public class MoreClassificationActivity extends BaseActivity implements MoreClas
      * 分类
      */
     @BindView(id = R.id.lv_moreClassification)
-    private ChildListView lv_moreClassification;
+    private ListView lv_moreClassification;
 
     /**
      * 分类详情
      */
     @BindView(id = R.id.gv_classification)
-    private NoScrollGridView gv_classification;
+    private GridView gv_classification;
 
     private MoreClassificationViewAdapter moreClassificationViewAdapter = null;
 

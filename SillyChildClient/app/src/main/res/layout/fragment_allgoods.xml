@@ -5,8 +5,6 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <TextView style="@style/DividerWidth" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen40"
@@ -55,9 +53,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
-            style="@style/MatchWrap"
-            android:layout_marginTop="@dimen/dimen10"
+            style="@style/MatchMatch"
+            android:layout_marginTop="@dimen/dimen5"
             android:background="@android:color/transparent"
+            android:paddingLeft="@dimen/dimen2"
+            android:paddingRight="@dimen/dimen2"
             tools:listitem="@layout/item_mallhomepage" />
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>

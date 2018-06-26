@@ -18,11 +18,13 @@ import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.goodslist.shop.ShopHomePageViewAdapter;
 import com.sillykid.app.entity.homepage.goodslist.shop.ShopHomePageBean;
-import com.sillykid.app.entity.main.AdvCatBean;
+import com.sillykid.app.entity.homepage.goodslist.shop.StoreImageBean;
 import com.sillykid.app.homepage.BannerDetailsActivity;
 import com.sillykid.app.utils.SpacesItemDecoration;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.utils.GlideImageLoader;
+
+import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -33,7 +35,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Admin on 2017/8/21.
  */
 
-public class ShopHomePageFragment extends BaseFragment implements ShopHomePageContract.View, BGABanner.Delegate<ImageView, AdvCatBean.DataBean>, BGABanner.Adapter<ImageView, AdvCatBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
+public class ShopHomePageFragment extends BaseFragment implements ShopHomePageContract.View, BGABanner.Delegate<ImageView, StoreImageBean.DataBean>, BGABanner.Adapter<ImageView, StoreImageBean.DataBean>, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener {
 
     private ShopActivity aty;
 
@@ -60,7 +62,6 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
 
     private int storeid = 0;
 
-
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (ShopActivity) getActivity();
@@ -71,7 +72,7 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     protected void initData() {
         super.initData();
         mPresenter = new ShopHomePagePresenter(this);
-        spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        spacesItemDecoration = new SpacesItemDecoration(7, 14);
         shopHomepageAdapter = new ShopHomePageViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         storeid = aty.getIntent().getIntExtra("storeid", 0);
@@ -140,13 +141,16 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-
-
+            StoreImageBean storeImageBean = (StoreImageBean) JsonUtil.getInstance().json2Obj(success, StoreImageBean.class);
+            List<StoreImageBean.DataBean> advCatBeanList = storeImageBean.getData();
+            if (advCatBeanList != null && advCatBeanList.size() > 0) {
+                processLogic(advCatBeanList);
+            }
             ((ShopHomePageContract.Presenter) mPresenter).getStoreIndexGoods(storeid);
         } else if (flag == 1) {
             ShopHomePageBean shopHomePageBean = (ShopHomePageBean) JsonUtil.getInstance().json2Obj(success, ShopHomePageBean.class);
             if (shopHomePageBean.getData() == null || shopHomePageBean.getData().size() == 0) {
-                errorMsg(getString(R.string.noCollectedGoods), 1);
+                errorMsg(getString(R.string.noale), 1);
                 return;
             }
             shopHomepageAdapter.clear();
@@ -159,20 +163,21 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     /**
      * 广告轮播图
      */
-//    @SuppressWarnings("unchecked")
-//    private void processLogic(List<AdvCatBean.DataBean> list) {
-//        if (list != null && list.size() > 0) {
-//            if (list.size() == 1) {
-//                mForegroundBanner.setAutoPlayAble(false);
-//                mForegroundBanner.setAllowUserScrollable(false);
-//            } else {
-//                mForegroundBanner.setAutoPlayAble(true);
-//                mForegroundBanner.setAllowUserScrollable(true);
-//            }
-//            mForegroundBanner.setBackground(null);
-//            mForegroundBanner.setData(list, null);
-//        }
-//    }
+    @SuppressWarnings("unchecked")
+    private void processLogic(List<StoreImageBean.DataBean> list) {
+        if (list != null && list.size() > 0) {
+            if (list.size() == 1) {
+                mForegroundBanner.setAutoPlayAble(false);
+                mForegroundBanner.setAllowUserScrollable(false);
+            } else {
+                mForegroundBanner.setAutoPlayAble(true);
+                mForegroundBanner.setAllowUserScrollable(true);
+            }
+            mForegroundBanner.setBackground(null);
+            mForegroundBanner.setData(list, null);
+        }
+    }
+
     @Override
     public void errorMsg(String msg, int flag) {
         ViewInject.toast(msg);
@@ -188,18 +193,18 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
     }
 
     @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(aty, model.getAtturl(), itemView, R.mipmap.placeholderfigure2);
+    public void fillBannerItem(BGABanner banner, ImageView itemView, StoreImageBean.DataBean model, int position) {
+        GlideImageLoader.glideOrdinaryLoader(aty, model.getImg(), itemView, R.mipmap.placeholderfigure2);
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvCatBean.DataBean model, int position) {
-        if (StringUtils.isEmpty(model.getUrl())) {
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, StoreImageBean.DataBean model, int position) {
+        if (StringUtils.isEmpty(model.getSilde_url())) {
             return;
         }
         Intent bannerDetails = new Intent(aty, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getUrl());
-        bannerDetails.putExtra("title", model.getAname());
+        bannerDetails.putExtra("url", model.getSilde_url());
+        // bannerDetails.putExtra("title", model.get());
         aty.showActivity(aty, bannerDetails);
     }
 

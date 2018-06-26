@@ -128,6 +128,10 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                     ViewInject.toast(mContext.getString(R.string.selectProductAttribute));
                     return;
                 }
+                if (enable_store <= 0) {
+                    ViewInject.toast(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+                    return;
+                }
                 dismiss();
                 mPresenter = null;
                 toDo(goodsid, flag, StringUtils.toInt(tv_goodNumber.getText().toString()), product_id);
@@ -137,11 +141,17 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
     public abstract void toDo(int goodId, int flag, int num, int product_id);
 
-    public void setFlag(int flag, int goodId, String img, String price, int have_spec, int product_id) {
+    public void setFlag(int flag, int goodId, String img, String price, int have_spec, int product_id, int store) {
         this.flag = flag;
         this.goodsid = goodId;
         this.product_id = product_id;
         this.have_spec = have_spec;
+        if (store != -1) {
+            this.enable_store = store;
+            if (store <= 0) {
+                tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+            }
+        }
         tv_goodNumber.setText("1");
         GlideImageLoader.glideOrdinaryLoader(mContext, img, img_good, R.mipmap.placeholderfigure1);
         tv_money.setText(mContext.getString(R.string.renminbi) + price);

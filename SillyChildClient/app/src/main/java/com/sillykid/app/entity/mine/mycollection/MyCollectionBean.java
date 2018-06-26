@@ -42,6 +42,7 @@ public class MyCollectionBean extends BaseResult<List<MyCollectionBean.DataBean>
         private String store_name;
         private int favorite_id;
         private int product_id;
+        private String store;
 
         public int getGoods_id() {
             return goods_id;
@@ -169,6 +170,14 @@ public class MyCollectionBean extends BaseResult<List<MyCollectionBean.DataBean>
 
         public void setProduct_id(int product_id) {
             this.product_id = product_id;
+        }
+
+        public String getStore() {
+            return store;
+        }
+
+        public void setStore(String store) {
+            this.store = store;
         }
     }
 }
