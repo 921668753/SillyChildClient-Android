@@ -244,25 +244,15 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
                 specificationsBouncedDialog.setFlag(0, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg, store);
                 break;
             case R.id.tv_buyNow:
-                Intent intent = new Intent(aty, CommentsActivity.class);
-                intent.putExtra("goodsid", goodsid);
-                intent.putExtra("favorited", favorited);
-                intent.putExtra("price", price);
-                intent.putExtra("img", smallImg);
-                intent.putExtra("have_spec", have_spec);
-                intent.putExtra("store", store);
-                intent.putExtra("store_id", store_id);
-                intent.putExtra("product_id", product_idg);
-                startActivityForResult(intent, REQUEST_CODE);
-//                if (store <= 0) {
-//                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
-//                    return;
-//                }
-//                if (specificationsBouncedDialog == null) {
-//                    initDialog();
-//                }
-//                specificationsBouncedDialog.show();
-//                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg, store);
+                if (store <= 0) {
+                    ViewInject.toast(getString(R.string.inventory) + getString(R.string.insufficient));
+                    return;
+                }
+                if (specificationsBouncedDialog == null) {
+                    initDialog();
+                }
+                specificationsBouncedDialog.show();
+                specificationsBouncedDialog.setFlag(1, goodsid, smallImg, price, StringUtils.toInt(have_spec, 0), product_idg, store);
                 break;
         }
     }

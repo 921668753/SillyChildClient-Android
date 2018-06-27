@@ -11,8 +11,10 @@ import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
+import com.lzy.imagepicker.ImagePicker;
 import com.sillykid.app.BuildConfig;
 
+import com.sillykid.app.utils.GlideImageLoader;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -57,9 +59,18 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         UMShareAPI.get(this);//友盟分享
         initRongCloud();
+        initImagePicker();
         testMemoryInfo();
     }
 
+    /**
+     * 初始化图片加载器
+     */
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
+    }
 
     public static MyApplication getInstance() {
         return instance;

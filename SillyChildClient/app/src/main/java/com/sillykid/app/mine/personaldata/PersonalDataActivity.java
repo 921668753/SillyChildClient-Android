@@ -160,11 +160,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      */
     private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
-        GlideImageLoader glideImageLoader = new GlideImageLoader();
-        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setCrop(true);        //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true); //是否按矩形区域保存
-        imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);    //选中数量限制
+        imagePicker.setSelectLimit(1);    //选中数量限制
         imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
         imagePicker.setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
@@ -380,7 +378,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private void selectPicture() {
         //打开选择,本次允许选择的数量
-        ImagePicker.getInstance().setSelectLimit(1);
         Intent intent1 = new Intent(this, ImageGridActivity.class);
         /* 如果需要进入选择的时候显示已经选中的图片，
          * 详情请查看ImagePickerActivity
