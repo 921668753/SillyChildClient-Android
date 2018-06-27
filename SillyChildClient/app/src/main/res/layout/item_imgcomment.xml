@@ -5,9 +5,7 @@
 
     <ImageView
         android:id="@+id/img_comment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen142"
-        android:scaleType="fitXY"
+        style="@style/MatchWrap"
         android:src="@mipmap/placeholderfigure" />
 
 </LinearLayout>

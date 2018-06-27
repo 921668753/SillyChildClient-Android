@@ -13,6 +13,8 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsContract;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsPresenter;
@@ -20,6 +22,7 @@ import com.sillykid.app.homepage.goodslist.goodsdetails.dialog.SpecificationsBou
 import com.sillykid.app.homepage.goodslist.shop.ShopActivity;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.myshoppingcart.makesureorder.MakeSureOrderActivity;
+import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SoftKeyboardUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -136,6 +139,7 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
     public void initWidget() {
         super.initWidget();
         initTitle();
+        initImagePicker();
         if (favorited) {
             ll_follow.setBackgroundResource(R.mipmap.mall_collect);
         } else {
@@ -176,6 +180,22 @@ public class CommentsActivity extends BaseActivity implements GoodsDetailsContra
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.comment), "", true, R.id.titlebar, simpleDelegate);
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
+        imagePicker.setShowCamera(true);                      //显示拍照按钮
+        imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
+        imagePicker.setSelectLimit(5);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);                         //保存文件的高度。单位像素
+        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
     }
 
 

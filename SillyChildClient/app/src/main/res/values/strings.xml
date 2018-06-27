@@ -542,7 +542,7 @@
     <string name="general">共</string>
     <string name="comments1">条评论</string>
     <string name="reply">条回复</string>
-
+    <string name="notFillEvaluation">此用户没有填写评价。</string>
 
     <!--首页   当地达人详情-->
     <string name="shopkeepers">店主</string>

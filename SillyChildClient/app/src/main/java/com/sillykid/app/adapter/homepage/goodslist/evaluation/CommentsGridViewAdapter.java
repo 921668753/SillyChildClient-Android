@@ -2,12 +2,12 @@ package com.sillykid.app.adapter.homepage.goodslist.evaluation;
 
 import android.content.Context;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 
+import com.lzy.imagepicker.bean.ImageItem;
 import com.sillykid.app.R;
-import com.sillykid.app.utils.DisplayUtil;
 import com.sillykid.app.utils.GlideImageLoader;
-import com.sillykid.app.entity.homepage.goodslist.goodsdetails.comments.CommentsBean.DataBean.CommentListBean.GalleryBean;
+
+import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -16,7 +16,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/9/29.
  */
 
-public class CommentsGridViewAdapter extends BGAAdapterViewAdapter<GalleryBean> {
+public class CommentsGridViewAdapter extends BGAAdapterViewAdapter<ImageItem> {
 
     //  private LayoutParams layoutParams;
 
@@ -28,13 +28,15 @@ public class CommentsGridViewAdapter extends BGAAdapterViewAdapter<GalleryBean> 
 
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, GalleryBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, ImageItem model) {
 
         //  helper.getView(R.id.img_vehicles).setLayoutParams(layoutParams);
         /**
          * 图片
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getOriginal(), (ImageView) helper.getView(R.id.img_comment), R.mipmap.placeholderfigure);
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.path, (ImageView) helper.getView(R.id.img_comment), R.mipmap.placeholderfigure);
 
     }
+
+
 }

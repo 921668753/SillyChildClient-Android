@@ -55,6 +55,7 @@
     <com.common.cklibrary.utils.myview.NoScrollGridView
         android:id="@+id/gv_imgComments"
         style="@style/MatchWrap"
+        android:layout_marginRight="@dimen/dimen15"
         android:background="@android:color/white"
         android:horizontalSpacing="15dp"
         android:numColumns="3"

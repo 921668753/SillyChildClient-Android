@@ -49,7 +49,7 @@ public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<Memb
         GlideImageLoader.glideOrdinaryLoader(mContext, model.getImage(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
         viewHolderHelper.setText(R.id.tv_goodName, model.getName());
         viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
-        viewHolderHelper.setText(R.id.tv_money, mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
+        viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
         et_goodsSatisfactory.setTag(position);
         if (!StringUtils.isEmpty(model.getContent())) {
