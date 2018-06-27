@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
@@ -200,7 +201,6 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
         tv_settleAccounts.setVisibility(View.GONE);
     }
 
-
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
@@ -326,7 +326,7 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyShoppingCartBean myShoppingCartBean = (MyShoppingCartBean) JsonUtil.getInstance().json2Obj(success, MyShoppingCartBean.class);
             mAdapter.closeOpenedSwipeItemLayoutWithAnim();
-            if (myShoppingCartBean.getData().getStorelist() == null || myShoppingCartBean.getData().getStorelist().size() <= 0) {
+            if (myShoppingCartBean.getData() == null || myShoppingCartBean.getData().getStorelist() == null || myShoppingCartBean.getData().getStorelist().size() <= 0) {
                 errorMsg(getString(R.string.notAnythingAdd), 0);
                 editStatus();
                 return;
@@ -351,7 +351,14 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             for (int i = 0; i < mAdapter.getData().size(); i++) {
                 if (mAdapter.getData().get(i).getIsSelected() == 1) {
                     mAdapter.removeItem(i);
+                    i--;
                 }
+            }
+            if (mAdapter.getData() == null || mAdapter.getData().size() == 0) {
+                isEdit = 0;
+                titlebar.getRightCtv().setTextColor(getResources().getColor(R.color.textColor));
+                titlebar.setRightText(R.string.edit);
+                errorMsg(getString(R.string.notAnythingAdd), 1);
             }
             tv_money.setText(calculatePrice(mAdapter.getData()));
             dismissLoadingDialog();

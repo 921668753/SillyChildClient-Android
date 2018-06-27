@@ -131,27 +131,13 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                 private String coupPrice;
                 private String subtotal;
                 private int num;
-                private String limitnum;
                 private String image_default;
-                private int point;
-                private int itemtype;
                 private String sn;
-                private String addon;
                 private String specs;
                 private int catid;
-                private OthersBean others;
-                private String exchange;
-                private String unit;
-                private int goods_type;
-                private String pmtList;
-                private int weight;
-                private String activity_id;
                 private int is_check;
-                private String snapshot_id;
                 private int store_id;
                 private String store_name;
-                private int goods_transfee_charge;
-                private int activity_type;
                 private int isSelected;
                 private int isEdit;
 
@@ -227,14 +213,6 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.num = num;
                 }
 
-                public String getLimitnum() {
-                    return limitnum;
-                }
-
-                public void setLimitnum(String limitnum) {
-                    this.limitnum = limitnum;
-                }
-
                 public String getImage_default() {
                     return image_default;
                 }
@@ -243,36 +221,12 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.image_default = image_default;
                 }
 
-                public int getPoint() {
-                    return point;
-                }
-
-                public void setPoint(int point) {
-                    this.point = point;
-                }
-
-                public int getItemtype() {
-                    return itemtype;
-                }
-
-                public void setItemtype(int itemtype) {
-                    this.itemtype = itemtype;
-                }
-
                 public String getSn() {
                     return sn;
                 }
 
                 public void setSn(String sn) {
                     this.sn = sn;
-                }
-
-                public String getAddon() {
-                    return addon;
-                }
-
-                public void setAddon(String addon) {
-                    this.addon = addon;
                 }
 
                 public String getSpecs() {
@@ -291,76 +245,12 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
                     this.catid = catid;
                 }
 
-                public OthersBean getOthers() {
-                    return others;
-                }
-
-                public void setOthers(OthersBean others) {
-                    this.others = others;
-                }
-
-                public String getExchange() {
-                    return exchange;
-                }
-
-                public void setExchange(String exchange) {
-                    this.exchange = exchange;
-                }
-
-                public String getUnit() {
-                    return unit;
-                }
-
-                public void setUnit(String unit) {
-                    this.unit = unit;
-                }
-
-                public int getGoods_type() {
-                    return goods_type;
-                }
-
-                public void setGoods_type(int goods_type) {
-                    this.goods_type = goods_type;
-                }
-
-                public String getPmtList() {
-                    return pmtList;
-                }
-
-                public void setPmtList(String pmtList) {
-                    this.pmtList = pmtList;
-                }
-
-                public int getWeight() {
-                    return weight;
-                }
-
-                public void setWeight(int weight) {
-                    this.weight = weight;
-                }
-
-                public String getActivity_id() {
-                    return activity_id;
-                }
-
-                public void setActivity_id(String activity_id) {
-                    this.activity_id = activity_id;
-                }
-
                 public int getIs_check() {
                     return is_check;
                 }
 
                 public void setIs_check(int is_check) {
                     this.is_check = is_check;
-                }
-
-                public String getSnapshot_id() {
-                    return snapshot_id;
-                }
-
-                public void setSnapshot_id(String snapshot_id) {
-                    this.snapshot_id = snapshot_id;
                 }
 
                 public int getStore_id() {
@@ -377,22 +267,6 @@ public class MyShoppingCartBean extends BaseResult<MyShoppingCartBean.DataBean> 
 
                 public void setStore_name(String store_name) {
                     this.store_name = store_name;
-                }
-
-                public int getGoods_transfee_charge() {
-                    return goods_transfee_charge;
-                }
-
-                public void setGoods_transfee_charge(int goods_transfee_charge) {
-                    this.goods_transfee_charge = goods_transfee_charge;
-                }
-
-                public int getActivity_type() {
-                    return activity_type;
-                }
-
-                public void setActivity_type(int activity_type) {
-                    this.activity_type = activity_type;
                 }
 
                 public int getIsSelected() {
