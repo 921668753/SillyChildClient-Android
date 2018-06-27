@@ -49,8 +49,7 @@ public class GlideCatchUtil {
     // 获取Glide磁盘缓存大小
     public long getCacheSize() {
         try {
-//            return getFolderSize(FileUtils.getSaveFolder(StringConstants.PHOTOCACHE));
-            return 0;
+            return getFolderSize(FileUtils.getSaveFolder(StringConstants.PHOTOCACHE));
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

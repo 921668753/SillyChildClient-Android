@@ -3,7 +3,6 @@ package com.sillykid.app.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -147,7 +146,7 @@ public class MyApplication extends Application {
             GlideCatchUtil.getInstance().clearCacheMemory();
             // 必须在后台线程中调用，建议同时clearMemory()
             GlideCatchUtil.getInstance().clearCacheDiskSelf();
-//            GlideCatchUtil.getInstance().cleanCatchDisk();
+            GlideCatchUtil.getInstance().cleanCatchDisk();
         }
     }
 }
