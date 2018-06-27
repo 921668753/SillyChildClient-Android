@@ -101,6 +101,8 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
 
     private Thread thread = null;
 
+    private List<GoodsListBean.DataBean> list = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_goodslist);
@@ -118,6 +120,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         cat = getIntent().getIntExtra("cat", 0);
         mark = getIntent().getStringExtra("mark");
         keyword = getIntent().getStringExtra("keyword");
+        list = new ArrayList<GoodsListBean.DataBean>();
     }
 
     @Override
@@ -224,7 +227,7 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<GoodsListBean.DataBean> list = new ArrayList<>();
+                list.clear();
                 for (int i = 0; i < goodsListBean.getData().size(); i++) {
                     Bitmap bitmap = GlideImageLoader.load(aty, goodsListBean.getData().get(i).getThumbnail());
                     if (bitmap != null) {
@@ -322,18 +325,6 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (thread != null) {
-            thread.interrupted();
-        }
-        thread = null;
-        goodsListAdapter.clear();
-        goodsListAdapter = null;
-    }
-
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
@@ -345,5 +336,17 @@ public class GoodsListActivity extends BaseActivity implements GoodsListContract
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        list.clear();
+        list = null;
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
+        goodsListAdapter.clear();
+        goodsListAdapter = null;
+    }
 
 }

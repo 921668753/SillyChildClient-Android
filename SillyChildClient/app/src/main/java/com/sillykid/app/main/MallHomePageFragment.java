@@ -123,6 +123,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
 
     private Thread thread = null;
 
+    private List<HomePageBean> list = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -141,7 +142,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         myListener = new MyLocationListener();
         spacesItemDecoration = new SpacesItemDecoration(7, 14);
         mallHomePageViewAdapter = new MallHomePageViewAdapter(recyclerview);
-        sv_home.setOnScrollChangeListener(this);
+        list = new ArrayList<HomePageBean>();
     }
 
 
@@ -149,6 +150,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         initBanner();
+        sv_home.setOnScrollChangeListener(this);
         gv_classification.setAdapter(homePageClassificationViewAdapter);
         gv_classification.setOnItemClickListener(this);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -224,7 +226,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    List<HomePageBean> list = new ArrayList<>();
+                    list.clear();
                     for (int i = 0; i < mallHomePageBean.getData().getHomePage().size(); i++) {
                         Bitmap bitmap = GlideImageLoader.load(aty, mallHomePageBean.getData().getHomePage().get(i).getThumbnail());
                         if (bitmap != null) {
@@ -481,6 +483,8 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
         super.onDestroy();
         mallHomePageViewAdapter.clear();
         mallHomePageViewAdapter = null;
+        list.clear();
+        list = null;
         if (thread != null) {
             thread.interrupted();
         }

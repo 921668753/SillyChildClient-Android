@@ -47,6 +47,9 @@ public class ShopHomePageBean extends BaseResult<List<ShopHomePageBean.DataBean>
         private String store_name;
         private String brand_name;
         private String goods_tag;
+        private int width;
+        private int height;
+
 
         public int getGoods_id() {
             return goods_id;
@@ -190,6 +193,22 @@ public class ShopHomePageBean extends BaseResult<List<ShopHomePageBean.DataBean>
 
         public void setGoods_tag(String goods_tag) {
             this.goods_tag = goods_tag;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
         }
     }
 }

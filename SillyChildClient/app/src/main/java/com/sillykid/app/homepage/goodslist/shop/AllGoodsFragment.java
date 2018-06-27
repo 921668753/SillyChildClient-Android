@@ -1,6 +1,7 @@
 package com.sillykid.app.homepage.goodslist.shop;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -20,9 +21,13 @@ import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.goodslist.shop.AllGoodsViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.homepage.goodslist.shop.AllGoodsBean;
+import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SpacesItemDecoration;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.loginregister.LoginActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -82,12 +87,16 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
     private boolean isShowLoadingMore = false;
 
     private AllGoodsViewAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+
+    private StaggeredGridLayoutManager layoutManager;
+
     private SpacesItemDecoration spacesItemDecoration;
 
     private int storeid = 0;
     private String order = "desc";
     private int key = 0;
+    private List<AllGoodsBean.DataBean> list = null;
+    private Thread thread = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -102,7 +111,9 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         mAdapter = new AllGoodsViewAdapter(recyclerView);
         spacesItemDecoration = new SpacesItemDecoration(7, 14);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。
         storeid = aty.getIntent().getIntExtra("storeid", 0);
+        list = new ArrayList<AllGoodsBean.DataBean>();
     }
 
     @Override
@@ -125,6 +136,13 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         recyclerView.addItemDecoration(spacesItemDecoration);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnRVItemClickListener(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments();
+            }
+        });
     }
 
     /**
@@ -224,15 +242,40 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
             mRefreshLayout.endLoadingMore();
             return;
         }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            mAdapter.clear();
-            mAdapter.addNewData(allGoodsBean.getData());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(allGoodsBean.getData());
+        if (thread != null && !thread.isAlive()) {
+            thread.run();
+            return;
         }
-        dismissLoadingDialog();
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                list.clear();
+                for (int i = 0; i < allGoodsBean.getData().size(); i++) {
+                    Bitmap bitmap = GlideImageLoader.load(aty, allGoodsBean.getData().get(i).getThumbnail());
+                    if (bitmap != null) {
+                        allGoodsBean.getData().get(i).setHeight(bitmap.getHeight());
+                        allGoodsBean.getData().get(i).setWidth(bitmap.getWidth());
+                    }
+                    list.add(allGoodsBean.getData().get(i));
+                }
+                aty.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                            mRefreshLayout.endRefreshing();
+                            mAdapter.clear();
+                            mAdapter.addNewData(list);
+                        } else {
+                            mRefreshLayout.endLoadingMore();
+                            mAdapter.addMoreData(list);
+                        }
+                        dismissLoadingDialog();
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 
     @Override
@@ -270,9 +313,6 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
-//        } else {
-//            ViewInject.toast(msg);
-//        }
     }
 
     @Override
@@ -280,6 +320,12 @@ public class AllGoodsFragment extends BaseFragment implements AllGoodsContract.V
         super.onDestroy();
         mAdapter.clear();
         mAdapter = null;
+        list.clear();
+        list = null;
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
     }
 
 }

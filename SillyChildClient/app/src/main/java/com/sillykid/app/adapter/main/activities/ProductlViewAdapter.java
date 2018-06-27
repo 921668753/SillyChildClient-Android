@@ -3,9 +3,11 @@ package com.sillykid.app.adapter.main.activities;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.ScaleImageView;
+import com.kymjs.common.DensityUtils;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.main.ActivitiesBean.DataBean.MonthHotBean;
@@ -41,7 +43,21 @@ public class ProductlViewAdapter extends BGARecyclerViewAdapter<MonthHotBean> {
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, MonthHotBean model) {
-        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), (ImageView) helper.getView(R.id.img_good), 5, R.mipmap.placeholderfigure);
+        ImageView imageView = (ImageView) helper.getView(R.id.img_good);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+        float width1 = (DensityUtils.getScreenW() - 7 * 3 - 10 * 2) / 2;
+        lp.width = (int) width1;
+        float scale = 0;
+        float tempHeight = 0;
+        if (model.getWidth() <= 0 || model.getHeight() <= 0) {
+            tempHeight = width1;
+        } else {
+            scale = (width1 + 0f) / model.getWidth();
+            tempHeight = model.getHeight() * scale;
+        }
+        lp.height = (int) tempHeight;
+        imageView.setLayoutParams(lp);
+        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), imageView, 5, (int) lp.width, (int) lp.height, R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
         if (StringUtils.isEmpty(model.getBrief())) {
             helper.setVisibility(R.id.tv_goodSynopsis, View.GONE);

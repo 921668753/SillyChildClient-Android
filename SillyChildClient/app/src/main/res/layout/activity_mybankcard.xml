@@ -20,4 +20,5 @@
         android:scrollbars="none"
         tools:listitem="@layout/item_bankcard" />
 
+    <include layout="@layout/common_error" />
 </LinearLayout>

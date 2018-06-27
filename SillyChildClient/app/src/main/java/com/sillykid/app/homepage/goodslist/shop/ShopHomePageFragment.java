@@ -1,6 +1,7 @@
 package com.sillykid.app.homepage.goodslist.shop;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -24,6 +25,7 @@ import com.sillykid.app.utils.SpacesItemDecoration;
 import com.sillykid.app.homepage.goodslist.goodsdetails.GoodsDetailsActivity;
 import com.sillykid.app.utils.GlideImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -62,6 +64,10 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
 
     private int storeid = 0;
 
+    private Thread thread = null;
+
+    private List<ShopHomePageBean.DataBean> list = null;
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (ShopActivity) getActivity();
@@ -75,6 +81,7 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         spacesItemDecoration = new SpacesItemDecoration(7, 14);
         shopHomepageAdapter = new ShopHomePageViewAdapter(recyclerview);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        list = new ArrayList<ShopHomePageBean.DataBean>();
         storeid = aty.getIntent().getIntExtra("storeid", 0);
         ((ShopHomePageContract.Presenter) mPresenter).getStoreImage(storeid);
     }
@@ -112,6 +119,13 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(shopHomepageAdapter);
         shopHomepageAdapter.setOnRVItemClickListener(this);
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments();
+            }
+        });
     }
 
 
@@ -153,10 +167,35 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
                 errorMsg(getString(R.string.noale), 1);
                 return;
             }
-            shopHomepageAdapter.clear();
-            shopHomepageAdapter.addNewData(shopHomePageBean.getData());
+            if (thread != null && !thread.isAlive()) {
+                thread.run();
+                return;
+            }
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    list.clear();
+                    for (int i = 0; i < shopHomePageBean.getData().size(); i++) {
+                        Bitmap bitmap = GlideImageLoader.load(aty, shopHomePageBean.getData().get(i).getThumbnail());
+                        if (bitmap != null) {
+                            shopHomePageBean.getData().get(i).setHeight(bitmap.getHeight());
+                            shopHomePageBean.getData().get(i).setWidth(bitmap.getWidth());
+                        }
+                        list.add(shopHomePageBean.getData().get(i));
+                    }
+                    aty.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            shopHomepageAdapter.clear();
+                            shopHomepageAdapter.addNewData(list);
+                            dismissLoadingDialog();
+                        }
+                    });
+                }
+            });
+            thread.start();
         }
-        dismissLoadingDialog();
+        // dismissLoadingDialog();
     }
 
 
@@ -225,5 +264,11 @@ public class ShopHomePageFragment extends BaseFragment implements ShopHomePageCo
         super.onDestroy();
         shopHomepageAdapter.clear();
         shopHomepageAdapter = null;
+        list.clear();
+        list = null;
+        if (thread != null) {
+            thread.interrupted();
+        }
+        thread = null;
     }
 }

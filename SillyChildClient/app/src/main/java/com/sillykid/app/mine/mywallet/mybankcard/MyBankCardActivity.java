@@ -3,7 +3,10 @@ package com.sillykid.app.mine.mywallet.mybankcard;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
@@ -44,6 +47,21 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
     private int removePosition = 0;
 
+    /**
+     * 错误提示页
+     */
+    @BindView(id = R.id.ll_commonError)
+    private LinearLayout ll_commonError;
+
+    @BindView(id = R.id.img_err)
+    private ImageView img_err;
+
+    @BindView(id = R.id.tv_hintText)
+    private TextView tv_hintText;
+
+    @BindView(id = R.id.tv_button, click = true)
+    private TextView tv_button;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_mybankcard);
@@ -79,7 +97,6 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
         };
     }
 
-
     private void initTitle() {
         if (type == 1) {
             titlebar.setTitleText(R.string.selectBankCard);
@@ -102,6 +119,21 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
             }
         };
         titlebar.setDelegate(simpleDelegate);
+    }
+
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_button:
+                if (tv_button.getText().toString().contains(getString(R.string.retry))) {
+                    showLoadingDialog(getString(R.string.dataLoad));
+                    ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
+                    return;
+                }
+                break;
+        }
     }
 
     @Override
@@ -132,16 +164,24 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+            ll_commonError.setVisibility(View.GONE);
+            lv_bankCard.setVisibility(View.VISIBLE);
             MyBankCardBean myBankCardBean = (MyBankCardBean) JsonUtil.getInstance().json2Obj(success, MyBankCardBean.class);
-            myBankCardViewAdapter.clear();
-            if (myBankCardBean.getData() != null && myBankCardBean.getData().size() > 0) {
-                myBankCardViewAdapter.addNewData(myBankCardBean.getData());
+            if (myBankCardBean.getData() == null || myBankCardBean.getData().size() <= 0) {
+                errorMsg(getString(R.string.notAddedBankCard), 0);
+                return;
             }
+            myBankCardViewAdapter.clear();
+            myBankCardViewAdapter.addNewData(myBankCardBean.getData());
         } else if (flag == 1) {
             if (submitBouncedDialog != null && submitBouncedDialog.isShowing()) {
                 submitBouncedDialog.dismiss();
             }
             myBankCardViewAdapter.removeItem(removePosition);
+            if (myBankCardViewAdapter.getData() == null || myBankCardViewAdapter.getData().size() <= 0) {
+                errorMsg(getString(R.string.notAddedBankCard), 0);
+                return;
+            }
         } else if (flag == 2) {
             MyBankCardBean.DataBean dataBean = myBankCardViewAdapter.getItem(removePosition);
             Intent intent = getIntent();
@@ -157,12 +197,38 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
+        if (flag == 0) {
+            lv_bankCard.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setVisibility(View.VISIBLE);
+            tv_button.setVisibility(View.VISIBLE);
+            if (isLogin(msg)) {
+                img_err.setImageResource(R.mipmap.no_login);
+                tv_hintText.setVisibility(View.GONE);
+                tv_button.setText(getString(R.string.login));
+                skipActivity(this, LoginActivity.class);
+                return;
+            } else if (msg.contains(getString(R.string.checkNetwork))) {
+                img_err.setImageResource(R.mipmap.no_network);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+                return;
+            } else if (msg.contains(getString(R.string.notAddedBankCard))) {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setVisibility(View.GONE);
+                return;
+            }
+            img_err.setImageResource(R.mipmap.no_data);
+            tv_hintText.setText(msg);
+            tv_button.setText(getString(R.string.retry));
+            return;
+        }
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);
-
     }
 
 

@@ -93,6 +93,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
 
     private Thread thread = null;
 
+    private List<ActivitiesBean.DataBean.MonthHotBean> list = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -107,6 +108,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         bargainViewAdapter = new BargainViewAdapter(aty, hlv_bargain);
         spacesItemDecoration = new SpacesItemDecoration(7, 14);
         productlViewAdapter = new ProductlViewAdapter(recyclerview);
+        list = new ArrayList<ActivitiesBean.DataBean.MonthHotBean>();
     }
 
     @Override
@@ -229,7 +231,7 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    List<ActivitiesBean.DataBean.MonthHotBean> list = new ArrayList<>();
+                    list.clear();
                     for (int i = 0; i < activitiesBean.getData().getMonthHot().size(); i++) {
                         Bitmap bitmap = GlideImageLoader.load(aty, activitiesBean.getData().getMonthHot().get(i).getThumbnail());
                         if (bitmap != null) {
@@ -249,7 +251,6 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
                 }
             });
             thread.start();
-            dismissLoadingDialog();
         }
     }
 
@@ -331,6 +332,8 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
         super.onDestroy();
         bargainViewAdapter.clear();
         bargainViewAdapter = null;
+        list.clear();
+        list = null;
         if (thread != null) {
             thread.interrupted();
         }
