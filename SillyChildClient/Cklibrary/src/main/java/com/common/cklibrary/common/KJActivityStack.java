@@ -110,7 +110,9 @@ public class KJActivityStack {
         for (int i = 0; i < activityStack.size(); i++) {
             if (activityStack.get(i) != null && activityStack.get(i).getClass().equals(cls)) {
                 finishActivity((Activity) activityStack.get(i));
+                i--;
             }
+
         }
 
 
@@ -133,11 +135,6 @@ public class KJActivityStack {
                 i--;
             }
         }
-//        for (I_KJActivity activity : activityStack) {
-//            if (activity != null && !(activity.getClass().equals(cls))) {
-//                finishActivity((Activity) activity);
-//            }
-//        }
     }
 
     /**
@@ -156,7 +153,6 @@ public class KJActivityStack {
             } else {
                 if (activityStack.get(i) != null && !activityStack.get(i).getClass().equals(cls1)) {
                     ((Activity) activityStack.get(i)).finish();
-                    i--;
                 }
             }
         }
@@ -169,7 +165,6 @@ public class KJActivityStack {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 ((Activity) activityStack.get(i)).finish();
-                i--;
             }
         }
         activityStack.clear();
