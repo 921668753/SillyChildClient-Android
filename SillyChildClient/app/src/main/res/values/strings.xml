@@ -137,6 +137,7 @@
     <string name="trip">出行</string>
     <string name="mine">我的</string>
     <string name="noDevelopment">功能开发中，敬请期待……</string>
+    <string name="clickAgainExitProgram">再按一次退出程序</string>
 
     <!--首页-->
     <string name="sillyChild">傻孩志</string>
