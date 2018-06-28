@@ -77,4 +77,9 @@ public class StringNewConstants {
      */
     public static String MainServiceAction = "com.sillykid.app.services.MainReceiver";
 
+
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
 }

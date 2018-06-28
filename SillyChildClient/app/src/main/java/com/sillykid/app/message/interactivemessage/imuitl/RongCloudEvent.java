@@ -1,15 +1,19 @@
 package com.sillykid.app.message.interactivemessage.imuitl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+
+import static com.sillykid.app.constant.StringNewConstants.MainServiceAction;
 
 /**
  * 融云SDK事件监听处理。 把事件统一处理，开发者可直接复制到自己的项目中去使用。
@@ -23,6 +27,7 @@ import io.rong.imlib.model.UserInfo;
  * 6、连接状态监听器，以获取连接相关状态：    ConnectionStatusListener。
  * 7、地理位置提供者：                 LocationProvider。
  * 8、会话界面操作的监听器：            ConversationBehaviorListener。
+ * 9、未读消息数监听器的监听器：           addUnReadMessageCountChangedObserver。
  */
 public final class RongCloudEvent implements
         RongIM.ConversationListBehaviorListener,
@@ -33,7 +38,7 @@ public final class RongCloudEvent implements
         RongIMClient.ConnectionStatusListener,
         RongIM.LocationProvider,
         RongIM.ConversationBehaviorListener,
-        RongIM.OnSendMessageListener {
+        RongIM.OnSendMessageListener, IUnReadMessageObserver {
 
     private static final String TAG = RongCloudEvent.class.getSimpleName();
 
@@ -78,6 +83,17 @@ public final class RongCloudEvent implements
         RongIM.setUserInfoProvider(this, true);// 设置用户信息提供者。
         //  RongIM.setGroupInfoProvider(this, true);// 设置群组信息提供者。
         RongIM.setLocationProvider(this);//设置地理位置提供者,不用位置的同学可以注掉此行代码
+        setReadReceiptConversationType();
+    }
+
+    private void setReadReceiptConversationType() {
+        Conversation.ConversationType[] types = new Conversation.ConversationType[]{
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP,
+                Conversation.ConversationType.DISCUSSION
+        };
+        RongIM.getInstance().setReadReceiptConversationTypeList(types);
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, types);
     }
 
     /*
@@ -116,8 +132,7 @@ public final class RongCloudEvent implements
 
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
-                //   ActivityUtil.reLogout(IHealthActivity.INSTANCE);
-
+                UserUtil.clearUserInfo(mContext);
                 break;
         }
     }
@@ -210,5 +225,26 @@ public final class RongCloudEvent implements
                 }
             }
         });
+    }
+
+    /**
+     * 未读消息数监听器
+     *
+     * @param i
+     */
+    @Override
+    public void onCountChanged(int i) {
+        Intent news = new Intent();
+        news.setAction(MainServiceAction);
+        if (i > 0) {
+            news.putExtra("havemsg", true);
+        } else {
+            news.putExtra("havemsg", false);
+        }
+        mContext.sendBroadcast(news);
+    }
+
+    public void removeUnReadMessageCountChangedObserver() {
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(this);
     }
 }

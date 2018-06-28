@@ -10,6 +10,8 @@ import com.sillykid.app.main.MainActivity;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
+import static com.sillykid.app.constant.StringNewConstants.MainServiceAction;
+
 /**
  * 为了接收推送消息，您需要自定义一个继承自 PushMessageReceiver 类的 BroadcastReceiver (必须实现,否则会收不到推送消息)，
  * 实现其中的 onNotificationMessageArrived，onNotificationMessageClicked 然后把该 receiver 注册到 AndroidManifest.xml 文件中。
@@ -32,6 +34,9 @@ public class RongIMPushMessageReceiver extends PushMessageReceiver {
         news.putExtra("chageMessageIcon", 20);
         news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(news);
+        news.setAction(MainServiceAction);
+        news.putExtra("havemsg", false);
+        context.sendBroadcast(news);
 //        Intent intent = new Intent();
 //        intent.putExtra("newChageIcon", 1);
 //        intent.putExtra("chageIcon", 20);

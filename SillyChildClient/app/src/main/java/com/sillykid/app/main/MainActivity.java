@@ -23,13 +23,21 @@ import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.constant.StringNewConstants;
-import com.sillykid.app.custominterfaces.MainCallBack;
+import com.sillykid.app.message.interactivemessage.imuitl.RongCloudEvent;
+import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
+import com.sillykid.app.receivers.MainCallBack;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.receivers.MainReceiver;
 import com.sillykid.app.services.MainService;
+import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+
+import static com.sillykid.app.constant.StringNewConstants.KEY_EXTRAS;
+import static com.sillykid.app.constant.StringNewConstants.KEY_MESSAGE;
+import static com.sillykid.app.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
 
 
 @SuppressWarnings("deprecation")
@@ -85,16 +93,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     private MessageReceiver mMessageReceiver;
 
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";
-
     /**
      * 用来表示移动的Fragment
      */
     private int chageIcon;
-    public static boolean isForeground = true;
+
     private Intent intentservice;
     private MainReceiver mainReceiver;
 
@@ -124,10 +127,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void initWidget() {
         super.initWidget();
-//        boolean isShow = getIntent().getBooleanExtra("isShow", false);
-//        if (isShow) {
-//            tv_messageTag.setVisibility(View.VISIBLE);
-//        }
         initColors();
     }
 
@@ -221,9 +220,15 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 } else {
                     //  int i = 1 / 0;
                     //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
-                    //    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
+                    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
                     JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
-                    //    MobclickAgent.onKillProcess(aty);
+                    MobclickAgent.onKillProcess(aty);
+                    if (!StringUtils.isEmpty(UserUtil.getResTokenInfo(this))) {
+                        //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
+                        //清除融云信息，退出登陆
+                        RongIM.getInstance().logout();
+                    }
+                    RongCloudEvent.getInstance().removeUnReadMessageCountChangedObserver();
                     //第一个参数为是否解绑推送的devicetoken
                     KJActivityStack.create().appExit(aty);
                 }
@@ -232,27 +237,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         return super.onKeyUp(keyCode, event);
     }
 
-    @Override
-    protected void onDestroy() {
-        isForeground = false;
-        unregisterReceiver(mMessageReceiver);
-        if (mainReceiver != null) {
-            unregisterReceiver(mainReceiver);
-            mainReceiver = null;
-        }
-        if (intentservice != null) {
-            stopService(intentservice);
-            intentservice = null;
-        }
-        super.onDestroy();
-    }
 
     public void registerMessageReceiver() {
         mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
-        Intent intent = registerReceiver(mMessageReceiver, filter);
+        registerReceiver(mMessageReceiver, filter);
         //极光推送 定制声音、震动、闪灯等 Notification 样式。
         BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(MainActivity.this);
 //        builder.statusBarDrawable = R.mipmap.ic_launcher;
@@ -384,15 +375,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     protected void onResume() {
         super.onResume();
         intentservice = new Intent(MainActivity.this, MainService.class);
-        MainActivity.this.startService(intentservice);
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                intentservice=new Intent(MainActivity.this, MainService.class);
-//                MainActivity.this.startService(intentservice);
-//            }
-//        });
-//        thread.start();
+        startService(intentservice);
     }
 
     @Override
@@ -406,14 +389,31 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void msgStyle(boolean havemsg) {
-//        if (havemsg) {
-//            tv_messageTag.setVisibility(View.VISIBLE);
-//        } else {
-//            tv_messageTag.setVisibility(View.GONE);
-//        }
+        if (havemsg) {
+            tv_messageTag.setVisibility(View.VISIBLE);
+        } else {
+            tv_messageTag.setVisibility(View.GONE);
+        }
     }
 
     public int getChageIcon() {
         return chageIcon;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mMessageReceiver != null) {
+            unregisterReceiver(mMessageReceiver);
+            mMessageReceiver = null;
+        }
+        if (mainReceiver != null) {
+            unregisterReceiver(mainReceiver);
+            mainReceiver = null;
+        }
+        if (intentservice != null) {
+            stopService(intentservice);
+            intentservice = null;
+        }
+        super.onDestroy();
     }
 }
