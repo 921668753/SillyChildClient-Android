@@ -120,11 +120,13 @@
     <dimen name="dimen209">209dp</dimen>
     <dimen name="dimen210">210dp</dimen>
     <dimen name="dimen215">215dp</dimen>
+    <dimen name="dimen224">224dp</dimen>
     <dimen name="dimen230">230dp</dimen>
     <dimen name="dimen235">235dp</dimen>
-    <dimen name="dimen240">240dp</dimen>
     <dimen name="dimen238">238dp</dimen>
+    <dimen name="dimen240">240dp</dimen>
     <dimen name="dimen246">246dp</dimen>
+    <dimen name="dimen247">247dp</dimen>
     <dimen name="dimen250">250dp</dimen>
     <dimen name="dimen259">259dp</dimen>
     <dimen name="dimen282">282dp</dimen>

@@ -12,6 +12,7 @@
 
     <!--设置支付密码-->
     <color name="fEFDFDColors">#FEFDFD</color>
+    <color name="fCFCFCColors">#FCFCFC</color>
     <color name="bEBEC0Colors">#BEBEC0</color>
     <color name="e8E8EColors">#8E8E8E</color>
     <color name="f2222Colors">#222222</color>

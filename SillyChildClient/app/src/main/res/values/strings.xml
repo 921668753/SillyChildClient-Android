@@ -612,6 +612,8 @@
     <string name="noale">亲，您来的太早了，还没有商品出售哟~</string>
 
 
+
+
     <!--商城  店铺首页  全部商品 商品详情-->
     <string name="GoodsDetails">商品详情</string>
     <string name="color">颜色</string>
@@ -626,6 +628,16 @@
     <string name="inventory">库存</string>
     <string name="insufficient">不足</string>
     <string name="selectProductAttribute">请选择商品属性</string>
+    <string name="collection">收藏</string>
+    <string name="unitPrice">单价</string>
+    <string name="distribution">配送</string>
+    <string name="to">至</string>
+    <string name="free_shipping">免运费</string>
+    <string name="instructions2">说明</string>
+    <string name="productEvaluation">商品评价</string>
+
+
+
 
 
     <!--商城  店铺首页  全部商品 评论-->

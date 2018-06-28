@@ -44,7 +44,7 @@
     <color name="dFFDE6Colors">#DFFDE6</color>
     <color name="fF4E00Colors">#FF4E00</color>
     <color name="c9FFD2Colors">#C9FFD2</color>
-
+    <color name="fF7565Colors">#FF7565</color>
 
     <!--首页-->
     <color name="translucent">#50000000</color>
@@ -61,6 +61,10 @@
     <color name="mallduanxian">#aaaaaa</color>
     <color name="f1F4F6Colors">#F1F4F6</color>
     <color name="fF3542Colors">#FF3542</color>
+
+
+
+
 
     <!--购物车-->
     <color name="bEBEBEColors">#BEBEBE</color>

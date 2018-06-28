@@ -312,6 +312,7 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
             specificationsBouncedDialog.dismissLoadingDialog();
             ViewInject.toast(getString(R.string.addCartSuccess));
         } else if (flag == 5) {
+            RongIMUtil.connectRongIM(this);
             if (!StringUtils.isEmpty(store_name) && store_name.contains(getString(R.string.platformProprietary))) {
                 //首先需要构造使用客服者的用户信息
                 //            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
