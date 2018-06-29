@@ -17,6 +17,7 @@ import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.sillykid.app.homepage.BannerDetailsActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.sillykid.app.R;
 import com.sillykid.app.entity.loginregister.LoginBean;
@@ -194,6 +195,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            CrashReport.putUserData(this, "mobile", et_accountNumber.getText().toString());
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();

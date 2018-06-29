@@ -20,6 +20,7 @@ import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -198,9 +199,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         } else if (flag == 1) {
             if (StringUtils.isEmpty(openid)) {
                 MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+                CrashReport.putUserData(this, "mobile", et_accountNumber.getText().toString());
             } else {
                 MobclickAgent.onProfileSignIn(openid);
+                CrashReport.putUserData(this, "openid", openid);
             }
+
             dismissLoadingDialog();
             /**
              * 发送消息

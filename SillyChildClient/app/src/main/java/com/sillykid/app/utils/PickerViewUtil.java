@@ -13,7 +13,6 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
-import com.sillykid.app.application.MyApplication;
 import com.sillykid.app.entity.NationalCity;
 
 import org.json.JSONArray;
@@ -50,7 +49,7 @@ public abstract class PickerViewUtil {
         this.type = type;
         //添加三级联动数据
         if (type == 0) {
-            showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+            showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
             thread1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -61,7 +60,7 @@ public abstract class PickerViewUtil {
             });
             thread1.start();
         } else {
-            showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+            showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
             thread2 = new Thread(new Runnable() {
                 @Override
                 public void run() {

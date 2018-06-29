@@ -27,6 +27,7 @@ import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.setup.dialog.ClearCacheDialog;
 import com.sillykid.app.mine.setup.feedback.FeedbackActivity;
 import com.sillykid.app.utils.FileNewUtil;
+import com.tencent.bugly.beta.Beta;
 
 import java.io.File;
 import java.util.List;
@@ -113,21 +114,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_versionNumber:
-                if (isUpdateApp) {
-                    updateAppUrl = PreferenceHelper.readString(aty, StringConstants.FILENAME, "updateAppUrl", null);
-                    if (StringUtils.isEmpty(updateAppUrl)) {
-                        return;
-                    }
-                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.dismiss();
-                            readAndWriteTask(updateAppUrl);
-                        }
-                    }).show();
-                    break;
-                }
-                ViewInject.toast(getString(R.string.latestVersion));
+                Beta.checkUpgrade();
                 break;
             case R.id.ll_clearCache:
                 showClearCacheDialog();

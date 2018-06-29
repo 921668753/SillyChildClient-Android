@@ -199,6 +199,9 @@ public static final ** CREATOR;
 
 # RongCloud SDK
 -keep class io.rong.** {*;}
+-keep class com.huawei.android.**
+-keep class io.rong.imkit.plugin.**
+-keep class com.parse.**
 -keep class * implements io.rong.imlib.model.MessageContent {*;}
 -dontwarn io.rong.push.**
 -dontnote com.xiaomi.**
@@ -223,6 +226,16 @@ public static final ** CREATOR;
 -ignorewarnings
 
 -keep class io.rong.app.DemoNotificationReceiver {*;}
+
+
+#==================腾讯bugly=====================
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
+
+#==================银联支付=====================
+-keep class com.unionpay.mobile.android.**
+
 
 
 ## ----------------------------------

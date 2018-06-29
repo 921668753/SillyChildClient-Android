@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 控制振动器 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 防止设备休眠 -->
@@ -63,6 +65,7 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/android_template"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -344,7 +347,7 @@
         <!--首页    店铺首页  全部商品-->
         <activity
             android:name=".homepage.goodslist.shop.ShopActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <!--消息   消息列表-->
@@ -458,12 +461,12 @@
         <!--我的   我的订单 查看评论-->
         <activity
             android:name=".mine.myorder.orderevaluation.SeeEvaluationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的订单 查看评论 图片浏览-->
         <activity
             android:name=".mine.myorder.orderevaluation.ImagePagerActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   我的订单 订单详情-->
         <activity
@@ -613,14 +616,14 @@
         <!--我的   设置-->
         <activity
             android:name=".mine.setup.SetUpActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   设置  帮助中心-->
 
         <!--我的   设置  意见反馈-->
         <activity
             android:name=".mine.setup.feedback.FeedbackCacheActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   设置  意见反馈-->
         <activity
@@ -633,12 +636,25 @@
         <!--我的   分享有礼-->
         <activity
             android:name=".mine.sharingceremony.SharingCeremonyActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--我的   VIP紧急电话-->
         <activity
             android:name=".mine.vipemergencycall.VipEmergencyCallActivity"
             android:screenOrientation="portrait"></activity>
+
+
+        <!-- Bugly升级SDK配置开始  -->
+        <!-- Bugly升级SDK配置开始  -->
+        <!-- Bugly升级SDK配置开始  -->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+        <!-- Bugly升级SDK配置开始  -->
+        <!-- Bugly升级SDK配置开始  -->
+        <!-- Bugly升级SDK配置开始  -->
+
 
         <!--融云start-->
         <!--融云start-->
@@ -869,10 +885,12 @@
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"
+                tools:replace="name,resource" />
         </provider>
         <!--Anrroid 7.0SD卡路径-->
         <!--Anrroid 7.0SD卡路径-->

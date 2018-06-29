@@ -3,13 +3,10 @@ package com.sillykid.app.mine.mywallet.paymentpasswordmanagement.modifypaymentpa
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
-import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.R;
-import com.sillykid.app.application.MyApplication;
-import com.sillykid.app.retrofit.RequestClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +27,11 @@ public class ModifyPaymentPasswordPresenter implements ModifyPaymentPasswordCont
     @Override
     public void postCode(String phone, String type) {
         if (StringUtils.isEmpty(phone)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hintAccountText), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
             return;
         }
         if (phone.length() != 11) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
@@ -65,19 +62,19 @@ public class ModifyPaymentPasswordPresenter implements ModifyPaymentPasswordCont
     @Override
     public void postVerificationCode(String phone, String code) {
         if (StringUtils.isEmpty(phone)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hintAccountText), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
             return;
         }
         if (phone.length() != 11) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
         if (StringUtils.isEmpty(code)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.errorCode), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
             return;
         }
         if (code.length() < 4 || code.length() > 6) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.enterCorrectVerificationCode), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterCorrectVerificationCode), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();

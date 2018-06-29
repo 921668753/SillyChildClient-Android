@@ -10,16 +10,18 @@
         android:layout_height="@dimen/dimen294"
         android:background="@mipmap/my_wallet_background">
 
-        <include layout="@layout/common_title" />
+        <include
+            android:id="@+id/titlebar0"
+            layout="@layout/common_title" />
 
         <TextView
             android:id="@+id/tv_yue"
             style="@style/WrapWrap"
+            android:layout_below="@id/titlebar0"
             android:layout_centerHorizontal="true"
             android:paddingLeft="@dimen/dimen20"
             android:paddingRight="@dimen/dimen20"
             android:paddingTop="@dimen/dimen40"
-            android:layout_below="@id/titlebarl"
             android:singleLine="true"
             android:text="￥5201314.00"
             android:textColor="@color/whiteColors"
@@ -202,30 +204,6 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </LinearLayout>

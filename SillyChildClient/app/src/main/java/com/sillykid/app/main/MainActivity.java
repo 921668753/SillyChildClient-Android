@@ -29,6 +29,7 @@ import com.sillykid.app.receivers.MainCallBack;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.receivers.MainReceiver;
 import com.sillykid.app.services.MainService;
+import com.tencent.bugly.beta.Beta;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
@@ -228,6 +229,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                         //清除融云信息，退出登陆
                         RongIM.getInstance().logout();
                     }
+                    Beta.unInit();
                     RongCloudEvent.getInstance().removeUnReadMessageCountChangedObserver();
                     //第一个参数为是否解绑推送的devicetoken
                     KJActivityStack.create().appExit(aty);
