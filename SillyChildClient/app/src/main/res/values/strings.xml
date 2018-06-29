@@ -723,6 +723,8 @@
     <string name="fans">粉丝</string>
     <string name="follow">关注</string>
     <string name="beLike">被赞</string>
+    <string name="footprint">足迹</string>
+    <string name="tips">心得</string>
     <string name="beCollected">被收藏</string>
     <string name="myWallet">我的钱包</string>
     <string name="accountDetails">账户明细</string>
@@ -748,6 +750,17 @@
     <string name="makeSureAddShoppingCart">确定加入购物车</string>
     <string name="determineDeleteCollection">确定删除该商品收藏</string>
     <string name="addCartSuccess">加入购物车成功</string>
+    <string name="clickPrivilege">点击查看特权</string>
+    <string name="myService">我的服务</string>
+    <string name="purse">钱包</string>
+    <string name="inviteFriends">邀请好友</string>
+    <string name="helpCustomerService">帮助与客服</string>
+
+
+
+
+
+
 
 
     <!--个人中心  收货地址-->
@@ -1097,6 +1110,7 @@
     <string name="closed">已关闭</string>
     <string name="afterSale">售后</string>
     <string name="all">全部</string>
+    <string name="evaluation">评价</string>
     <string name="anonymousEvaluation">匿名评价</string>
     <string name="evaluationOtherFriends">你的评价能帮助其他小伙伴呦</string>
     <string name="scoring">评分</string>
@@ -1111,6 +1125,7 @@
     <string name="guideEvaluation">司导的评价：</string>
     <string name="fillWords">请输入评论的文字内容</string>
     <string name="scoreRemind">请给予评分</string>
+    <string name="refunds">退货退款</string>
 
     <!-- 个人中心 我的订单  商品订单-->
     <string name="orderNumber">订单编号：</string>
