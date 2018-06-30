@@ -29,7 +29,12 @@ public class JsonUtil {
 //    }
     @SuppressWarnings("unchecked")
     public static String obj2JsonString(Object obj) {
-        return gson.toJson(obj);
+        try {
+            return gson.toJson(obj);
+        } catch (Exception e) {
+            return "";
+        }
+
 
     }
 

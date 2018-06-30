@@ -6,13 +6,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.kymjs.common.FileUtils;
@@ -105,16 +103,6 @@ public class MyApplicationLike extends DefaultApplicationLike {
         ImagePicker imagePicker = ImagePicker.getInstance();
         GlideImageLoader glideImageLoader = new GlideImageLoader();
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
-    }
-
-
-    /**
-     * 关闭Activity列表中的所有Activity
-     */
-    public void finishActivity() {
-        KJActivityStack.create().finishAllActivity();
-        //杀死该应用进程
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 

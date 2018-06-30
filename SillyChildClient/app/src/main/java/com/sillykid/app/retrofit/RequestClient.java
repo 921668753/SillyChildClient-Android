@@ -2696,7 +2696,7 @@ public class RequestClient {
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
             UserUtil.clearUserInfo(context);
-            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MineFragment"))) {
+            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MineFragment") || context.getClass().getName().contains("Mine1Fragment"))) {
                 /**
                  * 发送消息
                  */

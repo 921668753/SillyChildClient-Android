@@ -13,14 +13,9 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
  */
 public class MyApplication extends TinkerApplication {
 
-    public static MyApplication instance;
-    private static Context mContext;
-
     public MyApplication() {
         super(ShareConstants.TINKER_ENABLE_ALL, BuildConfig.APPLICATION_ID + ".application.MyApplicationLike",
                 "com.tencent.tinker.loader.TinkerLoader", false);
-        instance = this;
     }
-
 
 }

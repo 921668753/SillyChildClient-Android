@@ -741,7 +741,7 @@
     <string name="yuan">元</string>
     <string name="yuan1">元/天</string>
     <string name="yuan2">元/次</string>
-    <string name="loginOrRegister">登录/注册</string>
+    <string name="loginOrRegister">登录/注册 ></string>
     <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>
     <string name="noHaveUserInfo">没有获取到用户信息，您可移步至客服为您处理！</string>
     <string name="prompting">提示</string>
@@ -755,9 +755,6 @@
     <string name="purse">钱包</string>
     <string name="inviteFriends">邀请好友</string>
     <string name="helpCustomerService">帮助与客服</string>
-
-
-
 
 
 

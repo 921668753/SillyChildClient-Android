@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         contentFragment = new MallHomePageFragment();
         contentFragment1 = new MessageFragment();
         contentFragment2 = new ActivitiesFragment();
-        contentFragment3 = new MineFragment();
+        contentFragment3 = new Mine1Fragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
         registerMessageReceiver();  //   极光推送 used for receive msg
         ((MainContract.Presenter) mPresenter).getChatManagerListener();

@@ -32,6 +32,7 @@ import com.sillykid.app.mine.mycollection.MyCollectionActivity;
 import com.sillykid.app.mine.myorder.MyOrderActivity;
 import com.sillykid.app.mine.myshoppingcart.MyShoppingCartActivity;
 import com.sillykid.app.mine.mywallet.MyWalletActivity;
+import com.sillykid.app.mine.mywallet.coupons.CouponsActivity;
 import com.sillykid.app.mine.personaldata.PersonalDataActivity;
 import com.sillykid.app.mine.setup.SetUpActivity;
 import com.sillykid.app.mine.sharingceremony.SharingCeremonyActivity;
@@ -47,7 +48,7 @@ import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
  * Created by Admin on 2017/8/10.
  */
 @SuppressLint("NewApi")
-public class MineFragment extends BaseFragment implements MineContract.View, View.OnScrollChangeListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class Mine1Fragment extends BaseFragment implements MineContract.View, View.OnScrollChangeListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private MainActivity aty;
 
@@ -57,64 +58,134 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     @BindView(id = R.id.sv_mine)
     private ScrollView sv_mine;
 
+    @BindView(id = R.id.img_messages, click = true)
+    private ImageView img_messages;
+
+    @BindView(id = R.id.img_setUp, click = true)
+    private ImageView img_setUp;
+
     @BindView(id = R.id.rl_title)
     private RelativeLayout rl_title;
 
     @BindView(id = R.id.tv_title)
     private TextView tv_title;
 
-    @BindView(id = R.id.ll_notLogin, click = true)
-    private LinearLayout ll_notLogin;
+//    @BindView(id = R.id.ll_notLogin, click = true)
+//    private LinearLayout ll_notLogin;
 
-    @BindView(id = R.id.tv_editData1, click = true)
-    private TextView tv_editData1;
 
-    @BindView(id = R.id.tv_divider)
-    private TextView tv_divider;
+    @BindView(id = R.id.img_head, click = true)
+    private ImageView img_head;
 
-    @BindView(id = R.id.tv_editData, click = true)
-    private TextView tv_editData;
+    @BindView(id = R.id.tv_nickName, click = true)
+    private TextView tv_nickName;
 
-    @BindView(id = R.id.iv_minetouxiang, click = true)
-    private ImageView iv_minetouxiang;
+    /**
+     * 收藏数量
+     */
+    @BindView(id = R.id.tv_dynamicCollection)
+    private TextView tv_dynamicCollection;
 
-    @BindView(id = R.id.tv_nickname, click = true)
-    private TextView tv_nickname;
+    /**
+     * 关注数量
+     */
+    @BindView(id = R.id.tv_follow)
+    private TextView tv_follow;
 
-    @BindView(id = R.id.tv_serialNumber)
-    private TextView tv_serialNumber;
+    /**
+     * 足迹数量
+     */
+    @BindView(id = R.id.tv_footprint)
+    private TextView tv_footprint;
 
-    @BindView(id = R.id.tv_synopsis)
-    private TextView tv_synopsis;
+    /**
+     * 心得数量
+     */
+    @BindView(id = R.id.tv_tips)
+    private TextView tv_tips;
 
-    @BindView(id = R.id.ll_mineshopping, click = true)
-    private LinearLayout ll_mineshopping;
+    /**
+     * 钻石会员
+     */
+    @BindView(id = R.id.img_members)
+    private ImageView img_members;
+    @BindView(id = R.id.tv_members)
+    private TextView tv_members;
 
-    @BindView(id = R.id.ll_mineorder, click = true)
-    private LinearLayout ll_mineorder;
+    /**
+     * 查看特权
+     */
+    @BindView(id = R.id.tv_clickPrivilege, click = true)
+    private TextView tv_clickPrivilege;
 
-    @BindView(id = R.id.ll_minewallet, click = true)
-    private LinearLayout ll_minewallet;
+    /**
+     * 我的订单
+     */
+    @BindView(id = R.id.ll_myOrder, click = true)
+    private LinearLayout ll_myOrder;
 
-    @BindView(id = R.id.ll_minecollection, click = true)
-    private LinearLayout ll_minecollection;
+    /**
+     * 待付款
+     */
+    @BindView(id = R.id.ll_obligation, click = true)
+    private LinearLayout ll_obligation;
 
-    @BindView(id = R.id.ll_mineshare, click = true)
-    private LinearLayout ll_mineshare;
+    /**
+     * 待发货
+     */
+    @BindView(id = R.id.ll_sendGoods, click = true)
+    private LinearLayout ll_sendGoods;
 
-    @BindView(id = R.id.ll_mineaddress, click = true)
-    private LinearLayout ll_mineaddress;
+    /**
+     * 待收货
+     */
+    @BindView(id = R.id.ll_waitGoods, click = true)
+    private LinearLayout ll_waitGoods;
 
-    @BindView(id = R.id.ll_minesetup, click = true)
-    private LinearLayout ll_minesetup;
+    /**
+     * 评价
+     */
+    @BindView(id = R.id.ll_evaluation, click = true)
+    private LinearLayout ll_evaluation;
 
-    @BindView(id = R.id.tv_vipEmergencyCall, click = true)
-    private TextView tv_vipEmergencyCall;
+    /**
+     * 退货退款
+     */
+    @BindView(id = R.id.ll_refunds, click = true)
+    private LinearLayout ll_refunds;
+
+    /**
+     * 钱包
+     */
+    @BindView(id = R.id.ll_purse, click = true)
+    private LinearLayout ll_purse;
+
+    /**
+     * 邀请好友
+     */
+    @BindView(id = R.id.ll_inviteFriends, click = true)
+    private LinearLayout ll_inviteFriends;
+
+    /**
+     * 优惠券
+     */
+    @BindView(id = R.id.ll_coupons, click = true)
+    private LinearLayout ll_coupons;
+    @BindView(id = R.id.tv_coupons)
+    private TextView tv_coupons;
+
+
+    /**
+     * 帮助与客服
+     */
+    @BindView(id = R.id.ll_helpCustomerService, click = true)
+    private LinearLayout ll_helpCustomerService;
+
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
-        return View.inflate(aty, R.layout.fragment_mine, null);
+        return View.inflate(aty, R.layout.fragment_mine1, null);
     }
 
     @Override
@@ -136,61 +207,63 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_editData:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
-                break;
-            case R.id.tv_editData1:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
-                break;
-            case R.id.iv_minetouxiang:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
-                break;
-            case R.id.ll_notLogin:
-                aty.showActivity(aty, LoginActivity.class);
-                break;
-            case R.id.ll_mineshopping:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 2);
-                break;
-            case R.id.ll_minewallet:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 3);
-                break;
-            case R.id.ll_mineorder:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);
-                break;
-            case R.id.ll_minecollection:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 5);
-                break;
-            case R.id.ll_mineshare:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 6);
-                break;
-            case R.id.ll_mineaddress:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 7);
-                break;
-            case R.id.ll_minesetup:
+            case R.id.img_setUp:
                 aty.showActivity(aty, SetUpActivity.class);
                 break;
-            case R.id.tv_vipEmergencyCall:
-//                if (userInfoBean == null) {
-//                    ViewInject.toast(getString(R.string.reloginPrompting));
-//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-//                    aty.showActivity(aty, LoginActivity.class);
-//                } else {
-////                    if (userInfoBean.getData().getLevel() > 3) {
-////                        aty.showActivity(aty, VipEmergencyCallActivity.class);
-////                    } else {
-////                        VIPPermissionsDialog vipPermissionsDialog = new VIPPermissionsDialog(aty) {
-////                            @Override
-////                            public void doAction() {
-////
-////                            }
-////                        };
-////                        vipPermissionsDialog.show();
-////                    }
-//                }
+            case R.id.img_messages:
+
                 break;
-
-
+            case R.id.img_head:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
+                break;
+            case R.id.tv_nickName:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 1);
+                break;
+            case R.id.ll_dynamicCollection:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 2);
+                break;
+            case R.id.ll_follow:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 3);
+                break;
+            case R.id.ll_footprint:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);
+                break;
+            case R.id.ll_tips:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 5);
+                break;
+            case R.id.tv_clickPrivilege:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 6);
+                break;
+            case R.id.ll_myOrder:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 7);
+                break;
+            case R.id.ll_obligation:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 8);
+                break;
+            case R.id.ll_sendGoods:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 9);
+                break;
+            case R.id.ll_waitGoods:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 10);
+                break;
+            case R.id.ll_evaluation:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 11);
+                break;
+            case R.id.ll_refunds:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 12);
+                break;
+            case R.id.ll_purse:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 13);
+                break;
+            case R.id.ll_inviteFriends:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 14);
+                break;
+            case R.id.ll_coupons:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 15);
+                break;
+            case R.id.ll_helpCustomerService:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 16);
+                break;
         }
     }
 
@@ -206,25 +279,19 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             Log.e("用户信息", "结果：" + success);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
             if (userInfoBean != null && userInfoBean.getData() != null) {
-                ll_notLogin.setVisibility(View.GONE);
-                tv_editData.setVisibility(View.VISIBLE);
-                tv_editData1.setVisibility(View.VISIBLE);
-                iv_minetouxiang.setVisibility(View.VISIBLE);
-                tv_nickname.setVisibility(View.VISIBLE);
-                tv_serialNumber.setVisibility(View.VISIBLE);
                 saveUserInfo(userInfoBean);
-                tv_nickname.setText(userInfoBean.getData().getNick_name());
+                tv_nickName.setText(userInfoBean.getData().getNick_name());
                 if (StringUtils.isEmpty(userInfoBean.getData().getFace())) {
-                    iv_minetouxiang.setImageResource(R.mipmap.avatar);
+                    img_head.setImageResource(R.mipmap.avatar);
                 } else {
-                    GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), iv_minetouxiang, 0, R.mipmap.avatar);
+                    GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), img_head, 0, R.mipmap.avatar);
                 }
-                tv_serialNumber.setText(userInfoBean.getData().getShz());
+                //     tv_serialNumber.setText(userInfoBean.getData().getShz());
                 if (StringUtils.isEmpty(userInfoBean.getData().getSignature())) {
-                    tv_synopsis.setVisibility(View.GONE);
+                    //            tv_synopsis.setVisibility(View.GONE);
                 } else {
-                    tv_synopsis.setVisibility(View.VISIBLE);
-                    tv_synopsis.setText(userInfoBean.getData().getSignature());
+//                    tv_synopsis.setVisibility(View.VISIBLE);
+//                    tv_synopsis.setText(userInfoBean.getData().getSignature());
                 }
             }
         } else if (flag == 1) {
@@ -233,18 +300,49 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             // 设置结果 结果码，一个数据
             startActivityForResult(personalDataIntent, REQUEST_CODE);
         } else if (flag == 2) {
-            aty.showActivity(aty, MyShoppingCartActivity.class);
-        } else if (flag == 3) {
-            aty.showActivity(aty, MyWalletActivity.class);
-        } else if (flag == 4) {
-            aty.showActivity(aty, MyOrderActivity.class);
-        } else if (flag == 5) {
             aty.showActivity(aty, MyCollectionActivity.class);
+        } else if (flag == 3) {
+            //    aty.showActivity(aty, MyWalletActivity.class);
+        } else if (flag == 4) {
+        } else if (flag == 5) {
         } else if (flag == 6) {
-            aty.showActivity(aty, SharingCeremonyActivity.class);
+            //    aty.showActivity(aty, SharingCeremonyActivity.class);
         } else if (flag == 7) {
-            aty.showActivity(aty, DeliveryAddressActivity.class);
+            aty.showActivity(aty, MyOrderActivity.class);
+            //   aty.showActivity(aty, DeliveryAddressActivity.class);
+        } else if (flag == 8) {
+            Intent intent = new Intent(aty, MyOrderActivity.class);
+            intent.putExtra("chageIcon", 0);
+            aty.showActivity(aty, intent);
+        } else if (flag == 9) {
+            Intent intent = new Intent(aty, MyOrderActivity.class);
+            intent.putExtra("chageIcon", 1);
+            aty.showActivity(aty, intent);
+        } else if (flag == 10) {
+            Intent intent = new Intent(aty, MyOrderActivity.class);
+            intent.putExtra("chageIcon", 2);
+            aty.showActivity(aty, intent);
+        } else if (flag == 11) {
+            Intent intent = new Intent(aty, MyOrderActivity.class);
+            intent.putExtra("chageIcon", 3);
+            aty.showActivity(aty, intent);
+        } else if (flag == 12) {
+            Intent intent = new Intent(aty, MyOrderActivity.class);
+            intent.putExtra("chageIcon", 4);
+            aty.showActivity(aty, intent);
+        } else if (flag == 13) {
+            aty.showActivity(aty, MyWalletActivity.class);
+        } else if (flag == 14) {
+            aty.showActivity(aty, SharingCeremonyActivity.class);
+        } else if (flag == 15) {
+            aty.showActivity(aty, CouponsActivity.class);
+        } else if (flag == 16) {
+
+
+//            aty.showActivity(aty, SharingCeremonyActivity.class);
         }
+
+
         dismissLoadingDialog();
     }
 
@@ -289,13 +387,13 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
      */
     private void initDefaultInfo() {
         UserUtil.clearUserInfo(aty);
-        tv_editData.setVisibility(View.GONE);
-        tv_editData1.setVisibility(View.GONE);
-        iv_minetouxiang.setVisibility(View.GONE);
-        tv_nickname.setVisibility(View.GONE);
-        tv_synopsis.setVisibility(View.GONE);
-        tv_serialNumber.setVisibility(View.GONE);
-        ll_notLogin.setVisibility(View.VISIBLE);
+        img_head.setImageResource(R.mipmap.avatar);
+        tv_nickName.setText(getString(R.string.loginOrRegister));
+        tv_dynamicCollection.setText("0");
+        tv_follow.setText("0");
+        tv_footprint.setText("0");
+        tv_tips.setText("0");
+        tv_coupons.setText("");
     }
 
     @Override
@@ -316,8 +414,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             rl_title.setBackgroundColor(Color.TRANSPARENT);
             //                          设置文字颜色，黑色，加透明度
             tv_title.setTextColor(Color.TRANSPARENT);
-            tv_editData1.setTextColor(Color.TRANSPARENT);
-            tv_divider.setBackgroundColor(Color.TRANSPARENT);
             Log.e("111", "y <= 0");
         } else if (scrollY > 0 && scrollY <= 200) {
             float scale = (float) scrollY / 200;
@@ -326,8 +422,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             rl_title.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
             //                          设置文字颜色，黑色，加透明度
             tv_title.setTextColor(Color.argb((int) alpha, 0, 0, 0));
-            tv_editData1.setTextColor(Color.argb((int) alpha, 0, 0, 0));
-            tv_divider.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
             Log.e("111", "y > 0 && y <= imageHeight");
         } else {
 //                          白色不透明
@@ -335,8 +429,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
             //                          设置文字颜色
             //黑色
             tv_title.setTextColor(Color.argb((int) 255, 0, 0, 0));
-            tv_editData1.setTextColor(Color.argb((int) 255, 0, 0, 0));
-            tv_divider.setBackgroundColor(getResources().getColor(R.color.dividercolors2));
         }
     }
 
@@ -357,13 +449,8 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
             ((MinePresenter) mPresenter).getInfo(aty);
-        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
-            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
-            if (!StringUtils.isEmpty(avatar)) {
-//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
-//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
-            }
         }
+
     }
 
 }
