@@ -2,18 +2,11 @@ package com.sillykid.app.main;
 
 import android.content.Context;
 
-import com.common.cklibrary.common.KJActivity;
-import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.CipherUtils;
-import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.sillykid.app.retrofit.RequestClient;
 
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by ruitu on 2016/9/24.
