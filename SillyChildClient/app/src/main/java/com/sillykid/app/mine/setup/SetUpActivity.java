@@ -28,6 +28,7 @@ import com.sillykid.app.mine.setup.dialog.ClearCacheDialog;
 import com.sillykid.app.mine.setup.feedback.FeedbackActivity;
 import com.sillykid.app.utils.FileNewUtil;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 
 import java.io.File;
 import java.util.List;
@@ -80,8 +81,8 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     public void initData() {
         super.initData();
         mPresenter = new SetUpPresenter(this);
-        int versionCode = Beta.getUpgradeInfo().versionCode;
-        if (versionCode > SystemTool.getAppVersionCode(this)) {
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        if (upgradeInfo != null && upgradeInfo.versionCode > SystemTool.getAppVersionCode(this)) {
             tv_versionname.setText(getString(R.string.newVersion));
         } else {
             tv_versionname.setText("V" + SystemTool.getAppVersionName(this));
