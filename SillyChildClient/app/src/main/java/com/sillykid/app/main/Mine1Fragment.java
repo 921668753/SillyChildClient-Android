@@ -187,6 +187,18 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
     @BindView(id = R.id.ll_helpCustomerService, click = true)
     private LinearLayout ll_helpCustomerService;
 
+    /**
+     * 购物车
+     */
+    @BindView(id = R.id.ll_shoppingCart, click = true)
+    private LinearLayout ll_shoppingCart;
+
+    /**
+     * 收货地址
+     */
+    @BindView(id = R.id.ll_deliveryAddress, click = true)
+    private LinearLayout ll_deliveryAddress;
+
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -214,9 +226,11 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_setUp:
+            case R.id.img_setUp1:
                 aty.showActivity(aty, SetUpActivity.class);
                 break;
             case R.id.img_messages:
+            case R.id.img_messages1:
 
                 break;
             case R.id.img_head:
@@ -269,6 +283,12 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
                 break;
             case R.id.ll_helpCustomerService:
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 16);
+                break;
+            case R.id.ll_shoppingCart:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 17);
+                break;
+            case R.id.ll_deliveryAddress:
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 18);
                 break;
         }
     }
@@ -344,11 +364,12 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
             aty.showActivity(aty, CouponsActivity.class);
         } else if (flag == 16) {
 
-
 //            aty.showActivity(aty, SharingCeremonyActivity.class);
+        }else if (flag == 17) {
+            aty.showActivity(aty, MyShoppingCartActivity.class);
+        }else if (flag == 18) {
+            aty.showActivity(aty, DeliveryAddressActivity.class);
         }
-
-
         dismissLoadingDialog();
     }
 
@@ -439,8 +460,8 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
             //                          设置文字颜色
             //黑色
             tv_title.setTextColor(Color.argb((int) 255, 0, 0, 0));
-            img_messages1.setImageResource(R.mipmap.direct_messages);
-            img_setUp1.setImageResource(R.mipmap.setting);
+            img_messages1.setImageResource(R.mipmap.direct_messages1);
+            img_setUp1.setImageResource(R.mipmap.setting1);
         }
     }
 

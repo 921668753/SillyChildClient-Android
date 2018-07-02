@@ -362,7 +362,7 @@
                         <TextView
                             style="@style/WrapWrap"
                             android:layout_marginTop="@dimen/dimen10"
-                            android:text="@string/evaluation"
+                            android:text="@string/completed"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/textsize11" />
 
@@ -385,7 +385,7 @@
                         <TextView
                             style="@style/WrapWrap"
                             android:layout_marginTop="@dimen/dimen10"
-                            android:text="@string/refunds"
+                            android:text="@string/afterSale"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/textsize11" />
 
@@ -404,10 +404,34 @@
                     android:textSize="@dimen/textsize16" />
 
                 <LinearLayout
+                    android:id="@+id/ll_myService"
                     style="@style/MatchWrap"
                     android:layout_below="@id/tv_myService"
                     android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:id="@+id/ll_shoppingCart"
+                        style="@style/AutoWrap"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/dimen18"
+                        android:paddingTop="@dimen/dimen15">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen39"
+                            android:layout_height="@dimen/dimen39"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/mine_shoppingcart" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:layout_marginTop="@dimen/dimen5"
+                            android:text="@string/shoppingCart"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/textsize11" />
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_purse"
@@ -431,6 +455,39 @@
                             android:textSize="@dimen/textsize11" />
 
                     </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_deliveryAddress"
+                        style="@style/AutoWrap"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/dimen18"
+                        android:paddingTop="@dimen/dimen15">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen39"
+                            android:layout_height="@dimen/dimen39"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/mine_shippingaddress" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:layout_marginTop="@dimen/dimen5"
+                            android:text="@string/deliveryAddress"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/textsize11" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_below="@id/ll_myService"
+                    android:orientation="horizontal">
+
 
                     <LinearLayout
                         android:id="@+id/ll_inviteFriends"
@@ -517,7 +574,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
             </RelativeLayout>
         </ScrollView>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
@@ -538,7 +594,7 @@
             android:paddingLeft="@dimen/dimen7"
             android:paddingRight="@dimen/dimen15"
             android:paddingTop="@dimen/dimen13"
-            android:src="@mipmap/direct_messages"
+            android:src="@mipmap/direct_messages1"
             android:visibility="gone" />
 
         <ImageView
@@ -550,7 +606,7 @@
             android:paddingLeft="@dimen/dimen17"
             android:paddingRight="@dimen/dimen7"
             android:paddingTop="@dimen/dimen15"
-            android:src="@mipmap/setting"
+            android:src="@mipmap/setting1"
             android:visibility="gone" />
 
         <TextView
