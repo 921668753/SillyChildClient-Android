@@ -12,7 +12,9 @@
     <LinearLayout
         android:id="@+id/ll_shz"
         style="@style/MatchWrap"
-        android:layout_margin="@dimen/dimen10"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen10"
         android:background="@drawable/shape_vippermissions"
         android:orientation="vertical">
 
@@ -87,6 +89,7 @@
         style="@style/MatchWrap"
         android:layout_marginLeft="@dimen/dimen10"
         android:layout_marginRight="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen10"
         android:background="@drawable/shape_vippermissions"
         android:orientation="vertical">
 
