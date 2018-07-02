@@ -67,6 +67,12 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
     @BindView(id = R.id.rl_title)
     private RelativeLayout rl_title;
 
+    @BindView(id = R.id.img_messages1, click = true)
+    private ImageView img_messages1;
+
+    @BindView(id = R.id.img_setUp1, click = true)
+    private ImageView img_setUp1;
+
     @BindView(id = R.id.tv_title)
     private TextView tv_title;
 
@@ -414,6 +420,8 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
             rl_title.setBackgroundColor(Color.TRANSPARENT);
             //                          设置文字颜色，黑色，加透明度
             tv_title.setTextColor(Color.TRANSPARENT);
+            img_messages1.setImageDrawable(null);
+            img_setUp1.setImageDrawable(null);
             Log.e("111", "y <= 0");
         } else if (scrollY > 0 && scrollY <= 200) {
             float scale = (float) scrollY / 200;
@@ -422,6 +430,8 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
             rl_title.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
             //                          设置文字颜色，黑色，加透明度
             tv_title.setTextColor(Color.argb((int) alpha, 0, 0, 0));
+            img_messages1.setImageResource(R.mipmap.direct_messages);
+            img_setUp1.setImageResource(R.mipmap.setting);
             Log.e("111", "y > 0 && y <= imageHeight");
         } else {
 //                          白色不透明
@@ -429,6 +439,8 @@ public class Mine1Fragment extends BaseFragment implements MineContract.View, Vi
             //                          设置文字颜色
             //黑色
             tv_title.setTextColor(Color.argb((int) 255, 0, 0, 0));
+            img_messages1.setImageResource(R.mipmap.direct_messages);
+            img_setUp1.setImageResource(R.mipmap.setting);
         }
     }
 

@@ -51,12 +51,12 @@ public class PublishedeEvaluationPresenter implements PublishedeEvaluationContra
     @Override
     public void upPictures(String imgPath) {
         if (StringUtils.isEmpty(imgPath)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 1);
             return;
         }
         File oldFile = new File(imgPath);
         if (!(FileUtil.isFileExists(oldFile))) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 1);
             return;
         }
         long fileSize = 0;

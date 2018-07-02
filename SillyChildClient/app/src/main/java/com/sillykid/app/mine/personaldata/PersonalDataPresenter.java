@@ -120,6 +120,7 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
         });
     }
 
+
     @Override
     public void setRegion(String province, int province_id, String city, int city_id, String region, int region_id) {
         if (province_id == 0 || city_id == 0 || region_id == 0) {
@@ -147,6 +148,24 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void getAddress(int parentid) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("parentid", parentid);
+        RequestClient.getAddressRegionList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, -1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, -1);
+            }
+        });
+    }
+
 
     @Override
     public void getRegionList(int parentid, int flag) {

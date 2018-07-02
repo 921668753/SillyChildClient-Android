@@ -2,6 +2,7 @@ package com.sillykid.app.mine.personaldata;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
 import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.UploadImageBean;
+import com.sillykid.app.entity.mine.deliveryaddress.AddressRegionBean;
 import com.sillykid.app.entity.mine.deliveryaddress.RegionListBean;
 import com.sillykid.app.loginregister.LoginActivity;
 import com.sillykid.app.mine.personaldata.dialog.PictureSourceDialog;
@@ -41,6 +43,7 @@ import com.sillykid.app.mine.personaldata.setsignature.SetSignatureActivity;
 import com.sillykid.app.mine.personaldata.setsillycode.SetSillyCodeActivity;
 import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
+import com.sillykid.app.utils.SoftKeyboardUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,7 +135,14 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private int cityOptions2 = 0;
     private int provinceOptions1 = 0;
 
+
+    private List<AddressRegionBean.DataBean> options1Items = new ArrayList<>();
+    private ArrayList<ArrayList<AddressRegionBean.DataBean.ChildrenBeanX>> options2Items = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean>>> options3Items = new ArrayList<>();
+
     private boolean isRefresh = false;
+
+    private OptionsPickerView pvLinkOptions = null;
 
     @Override
     public void setRootView() {
@@ -151,8 +161,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         areaList = new ArrayList<RegionListBean.DataBean>();
         initImagePicker();
         initCustomTimePicker();
-        initNoLinkOptionsPicker();
-        ((PersonalDataContract.Presenter) mPresenter).getRegionList(0, 4);
+        //  initNoLinkOptionsPicker();
+        initLinkOptionsPicker();
+        ((PersonalDataContract.Presenter) mPresenter).getAddress(0);
+        // ((PersonalDataContract.Presenter) mPresenter).getRegionList(0, 4);
     }
 
     /**
@@ -286,7 +298,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 pvCustomTime.show(tv_personalbirthday);
                 break;
             case R.id.ll_personaldatadq:
-                pvNoLinkOptions.show(tv_personaldiqu);
+                //  pvNoLinkOptions.show(tv_personaldiqu);
+                SoftKeyboardUtils.packUpKeyboard(aty);
+                pvLinkOptions.show(tv_personaldiqu);
                 break;
             case R.id.ll_personaldatagxqm:
                 Intent setSignatureIntent = new Intent(this, SetSignatureActivity.class);
@@ -336,7 +350,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                             ViewInject.toast(getString(R.string.noData));
                             return;
                         }
-                      String  touxiangpath = images.get(0).path;
+                        String touxiangpath = images.get(0).path;
                         showLoadingDialog(getString(R.string.saveLoad));
                         ((PersonalDataContract.Presenter) mPresenter).upPictures(touxiangpath);
                     } else {
@@ -486,6 +500,24 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 .build();
     }
 
+    /**
+     * 联动地区选择
+     */
+    private void initLinkOptionsPicker() {
+        pvLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                province_id = options1Items.get(options1).getRegion_id();
+                city_id = options2Items.get(options1).get(options2).getRegion_id();
+                region_id = options3Items.get(options1).get(options2).get(options3).getRegion_id();
+                province = options1Items.get(options1).getLocal_name();
+                city = options2Items.get(options1).get(options2).getLocal_name();
+                region = options3Items.get(options1).get(options2).get(options3).getLocal_name();
+                ((PersonalDataContract.Presenter) mPresenter).setRegion(options1Items.get(options1).getLocal_name(), province_id, options2Items.get(options1).get(options2).getLocal_name(), city_id, options3Items.get(options1).get(options2).get(options3).getLocal_name(), region_id);
+            }
+        }).build();
+    }
+
 
     /**
      * 获取地区二级列表
@@ -517,6 +549,82 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         switch (flag) {
+            case -1:
+                AddressRegionBean addressRegionBean = (AddressRegionBean) JsonUtil.getInstance().json2Obj(success, AddressRegionBean.class);
+                options1Items = addressRegionBean.getData();
+                Log.d("tag1", options1Items.size() + "=province");
+                for (int i = 0; i < options1Items.size(); i++) {//遍历省份
+                    ArrayList<AddressRegionBean.DataBean.ChildrenBeanX> CityList = new ArrayList<>();//该省的城市列表（第二级）
+                    ArrayList<ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
+                    if (StringUtils.isEmpty(options1Items.get(i).getLocal_name())) {
+                        continue;
+                    }
+                    if (province != null && province.equals(options1Items.get(i).getLocal_name())) {
+                        provinceOptions1 = i;
+                        Log.d("tag1", provinceOptions1 + "=province");
+                    }
+                    if (options1Items.get(i).getChildren() == null || options1Items.get(i).getChildren().size() <= 0) {
+                        AddressRegionBean.DataBean.ChildrenBeanX childrenBeanX = new AddressRegionBean.DataBean.ChildrenBeanX();
+                        childrenBeanX.setRegion_id(0);
+                        childrenBeanX.setLocal_name("");
+                        CityList.add(childrenBeanX);//添加城市
+                        ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
+                        AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
+                        childrenBean.setRegion_id(0);
+                        childrenBean.setLocal_name("");
+                        childrenBeanList1.add(childrenBean);
+                        Province_AreaList.add(childrenBeanList1);
+                        options2Items.add(CityList);
+                        options3Items.add(Province_AreaList);
+                        continue;
+                    }
+                    for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
+                        AddressRegionBean.DataBean.ChildrenBeanX CityName = options1Items.get(i).getChildren().get(c);
+                        if (StringUtils.isEmpty(CityName.getLocal_name())) {
+                            CityName = new AddressRegionBean.DataBean.ChildrenBeanX();
+                            CityName.setRegion_id(0);
+                            CityName.setLocal_name("");
+                        }
+                        CityList.add(CityName);//添加城市
+                        ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> City_AreaList = new ArrayList<>();//该城市的所有地区列表
+                        if (city != null && city.equals(options1Items.get(i).getChildren().get(c).getLocal_name())) {
+                            cityOptions2 = c;
+                            Log.d("tag1", cityOptions2 + "=city");
+                        }
+                        //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                        if (options1Items.get(i).getChildren().get(c).getChildren() == null
+                                || options1Items.get(i).getChildren().get(c).getChildren().size() == 0) {
+                            AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
+                            AreaName.setRegion_id(0);
+                            AreaName.setLocal_name("");
+                            City_AreaList.add(AreaName);
+                        } else {
+                            for (int d = 0; d < options1Items.get(i).getChildren().get(c).getChildren().size(); d++) {//该城市对应地区所有数据
+                                AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = options1Items.get(i).getChildren().get(c).getChildren().get(d);
+                                if (region != null && region.startsWith(AreaName.getLocal_name())) {
+                                    areaOptions3 = d;
+                                    Log.d("tag1", areaOptions3 + "=Area");
+                                }
+                                City_AreaList.add(AreaName);//添加该城市所有地区数据
+                            }
+                        }
+                        Province_AreaList.add(City_AreaList);//添加该省所有地区数据
+                    }
+                    /**
+                     * 添加城市数据
+                     */
+                    options2Items.add(CityList);
+                    Log.d("tag1", options2Items.size() + "=CityList");
+                    /**
+                     * 添加地区数据
+                     */
+                    options3Items.add(Province_AreaList);
+                    Log.d("tag1", options3Items.size() + "=Province_AreaList");
+                }
+
+                pvLinkOptions.setPicker(options1Items, options2Items, options3Items);
+                pvLinkOptions.setSelectOptions(provinceOptions1, cityOptions2, areaOptions3);
+                break;
             case 0:
 
                 break;
@@ -530,13 +638,14 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", String.valueOf(birthday));
                 break;
             case 3:
-                tv_personaldiqu.setText(provinceList.get(provinceOptions1).getLocal_name() + cityList.get(cityOptions2).getLocal_name() + areaList.get(areaOptions3).getLocal_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "province", provinceList.get(provinceOptions1).getLocal_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "province_id", String.valueOf(provinceList.get(provinceOptions1).getRegion_id()));
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "city", cityList.get(cityOptions2).getLocal_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "city_id", String.valueOf(areaList.get(areaOptions3).getRegion_id()));
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "region", areaList.get(areaOptions3).getLocal_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", String.valueOf(areaList.get(areaOptions3).getRegion_id()));
+                tv_personaldiqu.setText(province + city + region);
+                // tv_personaldiqu.setText(provinceList.get(provinceOptions1).getLocal_name() + cityList.get(cityOptions2).getLocal_name() + areaList.get(areaOptions3).getLocal_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "province", province);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "province_id", String.valueOf(province_id));
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "city", city);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "city_id", String.valueOf(city_id));
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "region", region);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", String.valueOf(region_id));
                 break;
             case 4:
                 RegionListBean regionListBean = (RegionListBean) JsonUtil.json2Obj(success, RegionListBean.class);
@@ -551,6 +660,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     cityList.clear();
                     cityList.addAll(regionListBean1.getData());
                     getRegionList(cityList, city, 6);
+                } else {
+                    pvNoLinkOptions.setNPicker(provinceList, cityList, areaList);
+                    pvNoLinkOptions.setSelectOptions(provinceOptions1, cityOptions2, areaOptions3);
                 }
                 break;
             case 6:
@@ -594,6 +706,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         }
         pvNoLinkOptions = null;
         pictureSourceDialog = null;
+        if (pvLinkOptions != null && pvLinkOptions.isShowing()) {
+            pvLinkOptions.dismiss();
+        }
+        pvLinkOptions = null;
     }
 
     /**

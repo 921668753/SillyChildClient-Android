@@ -366,7 +366,6 @@ public class RequestClient {
         HttpRequest.requestGetHttp(context, URLConstants.COMMENTLIST, httpParams, false, listener);
     }
 
-
     /**
      * 首页---更多分类----商品列表----商品详情----收藏商品
      */
@@ -2696,7 +2695,7 @@ public class RequestClient {
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
             UserUtil.clearUserInfo(context);
-            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MineFragment") || context.getClass().getName().contains("Mine1Fragment"))) {
+            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MyOrderActivity") || context.getClass().getName().contains("MineFragment") || context.getClass().getName().contains("Mine1Fragment"))) {
                 /**
                  * 发送消息
                  */

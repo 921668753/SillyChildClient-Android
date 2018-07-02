@@ -27,7 +27,6 @@ import com.sillykid.app.constant.NumericConstants;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean;
 import com.sillykid.app.entity.mine.myorder.OrderDetailBean.DataBeanX.ItemListBean;
 import com.sillykid.app.loginregister.LoginActivity;
-import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -151,8 +150,6 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                 mAdapter.getData().get(selectePosition).getImageList().clear();
                 mAdapter.notifyItemChanged(selectePosition);
             }
-        } else {
-            ViewInject.toast(getString(R.string.noData));
         }
     }
 
@@ -229,9 +226,9 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
                 break;
             default:
                 if (view.getId() == R.id.iv_delete) {
-                    if (mAdapter.getData() != null && mAdapter.getData().size() > position1) {
+                    if (mAdapter.getData() != null && mAdapter.getData().size() > 0) {
                         mAdapter.getData().get(position).getImageList().remove(position1);
-                        mAdapter.notifyItemChanged(position);
+                        mAdapter.notifyItemChanged(selectePosition);
                     }
                 } else {
 //                    ArrayList<ImageItem> images = new ArrayList<ImageItem>();

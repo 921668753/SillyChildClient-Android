@@ -33,6 +33,11 @@ public interface PersonalDataContract {
         void changeShzCode(String shz_code);
 
         /**
+         * 根据parentid获取所有地区列表
+         */
+        void getAddress(int parentid);
+
+        /**
          * 根据父id获取地址列表
          */
         void getRegionList(int parentid, int flag);

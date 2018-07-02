@@ -61,6 +61,7 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
              */
 
             private int goods_id;
+            private int position;
             private String content;
             private String name;
             private String specs;
@@ -68,6 +69,13 @@ public class PublishedeEvaluationBean extends BaseResult<PublishedeEvaluationBea
             private String image;
             public List<String> imageList;
 
+            public int getPosition() {
+                return position;
+            }
+
+            public void setPosition(int position) {
+                this.position = position;
+            }
 
             public int getGoods_id() {
                 return goods_id;

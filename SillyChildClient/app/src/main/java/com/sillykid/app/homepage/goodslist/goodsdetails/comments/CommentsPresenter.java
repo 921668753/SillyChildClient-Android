@@ -25,9 +25,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     public void getCommentList(Context context, int goodsid, int onlyimage, int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("goodsid", goodsid);
-        if (onlyimage == 0 || onlyimage == 1) {
-            httpParams.put("onlyimage", onlyimage);
-        }
+        httpParams.put("onlyimage", onlyimage);
         httpParams.put("page", page);
         RequestClient.getCommentList(context, httpParams, new ResponseListener<String>() {
             @Override

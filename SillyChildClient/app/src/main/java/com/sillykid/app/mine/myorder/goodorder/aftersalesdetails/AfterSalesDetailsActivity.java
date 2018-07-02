@@ -146,6 +146,8 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
             tv_type.setText(getString(R.string.toAudit));
         } else if (afterSalesDetailsBean.getData().getTradestatus() == 1) {
             tv_type.setText(getString(R.string.pendingDelivery));
+        } else if (afterSalesDetailsBean.getData().getTradestatus() == 2) {
+            tv_type.setText(getString(R.string.merchantRejectedApplication));
         } else if (afterSalesDetailsBean.getData().getTradestatus() == 3) {
             tv_type.setText(getString(R.string.merchantRefund));
         } else if (afterSalesDetailsBean.getData().getTradestatus() == 6) {

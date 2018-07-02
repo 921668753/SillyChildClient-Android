@@ -66,7 +66,7 @@ public class AddCommentsFragment extends BaseFragment implements CommentsContrac
 
     private int goodsid = 0;
 
-    private int onlyimage = 0;
+    private int onlyimage = 2;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {

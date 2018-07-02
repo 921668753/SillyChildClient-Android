@@ -76,6 +76,7 @@ public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<Memb
         });
         List<ImageItem> selImageList;
         RecyclerView recyclerView = (RecyclerView) viewHolderHelper.getView(R.id.recyclerView);
+        recyclerView.setTag(position);
         if (selImageListCounters.get(recyclerView.hashCode()) != null) {
             selImageListCounters.get(recyclerView.hashCode()).clear();
             selImageList = selImageListCounters.get(recyclerView.hashCode());
@@ -96,18 +97,20 @@ public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<Memb
             adapter.setImages(selImageList);
         } else {
             adapter = new ImagePickerAdapter(mContext, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
-            adapter.setOnItemClickListener(new ImagePickerAdapter.OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position1) {
-                    onStatusListener.onSetStatusListener(view, adapter, position, position1);
-                }
-            });
             GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 5);
             recyclerView.setLayoutManager(gridLayoutManager);
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(adapter);
             imagePickerAdapterCounters.put(recyclerView.hashCode(), adapter);
         }
+        adapter.setOnItemClickListener(new ImagePickerAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position1) {
+                if ((int) recyclerView.getTag() == position) {
+                    onStatusListener.onSetStatusListener(view, adapter, position, position1);
+                }
+            }
+        });
     }
 
 

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
@@ -33,7 +32,6 @@ import static com.sillykid.app.constant.NumericConstants.REQUEST_CODE;
  */
 
 public class DeliveryAddressActivity extends BaseActivity implements DeliveryAddressContract.View, BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, BGAOnItemChildClickListener {
-
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;

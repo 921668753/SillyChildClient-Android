@@ -482,7 +482,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_paymentTime.setVisibility(View.GONE);
         ll_deliveryTime.setVisibility(View.GONE);
         if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
-            time = new TimeCount(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000 - System.currentTimeMillis(), 1000);
+            long last_time = StringUtils.toLong(orderDetailBean.getData().getLastTime()) - StringUtils.toLong(orderDetailBean.getData().getNowTime());
+            time = new TimeCount(last_time * 1000, 1000);
             time.setTimeCountCallBack(this);
             time.start();
         } else {
@@ -701,8 +702,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void onTick(long millisUntilFinished) {
         //     lastTime = millisUntilFinished;
         String millisUntilFinish = "";
-        long minute = millisUntilFinished / 60000;
-        long seconds = millisUntilFinished % 60000;
+        long minute = millisUntilFinished / 1000 / 60;
+        long seconds = millisUntilFinished / 1000 % 60;
         if (minute > 0) {
             millisUntilFinish = minute + getString(R.string.minute) + seconds + getString(R.string.seconds);
         } else {
