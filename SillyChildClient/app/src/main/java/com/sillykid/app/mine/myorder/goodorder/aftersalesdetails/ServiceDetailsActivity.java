@@ -132,7 +132,11 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
                 tv_refundSuccess.setText(getString(R.string.platformRefuse) + getString(R.string.applyFailure));
             }
             tv_refundSuccessTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getSHZ().getRefund_time()), "yyyy-MM-dd HH:mm:ss"));
-            tv_remark.setText(serviceDetailsBean.getData().getSHZ().getRefund_remark());
+            if (StringUtils.isEmpty(serviceDetailsBean.getData().getSHZ().getRefund_remark())) {
+                tv_remark.setText(getString(R.string.noRemarks));
+            } else {
+                tv_remark.setText(serviceDetailsBean.getData().getStore().getCreate_remark());
+            }
         } else {
             ll_shz.setVisibility(View.GONE);
         }
@@ -146,13 +150,14 @@ public class ServiceDetailsActivity extends BaseActivity implements ServiceDetai
                 tv_merchantsApplyRefund.setText(getString(R.string.merchantsApplyRefund1) + getString(R.string.user) + getString(R.string.apply));
             }
             tv_merchantsApplyRefundTime.setText(DataUtil.formatData(StringUtils.toLong(serviceDetailsBean.getData().getStore().getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-
-            tv_merchantsRemark.setText(serviceDetailsBean.getData().getStore().getCreate_remark());
+            if (StringUtils.isEmpty(serviceDetailsBean.getData().getStore().getCreate_remark())) {
+                tv_merchantsRemark.setText(getString(R.string.noRemarks));
+            } else {
+                tv_merchantsRemark.setText(serviceDetailsBean.getData().getStore().getCreate_remark());
+            }
         } else {
             ll_merchants.setVisibility(View.GONE);
         }
-
-
         GlideImageLoader.glideLoader(this, serviceDetailsBean.getData().getMember().getFace(), img_users, 0, R.mipmap.placeholderfigure1);
 
         tv_usersApplyRefundGoods.setText(getString(R.string.userApplication) + serviceDetailsBean.getData().getMember().getRemark());
