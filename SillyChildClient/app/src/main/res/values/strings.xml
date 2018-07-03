@@ -1106,6 +1106,8 @@
     <string name="completed">已完成</string>
     <string name="closed">已关闭</string>
     <string name="afterSale">售后</string>
+    <string name="afterSale1">售后中</string>
+    <string name="haveAfter">已售后</string>
     <string name="all">全部</string>
     <string name="evaluation">评价</string>
     <string name="anonymousEvaluation">匿名评价</string>

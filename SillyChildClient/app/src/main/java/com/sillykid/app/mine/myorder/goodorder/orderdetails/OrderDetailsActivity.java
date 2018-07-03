@@ -612,7 +612,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_courierName.setVisibility(View.GONE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
         if (flag == 0) {
-            tv_waitSending.setText(getString(R.string.applyAfterSales));
+            tv_waitSending.setText(getString(R.string.applyAfterSales1));
         } else {
             tv_waitSending.setText(getString(R.string.afterComplete));
         }
