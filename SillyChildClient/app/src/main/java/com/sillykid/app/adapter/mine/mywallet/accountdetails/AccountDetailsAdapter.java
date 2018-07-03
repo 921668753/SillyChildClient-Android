@@ -55,7 +55,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
              */
             helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
         } else if (model.getType() == 3 && model.getStatus() == 0) {
-            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption) + " (" + mContext.getString(R.string.ongoing) + ")");
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption));
             /**
              * 交易金额
              */
