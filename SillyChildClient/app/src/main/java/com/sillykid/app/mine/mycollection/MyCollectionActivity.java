@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
 import com.sillykid.app.adapter.mine.mycollection.MyCollectionViewAdapter;
@@ -240,13 +241,15 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
                 mRefreshLayout.endLoadingMore();
                 mAdapter.addMoreData(myCollectionBean.getData());
             }
+            dismissLoadingDialog();
         } else if (flag == 1) {
             mAdapter.removeItem(positionItem);
+            mRefreshLayout.beginRefreshing();
         } else if (flag == 2) {
             addCartGoodDialog.dismissLoadingDialog();
             ViewInject.toast(getString(R.string.addCartSuccess));
+            dismissLoadingDialog();
         }
-        dismissLoadingDialog();
     }
 
     @Override
@@ -294,6 +297,20 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionCo
             }
         }
     }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

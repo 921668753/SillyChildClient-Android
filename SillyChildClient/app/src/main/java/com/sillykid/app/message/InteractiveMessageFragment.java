@@ -57,7 +57,7 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
         super.initData();
         mPresenter = new InteractiveMessagePresenter(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty);
+        ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty, 0);
     }
 
 
@@ -77,6 +77,13 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
         }
     }
 
+
+    @Override
+    public void onChange() {
+        super.onChange();
+        ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty, 1);
+    }
+
     @Override
     public void setPresenter(InteractiveMessageContract.Presenter presenter) {
         mPresenter = presenter;
@@ -84,18 +91,20 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
 
     @Override
     public void getSuccess(String success, int flag) {
-        ll_commonError.setVisibility(View.GONE);
-        //会话列表
-        ConversationListFragment conversationListFragment = new ConversationListFragment();
-        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
-                .build();
-        conversationListFragment.setUri(uri);
-        FragmentManager fragmentManager = aty.getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.rong_container, conversationListFragment);
-        transaction.commit();
+        if (flag == 0) {
+            ll_commonError.setVisibility(View.GONE);
+            //会话列表
+            ConversationListFragment conversationListFragment = new ConversationListFragment();
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                    .build();
+            conversationListFragment.setUri(uri);
+            FragmentManager fragmentManager = aty.getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.rong_container, conversationListFragment);
+            transaction.commitAllowingStateLoss();
+        }
         dismissLoadingDialog();
     }
 
@@ -110,7 +119,7 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
             // ViewInject.toast(getString(R.string.reloginPrompting));
-         //   aty.showActivity(aty, LoginActivity.class);
+            //   aty.showActivity(aty, LoginActivity.class);
         } else if (msg.contains(getString(R.string.checkNetwork))) {
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
@@ -133,8 +142,8 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
-            ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null) {
+            ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty, 0);
         }
     }
 }

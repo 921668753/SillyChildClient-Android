@@ -52,9 +52,11 @@ public class PublishedeEvaluationViewAdapter extends BGARecyclerViewAdapter<Memb
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
         EditText et_goodsSatisfactory = (EditText) viewHolderHelper.getView(R.id.et_goodsSatisfactory);
         et_goodsSatisfactory.setTag(position);
-        if (!StringUtils.isEmpty(model.getContent())) {
+        if (!StringUtils.isEmpty(model.getContent()) && (int) et_goodsSatisfactory.getTag() == position) {
             et_goodsSatisfactory.setText(model.getContent());
             et_goodsSatisfactory.setSelection(model.getContent().length());
+        } else {
+            et_goodsSatisfactory.setText("");
         }
         et_goodsSatisfactory.addTextChangedListener(new TextWatcher() {
             @Override

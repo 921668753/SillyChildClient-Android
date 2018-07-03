@@ -1260,7 +1260,7 @@
     <string name="amountRealPay">实付金额：</string>
     <string name="paymentTime">付款时间：</string>
     <string name="deliveryTime">发货时间：</string>
-
+    <string name="soldOut">下架</string>
     <string name="waitingPayment">等待买家付款</string>
     <string name="lateCancelled">请在</string>
     <string name="lateCancelled1">内付款，逾期订单将被取消</string>

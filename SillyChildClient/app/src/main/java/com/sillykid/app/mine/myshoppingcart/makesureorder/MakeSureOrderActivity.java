@@ -251,6 +251,9 @@ public class MakeSureOrderActivity extends BaseActivity implements MakeSureOrder
             return;
         }
         ViewInject.toast(msg);
+        if (msg.contains(getString(R.string.soldOut))) {
+            finish();
+        }
     }
 
 

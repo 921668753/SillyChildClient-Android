@@ -345,6 +345,7 @@ public class MyShoppingCartActivity extends BaseActivity implements MyShoppingCa
             mAdapter.clear();
             mAdapter.addNewData(list);
             tv_money.setText("0.00");
+            img_unselected.setImageResource(R.mipmap.shopping_cart_unselected);
             mRefreshLayout.endRefreshing();
             dismissLoadingDialog();
         } else if (flag == 1) {

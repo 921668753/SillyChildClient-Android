@@ -133,7 +133,7 @@ public class DeliveryAddressActivity extends BaseActivity implements DeliveryAdd
             mAdapter.clear();
             mAdapter.addNewData(deliveryAddressBean.getData());
             dismissLoadingDialog();
-        } else if (flag == 1) {
+        } else if (flag == 1 || flag == 2) {
             mRefreshLayout.beginRefreshing();
         } else if (flag == 2) {
             mAdapter.removeItem(positionItem);

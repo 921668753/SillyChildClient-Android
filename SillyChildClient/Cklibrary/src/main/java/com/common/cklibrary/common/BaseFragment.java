@@ -1,7 +1,5 @@
 package com.common.cklibrary.common;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 
 
@@ -105,7 +103,7 @@ public abstract class BaseFragment extends KJFragment implements LoadingDialogVi
 
     @Override
     public void onDestroy() {
-        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        RxVolley.getRequestQueue().cancelAll(getActivity().getClass().getName());
         RxManager.get().cancel(this.getClass().getName());
         super.onDestroy();
         subscription = null;
