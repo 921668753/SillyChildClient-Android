@@ -13,6 +13,9 @@ import android.widget.Toast;
  */
 
 public class ViewInject {
+
+    private static Toast mToast = null;
+
     private ViewInject() {
     }
 
@@ -103,7 +106,9 @@ public class ViewInject {
      * @param duration
      */
     public static void toast(Context context, String message, int duration) {
-        Toast mToast = Toast.makeText(context, null, duration);
+        if (mToast == null) {
+            mToast = Toast.makeText(context, null, duration);
+        }
         mToast.setText(message);
         mToast.show();
     }
@@ -112,13 +117,16 @@ public class ViewInject {
      * 自定义图片Toat
      */
     public static void showImg(Context context, String message, int duration, int img) {
-        Toast toast = Toast.makeText(context, message, duration);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        LinearLayout toastView = (LinearLayout) toast.getView();
+        if (mToast == null) {
+            mToast = Toast.makeText(context, null, duration);
+        }
+        mToast.setText(message);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+        LinearLayout toastView = (LinearLayout) mToast.getView();
         ImageView imageCodeProject = new ImageView(context);
         imageCodeProject.setImageResource(img);
         toastView.addView(imageCodeProject, 0);
-        toast.show();
+        mToast.show();
     }
 
 }
