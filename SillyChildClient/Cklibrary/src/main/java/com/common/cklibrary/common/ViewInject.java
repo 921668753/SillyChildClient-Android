@@ -34,7 +34,6 @@ public class ViewInject {
 
     /**
      * 显示一个toast
-     *
      * @param msg
      */
     public static void toast(String msg) {
