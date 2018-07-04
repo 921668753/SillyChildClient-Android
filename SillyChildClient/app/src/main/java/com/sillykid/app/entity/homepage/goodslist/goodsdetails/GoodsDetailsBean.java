@@ -42,10 +42,6 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
         private String name;
         private String store_name;
         private String have_spec;
-        private String comment;
-        @SerializedName("class")
-        private String classX;
-        private String mktprice;
         private String rongYun;
         private String rongYunStore;
 
@@ -175,30 +171,6 @@ public class GoodsDetailsBean extends BaseResult<GoodsDetailsBean.DataBean> {
 
         public void setHave_spec(String have_spec) {
             this.have_spec = have_spec;
-        }
-
-        public String getComment() {
-            return comment;
-        }
-
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
-
-        public String getClassX() {
-            return classX;
-        }
-
-        public void setClassX(String classX) {
-            this.classX = classX;
-        }
-
-        public String getMktprice() {
-            return mktprice;
-        }
-
-        public void setMktprice(String mktprice) {
-            this.mktprice = mktprice;
         }
 
         public String getRongYun() {
