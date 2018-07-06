@@ -52,7 +52,6 @@ public class PublishedeEvaluationActivity extends BaseActivity implements Publis
     @BindView(id = R.id.tv_release, click = true)
     private TextView tv_release;
 
-
     private int order_id = 0;
 
     private PublishedeEvaluationViewAdapter mAdapter = null;

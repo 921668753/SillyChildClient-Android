@@ -5,7 +5,7 @@
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.yinglan.scc.main.MainActivity">
+    tools:context="com.sillykid.app.main.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_content"

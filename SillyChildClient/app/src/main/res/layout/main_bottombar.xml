@@ -74,7 +74,7 @@
         <ImageView
             android:id="@+id/img_activities"
             style="@style/Image20"
-            android:src="@mipmap/tab_store" />
+            android:src="@mipmap/tab_activity" />
 
         <TextView
             android:id="@+id/tv_activities"
