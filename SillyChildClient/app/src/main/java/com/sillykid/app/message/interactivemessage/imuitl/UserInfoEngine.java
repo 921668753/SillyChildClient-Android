@@ -67,7 +67,11 @@ public class UserInfoEngine {
             public void onSuccess(String response) {
                 RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
                 if (RongIM.getInstance() != null && rongCloudBean.getData() != null && !StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                    userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                    if (!StringUtils.isEmpty(rongCloudBean.getData().getStore_name())) {
+                        userInfo = new UserInfo(userid + "", rongCloudBean.getData().getStore_name(), Uri.parse(rongCloudBean.getData().getFace()));
+                    } else {
+                        userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                    }
                     if (mListener != null) {
                         mListener.onResult(userInfo);
                     }

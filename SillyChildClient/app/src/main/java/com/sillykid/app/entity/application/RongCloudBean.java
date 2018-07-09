@@ -12,6 +12,7 @@ public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
 
         private String face;
         private String nickname;
+        private String store_name;
 
         public String getFace() {
             return face;
@@ -27,6 +28,14 @@ public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
 
         public void setNickname(String nickname) {
             this.nickname = nickname;
+        }
+
+        public String getStore_name() {
+            return store_name;
+        }
+
+        public void setStore_name(String store_name) {
+            this.store_name = store_name;
         }
     }
 
