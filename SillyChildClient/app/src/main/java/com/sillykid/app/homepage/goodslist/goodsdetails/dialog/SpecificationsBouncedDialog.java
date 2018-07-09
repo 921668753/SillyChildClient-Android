@@ -69,6 +69,8 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
 
     private int have_spec = 0;
 
+    private String price = "";
+
 
     public SpecificationsBouncedDialog(@NonNull Context context) {
         super(context, R.style.MyDialog);
@@ -159,6 +161,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         tv_goodNumber.setText("1");
         GlideImageLoader.glideOrdinaryLoader(mContext, img, img_good, R.mipmap.placeholderfigure1);
         tv_money.setText(mContext.getString(R.string.renminbi) + price);
+        this.price = price;
         if (have_spec == 1) {
             clv_specifications.setVisibility(View.VISIBLE);
             tv_divider.setVisibility(View.VISIBLE);
@@ -196,12 +199,22 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
             tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
         } else if (flag == 1) {
             SpecificationsBean specificationsBean = (SpecificationsBean) JsonUtil.getInstance().json2Obj(success, SpecificationsBean.class);
+            if (specificationsBean == null || specificationsBean.getData() == null) {
+                tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(price)));
+                tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
+                specificationsBouncedViewAdapter.getData().get(selectePosition).setIsSelected(0);
+                specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsSelected(0);
+                specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsNoClick(1);
+                specificationsBouncedViewAdapter.notifyDataSetChanged();
+                tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
+                return;
+            }
             if (specificationsBean.getData() != null && StringUtils.toInt(specificationsBean.getData().getEnable_store(), 0) > 0 && specificationsBouncedViewAdapter.getData().size() == specificationsSize) {
                 tv_specifications.setText(mContext.getString(R.string.selecte) + specificationsBean.getData().getSpecs());
                 tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(specificationsBean.getData().getPrice())));
                 tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + specificationsBean.getData().getEnable_store() + mContext.getString(R.string.jian));
             } else {
-                tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(specificationsBean.getData().getPrice())));
+                tv_money.setText(mContext.getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(price)));
                 tv_inventoryEnough.setText(mContext.getString(R.string.inventory) + mContext.getString(R.string.insufficient));
                 specificationsBouncedViewAdapter.getData().get(selectePosition).setIsSelected(0);
                 specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsSelected(0);
@@ -271,7 +284,6 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
         }
         int specifications = -1;
         for (int i = 0; i < adapter.getData().size(); i++) {
-
             if (position1 == i && adapter.getData().get(i).getIsSelected() == 0) {
                 adapter.getData().get(i).setIsSelected(1);
                 specificationsBouncedViewAdapter.getData().get(position).setIsSelected(1);
@@ -322,19 +334,33 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
      */
     private String unselectedSpecification() {
         String specifications = "";
+        int unSpecificationsSize = 0;
         for (int i = 0; i < specificationsBouncedViewAdapter.getData().size(); i++) {
-            if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 1) {
-                specifications = specifications + "、" + mContext.getString(R.string.color);
-            } else if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 2) {
-                specifications = specifications + "、" + mContext.getString(R.string.size);
-            } else if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0 && specificationsBouncedViewAdapter.getData().get(i).getSpec_id() == 3) {
-                specifications = specifications + "、" + mContext.getString(R.string.capacity);
+            if (specificationsBouncedViewAdapter.getData().get(i).getIsSelected() == 0) {
+                unSpecificationsSize++;
+                specifications = specifications + "、" + specificationsBouncedViewAdapter.getData().get(i).getSpec_name();
             }
         }
         if (StringUtils.isEmpty(specifications) || StringUtils.isEmpty(specifications.substring(1))) {
             return "";
         }
+        if (unSpecificationsSize == specificationsBouncedViewAdapter.getData().size()) {
+            clearSelectedSpecification();
+        }
         return specifications.substring(1);
+    }
+
+    /**
+     * 清空选项
+     */
+    private void clearSelectedSpecification() {
+        for (int i = 0; i < specificationsBouncedViewAdapter.getData().size(); i++) {
+            specificationsBouncedViewAdapter.getItem(i).setIsSelected(0);
+            for (int j = 0; j < specificationsBouncedViewAdapter.getItem(i).getSpecValueIds().size(); j++) {
+                specificationsBouncedViewAdapter.getItem(i).getSpecValueIds().get(j).setIsNoClick(0);
+            }
+        }
+        specificationsBouncedViewAdapter.notifyDataSetChanged();
     }
 
 

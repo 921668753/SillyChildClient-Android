@@ -30,13 +30,7 @@ public class SpecificationsBouncedViewAdapter extends BGAAdapterViewAdapter<Data
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
-        if (model.getSpec_id() == 1) {
-            helper.setText(R.id.tv_specificationsName, mContext.getString(R.string.color));
-        } else if (model.getSpec_id() == 2) {
-            helper.setText(R.id.tv_specificationsName, mContext.getString(R.string.size));
-        } else if (model.getSpec_id() == 3) {
-            helper.setText(R.id.tv_specificationsName, mContext.getString(R.string.capacity));
-        }
+        helper.setText(R.id.tv_specificationsName, model.getSpec_name());
         NoScrollGridView gv_specifications = (NoScrollGridView) helper.getView(R.id.gv_specifications);
         SpecificationsCvBouncedViewAdapter adapter;
         if (specificationsCvAdapterCounters.get(gv_specifications.hashCode()) != null) {

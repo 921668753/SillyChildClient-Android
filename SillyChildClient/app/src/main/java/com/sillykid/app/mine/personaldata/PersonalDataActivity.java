@@ -552,6 +552,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             case -1:
                 AddressRegionBean addressRegionBean = (AddressRegionBean) JsonUtil.getInstance().json2Obj(success, AddressRegionBean.class);
                 options1Items = addressRegionBean.getData();
+                if (options1Items == null || options1Items.size() <= 0) {
+                    errorMsg(getString(R.string.serverReturnsDataNullJsonError), -1);
+                    return;
+                }
                 Log.d("tag1", options1Items.size() + "=province");
                 for (int i = 0; i < options1Items.size(); i++) {//遍历省份
                     ArrayList<AddressRegionBean.DataBean.ChildrenBeanX> CityList = new ArrayList<>();//该省的城市列表（第二级）
