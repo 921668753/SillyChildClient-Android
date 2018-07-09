@@ -154,8 +154,8 @@ public class ConversationActivity extends BaseActivity implements ConversationCo
         RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(success, RongCloudBean.class);
         if (RongIM.getInstance() != null && rongCloudBean.getData() != null && !StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
             UserInfo userInfo;
-            if (!StringUtils.isEmpty(rongCloudBean.getData().getStore_name())) {
-                userInfo = new UserInfo(mTargetId + "", rongCloudBean.getData().getStore_name(), Uri.parse(rongCloudBean.getData().getFace()));
+            if (mTargetId.startsWith("S") && !StringUtils.isEmpty(rongCloudBean.getData().getStoreName())) {
+                userInfo = new UserInfo(mTargetId + "", rongCloudBean.getData().getStoreName(), Uri.parse(rongCloudBean.getData().getStoreLog()));
             } else {
                 userInfo = new UserInfo(mTargetId + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
             }

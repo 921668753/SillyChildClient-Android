@@ -12,7 +12,8 @@ public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
 
         private String face;
         private String nickname;
-        private String store_name;
+        private String storeName;
+        private String storeLog;
 
         public String getFace() {
             return face;
@@ -30,12 +31,20 @@ public class RongCloudBean extends BaseResult<RongCloudBean.DataBean> {
             this.nickname = nickname;
         }
 
-        public String getStore_name() {
-            return store_name;
+        public String getStoreName() {
+            return storeName;
         }
 
-        public void setStore_name(String store_name) {
-            this.store_name = store_name;
+        public void setStoreName(String storeName) {
+            this.storeName = storeName;
+        }
+
+        public String getStoreLog() {
+            return storeLog;
+        }
+
+        public void setStoreLog(String storeLog) {
+            this.storeLog = storeLog;
         }
     }
 

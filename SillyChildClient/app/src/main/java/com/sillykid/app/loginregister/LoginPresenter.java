@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
@@ -12,7 +13,9 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.application.RongCloudBean;
 import com.sillykid.app.entity.loginregister.LoginBean;
+import com.sillykid.app.message.interactivemessage.imuitl.UserInfoEngine;
 import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
 import com.sillykid.app.retrofit.RequestClient;
 
@@ -107,14 +110,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                      * 获取用户信息
                      */
                     UserUtil.saveRcTokenId(KJActivityStack.create().topActivity(), bean.getData().getRong_cloud(), userid);
-                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
-                        UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
-                        RongIM.getInstance().setCurrentUserInfo(userInfo);
-                        RongIM.getInstance().setMessageAttachedUserInfo(true);
-                        mView.getSuccess("", 1);
-                        return;
-                    }
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 0);
+                    getRongYunUserInfo(userid);
                 }
 
                 /**
@@ -132,6 +128,32 @@ public class LoginPresenter implements LoginContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
         }
     }
+
+    private void getRongYunUserInfo(String userid) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("userId", userid);
+        RequestClient.getRongCloud(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                if (RongIM.getInstance() != null && rongCloudBean.getData() != null && !StringUtils.isEmpty(rongCloudBean.getData().getNickname())) {
+                    UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                    RongIM.getInstance().setCurrentUserInfo(userInfo);
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    mView.getSuccess("", 1);
+                    return;
+                }
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                Log.d("RongYun", "onFailure");
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+            }
+        });
+    }
+
 
     @Override
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
