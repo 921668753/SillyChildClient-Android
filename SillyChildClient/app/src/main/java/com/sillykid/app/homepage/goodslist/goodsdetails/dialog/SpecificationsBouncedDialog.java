@@ -130,7 +130,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                 tv_goodNumber.setText(String.valueOf(StringUtils.toInt(tv_goodNumber.getText().toString()) + 1));
                 break;
             case R.id.tv_determine:
-                if (enable_store <= 0 && have_spec == 1) {
+                if (enable_store <= 0 && have_spec == 1 || product_id == 0 && have_spec == 1) {
                     ViewInject.toast(mContext.getString(R.string.selectProductAttribute));
                     return;
                 }
@@ -207,6 +207,7 @@ public abstract class SpecificationsBouncedDialog extends BaseDialog implements 
                 specificationsBouncedViewAdapter.getData().get(selectePosition).getSpecValueIds().get(selectePosition1).setIsNoClick(1);
                 specificationsBouncedViewAdapter.notifyDataSetChanged();
                 tv_specifications.setText(mContext.getString(R.string.pleaseSelect) + unselectedSpecification());
+                enable_store = 0;
                 return;
             }
             if (specificationsBean.getData() != null && StringUtils.toInt(specificationsBean.getData().getEnable_store(), 0) > 0 && specificationsBouncedViewAdapter.getData().size() == specificationsSize) {
