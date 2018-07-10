@@ -1,7 +1,6 @@
 package com.sillykid.app.mine.personaldata;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -31,8 +29,6 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.sillykid.app.R;
-import com.sillykid.app.constant.NumericConstants;
-import com.sillykid.app.entity.UploadImageBean;
 import com.sillykid.app.entity.mine.deliveryaddress.AddressRegionBean;
 import com.sillykid.app.entity.mine.deliveryaddress.RegionListBean;
 import com.sillykid.app.loginregister.LoginActivity;
@@ -45,7 +41,6 @@ import com.sillykid.app.utils.DataUtil;
 import com.sillykid.app.utils.GlideImageLoader;
 import com.sillykid.app.utils.SoftKeyboardUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -143,6 +138,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private boolean isRefresh = false;
 
     private OptionsPickerView pvLinkOptions = null;
+
+    private Thread mThread = null;
 
     @Override
     public void setRootView() {
@@ -557,77 +554,21 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     return;
                 }
                 Log.d("tag1", options1Items.size() + "=province");
-                for (int i = 0; i < options1Items.size(); i++) {//遍历省份
-                    ArrayList<AddressRegionBean.DataBean.ChildrenBeanX> CityList = new ArrayList<>();//该省的城市列表（第二级）
-                    ArrayList<ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
-                    if (StringUtils.isEmpty(options1Items.get(i).getLocal_name())) {
-                        continue;
-                    }
-                    if (province != null && province.equals(options1Items.get(i).getLocal_name())) {
-                        provinceOptions1 = i;
-                        Log.d("tag1", provinceOptions1 + "=province");
-                    }
-                    if (options1Items.get(i).getChildren() == null || options1Items.get(i).getChildren().size() <= 0) {
-                        AddressRegionBean.DataBean.ChildrenBeanX childrenBeanX = new AddressRegionBean.DataBean.ChildrenBeanX();
-                        childrenBeanX.setRegion_id(0);
-                        childrenBeanX.setLocal_name("");
-                        CityList.add(childrenBeanX);//添加城市
-                        ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
-                        AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
-                        childrenBean.setRegion_id(0);
-                        childrenBean.setLocal_name("");
-                        childrenBeanList1.add(childrenBean);
-                        Province_AreaList.add(childrenBeanList1);
-                        options2Items.add(CityList);
-                        options3Items.add(Province_AreaList);
-                        continue;
-                    }
-                    for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
-                        AddressRegionBean.DataBean.ChildrenBeanX CityName = options1Items.get(i).getChildren().get(c);
-                        if (StringUtils.isEmpty(CityName.getLocal_name())) {
-                            CityName = new AddressRegionBean.DataBean.ChildrenBeanX();
-                            CityName.setRegion_id(0);
-                            CityName.setLocal_name("");
-                        }
-                        CityList.add(CityName);//添加城市
-                        ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> City_AreaList = new ArrayList<>();//该城市的所有地区列表
-                        if (city != null && city.equals(options1Items.get(i).getChildren().get(c).getLocal_name())) {
-                            cityOptions2 = c;
-                            Log.d("tag1", cityOptions2 + "=city");
-                        }
-                        //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                        if (options1Items.get(i).getChildren().get(c).getChildren() == null
-                                || options1Items.get(i).getChildren().get(c).getChildren().size() == 0) {
-                            AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
-                            AreaName.setRegion_id(0);
-                            AreaName.setLocal_name("");
-                            City_AreaList.add(AreaName);
-                        } else {
-                            for (int d = 0; d < options1Items.get(i).getChildren().get(c).getChildren().size(); d++) {//该城市对应地区所有数据
-                                AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = options1Items.get(i).getChildren().get(c).getChildren().get(d);
-                                if (region != null && region.startsWith(AreaName.getLocal_name())) {
-                                    areaOptions3 = d;
-                                    Log.d("tag1", areaOptions3 + "=Area");
-                                }
-                                City_AreaList.add(AreaName);//添加该城市所有地区数据
+                try {
+                    if (mThread != null && !mThread.isAlive()) {
+                        mThread.run();
+                    } else {
+                        mThread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setPickerData();
                             }
-                        }
-                        Province_AreaList.add(City_AreaList);//添加该省所有地区数据
+                        });
+                        mThread.start();
                     }
-                    /**
-                     * 添加城市数据
-                     */
-                    options2Items.add(CityList);
-                    Log.d("tag1", options2Items.size() + "=CityList");
-                    /**
-                     * 添加地区数据
-                     */
-                    options3Items.add(Province_AreaList);
-                    Log.d("tag1", options3Items.size() + "=Province_AreaList");
+                } catch (Exception e) {
+                    errorMsg(getString(R.string.serverReturnsDataNullJsonError), -1);
                 }
-
-                pvLinkOptions.setPicker(options1Items, options2Items, options3Items);
-                pvLinkOptions.setSelectOptions(provinceOptions1, cityOptions2, areaOptions3);
                 break;
             case 0:
 
@@ -687,6 +628,83 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         }
     }
 
+    /**
+     * 地区选择添加数据
+     */
+    private void setPickerData() {
+        for (int i = 0; i < options1Items.size(); i++) {//遍历省份
+            ArrayList<AddressRegionBean.DataBean.ChildrenBeanX> CityList = new ArrayList<>();//该省的城市列表（第二级）
+            ArrayList<ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
+            if (StringUtils.isEmpty(options1Items.get(i).getLocal_name())) {
+                continue;
+            }
+            if (province != null && province.equals(options1Items.get(i).getLocal_name())) {
+                provinceOptions1 = i;
+                Log.d("tag1", provinceOptions1 + "=province");
+            }
+            if (options1Items.get(i).getChildren() == null || options1Items.get(i).getChildren().size() <= 0) {
+                AddressRegionBean.DataBean.ChildrenBeanX childrenBeanX = new AddressRegionBean.DataBean.ChildrenBeanX();
+                childrenBeanX.setRegion_id(0);
+                childrenBeanX.setLocal_name("");
+                CityList.add(childrenBeanX);//添加城市
+                ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
+                AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
+                childrenBean.setRegion_id(0);
+                childrenBean.setLocal_name("");
+                childrenBeanList1.add(childrenBean);
+                Province_AreaList.add(childrenBeanList1);
+                options2Items.add(CityList);
+                options3Items.add(Province_AreaList);
+                continue;
+            }
+            for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
+                AddressRegionBean.DataBean.ChildrenBeanX CityName = options1Items.get(i).getChildren().get(c);
+                if (StringUtils.isEmpty(CityName.getLocal_name())) {
+                    CityName = new AddressRegionBean.DataBean.ChildrenBeanX();
+                    CityName.setRegion_id(0);
+                    CityName.setLocal_name("");
+                }
+                CityList.add(CityName);//添加城市
+                ArrayList<AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean> City_AreaList = new ArrayList<>();//该城市的所有地区列表
+                if (city != null && city.equals(options1Items.get(i).getChildren().get(c).getLocal_name())) {
+                    cityOptions2 = c;
+                    Log.d("tag1", cityOptions2 + "=city");
+                }
+                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                if (options1Items.get(i).getChildren().get(c).getChildren() == null
+                        || options1Items.get(i).getChildren().get(c).getChildren().size() == 0) {
+                    AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = new AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean();
+                    AreaName.setRegion_id(0);
+                    AreaName.setLocal_name("");
+                    City_AreaList.add(AreaName);
+                } else {
+                    for (int d = 0; d < options1Items.get(i).getChildren().get(c).getChildren().size(); d++) {//该城市对应地区所有数据
+                        AddressRegionBean.DataBean.ChildrenBeanX.ChildrenBean AreaName = options1Items.get(i).getChildren().get(c).getChildren().get(d);
+                        if (region != null && region.startsWith(AreaName.getLocal_name())) {
+                            areaOptions3 = d;
+                            Log.d("tag1", areaOptions3 + "=Area");
+                        }
+                        City_AreaList.add(AreaName);//添加该城市所有地区数据
+                    }
+                }
+                Province_AreaList.add(City_AreaList);//添加该省所有地区数据
+            }
+            /**
+             * 添加城市数据
+             */
+            options2Items.add(CityList);
+            Log.d("tag1", options2Items.size() + "=CityList");
+            /**
+             * 添加地区数据
+             */
+            options3Items.add(Province_AreaList);
+            Log.d("tag1", options3Items.size() + "=Province_AreaList");
+        }
+        pvLinkOptions.setPicker(options1Items, options2Items, options3Items);
+        pvLinkOptions.setSelectOptions(provinceOptions1, cityOptions2, areaOptions3);
+    }
+
+
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
@@ -714,6 +732,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             pvLinkOptions.dismiss();
         }
         pvLinkOptions = null;
+        if (mThread != null) {
+            mThread.interrupted();
+        }
+        mThread = null;
     }
 
     /**
