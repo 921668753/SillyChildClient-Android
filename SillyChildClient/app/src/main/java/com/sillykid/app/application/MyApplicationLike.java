@@ -32,8 +32,6 @@ import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
-import java.util.Locale;
-
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 
@@ -217,6 +215,10 @@ public class MyApplicationLike extends DefaultApplicationLike {
         Beta.initDelay = 4 * 1000;
         //设置sd卡的Download为更新资源存储目录
         Beta.storageDir = FileUtils.getSaveFolder(StringConstants.DOWNLOADPATH);
+       // 设置自定义tip弹窗UI布局
+        Beta.upgradeDialogLayoutId = R.layout.dialog_upgrade;
+        // 设置自定义升级对话框UI布局
+      //  Beta.tipsDialogLayoutId = R.layout.dialog_tips;
         //设置点击过确认的弹窗在App下次启动自动检查更新时会再次显示。
         Beta.showInterruptedStrategy = true;
         //设置是否显示消息通知
@@ -225,6 +227,8 @@ public class MyApplicationLike extends DefaultApplicationLike {
         Beta.largeIconId = R.mipmap.android_template;
         //设置状态栏小图标
         Beta.smallIconId = R.mipmap.android_template;
+        //设置更新弹窗默认展示的banner
+        Beta.defaultBannerId = R.mipmap.android_template;
         //腾讯Bugly 异常上报
         Context context = getApplication().getApplicationContext();
         // 获取当前包名
