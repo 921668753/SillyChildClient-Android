@@ -44,8 +44,7 @@
             android:paddingRight="@dimen/dimen15"
             android:tag="beta_upgrade_feature"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textsize14"
-            android:visibility="visible" />
+            android:textSize="@dimen/textsize14" />
 
         <View style="@style/DividerWidth" />
 
