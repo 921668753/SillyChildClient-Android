@@ -46,6 +46,11 @@
     <color name="fF4E00Colors">#FF4E00</color>
     <color name="c9FFD2Colors">#C9FFD2</color>
     <color name="fF7565Colors">#FF7565</color>
+    <color name="ea73Colors">#63ea73</color>
+    <color name="ffe206Colors">#ffe206</color>
+    <color name="f3516dColors">#f3516d</color>
+    <color name="e9e5Colors">#13e9e5</color>
+
 
     <!--首页-->
     <color name="translucent">#50000000</color>

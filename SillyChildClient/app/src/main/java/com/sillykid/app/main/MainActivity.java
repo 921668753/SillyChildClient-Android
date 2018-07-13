@@ -40,7 +40,6 @@ import static com.sillykid.app.constant.StringNewConstants.KEY_EXTRAS;
 import static com.sillykid.app.constant.StringNewConstants.KEY_MESSAGE;
 import static com.sillykid.app.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
 
-
 @SuppressWarnings("deprecation")
 public class MainActivity extends BaseActivity implements MainContract.View, MainCallBack {
 
@@ -306,22 +305,22 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
             switch (chageIcon) {
                 case 0:
                     img_homePage.setImageResource(R.mipmap.tab_home_selected);
-                    tv_homePage.setTextColor(getResources().getColor(R.color.greenColors));
+                    tv_homePage.setTextColor(getResources().getColor(R.color.ea73Colors));
                     changeFragment(contentFragment);
                     break;
                 case 1:
                     img_message.setImageResource(R.mipmap.tab_message_selected);
-                    tv_message.setTextColor(getResources().getColor(R.color.greenColors));
+                    tv_message.setTextColor(getResources().getColor(R.color.ffe206Colors));
                     changeFragment(contentFragment1);
                     break;
                 case 2:
                     img_activities.setImageResource(R.mipmap.tab_activity_selected);
-                    tv_activities.setTextColor(getResources().getColor(R.color.greenColors));
+                    tv_activities.setTextColor(getResources().getColor(R.color.f3516dColors));
                     changeFragment(contentFragment2);
                     break;
                 case 3:
                     img_mine.setImageResource(R.mipmap.tab_personal_selected);
-                    tv_mine.setTextColor(getResources().getColor(R.color.greenColors));
+                    tv_mine.setTextColor(getResources().getColor(R.color.e9e5Colors));
                     changeFragment(contentFragment3);
                     break;
             }
