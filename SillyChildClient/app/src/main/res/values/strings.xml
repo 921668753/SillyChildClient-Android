@@ -165,6 +165,7 @@
     <string name="travelCity2">请选择出行城市</string>
     <string name="locationRelatedPermission">您拒绝了「定位」所需要的相关权限!</string>
     <string name="notOpenPositionSwitch">未打开位置开关，可能导致定位失败或定位不准，请打开GPS</string>
+    <string name="openPositionSwitch">定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限</string>
     <string name="moreClassification">更多分类</string>
 
 

@@ -99,13 +99,13 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
             public void onSuccess(String response) {
                 BaiDuInfo baiDuInfo = (BaiDuInfo) JsonUtil.getInstance().json2Obj(response, BaiDuInfo.class);
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", baiDuInfo.getId());
-              //  mView.getSuccess("", 1);
+                //  mView.getSuccess("", 1);
             }
 
             @Override
             public void onFailure(String msg) {
                 Log.d("BaiDuYun", "onFailure");
-              //  mView.getSuccess("", 1);
+                //  mView.getSuccess("", 1);
                 //  mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
             }
         });
@@ -172,7 +172,7 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
             }
             mLocationClient.start();
         } else {
-            EasyPermissions.requestPermissions(activity, "定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限", NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
+            EasyPermissions.requestPermissions(activity, activity.getString(R.string.openPositionSwitch), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
     }
 }
