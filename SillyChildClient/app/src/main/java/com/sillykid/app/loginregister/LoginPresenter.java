@@ -146,6 +146,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
                     mView.getSuccess("", 1);
+                    return;
 //                    String baiDuId = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", "");
 //                    if (StringUtils.isEmpty(baiDuId)) {
 //                        postBaiDuInfo();
