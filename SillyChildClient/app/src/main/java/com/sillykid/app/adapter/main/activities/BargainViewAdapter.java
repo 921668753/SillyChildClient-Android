@@ -56,10 +56,11 @@ public class BargainViewAdapter extends BGAAdapterViewAdapter<SpecialBean> {
             }
         }
         ll_bargain.setLayoutParams(layoutParams);
+
         /**
          * 图片
          */
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getThumbnail(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure);
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getThumbnail() + "?imageView2/0/w/130", viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure);
 
         if (StringUtils.isEmpty(listBean.getStore_name())) {
             viewHolderHelper.setVisibility(R.id.img_proprietary, View.GONE);

@@ -3,6 +3,7 @@
     android:id="@+id/rcv_shoppingInfo"
     style="@style/MatchWrap"
     android:background="@drawable/shape_mallhomepage"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <ImageView

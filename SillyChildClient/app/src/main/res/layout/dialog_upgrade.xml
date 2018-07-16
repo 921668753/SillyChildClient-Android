@@ -60,6 +60,11 @@
                 android:textColor="@color/tabColors"
                 android:textSize="@dimen/dimen15" />
 
+            <View
+                style="@style/DividerHeight"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:layout_marginTop="@dimen/dimen5" />
+
             <TextView
                 style="@style/AutoMatch"
                 android:gravity="center"

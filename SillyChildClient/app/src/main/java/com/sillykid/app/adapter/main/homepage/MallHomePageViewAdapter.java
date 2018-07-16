@@ -71,7 +71,7 @@ public class MallHomePageViewAdapter extends BGARecyclerViewAdapter<HomePageBean
         }
         lp.height = (int) tempHeight;
         imageView.setLayoutParams(lp);
-        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail(), imageView, 5, (int) lp.width, (int) lp.height, R.mipmap.placeholderfigure);
+        GlideImageLoader.glideLoaderRaudio(mContext, model.getThumbnail() + "?imageView2/0/w/" + lp.width + "/h/" + lp.width, imageView, 5, (int) lp.width, (int) lp.height, R.mipmap.placeholderfigure);
         helper.setText(R.id.tv_goodName, model.getName());
         if (StringUtils.isEmpty(model.getBrief())) {
             helper.setVisibility(R.id.tv_goodSynopsis, View.GONE);
