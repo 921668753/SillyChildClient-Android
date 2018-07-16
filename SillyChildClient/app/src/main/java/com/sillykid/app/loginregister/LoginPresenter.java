@@ -145,12 +145,13 @@ public class LoginPresenter implements LoginContract.Presenter {
                     UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    String baiDuId = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", "");
-                    if (StringUtils.isEmpty(baiDuId)) {
-                        postBaiDuInfo();
-                        return;
-                    }
-                    postBaiDuUpdateInfo();
+                    mView.getSuccess("", 1);
+//                    String baiDuId = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", "");
+//                    if (StringUtils.isEmpty(baiDuId)) {
+//                        postBaiDuInfo();
+//                        return;
+//                    }
+//                    postBaiDuUpdateInfo();
                 }
                 mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
             }

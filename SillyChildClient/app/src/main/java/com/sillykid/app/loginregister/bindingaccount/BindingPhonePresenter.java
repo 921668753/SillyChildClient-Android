@@ -180,7 +180,8 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                     UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    postBaiDuInfo();
+                    mView.getSuccess("", 2);
+             //       postBaiDuInfo();
                     return;
                 }
                 mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);

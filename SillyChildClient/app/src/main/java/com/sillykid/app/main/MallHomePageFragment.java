@@ -431,7 +431,7 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "latitude", location.getLatitude() + "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "longitude", location.getLongitude() + "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationAddress", location.getAddrStr());
-                ((MallHomePageContract.Presenter) mPresenter).postBaiDuUpdateInfo();
+            //    ((MallHomePageContract.Presenter) mPresenter).postBaiDuUpdateInfo();
                 Log.d("tag111", location.getCity());
                 if (isFirst) {
                     if (StringUtils.isEmpty(location.getCity())) {

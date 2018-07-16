@@ -247,8 +247,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    postBaiDuInfo();
-                    return;
+                    mView.getSuccess("", 2);
+//                    postBaiDuInfo();
+                  return;
                 }
                 mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
             }
