@@ -12,7 +12,9 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
+import com.sillykid.app.BuildConfig;
 import com.sillykid.app.R;
+import com.sillykid.app.entity.BaiDuInfo;
 import com.sillykid.app.entity.application.RongCloudBean;
 import com.sillykid.app.entity.loginregister.LoginBean;
 import com.sillykid.app.message.interactivemessage.imuitl.UserUtil;
@@ -28,6 +30,8 @@ import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+
+import static com.sillykid.app.constant.StringNewConstants.BAIDUTABID;
 
 
 /**
@@ -165,7 +169,6 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
     }
 
 
-
     private void getRongYunUserInfo(String userid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("userId", userid);
@@ -177,7 +180,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                     UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    mView.getSuccess("", 2);
+                    postBaiDuInfo();
                     return;
                 }
                 mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
@@ -192,16 +195,39 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
     }
 
 
+    /**
+     * 百度定位
+     */
+    private void postBaiDuInfo() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        String mobile = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "mobile", "");
+        httpParams.put("title", mobile);
+        String latitude = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "latitude", "");
+        String longitude = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "longitude", "");
+        String locationAddress = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "locationAddress", "");
+        httpParams.put("latitude", latitude);
+        httpParams.put("longitude", longitude);
+        httpParams.put("locationAddress", locationAddress);
+        httpParams.put("tags", "0");
+        httpParams.put("coord_type", 3);
+        httpParams.put("geotable_id", BAIDUTABID);
+        httpParams.put("ak", BuildConfig.BAIDU_APPKEY);
+        RequestClient.postBaiDuInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                BaiDuInfo baiDuInfo = (BaiDuInfo) JsonUtil.getInstance().json2Obj(response, BaiDuInfo.class);
+                PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", baiDuInfo.getId());
+                mView.getSuccess("", 2);
+            }
 
-
-
-
-
-
-
-
-
-
+            @Override
+            public void onFailure(String msg) {
+                Log.d("BaiDuYun", "onFailure");
+                mView.getSuccess("", 2);
+                //  mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+            }
+        });
+    }
 
 
 }

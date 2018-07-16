@@ -136,6 +136,21 @@ public class RequestClient {
     }
 
     /**
+     * 百度定位
+     */
+    public static void postBaiDuInfo(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.BAIDUYUN, httpParams, listener);
+    }
+
+    public static void postBaiDuGetdateInfo(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.BAIDUGETDATE, httpParams, listener);
+    }
+
+    public static void postBaiDuUpdateInfo(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.BAIDUUPDATE, httpParams, listener);
+    }
+
+    /**
      * 根据融云token获取头像性别昵称
      */
     public static void getRongCloud(Context context, HttpParams httpParams, ResponseListener<String> listener) {

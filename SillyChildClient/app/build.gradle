@@ -30,7 +30,7 @@ android {
                 JPUSH_APPKEY  : "f33675352d0f85cb754fa4b7", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                 UMENG_APPKEY  : "5b21fb46b27b0a67a00000af",//友盟分享上注册的包名对应的appkey.
-                BAIDU_APPKEY  : "lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM",//百度定位上注册的包名对应的appkey.
+                BAIDU_APPKEY  : "yFsR6oDpLXznfvrwxKCRpDi2MuUbuvzI",//百度定位上注册的包名对应的appkey.
                 RONGYUN_APPKEY: "pkfcgjstpo5w8"//融云即时通讯上注册的包名对应的appkey.
         ]
         //   useLibrary 'org.apache.http.legacy'
@@ -83,7 +83,7 @@ android {
             minifyEnabled false
             // 混淆文件的位置
             signingConfig signingConfigs.debug
-            buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
+            buildConfigField "String", "BAIDU_APPKEY", "\"yFsR6oDpLXznfvrwxKCRpDi2MuUbuvzI\""
             buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
             buildConfigField "String", "WEIXIN_APPSECRET", "\"6378e75dd1f12ee6aec861ba39929494\""
             buildConfigField "String", "TENGXUNBUGLY_APPID", "\"783b064cfd\""
@@ -109,7 +109,7 @@ android {
             // 混淆文件的位置
             signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
+            buildConfigField "String", "BAIDU_APPKEY", "\"yFsR6oDpLXznfvrwxKCRpDi2MuUbuvzI\""
             buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
             buildConfigField "String", "WEIXIN_APPSECRET", "\"336027558d4d7274dd33a6d04f375de8\""
             buildConfigField "String", "TENGXUNBUGLY_APPID", "\"783b064cfd\""

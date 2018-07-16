@@ -23,11 +23,11 @@ public interface MallHomePageContract {
          * 获取首页信息
          */
         void getHomePage();
-//
-//        /**
-//         * 获取商品分类
-//         */
-//        void getClassification();
+
+        /**
+         * 获取商品分类
+         */
+        void postBaiDuUpdateInfo();
 
         /**
          * 设置定位信息

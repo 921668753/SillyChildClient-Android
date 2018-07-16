@@ -428,17 +428,16 @@ public class MallHomePageFragment extends BaseFragment implements EasyPermission
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCountry", location.getCountry());
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", location.getCity());
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "location", location.getLongitude() + "," + location.getLatitude());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "latitude", location.getLatitude() + "");
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "longitude", location.getLongitude() + "");
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationAddress", location.getAddrStr());
+                ((MallHomePageContract.Presenter) mPresenter).postBaiDuUpdateInfo();
                 Log.d("tag111", location.getCity());
                 if (isFirst) {
                     if (StringUtils.isEmpty(location.getCity())) {
                         PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.allAeservationNumber));
 //                        tv_address.setText(getString(R.string.allAeservationNumber));
-//                        ((HomePageContract.Presenter) mPresenter).getHomePage("");
-                        PreferenceHelper.write(aty, StringConstants.FILENAME, "location", "");
-                    } else {
-//                        tv_address.setText(location.getCity());
-                        //           PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", location.getCity());
-                        //  ((HomePageContract.Presenter) mPresenter).getHomePage(location.getCity());
+                        //   PreferenceHelper.write(aty, StringConstants.FILENAME, "location", "");
                     }
                 }
                 isFirst = false;

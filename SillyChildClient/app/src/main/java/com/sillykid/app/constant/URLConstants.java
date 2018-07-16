@@ -44,6 +44,12 @@ public class URLConstants {
     public static String SYSRONGCLOUD = APIURL + "member/rongCloud.do";
 
     /**
+     * 百度定位
+     */
+    public static String BAIDUYUN = "http://api.map.baidu.com/geodata/v4/poi/create";
+    public static String BAIDUUPDATE = "http://api.map.baidu.com/geodata/v4/poi/update";
+    public static String BAIDUGETDATE = "http://api.map.baidu.com/geodata/v4/poi/list";
+    /**
      * 获取首页信息
      */
     public static String HOMEPAGE = APIURL + "page/home-list.do";

@@ -67,6 +67,8 @@ public class StringNewConstants {
      */
     public static String FINISH = "FINISH";
 
+    public static String BAIDUTABID = "1000004237";
+
     /**
      * 地区选择中的字段
      */

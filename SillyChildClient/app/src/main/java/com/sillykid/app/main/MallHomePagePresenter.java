@@ -4,21 +4,29 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.location.LocationManager;
+import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.sillykid.app.BuildConfig;
 import com.sillykid.app.R;
 import com.sillykid.app.constant.NumericConstants;
+import com.sillykid.app.entity.BaiDuInfo;
 import com.sillykid.app.retrofit.RequestClient;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.sillykid.app.constant.StringNewConstants.BAIDUTABID;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -66,22 +74,43 @@ public class MallHomePagePresenter implements MallHomePageContract.Presenter {
         });
     }
 
-//    @Override
-//    public void getClassification() {
-//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        httpParams.put("cat_id", 0);
-//        RequestClient.getClassification(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 2);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 2);
-//            }
-//        });
-//    }
+    @Override
+    public void postBaiDuUpdateInfo() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        String baiDuId = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", "");
+        if (StringUtils.isEmpty(baiDuId)) {
+            return;
+        }
+        httpParams.put("id", baiDuId);
+        String mobile = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "mobile", "");
+        httpParams.put("title", mobile);
+        String latitude = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "latitude", "");
+        String longitude = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "longitude", "");
+        String locationAddress = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "locationAddress", "");
+        httpParams.put("latitude", latitude);
+        httpParams.put("longitude", longitude);
+        httpParams.put("locationAddress", locationAddress);
+        httpParams.put("tags", "0");
+        httpParams.put("coord_type", 3);
+        httpParams.put("geotable_id", BAIDUTABID);
+        httpParams.put("ak", BuildConfig.BAIDU_APPKEY);
+        RequestClient.postBaiDuUpdateInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                BaiDuInfo baiDuInfo = (BaiDuInfo) JsonUtil.getInstance().json2Obj(response, BaiDuInfo.class);
+                PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "baiDuId", baiDuInfo.getId());
+              //  mView.getSuccess("", 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                Log.d("BaiDuYun", "onFailure");
+              //  mView.getSuccess("", 1);
+                //  mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+            }
+        });
+
+    }
 
     @Override
     public void initLocation(Activity activity, LocationClient mLocationClient) {
