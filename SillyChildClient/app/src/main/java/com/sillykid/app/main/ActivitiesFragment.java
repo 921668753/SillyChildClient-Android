@@ -50,13 +50,11 @@ public class ActivitiesFragment extends BaseFragment implements ActivitiesContra
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-
     /**
      * 搜索
      */
     @BindView(id = R.id.ll_search, click = true)
     private LinearLayout ll_search;
-
 
     /**
      * 轮播图
