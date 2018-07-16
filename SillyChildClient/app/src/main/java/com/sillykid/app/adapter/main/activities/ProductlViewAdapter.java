@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.common.cklibrary.utils.MathUtil;
-import com.common.cklibrary.utils.myview.ScaleImageView;
 import com.kymjs.common.DensityUtils;
 import com.kymjs.common.StringUtils;
 import com.sillykid.app.R;
@@ -45,7 +44,7 @@ public class ProductlViewAdapter extends BGARecyclerViewAdapter<MonthHotBean> {
     protected void fillData(BGAViewHolderHelper helper, int position, MonthHotBean model) {
         ImageView imageView = (ImageView) helper.getView(R.id.img_good);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        float width1 = (DensityUtils.getScreenW() - 7 * 3 - 10 * 2) / 2;
+        float width1 = (DensityUtils.getScreenW() - 6 * 3 - 10 * 2) / 2;
         lp.width = (int) width1;
         float scale = 0;
         float tempHeight = 0;

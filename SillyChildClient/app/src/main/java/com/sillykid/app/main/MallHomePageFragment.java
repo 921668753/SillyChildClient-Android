@@ -34,7 +34,6 @@ import com.sillykid.app.R;
 import com.sillykid.app.adapter.homepage.HomePageClassificationViewAdapter;
 import com.sillykid.app.adapter.main.homepage.MallHomePageViewAdapter;
 import com.sillykid.app.constant.NumericConstants;
-import com.sillykid.app.entity.homepage.moreclassification.MoreClassificationBean;
 import com.sillykid.app.entity.main.MallHomePageBean;
 import com.sillykid.app.entity.main.MallHomePageBean.DataBean.AdvcatBean;
 import com.sillykid.app.entity.main.MallHomePageBean.DataBean.ApiCatTreeBean;

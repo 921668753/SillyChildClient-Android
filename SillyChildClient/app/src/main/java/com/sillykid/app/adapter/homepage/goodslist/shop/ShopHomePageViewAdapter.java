@@ -30,7 +30,7 @@ public class ShopHomePageViewAdapter extends BGARecyclerViewAdapter<DataBean> {
     protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
         ImageView imageView = (ImageView) helper.getView(R.id.img_good);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        float width1 = (DensityUtils.getScreenW() - 7 * 3 - 10 * 2) / 2;
+        float width1 = (DensityUtils.getScreenW() - 6 * 3 - 10 * 2) / 2;
         lp.width = (int) width1;
         float scale = 0;
         float tempHeight = 0;
