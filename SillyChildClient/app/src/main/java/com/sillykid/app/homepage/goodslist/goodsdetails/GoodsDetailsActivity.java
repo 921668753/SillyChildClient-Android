@@ -343,7 +343,9 @@ public class GoodsDetailsActivity extends BaseActivity implements GoodsDetailsCo
 
     @Override
     public void errorMsg(String msg, int flag) {
-        specificationsBouncedDialog.dismissLoadingDialog();
+        if (specificationsBouncedDialog != null) {
+            specificationsBouncedDialog.dismissLoadingDialog();
+        }
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
